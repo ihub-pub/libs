@@ -27,15 +27,10 @@ subprojects {
         from rootProject.file('gradle/java_settings.gradle')
         from rootProject.file('gradle/spring_project_settings.gradle')
         from rootProject.file('gradle/verification_settings.gradle')
+        from rootProject.file('gradle/publishing_settings.gradle')
     }
 
     dependencies {
         implementation "org.slf4j:slf4j-api:$slf4j_version"
-    }
-
-    processResources {
-        from('src/main/java') {
-            include '**/*.xml'
-        }
     }
 }

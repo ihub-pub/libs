@@ -18,20 +18,20 @@ pluginManagement {
 
 rootProject.name = project_name + '-libs'
 
-new File(rootDir, 'core').with {
-    include ":$it.name"
-    it.eachDir { dir ->
-        include ":$dir.name"
-        project(":$dir.name").projectDir = new File(it.absolutePath, dir.name)
-        project(":$dir.name").name = project_name + '-' + dir.name
-    }
-}
+includeSubprojects('core') { project_name + '-' + it }
 
-new File(rootDir, 'starter').with {
-    include ":$it.name"
-    it.eachDir { dir ->
-        include ":$dir.name"
-        project(":$dir.name").projectDir = new File(it.absolutePath, dir.name)
-        project(":$dir.name").name = project_name + '-' + dir.name + '-spring-boot-starter'
+includeSubprojects('starter') { project_name + '-' + it + '-spring-boot-starter' }
+
+private includeSubprojects(String projectPath, Closure<String> splicingName) {
+    new File(rootDir, projectPath).with {
+        include ":$projectPath"
+        it.eachDir { dir ->
+            if ('build' != dir.name) {
+                def subprojectName = ":$it.name:$dir.name"
+                include subprojectName
+                project(subprojectName).projectDir = new File(it.absolutePath, dir.name)
+                project(subprojectName).name = splicingName dir.name
+            }
+        }
     }
 }
