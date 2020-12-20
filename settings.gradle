@@ -1,0 +1,37 @@
+/**
+ +---------------------+
+ | Gradle Plugin Repos |
+ +---------------------+
+ */
+pluginManagement {
+    repositories {
+        flatDir dirs: "$rootProject.projectDir/gradle/plugins"
+        maven { url gradle_plugin_repo_mirror_aliyun }
+        maven { url maven_central_repo_mirror_aliyun }
+        maven { url aliyun_content_repo }
+        gradlePluginPortal()
+        mavenCentral()
+        jcenter()
+        maven { url spring_plugin_repo_release }
+    }
+}
+
+rootProject.name = project_name + '-libs'
+
+new File(rootDir, 'core').with {
+    include ":$it.name"
+    it.eachDir { dir ->
+        include ":$dir.name"
+        project(":$dir.name").projectDir = new File(it.absolutePath, dir.name)
+        project(":$dir.name").name = project_name + '-' + dir.name
+    }
+}
+
+new File(rootDir, 'starter').with {
+    include ":$it.name"
+    it.eachDir { dir ->
+        include ":$dir.name"
+        project(":$dir.name").projectDir = new File(it.absolutePath, dir.name)
+        project(":$dir.name").name = project_name + '-' + dir.name + '-spring-boot-starter'
+    }
+}

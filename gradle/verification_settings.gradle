@@ -1,0 +1,111 @@
+apply {
+    plugin 'jacoco'        // 覆盖率报告
+    plugin 'pmd'           // Java静态检查
+}
+
+jacoco {
+    toolVersion = jacoco_version
+}
+
+pmd {
+    incrementalAnalysis = true
+    toolVersion = pmd_version
+    ruleSets = [
+            'rulesets/java/ali-comment.xml',
+            'rulesets/java/ali-concurrent.xml',
+            'rulesets/java/ali-constant.xml',
+            'rulesets/java/ali-exception.xml',
+            'rulesets/java/ali-flowcontrol.xml',
+            'rulesets/java/ali-naming.xml',
+            'rulesets/java/ali-oop.xml',
+            'rulesets/java/ali-orm.xml',
+            'rulesets/java/ali-other.xml',
+            'rulesets/java/ali-set.xml',
+            'rulesets/vm/ali-other.xml',
+//        'rulesets/java/basic.xml',
+//        'rulesets/java/braces.xml',
+//        'rulesets/java/clone.xml',
+//        'rulesets/java/codesize.xml',
+//        'rulesets/java/comments.xml',
+//        'rulesets/java/controversial.xml',
+//        'rulesets/java/coupling.xml',
+//        'rulesets/java/design.xml',
+//        'rulesets/java/empty.xml',
+//        'rulesets/java/finalizers.xml',
+            'rulesets/java/imports.xml',
+//        'rulesets/java/javabeans.xml',
+//        'rulesets/java/logging-jakarta-commons.xml',
+//        'rulesets/java/logging-java.xml',
+//        'rulesets/java/metrics.xml',
+//        'rulesets/java/naming.xml',
+//        'rulesets/java/optimizations.xml',
+//        'rulesets/java/quickstart.xml',
+//        'rulesets/java/strictexception.xml',
+//        'rulesets/java/strings.xml',
+//        'rulesets/java/sunsecure.xml',
+//        'rulesets/java/typeresolution.xml',
+//        'rulesets/java/unnecessary.xml',
+//        'rulesets/java/unusedcode.xml',
+    ]
+}
+
+/**
+ * 分支覆盖率达到100%
+ * https://github.com/jacoco/jacoco/issues/884
+ * http://groovy.329449.n5.nabble.com/Groovy-2-5-4-generates-dead-code-td5755188.html
+ */
+jacocoTestCoverageVerification {
+    violationRules {
+        // rule #1：bundle分支覆盖率
+        rule {
+            enabled = Boolean.valueOf(System.getProperty('jacoco.bundleBranchCoverageRuleEnabled', Boolean.TRUE.toString()))
+            // TODO 用例未覆盖，暂不检查
+            enabled = false
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = System.getProperty('jacoco.bundleBranchCoveredRatio', '1.0') as BigDecimal
+            }
+        }
+        // rule #2：bundle指令覆盖率
+        rule {
+            enabled = Boolean.valueOf(System.getProperty('jacoco.bundleInstructionCoverageRuleEnabled', Boolean.TRUE.toString()))
+            // TODO 用例未覆盖，暂不检查
+            enabled = false
+            limit {
+                minimum = System.getProperty('jacoco.bundleInstructionCoveredRatio', '0.9') as BigDecimal
+            }
+        }
+        // rule #3：package指令覆盖率
+        rule {
+            enabled = Boolean.valueOf(System.getProperty('jacoco.packageInstructionCoverageRuleEnabled', Boolean.TRUE.toString()))
+            element = 'PACKAGE'
+            // TODO 用例未覆盖，暂不检查
+            enabled = false
+            limit {
+                minimum = System.getProperty('jacoco.packageInstructionCoveredRatio', '0.9') as BigDecimal
+            }
+        }
+    }
+}
+
+/**
+ * 覆盖率报告排除main class
+ */
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect { dir ->
+            fileTree dir: dir, exclude: System.getProperty('jacoco.reportExclusion', '**/app/**/*.class')
+        })
+    }
+}
+
+/**
+ * 一些任务依赖和属性设置
+ */
+check.dependsOn jacocoTestCoverageVerification
+test.finalizedBy jacocoTestReport, jacocoTestCoverageVerification
+tasks.withType(Test) {
+    // 这是为了解决在项目根目录上执行test时Jacoco找不到依赖的类的问题
+    systemProperties.'user.dir' = workingDir
+}

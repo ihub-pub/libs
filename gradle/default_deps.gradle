@@ -1,0 +1,49 @@
+repositories {
+    flatDir  dirs: "$rootProject.projectDir/libs"
+    if (Boolean.valueOf(getSystemProperty('ihub.build.local'))) {
+        mavenLocal()
+    }
+//    exclusiveContent {
+//        forRepositories(
+//            maven  {
+//                url maven_ihub_repo
+//                allowInsecureProtocol true
+//            }
+//        )
+//        filter {
+//            includeGroupByRegex 'pub\\.ihub\\..*'
+//        }
+//    }
+//    maven { url maven_github_repo }
+    maven { url maven_central_repo_mirror_aliyun }
+    maven { url aliyun_content_repo }
+    mavenCentral()
+    jcenter()
+}
+
+configurations {
+    all*.exclude group: 'c3p0',                     module: 'c3p0'
+    all*.exclude group: 'commons-logging',          module: 'commons-logging'
+    all*.exclude group: 'com.zaxxer',               module: 'HikariCP'
+    all*.exclude group: 'log4j',                    module: 'log4j'
+    all*.exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
+    all*.exclude group: 'org.apache.tomcat',        module: 'tomcat-jdbc'
+    all*.exclude group: 'org.slf4j',                module: 'slf4j-jcl'
+    all*.exclude group: 'org.slf4j',                module: 'slf4j-log4j12'
+    all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    all*.exclude group: 'stax',                     module: 'stax-api'
+    all {
+        resolutionStrategy {
+            // 不缓存动态版本
+            cacheDynamicVersionsFor 0, 'seconds'
+            // 不缓存快照模块
+            cacheChangingModulesFor 0, 'seconds'
+        }
+    }
+}
+
+dependencies {
+    runtimeOnly     "org.slf4j:jul-to-slf4j:$slf4j_version",
+                    "org.slf4j:jcl-over-slf4j:$slf4j_version",
+                    "org.slf4j:log4j-over-slf4j:$slf4j_version"
+}
