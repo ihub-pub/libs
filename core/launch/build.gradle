@@ -1,4 +1,4 @@
-description = '基础启动模块'
+description = '服务启动组件'
 
 dependencies {
     api 'org.springframework.boot:spring-boot-starter-web'

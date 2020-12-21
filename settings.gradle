@@ -18,7 +18,9 @@ pluginManagement {
 
 rootProject.name = project_name + '-libs'
 
-includeSubprojects('core') { project_name + '-' + it }
+includeSubprojects('core') { project_name + '-core-' + it }
+
+includeSubprojects('business') { project_name + '-' + it }
 
 includeSubprojects('starter') { project_name + '-' + it + '-spring-boot-starter' }
 

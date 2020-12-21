@@ -1,0 +1,4 @@
+description = '分布式事务组件'
+
+dependencies {
+}

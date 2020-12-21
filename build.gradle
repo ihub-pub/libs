@@ -27,7 +27,9 @@ subprojects {
         from rootProject.file('gradle/java_settings.gradle')
         from rootProject.file('gradle/spring_project_settings.gradle')
         from rootProject.file('gradle/verification_settings.gradle')
-        from rootProject.file('gradle/publishing_settings.gradle')
+        if (project.name.startsWith(project_name)) {
+            from rootProject.file('gradle/publishing_settings.gradle')
+        }
     }
 
     dependencies {

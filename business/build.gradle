@@ -3,7 +3,7 @@
  | Build Settings |
  +----------------+
  */
-description = '核心组件自动配置集合'
+description = '业务功能组件集合'
 
 subprojects {
 }
