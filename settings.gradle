@@ -5,6 +5,7 @@
  */
 pluginManagement {
     repositories {
+        mavenLocal()
         flatDir dirs: "$rootProject.projectDir/gradle/plugins"
         maven { url gradle_plugin_repo_mirror_aliyun }
         maven { url maven_central_repo_mirror_aliyun }

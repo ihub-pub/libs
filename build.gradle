@@ -9,6 +9,7 @@ plugins {
     id 'io.freefair.lombok'                 version "$freefair_lombok_version"
     id 'io.spring.dependency-management'    version "$spring_io_dep_version"
     id 'org.springframework.boot'           version "$spring_boot_starter_version"
+    id 'pub.ihub.plugin'                    version "$ihub_plugin_version"
 }
 
 ext.getSystemProperty = { String name ->
@@ -28,7 +29,7 @@ subprojects {
         from rootProject.file('gradle/spring_project_settings.gradle')
         from rootProject.file('gradle/verification_settings.gradle')
         if (project.name.startsWith(project_name)) {
-            from rootProject.file('gradle/publishing_settings.gradle')
+            plugin 'pub.ihub.plugin.ihub-publish'
         }
     }
 

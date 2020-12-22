@@ -10,7 +10,7 @@ ext.java11 = Boolean.valueOf(System.getProperty('java11') ?: System.getenv('JAVA
  */
 jar {
     manifest {
-        attributes 'Implementation-Version': project_version
+        attributes 'Implementation-Version': project.version
     }
 }
 
