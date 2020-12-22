@@ -1,26 +1,3 @@
-repositories {
-    flatDir  dirs: "$rootProject.projectDir/libs"
-    if (Boolean.valueOf(getSystemProperty('ihub.build.local'))) {
-        mavenLocal()
-    }
-//    exclusiveContent {
-//        forRepositories(
-//            maven  {
-//                url maven_ihub_repo
-//                allowInsecureProtocol true
-//            }
-//        )
-//        filter {
-//            includeGroupByRegex 'pub\\.ihub\\..*'
-//        }
-//    }
-//    maven { url maven_github_repo }
-    maven { url maven_central_repo_mirror_aliyun }
-    maven { url aliyun_content_repo }
-    mavenCentral()
-    jcenter()
-}
-
 configurations {
     all*.exclude group: 'c3p0',                     module: 'c3p0'
     all*.exclude group: 'commons-logging',          module: 'commons-logging'

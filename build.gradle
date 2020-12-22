@@ -12,10 +12,6 @@ plugins {
     id 'pub.ihub.plugin'                    version "$ihub_plugin_version"
 }
 
-ext.getSystemProperty = { String name ->
-    System.getProperty(name) ?: System.getenv(name.replaceAll(/\.|-/, '_').toUpperCase())
-}
-
 /**
  +----------------+
  | Build Settings |
