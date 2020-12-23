@@ -20,16 +20,11 @@ plugins {
 subprojects {
     apply {
         from rootProject.file('gradle/default_plugins.gradle')
-        from rootProject.file('gradle/default_deps.gradle')
         from rootProject.file('gradle/java_settings.gradle')
         from rootProject.file('gradle/spring_project_settings.gradle')
         from rootProject.file('gradle/verification_settings.gradle')
         if (project.name.startsWith(project_name)) {
             plugin 'pub.ihub.plugin.ihub-publish'
         }
-    }
-
-    dependencies {
-        implementation "org.slf4j:slf4j-api:$slf4j_version"
     }
 }
