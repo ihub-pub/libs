@@ -13,10 +13,10 @@ plugins {
     id 'pub.ihub.plugin.ihub-settings' version "$ihub_plugin_version"
 }
 
-rootProject.name = project_name + '-libs'
-
 includeSubprojects 'core', project_name + '-core'
 
 includeSubprojects 'business'
 
 includeSubprojects 'starter', project_name, '-spring-boot-starter'
+
+rootProject.name = project_name + '-libs'
