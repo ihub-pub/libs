@@ -1,6 +1,0 @@
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.boot:spring-boot-dependencies:$spring_boot_starter_version"
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$spring_cloud_dep_version"
-    }
-}

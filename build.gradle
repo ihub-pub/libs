@@ -3,6 +3,7 @@
  | Plugins |
  +---------+
  */
+// TODO 在组件中引用插件
 plugins {
     id 'pub.ihub.plugin'
     id 'com.github.ben-manes.versions'      version "$uptodate_version"
@@ -19,10 +20,9 @@ plugins {
  */
 subprojects {
     apply {
-        from rootProject.file('gradle/default_plugins.gradle')
-        from rootProject.file('gradle/java_settings.gradle')
-        from rootProject.file('gradle/spring_project_settings.gradle')
+        plugin 'pub.ihub.plugin.ihub-java'
         from rootProject.file('gradle/verification_settings.gradle')
+        plugin 'pub.ihub.plugin.ihub-spring'
         if (project.name.startsWith(project_name)) {
             plugin 'pub.ihub.plugin.ihub-publish'
         }

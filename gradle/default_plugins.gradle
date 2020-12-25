@@ -1,8 +1,0 @@
-apply {
-    // built-in plugins
-    plugin 'java-library'                       // Java库
-//    plugin 'build-dashboard'
-//    plugin 'project-report'
-    plugin 'io.freefair.lombok'
-    plugin 'io.spring.dependency-management'
-}
