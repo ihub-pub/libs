@@ -6,35 +6,17 @@
 pluginManagement {
     repositories {
         mavenLocal()
-        flatDir dirs: "$rootProject.projectDir/gradle/plugins"
-        maven { url gradle_plugin_repo_mirror_aliyun }
-        maven { url maven_central_repo_mirror_aliyun }
-        maven { url aliyun_content_repo }
-        gradlePluginPortal()
-        mavenCentral()
-        jcenter()
-        maven { url spring_plugin_repo_release }
     }
+}
+
+plugins {
+    id 'pub.ihub.plugin.ihub-settings' version "$ihub_plugin_version"
 }
 
 rootProject.name = project_name + '-libs'
 
-includeSubprojects('core') { project_name + '-core-' + it }
+includeSubprojects 'core', project_name + '-core'
 
-includeSubprojects('business') { project_name + '-' + it }
+includeSubprojects 'business'
 
-includeSubprojects('starter') { project_name + '-' + it + '-spring-boot-starter' }
-
-private includeSubprojects(String projectPath, Closure<String> splicingName) {
-    new File(rootDir, projectPath).with {
-        include ":$projectPath"
-        it.eachDir { dir ->
-            if ('build' != dir.name) {
-                def subprojectName = ":$it.name:$dir.name"
-                include subprojectName
-                project(subprojectName).projectDir = new File(it.absolutePath, dir.name)
-                project(subprojectName).name = splicingName dir.name
-            }
-        }
-    }
-}
+includeSubprojects 'starter', project_name, '-spring-boot-starter'
