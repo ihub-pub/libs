@@ -3,14 +3,13 @@
  | Plugins |
  +---------+
  */
-// TODO 在组件中引用插件
 plugins {
     id 'pub.ihub.plugin'
-    id 'com.github.ben-manes.versions'      version "$uptodate_version"
-    id 'com.palantir.git-version'           version "$palantir_gitversion_version"
-    id 'io.freefair.lombok'                 version "$freefair_lombok_version"
-    id 'io.spring.dependency-management'    version "$spring_io_dep_version"
-    id 'org.springframework.boot'           version "$spring_boot_starter_version"
+    id 'com.github.ben-manes.versions'
+    id 'com.palantir.git-version'
+    id 'io.freefair.lombok'
+    id 'io.spring.dependency-management'
+    id 'org.springframework.boot'
 }
 
 /**
