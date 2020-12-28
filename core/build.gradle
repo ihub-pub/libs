@@ -12,8 +12,6 @@ subprojects {
                 'org.springframework.boot:spring-boot-starter-actuator',
                 'org.springframework.retry:spring-retry'
 
-        implementation "net.dreamlu:mica-auto:$mica_auto_version"
-
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
 }
