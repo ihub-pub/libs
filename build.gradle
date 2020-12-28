@@ -5,11 +5,8 @@
  */
 plugins {
     id 'pub.ihub.plugin'
-    id 'com.github.ben-manes.versions'
-    id 'com.palantir.git-version'
     id 'io.freefair.lombok'
     id 'io.spring.dependency-management'
-    id 'org.springframework.boot'
 }
 
 /**
@@ -20,7 +17,7 @@ plugins {
 subprojects {
     apply {
         plugin 'pub.ihub.plugin.ihub-java'
-        from rootProject.file('gradle/verification_settings.gradle')
+        plugin 'pub.ihub.plugin.ihub-verification'
         plugin 'pub.ihub.plugin.ihub-spring'
         if (project.name.startsWith(project_name)) {
             plugin 'pub.ihub.plugin.ihub-publish'
