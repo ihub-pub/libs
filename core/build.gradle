@@ -6,12 +6,4 @@
 description = '核心组件集合'
 
 subprojects {
-    dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter-aop',
-                'org.springframework.boot:spring-boot-configuration-processor',
-                'org.springframework.boot:spring-boot-starter-actuator',
-                'org.springframework.retry:spring-retry'
-
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    }
 }
