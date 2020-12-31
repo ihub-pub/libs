@@ -1,0 +1,13 @@
+/**
+ +----------------+
+ | Build Settings |
+ +----------------+
+ */
+description = '核心组件自动配置集合'
+
+subprojects {
+    dependencies {
+        implementation      'org.springframework.boot:spring-boot-starter-actuator'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    }
+}

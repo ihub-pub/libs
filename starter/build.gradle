@@ -1,9 +1,0 @@
-/**
- +----------------+
- | Build Settings |
- +----------------+
- */
-description = '核心组件自动配置集合'
-
-subprojects {
-}

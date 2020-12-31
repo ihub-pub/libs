@@ -1,5 +1,5 @@
 description = '服务启动组件自动配置'
 
 dependencies {
-    api project(':core:ihub-core-launch')
+    api project(':ihub-core:ihub-core-launch')
 }
