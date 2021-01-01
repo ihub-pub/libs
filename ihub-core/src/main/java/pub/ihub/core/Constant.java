@@ -7,8 +7,8 @@ package pub.ihub.core;
  */
 public class Constant {
 
-    public static final String PROPERTIES_PREFIX = "ihub";
+	public static final String PROPERTIES_PREFIX = "ihub";
 
-    public static String BASE_PACKAGES = "pub.ihub";
+	public static String BASE_PACKAGES = "pub.ihub";
 
 }

@@ -17,4 +17,4 @@ includeSubprojects 'ihub-core'
 
 includeSubprojects 'ihub-common'
 
-includeSubprojects 'ihub-starter', 'ihub', '-spring-boot-starter'
+includeSubprojects 'ihub-starter', 'ihub-', '-spring-boot-starter'

@@ -16,15 +16,15 @@ import org.springframework.util.StringUtils;
 @Configuration
 public class IHubApplicationEventListener {
 
-    @Async
-    @Order
-    @EventListener(WebServerInitializedEvent.class)
-    public void afterStart(WebServerInitializedEvent event) {
-        Environment environment = event.getApplicationContext().getEnvironment();
-        String appName = environment.getProperty("spring.application.name").toUpperCase();
-        int localPort = event.getWebServer().getPort();
-        String profile = StringUtils.arrayToCommaDelimitedString(environment.getActiveProfiles());
-        log.info("---[{}]---启动完成，当前使用的端口:[{}]，环境变量:[{}]---", appName, localPort, profile);
-    }
+	@Async
+	@Order
+	@EventListener(WebServerInitializedEvent.class)
+	public void afterStart(WebServerInitializedEvent event) {
+		Environment environment = event.getApplicationContext().getEnvironment();
+		String appName = environment.getProperty("spring.application.name").toUpperCase();
+		int localPort = event.getWebServer().getPort();
+		String profile = StringUtils.arrayToCommaDelimitedString(environment.getActiveProfiles());
+		log.info("---[{}]---启动完成，当前使用的端口:[{}]，环境变量:[{}]---", appName, localPort, profile);
+	}
 
 }
