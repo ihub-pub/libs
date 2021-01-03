@@ -1,4 +1,26 @@
 description = 'cloud封装组件'
 
 dependencies {
+    // Spring TODO 待定
+    api 'org.springframework.retry:spring-retry'
+
+    // Feign
+    api "io.github.openfeign:feign-okhttp:$openfeign_version",
+        'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    // Hystrix
+    api 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
+
+    // Actuator
+    api 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // Admin
+    api "de.codecentric:spring-boot-admin-starter-client:$spring_boot_admin_version"
+
+    // Nacos
+    api 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery',
+        'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+
+    // Sentinel
+    api 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
 }

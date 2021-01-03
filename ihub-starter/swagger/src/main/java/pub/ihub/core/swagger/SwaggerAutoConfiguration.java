@@ -1,25 +1,16 @@
 package pub.ihub.core.swagger;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
+import pub.ihub.core.swagger.SwaggerProperties.Header;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.AuthorizationScope;
-import springfox.documentation.service.Contact;
-import springfox.documentation.service.OAuth;
-import springfox.documentation.service.ResourceOwnerPasswordCredentialsGrant;
-import springfox.documentation.service.SecurityReference;
-import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.List;
-
-import static com.google.common.collect.Lists.newArrayList;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 import static springfox.documentation.builders.PathSelectors.ant;
@@ -32,71 +23,50 @@ import static springfox.documentation.spi.DocumentationType.SWAGGER_2;
  * @author liheng
  */
 @Configuration
-@EnableSwagger2
+@ConditionalOnClass(Docket.class)
 @EnableConfigurationProperties(SwaggerProperties.class)
-@Import(BeanValidatorPluginsConfiguration.class)
+@ConditionalOnMissingClass("org.springframework.cloud.gateway.config.GatewayAutoConfiguration")
 public class SwaggerAutoConfiguration {
 
 	@Bean
-	public Docket api(SwaggerProperties swaggerProperties) {
+	public Docket api(SwaggerProperties properties) {
 		ApiSelectorBuilder builder = new Docket(SWAGGER_2)
-			.host(swaggerProperties.getHost())
-			.apiInfo(apiInfo(swaggerProperties))
-			.groupName(swaggerProperties.getGroupName())
+			.host(properties.getHost())
+			.useDefaultResponseMessages(false)
+			.globalRequestParameters(properties.getHeaders().stream().map(Header::toRequestParameter).collect(toList()))
+			.apiInfo(apiInfo(properties))
+			.groupName(properties.getGroupName())
 			.select();
 
-		swaggerProperties.getBasePackages().forEach(basePackage -> builder.apis(basePackage(basePackage)));
-		swaggerProperties.getBasePath().forEach(path -> builder.paths(ant(path)));
-		swaggerProperties.getExcludePath().forEach(p -> builder.paths(ant(p).negate()));
+		properties.getBasePackages().forEach(basePackage -> builder.apis(basePackage(basePackage)));
+		properties.getBasePath().forEach(path -> builder.paths(ant(path)));
+		properties.getExcludePath().forEach(p -> builder.paths(ant(p).negate()));
 
-		SwaggerProperties.Authorization authorization = swaggerProperties.getAuthorization();
-		return builder.build()
-			.securitySchemes(singletonList(securitySchema(authorization)))
-			.securityContexts(singletonList(securityContext(authorization)))
-			.securityContexts(newArrayList(securityContext(authorization)))
-			.securitySchemes(singletonList(securitySchema(authorization)))
-			.pathMapping("/");
+		Docket docket = builder.build();
+
+		if (properties.getAuthorization().getEnabled()) {
+			docket.securitySchemes(singletonList(properties.getAuthorization().getApiKey()));
+			docket.securityContexts(singletonList(properties.getAuthorization().getSecurityContext()));
+		}
+
+		if (properties.getOauth2().getEnabled()) {
+			docket.securitySchemes(singletonList(properties.getOauth2().getOauth()));
+			docket.securityContexts(singletonList(properties.getOauth2().getSecurityContext()));
+		}
+
+		return docket;
 	}
 
-	private SecurityContext securityContext(SwaggerProperties.Authorization authorization) {
-		return SecurityContext.builder()
-			.securityReferences(defaultAuth(authorization))
-			.operationSelector(context -> context.requestMappingPattern().matches(authorization.getAuthRegex()))
-			.build();
-	}
-
-	private List<SecurityReference> defaultAuth(SwaggerProperties.Authorization authorization) {
-		List<AuthorizationScope> authorizationScopeList = newScopes(authorization);
-		AuthorizationScope[] authorizationScopes = new AuthorizationScope[authorizationScopeList.size()];
-		return singletonList(SecurityReference.builder()
-			.reference(authorization.getName())
-			.scopes(authorizationScopeList.toArray(authorizationScopes))
-			.build());
-	}
-
-	private OAuth securitySchema(SwaggerProperties.Authorization authorization) {
-		return new OAuth(authorization.getName(), newScopes(authorization), authorization.getTokenUrlList()
-			.stream().map(ResourceOwnerPasswordCredentialsGrant::new).collect(toList()));
-	}
-
-	private ApiInfo apiInfo(SwaggerProperties swaggerProperties) {
+	private ApiInfo apiInfo(SwaggerProperties properties) {
 		return new ApiInfoBuilder()
-			.title(swaggerProperties.getTitle())
-			.description(swaggerProperties.getDescription())
-			.license(swaggerProperties.getLicense())
-			.licenseUrl(swaggerProperties.getLicenseUrl())
-			.termsOfServiceUrl(swaggerProperties.getTermsOfServiceUrl())
-			.contact(new Contact(
-				swaggerProperties.getContact().getName(),
-				swaggerProperties.getContact().getUrl(),
-				swaggerProperties.getContact().getEmail()))
-			.version(swaggerProperties.getVersion())
+			.title(properties.getTitle())
+			.description(properties.getDescription())
+			.license(properties.getLicense())
+			.licenseUrl(properties.getLicenseUrl())
+			.termsOfServiceUrl(properties.getTermsOfServiceUrl())
+			.contact(properties.getContact().getContact())
+			.version(properties.getVersion())
 			.build();
-	}
-
-	private static List<AuthorizationScope> newScopes(SwaggerProperties.Authorization authorization) {
-		return authorization.getAuthorizationScopeList().stream()
-			.map(scope -> new AuthorizationScope(scope.getScope(), scope.getDescription())).collect(toList());
 	}
 
 }

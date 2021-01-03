@@ -6,4 +6,6 @@ dependencies {
     }
     implementation 'io.swagger:swagger-models'
     implementation 'com.github.xiaoymin:knife4j-micro-spring-boot-starter'
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
 }
