@@ -1,5 +1,3 @@
 # Auto Configuration
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-pub.ihub.core.swagger.SwaggerAutoConfiguration\
-pub.ihub.core.swagger.SwaggerServletConfiguration\
-pub.ihub.core.swagger.SwaggerReactiveConfiguration
+pub.ihub.core.swagger.SwaggerAutoConfiguration

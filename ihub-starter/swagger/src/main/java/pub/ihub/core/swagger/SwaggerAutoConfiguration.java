@@ -1,15 +1,17 @@
 package pub.ihub.core.swagger;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import pub.ihub.core.swagger.SwaggerProperties.Header;
+import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
@@ -23,9 +25,10 @@ import static springfox.documentation.spi.DocumentationType.SWAGGER_2;
  * @author liheng
  */
 @Configuration
+@EnableSwagger2
 @ConditionalOnClass(Docket.class)
 @EnableConfigurationProperties(SwaggerProperties.class)
-@ConditionalOnMissingClass("org.springframework.cloud.gateway.config.GatewayAutoConfiguration")
+@Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerAutoConfiguration {
 
 	@Bean

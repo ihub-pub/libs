@@ -1,9 +1,0 @@
-spring:
-  cloud:
-    nacos:
-      config:
-        prefix: ihub
-        file-extension: yaml
-  output:
-    ansi:
-      enabled: always
