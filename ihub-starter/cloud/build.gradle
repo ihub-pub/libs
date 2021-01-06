@@ -1,6 +1,9 @@
-description = 'cloud封装组件'
+description = 'spring cloud自动配置'
 
 dependencies {
+    api 'org.springframework.boot:spring-boot-starter-web'
+    api 'org.springframework.boot:spring-boot-starter-validation'
+
     // Spring TODO 待定
     api 'org.springframework.retry:spring-retry'
 

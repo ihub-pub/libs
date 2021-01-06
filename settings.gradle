@@ -15,6 +15,6 @@ plugins {
 
 includeSubprojects 'ihub-core'
 
-includeSubprojects 'ihub-common'
+includeSubprojects 'ihub-common', 'ihub-'
 
 includeSubprojects 'ihub-starter', 'ihub-', '-spring-boot-starter'

@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        prefix: ihub
+        file-extension: yaml
+        group: ihub
+      discovery:
+        group: ihub
+        server-addr: localhost:8848
+  output:
+    ansi:
+      enabled: always
+  profiles:
+    active: dev

@@ -1,0 +1,3 @@
+# Application Listeners
+org.springframework.context.ApplicationListener=\
+pub.ihub.cloud.IHubApplicationPropertyListener
