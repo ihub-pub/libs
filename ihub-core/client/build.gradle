@@ -1,0 +1,7 @@
+description = '客户端组件'
+
+dependencies {
+    // Spring TODO 待定
+    api 'org.springframework.retry:spring-retry'
+    api 'org.springframework.cloud:spring-cloud-starter-openfeign'
+}

@@ -1,22 +1,12 @@
 description = 'spring cloud自动配置'
 
 dependencies {
-    api 'org.springframework.boot:spring-boot-starter-web'
-    api 'org.springframework.boot:spring-boot-starter-validation'
-
-    // Spring TODO 待定
-    api 'org.springframework.retry:spring-retry'
-
-    // Feign
-    api "io.github.openfeign:feign-okhttp:$openfeign_version",
-        'org.springframework.cloud:spring-cloud-starter-openfeign'
+    api 'org.springframework.boot:spring-boot-starter-web',
+        'org.springframework.boot:spring-boot-starter-validation'
 
     api 'de.codecentric:spring-boot-admin-starter-client'
 
-    api 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
-
     api 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery',
-        'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
-
-    api 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
+        'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config',
+        'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
 }
