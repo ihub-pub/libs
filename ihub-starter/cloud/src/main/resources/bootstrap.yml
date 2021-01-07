@@ -1,0 +1,27 @@
+server:
+  port: ${ihub.application.port}
+spring:
+  application:
+    name: ${ihub.application.prefix}-${ihub.application.name}
+  cloud:
+    nacos:
+      config:
+        prefix: ${ihub.application.prefix}
+        file-extension: yaml
+        group: ${ihub.application.prefix}
+        server-addr: ${ihub.application.config-server-addr}
+      discovery:
+        group: ${ihub.application.prefix}
+        server-addr: ${ihub.application.discovery-server-addr}
+    sentinel:
+      transport:
+        dashboard: localhost:8858
+      log:
+        dir: ./logs/csp
+ihub:
+  application:
+    name: service
+    prefix: ihub
+    port: 8080
+    config-server-addr: localhost:8848
+    discovery-server-addr: localhost:8848

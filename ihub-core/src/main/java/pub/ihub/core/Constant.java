@@ -27,6 +27,6 @@ public final class Constant {
 
 	public static final String BASE_PACKAGES = "pub.ihub";
 
-	public static final String SPRING_CONFIG_NAMES = "ihub-swagger,ihub-cloud";
+	public static final String SPRING_CONFIG_NAMES = "ihub-swagger,ihub-cloud,bootstrap,application";
 
 }

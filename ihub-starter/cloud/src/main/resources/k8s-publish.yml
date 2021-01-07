@@ -1,0 +1,5 @@
+ihub:
+  application:
+    port: ${ihub_application_port}
+    config-server-addr: ${nacos_server_addr}
+    discovery-server-addr: ${nacos_server_addr}

@@ -7,8 +7,9 @@ description = '核心组件自动配置集合'
 
 subprojects {
     dependencies {
-        implementation      'org.springframework.boot:spring-boot-starter-actuator'
+        implementation      'org.springframework.boot:spring-boot-autoconfigure'
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
         annotationProcessor 'org.springframework.boot:spring-boot-autoconfigure-processor'
     }
+    compileJava.inputs.files(processResources)
 }
