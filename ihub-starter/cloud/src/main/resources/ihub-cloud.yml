@@ -1,6 +1,15 @@
+server:
+  port: ${ihub.application.port}
 spring:
+  application:
+    name: ${ihub.application.prefix}-${ihub.application.name}
   output:
     ansi:
       enabled: always
-  profiles:
-    active: dev
+ihub:
+  application:
+    name: service
+    prefix: ihub
+    port: 8080
+    gateway-server-addr: localhost
+management.endpoints.web.exposure.include: "*"
