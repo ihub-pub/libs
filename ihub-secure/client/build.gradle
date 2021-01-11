@@ -1,0 +1,6 @@
+description = '安全模块客户端组件'
+
+dependencies {
+    compileOnly     'org.springframework.boot:spring-boot-starter-web'
+    implementation  'org.bitbucket.b_c:jose4j'
+}

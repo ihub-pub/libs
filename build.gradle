@@ -23,6 +23,7 @@ subprojects {
         }
     }
     dependencies {
+        compileOnly         'cn.hutool:hutool-all'
         if (project.name != 'ihub-core') {
             api project(':ihub-core')
         }

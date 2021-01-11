@@ -1,0 +1,7 @@
+description = '安全模块组件'
+
+subprojects {
+    dependencies {
+        api project(':ihub-secure')
+    }
+}
