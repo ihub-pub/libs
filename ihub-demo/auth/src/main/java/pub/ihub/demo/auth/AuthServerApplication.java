@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-package pub.ihub.core;
+package pub.ihub.demo.auth;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
+import pub.ihub.secure.auth.config.AuthServerConfig;
 
 /**
- * 通用常量
- *
  * @author liheng
  */
-public final class Constant {
+@SpringBootApplication
+// TODO 配置顺序
+@Import(AuthServerConfig.class)
+public class AuthServerApplication {
 
-	public static final String PROPERTIES_PREFIX = "ihub";
-
-	public static final String BASE_PACKAGES = "pub.ihub";
-
-	public static final String SPRING_CONFIG_NAMES = "ihub-swagger,ihub-secure,ihub-cloud,application";
+	public static void main(String[] args) {
+		SpringApplication.run(AuthServerApplication.class, args);
+	}
 
 }

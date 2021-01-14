@@ -1,0 +1,6 @@
+description = '安全模块资源服务组件'
+
+dependencies {
+    implementation  'org.springframework.boot:spring-boot-starter-web',
+                    project(':ihub-secure:ihub-secure-resource-spring-boot-starter')
+}

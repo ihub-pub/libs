@@ -1,6 +1,8 @@
 description = '安全模块客户端组件'
 
 dependencies {
-    compileOnly     'org.springframework.boot:spring-boot-starter-web'
-    implementation  'org.bitbucket.b_c:jose4j'
+    api 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    // TODO 以下为reactive WebClient相关，须结合springCloudClient
+    api 'org.springframework:spring-webflux'
+    api 'io.projectreactor.netty:reactor-netty'
 }

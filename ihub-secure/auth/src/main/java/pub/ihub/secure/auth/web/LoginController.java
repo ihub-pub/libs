@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package pub.ihub.core;
+package pub.ihub.secure.auth.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * 通用常量
- *
  * @author liheng
  */
-public final class Constant {
+@Controller
+public class LoginController {
 
-	public static final String PROPERTIES_PREFIX = "ihub";
-
-	public static final String BASE_PACKAGES = "pub.ihub";
-
-	public static final String SPRING_CONFIG_NAMES = "ihub-swagger,ihub-secure,ihub-cloud,application";
+	@GetMapping(value = "/login")
+	public String login() {
+		return "login";
+	}
 
 }

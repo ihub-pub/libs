@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package pub.ihub.core;
+package pub.ihub.demo.resource.web;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 通用常量
- *
  * @author liheng
  */
-public final class Constant {
+@RestController
+public class MessagesController {
 
-	public static final String PROPERTIES_PREFIX = "ihub";
-
-	public static final String BASE_PACKAGES = "pub.ihub";
-
-	public static final String SPRING_CONFIG_NAMES = "ihub-swagger,ihub-secure,ihub-cloud,application";
+	@GetMapping("/messages")
+	public String[] getMessages() {
+		return new String[]{"Message 1", "Message 2", "Message 3"};
+	}
 
 }

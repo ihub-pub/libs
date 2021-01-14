@@ -20,3 +20,5 @@ includeSubprojects 'ihub-secure', 'ihub-secure-', '-spring-boot-starter'
 includeSubprojects 'ihub-common', 'ihub-'
 
 includeSubprojects 'ihub-starter', 'ihub-', '-spring-boot-starter'
+
+includeSubprojects 'ihub-demo'

@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package pub.ihub.core;
+package pub.ihub.demo.resource;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 通用常量
- *
  * @author liheng
  */
-public final class Constant {
+@SpringBootApplication
+public class AuthResourceServerApplication {
 
-	public static final String PROPERTIES_PREFIX = "ihub";
-
-	public static final String BASE_PACKAGES = "pub.ihub";
-
-	public static final String SPRING_CONFIG_NAMES = "ihub-swagger,ihub-secure,ihub-cloud,application";
+	public static void main(String[] args) {
+		SpringApplication.run(AuthResourceServerApplication.class, args);
+	}
 
 }
