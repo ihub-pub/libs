@@ -9,13 +9,11 @@
     {
       "name": "ihub.application.name",
       "type": "java.lang.String",
-      "defaultValue": "service",
       "description": "服务名称."
     },
     {
       "name": "ihub.application.port",
       "type": "java.lang.Integer",
-      "defaultValue": 8080,
       "description": "服务端口."
     },
     {

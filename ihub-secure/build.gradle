@@ -1,5 +1,9 @@
 description = '安全模块组件'
 
+dependencies {
+    compileOnly 'org.springframework.security:spring-security-oauth2-core'
+}
+
 subprojects {
     dependencies {
         api project(':ihub-secure')

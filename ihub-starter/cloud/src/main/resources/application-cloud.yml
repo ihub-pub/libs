@@ -8,8 +8,6 @@ spring:
       enabled: always
 ihub:
   application:
-    name: service
     prefix: ihub
-    port: 8080
     gateway-server-addr: localhost
 management.endpoints.web.exposure.include: "*"
