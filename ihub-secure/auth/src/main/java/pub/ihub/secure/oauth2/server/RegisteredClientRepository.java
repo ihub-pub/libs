@@ -14,44 +14,32 @@
  * limitations under the License.
  */
 
-package pub.ihub.secure.auth;
+package pub.ihub.secure.oauth2.server;
 
 
-import pub.ihub.secure.oauth2.server.RegisteredClientRepository;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 /**
- * 动态注册客户端存储库
+ * OAuth 2.0 RegisteredClient存储库
  *
- * @author liheng
+ * @author henry
  */
-public interface RegisterClientRepository extends RegisteredClientRepository {
+public interface RegisteredClientRepository {
 
 	/**
-	 * 注册注册客户端
-	 *
-	 * @param registeredClient 注册客户端
-	 * @return 注册结果
-	 */
-	boolean register(@NotNull RegisteredClient registeredClient);
-
-	/**
-	 * 通过ID注销
+	 * 获取注册客户端
 	 *
 	 * @param id ID
-	 * @return 注销结果
+	 * @return 客户端
 	 */
-	boolean logoutById(@NotBlank String id);
+	RegisteredClient findById(String id);
 
 	/**
-	 * 通过客户端ID注销
+	 * 获取注册客户端
 	 *
 	 * @param clientId 客户端ID
-	 * @return 注销结果
+	 * @return 客户端
 	 */
-	boolean logoutByClientId(@NotBlank String clientId);
+	RegisteredClient findByClientId(String clientId);
 
 }

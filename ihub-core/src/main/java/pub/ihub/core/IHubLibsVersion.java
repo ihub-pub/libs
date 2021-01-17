@@ -22,6 +22,7 @@ import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.CodeSource;
+import java.util.Objects;
 import java.util.jar.JarFile;
 
 import static java.util.jar.Attributes.Name.IMPLEMENTATION_VERSION;
@@ -33,6 +34,9 @@ import static java.util.jar.Attributes.Name.IMPLEMENTATION_VERSION;
  * @see org.springframework.boot.SpringBootVersion
  */
 public final class IHubLibsVersion {
+
+	// TODO
+	public static final long SERIAL_VERSION_UID = Objects.requireNonNullElse(getVersion(), "dev").hashCode();
 
 	public static String getVersion() {
 		return determineVersion();

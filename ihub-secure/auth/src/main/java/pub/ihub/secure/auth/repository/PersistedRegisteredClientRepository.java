@@ -16,9 +16,9 @@
 
 package pub.ihub.secure.auth.repository;
 
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.validation.annotation.Validated;
 import pub.ihub.secure.auth.RegisterClientRepository;
+import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 
 /**
  * 动态注册客户端存储库（持久化）
