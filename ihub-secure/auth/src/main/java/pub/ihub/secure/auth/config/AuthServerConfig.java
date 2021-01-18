@@ -28,11 +28,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
-import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.auth.repository.DynamicRegisteredClientRepository;
 import pub.ihub.secure.auth.repository.PersistedRegisteredClientRepository;
 import pub.ihub.secure.crypto.CryptoKeySource;
@@ -40,12 +38,19 @@ import pub.ihub.secure.crypto.StaticKeyGeneratingCryptoKeySource;
 import pub.ihub.secure.oauth2.server.InMemoryRegisteredClientRepository;
 import pub.ihub.secure.oauth2.server.RegisteredClientRepository;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
+import pub.ihub.secure.oauth2.server.config.ClientSettings;
 import pub.ihub.secure.oauth2.server.config.ProviderSettings;
+import pub.ihub.secure.oauth2.server.config.TokenSettings;
 
-import java.util.UUID;
-
+import static cn.hutool.core.collection.CollUtil.newHashSet;
+import static cn.hutool.core.lang.UUID.randomUUID;
 import static org.springframework.boot.autoconfigure.security.SecurityProperties.BASIC_AUTH_ORDER;
 import static org.springframework.security.config.Customizer.withDefaults;
+import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
+import static org.springframework.security.oauth2.core.AuthorizationGrantType.CLIENT_CREDENTIALS;
+import static org.springframework.security.oauth2.core.AuthorizationGrantType.REFRESH_TOKEN;
+import static org.springframework.security.oauth2.core.ClientAuthenticationMethod.BASIC;
+import static org.springframework.security.oauth2.core.oidc.OidcScopes.OPENID;
 
 /**
  * 授权服务配置
@@ -59,35 +64,21 @@ public class AuthServerConfig {
 
 	@Bean
 	public RegisteredClientRepository registeredClientRepository() {
-		RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
-			.clientId("messaging-client")
-			.clientSecret("secret")
-			.clientAuthenticationMethod(ClientAuthenticationMethod.BASIC)
-			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-			.authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-			.authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-			.redirectUri("http://localhost:8080/login/oauth2/code/messaging-client-oidc")
-			.redirectUri("http://localhost:8080/authorized")
-			.scope(OidcScopes.OPENID)
-			.scope("message.read")
-			.scope("message.write")
-			.clientSettings(clientSettings -> clientSettings.requireUserConsent(true))
+		RegisteredClient registeredClient = ObjectBuilder.builder(RegisteredClient::new)
+			.set(RegisteredClient::setId, randomUUID().toString())
+			.set(RegisteredClient::setClientId, "messaging-client")
+			.set(RegisteredClient::setClientSecret, "secret")
+			.set(RegisteredClient::setClientAuthenticationMethods, newHashSet(BASIC))
+			.set(RegisteredClient::setAuthorizationGrantTypes,
+				newHashSet(AUTHORIZATION_CODE, REFRESH_TOKEN, CLIENT_CREDENTIALS))
+			.set(RegisteredClient::setRedirectUris, newHashSet(
+				"http://localhost:8080/login/oauth2/code/messaging-client-oidc",
+				"http://localhost:8080/authorized"))
+			.set(RegisteredClient::setScopes, newHashSet(OPENID, "message.read", "message.write"))
+			.set(RegisteredClient::setClientSettings, new ClientSettings())
+			.set(RegisteredClient::setTokenSettings, new TokenSettings())
+			.setSub(RegisteredClient::getClientSettings, ClientSettings::requireUserConsent, true)
 			.build();
-//		ObjectBuilder.builder(RegisteredClient::new)
-//			.set(RegisteredClient::setId, cn.hutool.core.lang.UUID.randomUUID().toString())
-//			.set(RegisteredClient::setClientId,"messaging-client")
-//			.set(RegisteredClient::setClientSecret,"secret")
-//			.set(RegisteredClient::setClientAuthenticationMethods, HashSet::new, Set::add,ClientAuthenticationMethod.BASIC)
-//			.set(RegisteredClient::setAuthorizationGrantTypes, HashSet::new, Set::add,AuthorizationGrantType.AUTHORIZATION_CODE)
-//			.add(RegisteredClient::getAuthorizationGrantTypes,Set::add,AuthorizationGrantType.REFRESH_TOKEN)
-//			.add(RegisteredClient::getAuthorizationGrantTypes,Set::add,AuthorizationGrantType.CLIENT_CREDENTIALS)
-//			.set(RegisteredClient::setRedirectUris,HashSet::new, Set::add,"http://localhost:8080/login/oauth2/code/messaging-client-oidc")
-//			.add(RegisteredClient::getRedirectUris, Set::add,"http://localhost:8080/authorized")
-//			.set(RegisteredClient::setScopes, HashSet::new, Set::add,OidcScopes.OPENID)
-//			.add(RegisteredClient::getScopes,Set::add,"message.read")
-//			.add(RegisteredClient::getScopes,Set::add,"message.write")
-//			.build();
-//		registeredClient.getClientSettings().requireUserConsent(true);
 		return new InMemoryRegisteredClientRepository(registeredClient);
 	}
 

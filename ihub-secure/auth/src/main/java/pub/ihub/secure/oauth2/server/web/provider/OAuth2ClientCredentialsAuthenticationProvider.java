@@ -26,6 +26,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.jwt.Jwt;
+import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.oauth2.jwt.JwtEncoder;
 import org.springframework.util.CollectionUtils;
 import pub.ihub.secure.oauth2.server.OAuth2Authorization;
@@ -84,7 +85,7 @@ public class OAuth2ClientCredentialsAuthenticationProvider implements Authentica
 
 		OAuth2Authorization authorization = OAuth2Authorization.withRegisteredClient(registeredClient)
 			.principalName(clientPrincipal.getName())
-			.tokens(OAuth2Tokens.builder().accessToken(accessToken).build())
+			.tokens(ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::addToken, accessToken).build())
 			.attribute(OAuth2Authorization.ACCESS_TOKEN_ATTRIBUTES, jwt)
 			.build();
 		this.authorizationService.save(authorization);

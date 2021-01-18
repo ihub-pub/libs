@@ -16,10 +16,13 @@
 
 package pub.ihub.secure.oauth2.server;
 
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.extra.validation.ValidationUtil;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.util.Assert;
+import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 import pub.ihub.secure.oauth2.server.token.OAuth2Tokens;
 
@@ -27,6 +30,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
@@ -135,11 +139,8 @@ public class OAuth2Authorization implements Serializable {
 			authorization.registeredClientId = this.registeredClientId;
 			authorization.principalName = this.principalName;
 			if (this.tokens == null) {
-				OAuth2Tokens.Builder builder = OAuth2Tokens.builder();
-				if (this.accessToken != null) {
-					builder.accessToken(this.accessToken);
-				}
-				this.tokens = builder.build();
+				tokens = ObjectBuilder.builder(OAuth2Tokens::new)
+					.set(Objects::nonNull, OAuth2Tokens::addToken, accessToken).build();
 			}
 			authorization.tokens = this.tokens;
 			authorization.attributes = Collections.unmodifiableMap(this.attributes);

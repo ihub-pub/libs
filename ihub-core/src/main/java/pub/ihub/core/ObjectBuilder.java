@@ -16,14 +16,17 @@
 
 package pub.ihub.core;
 
+import cn.hutool.core.map.MapUtil;
 import lombok.SneakyThrows;
 import org.springframework.core.convert.converter.Converter;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -194,26 +197,94 @@ public class ObjectBuilder<T> {
 	}
 
 	/**
-	 * 集合对象赋值
+	 * 对象操作
 	 *
-	 * @param condition   条件
-	 * @param setter      赋值方法
-	 * @param supplier    原始集合
-	 * @param accumulator 累加方法
-	 * @param value       值
-	 * @param <I>         集合类型
-	 * @param <V>         值类型
+	 * @param setter 操作方法
 	 * @return 对象构建器
 	 */
-	public <I extends Iterable<V>, V> ObjectBuilder<T> set(boolean condition, BiConsumer<T, I> setter, Supplier<I> supplier,
-														   BiConsumer<I, V> accumulator, V value) {
-		if (condition) {
-			I collection = supplier.get();
-			accumulator.accept(collection, value);
-			setter.accept(object, collection);
-		}
+	public ObjectBuilder<T> set(Consumer<T> setter) {
+		setter.accept(object);
 		return this;
 	}
+
+	/**
+	 * 给子对象赋值（内部条件）
+	 *
+	 * @param getter 获取属性方法
+	 * @param map    赋值映射
+	 * @param <S>    属性类型
+	 * @param <V>    值类型
+	 * @return 对象构建器
+	 */
+	public <S, V> ObjectBuilder<T> setSub(Function<T, S> getter, Map<BiConsumer<S, V>, V> map) {
+		map.forEach((BiConsumer<S, V> setter, V value) -> setter.accept(getter.apply(object), value));
+		return this;
+	}
+
+	/**
+	 * 给子对象赋值（内部条件）
+	 *
+	 * @param getter 获取属性方法
+	 * @param setter 赋值方法
+	 * @param value  值
+	 * @param <S>    属性类型
+	 * @param <V>    值类型
+	 * @return 对象构建器
+	 */
+	public <S, V> ObjectBuilder<T> setSub(Function<T, S> getter, BiConsumer<S, V> setter, V value) {
+		return setSub(getter, MapUtil.of(setter, value));
+	}
+
+	/**
+	 * 给子对象赋值（内部条件）
+	 *
+	 * @param condition 条件
+	 * @param getter    获取属性方法
+	 * @param setter    赋值方法
+	 * @param value     值
+	 * @param <S>       属性类型
+	 * @param <V>       值类型
+	 * @return 对象构建器
+	 */
+	public <S, V> ObjectBuilder<T> setSub(boolean condition, Function<T, S> getter, BiConsumer<S, V> setter, V value) {
+		if (condition) {
+			return setSub(getter, setter, value);
+		} else {
+			return this;
+		}
+	}
+
+	/**
+	 * 给子对象赋值（内部条件）
+	 *
+	 * @param predicate 判断条件
+	 * @param getter    获取属性方法
+	 * @param setter    赋值方法
+	 * @param value     值
+	 * @param <S>       属性类型
+	 * @param <V>       值类型
+	 * @return 对象构建器
+	 */
+	public <S, V> ObjectBuilder<T> setSub(Predicate<V> predicate, Function<T, S> getter, BiConsumer<S, V> setter, V value) {
+		return setSub(predicate.test(value), getter, setter, value);
+	}
+
+	/**
+	 * 子对象操作
+	 *
+	 * @param getter 获取属性方法
+	 * @param setter 操作方法
+	 * @param <S>    属性类型
+	 * @return 对象构建器
+	 */
+	public <S> ObjectBuilder<T> setSub(Function<T, S> getter, Consumer<S> setter) {
+		setter.accept(getter.apply(object));
+		return this;
+	}
+
+	//</editor-fold>
+
+	//<editor-fold desc="集合对象添加值">
 
 	/**
 	 * 集合对象赋值
@@ -226,9 +297,38 @@ public class ObjectBuilder<T> {
 	 * @param <V>         值类型
 	 * @return 对象构建器
 	 */
-	public <I extends Iterable<V>, V> ObjectBuilder<T> set(BiConsumer<T, I> setter, Supplier<I> supplier,
-														   BiConsumer<I, V> accumulator, V value) {
-		return set(true, setter, supplier, accumulator, value);
+	@SafeVarargs
+	public final <I extends Iterable<V>, V> ObjectBuilder<T> set(BiConsumer<T, I> setter, Supplier<I> supplier,
+																 BiConsumer<I, V> accumulator, V... value) {
+		if (null != value) {
+			I collection = supplier.get();
+			for (V v : value) {
+				accumulator.accept(collection, v);
+			}
+			setter.accept(object, collection);
+		}
+		return this;
+	}
+
+	/**
+	 * 集合对象赋值
+	 *
+	 * @param condition   条件
+	 * @param setter      赋值方法
+	 * @param supplier    原始集合
+	 * @param accumulator 累加方法
+	 * @param value       值
+	 * @param <I>         集合类型
+	 * @param <V>         值类型
+	 * @return 对象构建器
+	 */
+	public <I extends Iterable<V>, V> ObjectBuilder<T> set(boolean condition, BiConsumer<T, I> setter,
+														   Supplier<I> supplier, BiConsumer<I, V> accumulator, V value) {
+		if (condition) {
+			return set(setter, supplier, accumulator, value);
+		} else {
+			return this;
+		}
 	}
 
 	/**
@@ -249,25 +349,18 @@ public class ObjectBuilder<T> {
 		return set(predicate.test(value), setter, supplier, accumulator, value);
 	}
 
-	//</editor-fold>
-
-	//<editor-fold desc="集合对象添加值">
-
 	/**
 	 * 集合对象添加值
 	 *
-	 * @param condition   条件
-	 * @param getter      原始集合
-	 * @param accumulator 累加方法
-	 * @param value       值
-	 * @param <C>         集合类型
-	 * @param <V>         值类型
+	 * @param getter     原始集合
+	 * @param collection 集合
+	 * @param <C>        集合类型
+	 * @param <V>        值类型
 	 * @return 对象构建器
 	 */
-	public <C extends Collection<V>, V> ObjectBuilder<T> add(boolean condition, Function<T, C> getter,
-															 BiConsumer<C, V> accumulator, V value) {
-		if (condition) {
-			accumulator.accept(getter.apply(object), value);
+	public final <C extends Collection<V>, V> ObjectBuilder<T> add(Function<T, C> getter, C collection) {
+		if (null != collection) {
+			getter.apply(object).addAll(collection);
 		}
 		return this;
 	}
@@ -275,31 +368,50 @@ public class ObjectBuilder<T> {
 	/**
 	 * 集合对象添加值
 	 *
-	 * @param getter      原始集合
-	 * @param accumulator 累加方法
-	 * @param value       值
-	 * @param <C>         集合类型
-	 * @param <V>         值类型
+	 * @param getter 原始集合
+	 * @param value  值
+	 * @param <C>    集合类型
+	 * @param <V>    值类型
 	 * @return 对象构建器
 	 */
-	public <C extends Collection<V>, V> ObjectBuilder<T> add(Function<T, C> getter, BiConsumer<C, V> accumulator, V value) {
-		return add(true, getter, accumulator, value);
+	@SafeVarargs
+	public final <C extends Collection<V>, V> ObjectBuilder<T> add(Function<T, C> getter, V... value) {
+		if (null != value) {
+			getter.apply(object).addAll(Arrays.asList(value));
+		}
+		return this;
 	}
 
 	/**
 	 * 集合对象添加值
 	 *
-	 * @param predicate   判断条件
-	 * @param getter      原始集合
-	 * @param accumulator 累加方法
-	 * @param value       值
-	 * @param <C>         集合类型
-	 * @param <V>         值类型
+	 * @param condition 条件
+	 * @param getter    原始集合
+	 * @param value     值
+	 * @param <C>       集合类型
+	 * @param <V>       值类型
 	 * @return 对象构建器
 	 */
-	public <C extends Collection<V>, V> ObjectBuilder<T> add(Predicate<V> predicate, Function<T, C> getter,
-															 BiConsumer<C, V> accumulator, V value) {
-		return add(predicate.test(value), getter, accumulator, value);
+	public <C extends Collection<V>, V> ObjectBuilder<T> add(boolean condition, Function<T, C> getter, V value) {
+		if (condition) {
+			return add(getter, value);
+		} else {
+			return this;
+		}
+	}
+
+	/**
+	 * 集合对象添加值
+	 *
+	 * @param predicate 判断条件
+	 * @param getter    原始集合
+	 * @param value     值
+	 * @param <C>       集合类型
+	 * @param <V>       值类型
+	 * @return 对象构建器
+	 */
+	public <C extends Collection<V>, V> ObjectBuilder<T> add(Predicate<V> predicate, Function<T, C> getter, V value) {
+		return add(predicate.test(value), getter, value);
 	}
 
 	//</editor-fold>
@@ -351,6 +463,23 @@ public class ObjectBuilder<T> {
 	 */
 	public <K, V> ObjectBuilder<T> put(Function<T, Map<K, V>> getter, K key, V value) {
 		return put(true, getter, key, value);
+	}
+
+	/**
+	 * 集合对象添加值
+	 *
+	 * @param condition 条件
+	 * @param getter    原始集合
+	 * @param map       集合
+	 * @param <K>       键值类型
+	 * @param <V>       值类型
+	 * @return 对象构建器
+	 */
+	public <K, V> ObjectBuilder<T> putAll(boolean condition, Function<T, Map<K, V>> getter, Map<K, V> map) {
+		if (condition) {
+			getter.apply(object).putAll(map);
+		}
+		return this;
 	}
 
 	//</editor-fold>

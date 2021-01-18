@@ -45,6 +45,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.UriComponentsBuilder;
+import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.oauth2.server.OAuth2Authorization;
 import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.RegisteredClientRepository;
@@ -193,7 +194,7 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 			OAuth2AuthorizationCode authorizationCode = new OAuth2AuthorizationCode(
 				this.codeGenerator.generateKey(), issuedAt, expiresAt);
 			OAuth2Authorization authorization = builder
-				.tokens(OAuth2Tokens.builder().token(authorizationCode).build())
+				.tokens(ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::addToken, authorizationCode).build())
 				.attribute(OAuth2Authorization.AUTHORIZED_SCOPES, authorizationRequest.getScopes())
 				.build();
 			this.authorizationService.save(authorization);
@@ -244,7 +245,7 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 		OAuth2AuthorizationCode authorizationCode = new OAuth2AuthorizationCode(
 			this.codeGenerator.generateKey(), issuedAt, expiresAt);
 		OAuth2Authorization authorization = OAuth2Authorization.from(userConsentRequestContext.getAuthorization())
-			.tokens(OAuth2Tokens.builder().token(authorizationCode).build())
+			.tokens(ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::addToken, authorizationCode).build())
 			.attributes(attrs -> {
 				attrs.remove(OAuth2Authorization.STATE);
 				attrs.put(OAuth2Authorization.AUTHORIZED_SCOPES, userConsentRequestContext.getScopes());

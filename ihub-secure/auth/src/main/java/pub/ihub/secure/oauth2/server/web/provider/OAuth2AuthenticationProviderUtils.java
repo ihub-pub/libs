@@ -22,6 +22,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
+import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.oauth2.server.OAuth2Authorization;
 import pub.ihub.secure.oauth2.server.token.OAuth2AuthorizationCode;
 import pub.ihub.secure.oauth2.server.token.OAuth2TokenMetadata;
@@ -49,20 +50,18 @@ final class OAuth2AuthenticationProviderUtils {
 	static <T extends AbstractOAuth2Token> OAuth2Authorization invalidate(
 		OAuth2Authorization authorization, T token) {
 
-		OAuth2Tokens.Builder builder = OAuth2Tokens.from(authorization.getTokens())
-			.token(token, OAuth2TokenMetadata.builder().invalidated().build());
+		OAuth2TokenMetadata metadata = ObjectBuilder.builder(OAuth2TokenMetadata::new)
+			.put(OAuth2TokenMetadata::getMetadata, OAuth2TokenMetadata.INVALIDATED, true).build();
+		OAuth2Tokens.Builder builder = OAuth2Tokens.from(authorization.getTokens()).token(token, metadata);
 
 		if (OAuth2RefreshToken.class.isAssignableFrom(token.getClass())) {
 			builder.token(
-				authorization.getTokens().getAccessToken(),
-				OAuth2TokenMetadata.builder().invalidated().build());
+				authorization.getTokens().getAccessToken(), metadata);
 			OAuth2AuthorizationCode authorizationCode =
 				authorization.getTokens().getToken(OAuth2AuthorizationCode.class);
 			if (authorizationCode != null &&
 				!authorization.getTokens().getTokenMetadata(authorizationCode).isInvalidated()) {
-				builder.token(
-					authorizationCode,
-					OAuth2TokenMetadata.builder().invalidated().build());
+				builder.token(authorizationCode, metadata);
 			}
 		}
 
