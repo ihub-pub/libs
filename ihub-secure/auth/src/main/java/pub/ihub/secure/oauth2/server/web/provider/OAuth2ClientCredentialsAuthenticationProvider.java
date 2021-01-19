@@ -85,7 +85,7 @@ public class OAuth2ClientCredentialsAuthenticationProvider implements Authentica
 
 		OAuth2Authorization authorization = OAuth2Authorization.withRegisteredClient(registeredClient)
 			.principalName(clientPrincipal.getName())
-			.tokens(ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::addToken, accessToken).build())
+			.tokens(ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::accessToken, accessToken).build())
 			.attribute(OAuth2Authorization.ACCESS_TOKEN_ATTRIBUTES, jwt)
 			.build();
 		this.authorizationService.save(authorization);

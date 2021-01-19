@@ -17,7 +17,6 @@
 package pub.ihub.secure.oauth2.server.web.filter;
 
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
@@ -31,7 +30,6 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames2;
 import org.springframework.security.oauth2.core.http.converter.OAuth2ErrorHttpMessageConverter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.util.Assert;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -43,6 +41,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static cn.hutool.core.lang.Assert.notBlank;
+import static cn.hutool.core.lang.Assert.notNull;
+import static org.springframework.http.HttpMethod.POST;
 
 /**
  * OAuth 2.0令牌吊销终结点的Filter
@@ -67,11 +69,9 @@ public class OAuth2TokenRevocationEndpointFilter extends OncePerRequestFilter {
 
 	public OAuth2TokenRevocationEndpointFilter(AuthenticationManager authenticationManager,
 											   String tokenRevocationEndpointUri) {
-		Assert.notNull(authenticationManager, "authenticationManager cannot be null");
-		Assert.hasText(tokenRevocationEndpointUri, "tokenRevocationEndpointUri cannot be empty");
-		this.authenticationManager = authenticationManager;
+		this.authenticationManager = notNull(authenticationManager, "认证管理器不能为空！");
 		this.tokenRevocationEndpointMatcher = new AntPathRequestMatcher(
-			tokenRevocationEndpointUri, HttpMethod.POST.name());
+			notBlank(tokenRevocationEndpointUri, "请求匹配策略不能为空！"), POST.name());
 	}
 
 	@Override

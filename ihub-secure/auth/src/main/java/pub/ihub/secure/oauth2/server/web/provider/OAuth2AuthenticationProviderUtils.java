@@ -52,21 +52,22 @@ final class OAuth2AuthenticationProviderUtils {
 
 		OAuth2TokenMetadata metadata = ObjectBuilder.builder(OAuth2TokenMetadata::new)
 			.put(OAuth2TokenMetadata::getMetadata, OAuth2TokenMetadata.INVALIDATED, true).build();
-		OAuth2Tokens.Builder builder = OAuth2Tokens.from(authorization.getTokens()).token(token, metadata);
+		OAuth2Tokens tokens = ObjectBuilder.clone(authorization.getTokens()).build();
+		tokens.token(token, metadata);
 
 		if (OAuth2RefreshToken.class.isAssignableFrom(token.getClass())) {
-			builder.token(
+			tokens.token(
 				authorization.getTokens().getAccessToken(), metadata);
 			OAuth2AuthorizationCode authorizationCode =
 				authorization.getTokens().getToken(OAuth2AuthorizationCode.class);
 			if (authorizationCode != null &&
 				!authorization.getTokens().getTokenMetadata(authorizationCode).isInvalidated()) {
-				builder.token(authorizationCode, metadata);
+				tokens.token(authorizationCode, metadata);
 			}
 		}
 
 		return OAuth2Authorization.from(authorization)
-			.tokens(builder.build())
+			.tokens(tokens)
 			.build();
 	}
 

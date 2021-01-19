@@ -27,6 +27,7 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.security.oauth2.jwt.Jwt;
+import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.oauth2.jwt.JwtEncoder;
 import pub.ihub.secure.oauth2.server.OAuth2Authorization;
 import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
@@ -118,7 +119,8 @@ public class OAuth2RefreshTokenAuthenticationProvider implements AuthenticationP
 		}
 
 		authorization = OAuth2Authorization.from(authorization)
-			.tokens(OAuth2Tokens.from(authorization.getTokens()).accessToken(accessToken).refreshToken(refreshToken).build())
+			.tokens(ObjectBuilder.clone(authorization.getTokens())
+				.set(OAuth2Tokens::accessToken, accessToken).set(OAuth2Tokens::refreshToken, refreshToken).build())
 			.attribute(OAuth2Authorization.ACCESS_TOKEN_ATTRIBUTES, jwt)
 			.build();
 		this.authorizationService.save(authorization);

@@ -31,6 +31,7 @@ import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
 import org.springframework.security.oauth2.jwt.Jwt;
+import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.oauth2.jwt.JwtEncoder;
 import org.springframework.util.StringUtils;
 import pub.ihub.secure.oauth2.server.OAuth2Authorization;
@@ -108,13 +109,13 @@ public class OAuth2AuthorizationCodeAuthenticationProvider implements Authentica
 		OAuth2AccessToken accessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
 			jwt.getTokenValue(), jwt.getIssuedAt(), jwt.getExpiresAt(), authorizedScopes);
 
-		OAuth2Tokens.Builder tokensBuilder = OAuth2Tokens.from(authorization.getTokens())
-			.accessToken(accessToken);
+		OAuth2Tokens tokens = ObjectBuilder.clone(authorization.getTokens())
+			.set(OAuth2Tokens::accessToken,accessToken).build();
 
 		OAuth2RefreshToken refreshToken = null;
 		if (registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.REFRESH_TOKEN)) {
 			refreshToken = OAuth2TokenIssuerUtil.issueRefreshToken(registeredClient.getTokenSettings().refreshTokenTimeToLive());
-			tokensBuilder.refreshToken(refreshToken);
+			tokens.refreshToken(refreshToken);
 		}
 
 		OidcIdToken idToken = null;
@@ -124,10 +125,9 @@ public class OAuth2AuthorizationCodeAuthenticationProvider implements Authentica
 				(String) authorizationRequest.getAdditionalParameters().get(OidcParameterNames.NONCE));
 			idToken = new OidcIdToken(jwtIdToken.getTokenValue(), jwtIdToken.getIssuedAt(),
 				jwtIdToken.getExpiresAt(), jwtIdToken.getClaims());
-			tokensBuilder.token(idToken);
+			tokens.token(idToken);
 		}
 
-		OAuth2Tokens tokens = tokensBuilder.build();
 		authorization = OAuth2Authorization.from(authorization)
 			.tokens(tokens)
 			.attribute(OAuth2Authorization.ACCESS_TOKEN_ATTRIBUTES, jwt)

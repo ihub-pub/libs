@@ -84,7 +84,7 @@ public class OAuth2Authorization implements Serializable {
 		Assert.notNull(authorization, "authorization cannot be null");
 		return new Builder(authorization.getRegisteredClientId())
 			.principalName(authorization.getPrincipalName())
-			.tokens(OAuth2Tokens.from(authorization.getTokens()).build())
+			.tokens(ObjectBuilder.clone(authorization.getTokens()).build())
 			.attributes(attrs -> attrs.putAll(authorization.getAttributes()));
 	}
 
@@ -140,7 +140,7 @@ public class OAuth2Authorization implements Serializable {
 			authorization.principalName = this.principalName;
 			if (this.tokens == null) {
 				tokens = ObjectBuilder.builder(OAuth2Tokens::new)
-					.set(Objects::nonNull, OAuth2Tokens::addToken, accessToken).build();
+					.set(Objects::nonNull, OAuth2Tokens::accessToken, accessToken).build();
 			}
 			authorization.tokens = this.tokens;
 			authorization.attributes = Collections.unmodifiableMap(this.attributes);

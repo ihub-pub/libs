@@ -16,6 +16,8 @@
 
 package pub.ihub.secure.oauth2.server.web.filter;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -70,6 +72,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PROTECTED;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CLIENT_ID;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.REDIRECT_URI;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.RESPONSE_TYPE;
@@ -194,7 +198,7 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 			OAuth2AuthorizationCode authorizationCode = new OAuth2AuthorizationCode(
 				this.codeGenerator.generateKey(), issuedAt, expiresAt);
 			OAuth2Authorization authorization = builder
-				.tokens(ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::addToken, authorizationCode).build())
+				.tokens(ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::token, authorizationCode).build())
 				.attribute(OAuth2Authorization.AUTHORIZED_SCOPES, authorizationRequest.getScopes())
 				.build();
 			this.authorizationService.save(authorization);
@@ -245,7 +249,7 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 		OAuth2AuthorizationCode authorizationCode = new OAuth2AuthorizationCode(
 			this.codeGenerator.generateKey(), issuedAt, expiresAt);
 		OAuth2Authorization authorization = OAuth2Authorization.from(userConsentRequestContext.getAuthorization())
-			.tokens(ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::addToken, authorizationCode).build())
+			.tokens(ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::token, authorizationCode).build())
 			.attributes(attrs -> {
 				attrs.remove(OAuth2Authorization.STATE);
 				attrs.put(OAuth2Authorization.AUTHORIZED_SCOPES, userConsentRequestContext.getScopes());
@@ -449,6 +453,7 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 			principal.isAuthenticated();
 	}
 
+	@Getter(PRIVATE)
 	private static class OAuth2AuthorizationRequestContext extends AbstractRequestContext {
 
 		private final String responseType;
@@ -469,14 +474,6 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 			return StringUtils.hasText(scope) ?
 				new HashSet<>(Arrays.asList(StringUtils.delimitedListToStringArray(scope, " "))) :
 				Collections.emptySet();
-		}
-
-		private String getResponseType() {
-			return this.responseType;
-		}
-
-		private String getRedirectUri() {
-			return this.redirectUri;
 		}
 
 		private boolean isAuthenticationRequest() {
@@ -509,6 +506,8 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 		}
 	}
 
+	@Getter(PRIVATE)
+	@Setter(PRIVATE)
 	private static class UserConsentRequestContext extends AbstractRequestContext {
 
 		private OAuth2Authorization authorization;
@@ -526,14 +525,6 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 			return !CollectionUtils.isEmpty(scope) ? new HashSet<>(scope) : Collections.emptySet();
 		}
 
-		private OAuth2Authorization getAuthorization() {
-			return this.authorization;
-		}
-
-		private void setAuthorization(OAuth2Authorization authorization) {
-			this.authorization = authorization;
-		}
-
 		@Override
 		protected String resolveRedirectUri() {
 			OAuth2AuthorizationRequest authorizationRequest = getAuthorizationRequest();
@@ -547,6 +538,8 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 		}
 	}
 
+	@Getter(PROTECTED)
+	@Setter(PROTECTED)
 	private abstract static class AbstractRequestContext {
 
 		private final String authorizationUri;
@@ -567,52 +560,8 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 			this.scopes = scopes;
 		}
 
-		protected String getAuthorizationUri() {
-			return this.authorizationUri;
-		}
-
-		protected MultiValueMap<String, String> getParameters() {
-			return this.parameters;
-		}
-
-		protected String getClientId() {
-			return this.clientId;
-		}
-
-		protected String getState() {
-			return this.state;
-		}
-
-		protected Set<String> getScopes() {
-			return this.scopes;
-		}
-
-		protected RegisteredClient getRegisteredClient() {
-			return this.registeredClient;
-		}
-
-		protected void setRegisteredClient(RegisteredClient registeredClient) {
-			this.registeredClient = registeredClient;
-		}
-
-		protected OAuth2Error getError() {
-			return this.error;
-		}
-
-		protected void setError(OAuth2Error error) {
-			this.error = error;
-		}
-
 		protected boolean hasError() {
 			return getError() != null;
-		}
-
-		protected boolean isRedirectOnError() {
-			return this.redirectOnError;
-		}
-
-		protected void setRedirectOnError(boolean redirectOnError) {
-			this.redirectOnError = redirectOnError;
 		}
 
 		protected abstract String resolveRedirectUri();

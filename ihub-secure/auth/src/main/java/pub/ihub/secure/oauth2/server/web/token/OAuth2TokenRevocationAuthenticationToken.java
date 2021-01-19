@@ -25,10 +25,13 @@ import org.springframework.util.Assert;
 
 import java.util.Collections;
 
+import static cn.hutool.core.lang.Assert.notBlank;
+import static cn.hutool.core.lang.Assert.notNull;
+import static java.util.Collections.emptyList;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
 
 /**
- * 用于OAuth 2.0令牌吊销的Authentication实现。
+ * 撤销令牌
  *
  * @author henry
  */
@@ -41,30 +44,26 @@ public class OAuth2TokenRevocationAuthenticationToken extends AbstractAuthentica
 	private final String tokenTypeHint;
 
 	public OAuth2TokenRevocationAuthenticationToken(String token,
-													Authentication clientPrincipal, @Nullable String tokenTypeHint) {
-		super(Collections.emptyList());
-		Assert.hasText(token, "token cannot be empty");
-		Assert.notNull(clientPrincipal, "clientPrincipal cannot be null");
-		this.token = token;
-		this.clientPrincipal = clientPrincipal;
+													Authentication clientPrincipal,
+													@Nullable String tokenTypeHint) {
+		super(emptyList());
+		this.token = notBlank(token, "令牌不能为空！");
+		this.clientPrincipal = notNull(clientPrincipal, "授权主体不能为空！");
 		this.tokenTypeHint = tokenTypeHint;
 	}
 
 	public OAuth2TokenRevocationAuthenticationToken(AbstractOAuth2Token revokedToken,
 													Authentication clientPrincipal) {
-		super(Collections.emptyList());
-		Assert.notNull(revokedToken, "revokedToken cannot be null");
-		Assert.notNull(clientPrincipal, "clientPrincipal cannot be null");
-		this.token = revokedToken.getTokenValue();
-		this.clientPrincipal = clientPrincipal;
+		super(emptyList());
+		this.token = notNull(revokedToken, "令牌不能为空！").getTokenValue();
+		this.clientPrincipal = notNull(clientPrincipal, "授权主体不能为空！");
 		this.tokenTypeHint = null;
-		// Indicates that the token was authenticated and revoked
 		setAuthenticated(true);
 	}
 
 	@Override
 	public Object getPrincipal() {
-		return this.clientPrincipal;
+		return clientPrincipal;
 	}
 
 	@Override

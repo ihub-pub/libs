@@ -219,18 +219,17 @@ public final class OAuth2AuthorizationServerConfigurer<B extends HttpSecurityBui
 
 		AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-		OAuth2ClientAuthenticationFilter clientAuthenticationFilter =
-			new OAuth2ClientAuthenticationFilter(
-				authenticationManager,
-				new OrRequestMatcher(this.tokenEndpointMatcher, this.tokenRevocationEndpointMatcher));
-		builder.addFilterAfter(postProcess(clientAuthenticationFilter), AbstractPreAuthenticatedProcessingFilter.class);
-
 		OAuth2AuthorizationEndpointFilter authorizationEndpointFilter =
 			new OAuth2AuthorizationEndpointFilter(
 				getRegisteredClientRepository(builder),
 				getAuthorizationService(builder),
 				providerSettings.authorizationEndpoint());
 		builder.addFilterBefore(postProcess(authorizationEndpointFilter), AbstractPreAuthenticatedProcessingFilter.class);
+
+		// OAuth2.0客户端请求提取身份认证凭证过滤器
+		builder.addFilterAfter(postProcess(new OAuth2ClientAuthenticationFilter(authenticationManager,
+			new OrRequestMatcher(tokenEndpointMatcher, tokenRevocationEndpointMatcher))
+		), AbstractPreAuthenticatedProcessingFilter.class);
 
 		OAuth2TokenEndpointFilter tokenEndpointFilter =
 			new OAuth2TokenEndpointFilter(

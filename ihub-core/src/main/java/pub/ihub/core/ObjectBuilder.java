@@ -17,6 +17,7 @@
 package pub.ihub.core;
 
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ObjectUtil;
 import lombok.SneakyThrows;
 import org.springframework.core.convert.converter.Converter;
 
@@ -77,6 +78,30 @@ public class ObjectBuilder<T> {
 	 */
 	public static <T> ObjectBuilder<T> builder(Supplier<T> supplier) {
 		return new ObjectBuilder<>(supplier.get());
+	}
+
+	/**
+	 * 获取对象构建器
+	 *
+	 * @param constructor 对象构造方法
+	 * @param parameter   对象构造方法参数
+	 * @param <T>         对象类型
+	 * @param <P>         对象构造方法参数类型
+	 * @return 对象构建器
+	 */
+	public static <T, P> ObjectBuilder<T> builder(Function<P, T> constructor, P parameter) {
+		return new ObjectBuilder<>(constructor.apply(parameter));
+	}
+
+	/**
+	 * 获取克隆对象构建器
+	 *
+	 * @param object 构建对象
+	 * @param <T>    对象类型
+	 * @return 对象构建器
+	 */
+	public static <T> ObjectBuilder<T> clone(T object) {
+		return builder(ObjectUtil.clone(object));
 	}
 
 	//<editor-fold desc="给对象赋值">

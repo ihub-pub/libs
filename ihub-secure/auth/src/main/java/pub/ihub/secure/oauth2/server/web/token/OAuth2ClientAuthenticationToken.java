@@ -23,13 +23,17 @@ import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.util.Assert;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 
-import java.util.Collections;
 import java.util.Map;
 
+import static cn.hutool.core.lang.Assert.notBlank;
+import static cn.hutool.core.lang.Assert.notNull;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.unmodifiableMap;
+import static org.springframework.security.oauth2.core.ClientAuthenticationMethod.NONE;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
 
 /**
- * 用于OAuth 2.0客户端身份验证的Authentication实现。
+ * 客户端授权令牌
  *
  * @author henry
  */
@@ -47,26 +51,21 @@ public class OAuth2ClientAuthenticationToken extends AbstractAuthenticationToken
 										   ClientAuthenticationMethod clientAuthenticationMethod,
 										   @Nullable Map<String, Object> additionalParameters) {
 		this(clientId, additionalParameters);
-		Assert.hasText(clientSecret, "clientSecret cannot be empty");
-		Assert.notNull(clientAuthenticationMethod, "clientAuthenticationMethod cannot be null");
-		this.clientSecret = clientSecret;
-		this.clientAuthenticationMethod = clientAuthenticationMethod;
+		this.clientSecret = notNull(clientSecret, "客户端密钥不能为空！");
+		this.clientAuthenticationMethod = notNull(clientAuthenticationMethod, "客户端授权方法不能为空！");
 	}
 
 	public OAuth2ClientAuthenticationToken(String clientId,
 										   @Nullable Map<String, Object> additionalParameters) {
-		super(Collections.emptyList());
-		Assert.hasText(clientId, "clientId cannot be empty");
-		this.clientId = clientId;
-		this.additionalParameters = additionalParameters != null ?
-			Collections.unmodifiableMap(additionalParameters) : null;
-		this.clientAuthenticationMethod = ClientAuthenticationMethod.NONE;
+		super(emptyList());
+		this.clientId = notBlank(clientId, "客户端ID不能为空！");
+		this.additionalParameters = additionalParameters != null ? unmodifiableMap(additionalParameters) : null;
+		this.clientAuthenticationMethod = NONE;
 	}
 
 	public OAuth2ClientAuthenticationToken(RegisteredClient registeredClient) {
-		super(Collections.emptyList());
-		Assert.notNull(registeredClient, "registeredClient cannot be null");
-		this.registeredClient = registeredClient;
+		super(emptyList());
+		this.registeredClient = notNull(registeredClient, "注册客户端不能为空！");
 		setAuthenticated(true);
 	}
 
