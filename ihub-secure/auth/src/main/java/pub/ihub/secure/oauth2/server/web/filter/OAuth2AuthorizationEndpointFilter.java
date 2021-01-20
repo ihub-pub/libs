@@ -83,7 +83,7 @@ import static pub.ihub.secure.oauth2.server.OAuth2Authorization.AUTHORIZED_SCOPE
 import static pub.ihub.secure.oauth2.server.OAuth2Authorization.STATE;
 
 /**
- * OAuth 2.0授权代码授予的Filter ，用于处理OAuth 2.0授权请求的处理
+ * OAuth2.0授权令牌认证过滤器
  * TODO 整理页面
  *
  * @author henry

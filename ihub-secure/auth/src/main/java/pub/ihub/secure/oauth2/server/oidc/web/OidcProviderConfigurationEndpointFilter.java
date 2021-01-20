@@ -22,7 +22,6 @@ import org.springframework.security.oauth2.core.oidc.http.converter.OidcProvider
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
-import pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -41,6 +40,7 @@ import static org.springframework.security.oauth2.jose.jws.SignatureAlgorithm.RS
 import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_AUTHORIZATION_ENDPOINT_URI;
 import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_JWK_SET_ENDPOINT_URI;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI;
 import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_TOKEN_ENDPOINT_URI;
 import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.ISSUER_URI;
 
@@ -51,8 +51,6 @@ import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.IS
  * @author henry
  */
 public class OidcProviderConfigurationEndpointFilter extends OncePerRequestFilter {
-
-	public static final String DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI = "/.well-known/openid-configuration";
 
 	private final RequestMatcher requestMatcher;
 	private final OidcProviderConfigurationHttpMessageConverter providerConfigurationHttpMessageConverter =

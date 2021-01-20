@@ -71,9 +71,10 @@ public final class OAuth2AuthorizationServerConfigurer<B extends HttpSecurityBui
 
 	// TODO 整理配置文件
 	public static final String ISSUER_URI = "http://auth-server:9000";
+	public static final String DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI = "/.well-known/openid-configuration";
+	public static final String DEFAULT_JWK_SET_ENDPOINT_URI = "/oauth2/jwks";
 	public static final String DEFAULT_AUTHORIZATION_ENDPOINT_URI = "/oauth2/authorize";
 	public static final String DEFAULT_TOKEN_ENDPOINT_URI = "/oauth2/token";
-	public static final String DEFAULT_JWK_SET_ENDPOINT_URI = "/oauth2/jwks";
 	public static final String DEFAULT_TOKEN_REVOCATION_ENDPOINT_URI = "/oauth2/revoke";
 
 	private final RequestMatcher authorizationEndpointMatcher = new OrRequestMatcher(
@@ -90,7 +91,7 @@ public final class OAuth2AuthorizationServerConfigurer<B extends HttpSecurityBui
 		DEFAULT_JWK_SET_ENDPOINT_URI, GET.name());
 
 	private final RequestMatcher oidcProviderConfigurationEndpointMatcher = new AntPathRequestMatcher(
-		OidcProviderConfigurationEndpointFilter.DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI, GET.name());
+		DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI, GET.name());
 
 	/**
 	 * Sets the repository of registered clients.
@@ -193,7 +194,7 @@ public final class OAuth2AuthorizationServerConfigurer<B extends HttpSecurityBui
 
 	@Override
 	public void configure(B builder) {
-		// TODO　IODC可选
+		// TODO IODC可选
 		OidcProviderConfigurationEndpointFilter oidcProviderConfigurationEndpointFilter =
 			new OidcProviderConfigurationEndpointFilter();
 		builder.addFilterBefore(postProcess(oidcProviderConfigurationEndpointFilter), AbstractPreAuthenticatedProcessingFilter.class);
@@ -201,8 +202,7 @@ public final class OAuth2AuthorizationServerConfigurer<B extends HttpSecurityBui
 		JwkSetEndpointFilter jwkSetEndpointFilter = new JwkSetEndpointFilter(getKeySource(builder), DEFAULT_JWK_SET_ENDPOINT_URI);
 		builder.addFilterBefore(postProcess(jwkSetEndpointFilter), AbstractPreAuthenticatedProcessingFilter.class);
 
-		AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
-
+		// OAuth2.0授权令牌认证过滤器
 		OAuth2AuthorizationEndpointFilter authorizationEndpointFilter =
 			new OAuth2AuthorizationEndpointFilter(
 				getRegisteredClientRepository(builder),
@@ -210,14 +210,16 @@ public final class OAuth2AuthorizationServerConfigurer<B extends HttpSecurityBui
 				DEFAULT_AUTHORIZATION_ENDPOINT_URI);
 		builder.addFilterBefore(postProcess(authorizationEndpointFilter), AbstractPreAuthenticatedProcessingFilter.class);
 
+		AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
+
 		// OAuth2.0客户端请求提取身份认证凭证过滤器
 		builder.addFilterAfter(postProcess(new OAuth2ClientAuthenticationFilter(authenticationManager,
 			new OrRequestMatcher(tokenEndpointMatcher, tokenRevocationEndpointMatcher))
 		), AbstractPreAuthenticatedProcessingFilter.class);
 
-		OAuth2TokenEndpointFilter tokenEndpointFilter =
-			new OAuth2TokenEndpointFilter(authenticationManager, DEFAULT_TOKEN_ENDPOINT_URI);
-		builder.addFilterAfter(postProcess(tokenEndpointFilter), FilterSecurityInterceptor.class);
+		// OAuth2.0令牌授予过滤器
+		builder.addFilterAfter(postProcess(new OAuth2TokenEndpointFilter(authenticationManager,
+			DEFAULT_TOKEN_ENDPOINT_URI)), FilterSecurityInterceptor.class);
 
 		// OAuth2.0令牌撤销过滤器
 		builder.addFilterAfter(postProcess(new OAuth2TokenRevocationEndpointFilter(authenticationManager,

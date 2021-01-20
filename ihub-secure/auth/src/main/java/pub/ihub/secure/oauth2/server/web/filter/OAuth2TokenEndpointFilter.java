@@ -71,11 +71,7 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterN
 import static pub.ihub.core.ObjectBuilder.builder;
 
 /**
- * OAuth 2.0令牌端点的Filter ，用于处理OAuth 2.0授权授予的处理。
- * 它将OAuth 2.0授权授予请求转换为Authentication ，然后由AuthenticationManager 。 如果身份验证成功，则AuthenticationManager返回OAuth2AccessTokenAuthenticationToken ，它在OAuth 2.0访问令牌响应中返回。 如果发生任何错误， OAuth2Error在OAuth 2.0错误响应中返回OAuth2Error 。
- * 默认情况下，此Filter在URI /oauth2/token和HttpMethod POST响应授权授予请求。
- * 可以通过构造函数OAuth2TokenEndpointFilter(AuthenticationManager, String)覆盖默认端点URI /oauth2/token
- * TODO 整理页面
+ * OAuth2.0令牌授予过滤器
  *
  * @author henry
  */
@@ -84,7 +80,12 @@ public class OAuth2TokenEndpointFilter extends OAuth2ManagerFilter {
 	/**
 	 * 认证凭证转换器
 	 */
-	private static Map<AuthorizationGrantType, Converter<HttpServletRequest, Authentication>> converters = new HashMap<>(3);
+	private static Map<AuthorizationGrantType, Converter<HttpServletRequest, Authentication>> converters =
+		new HashMap<>(3) {{
+			put(AUTHORIZATION_CODE, OAuth2TokenEndpointFilter::authorizationCodeConvert);
+			put(REFRESH_TOKEN, OAuth2TokenEndpointFilter::refreshTokenConvert);
+			put(CLIENT_CREDENTIALS, OAuth2TokenEndpointFilter::clientCredentialsConvert);
+		}};
 	/**
 	 * 认证消息转换器
 	 */
@@ -93,9 +94,6 @@ public class OAuth2TokenEndpointFilter extends OAuth2ManagerFilter {
 
 	public OAuth2TokenEndpointFilter(AuthenticationManager authenticationManager, String tokenEndpointUri) {
 		super(authenticationManager, tokenEndpointUri, OAuth2TokenEndpointFilter::convert);
-		converters.put(AUTHORIZATION_CODE, OAuth2TokenEndpointFilter::authorizationCodeConvert);
-		converters.put(REFRESH_TOKEN, OAuth2TokenEndpointFilter::refreshTokenConvert);
-		converters.put(CLIENT_CREDENTIALS, OAuth2TokenEndpointFilter::clientCredentialsConvert);
 	}
 
 	@Override
