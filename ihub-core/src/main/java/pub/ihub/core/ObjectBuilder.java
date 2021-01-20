@@ -446,6 +446,21 @@ public class ObjectBuilder<T> {
 	/**
 	 * 集合对象添加值
 	 *
+	 * @param getter 原始集合
+	 * @param key    键
+	 * @param value  值
+	 * @param <K>    键值类型
+	 * @param <V>    值类型
+	 * @return 对象构建器
+	 */
+	public <K, V> ObjectBuilder<T> put(Function<T, Map<K, V>> getter, K key, V value) {
+		getter.apply(object).put(key, value);
+		return this;
+	}
+
+	/**
+	 * 集合对象添加值
+	 *
 	 * @param condition 条件
 	 * @param getter    原始集合
 	 * @param key       键
@@ -456,7 +471,7 @@ public class ObjectBuilder<T> {
 	 */
 	public <K, V> ObjectBuilder<T> put(boolean condition, Function<T, Map<K, V>> getter, K key, V value) {
 		if (condition) {
-			getter.apply(object).put(key, value);
+			put(getter, key, value);
 		}
 		return this;
 	}
@@ -464,7 +479,7 @@ public class ObjectBuilder<T> {
 	/**
 	 * 集合对象添加值
 	 *
-	 * @param predicate 原始集合
+	 * @param predicate 判断条件
 	 * @param getter    原始集合
 	 * @param key       键
 	 * @param value     值
@@ -480,30 +495,13 @@ public class ObjectBuilder<T> {
 	 * 集合对象添加值
 	 *
 	 * @param getter 原始集合
-	 * @param key    键
-	 * @param value  值
+	 * @param map    集合
 	 * @param <K>    键值类型
 	 * @param <V>    值类型
 	 * @return 对象构建器
 	 */
-	public <K, V> ObjectBuilder<T> put(Function<T, Map<K, V>> getter, K key, V value) {
-		return put(true, getter, key, value);
-	}
-
-	/**
-	 * 集合对象添加值
-	 *
-	 * @param condition 条件
-	 * @param getter    原始集合
-	 * @param map       集合
-	 * @param <K>       键值类型
-	 * @param <V>       值类型
-	 * @return 对象构建器
-	 */
-	public <K, V> ObjectBuilder<T> putAll(boolean condition, Function<T, Map<K, V>> getter, Map<K, V> map) {
-		if (condition) {
-			getter.apply(object).putAll(map);
-		}
+	public <K, V> ObjectBuilder<T> putAll(Function<T, Map<K, V>> getter, Map<K, V> map) {
+		getter.apply(object).putAll(map);
 		return this;
 	}
 

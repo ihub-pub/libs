@@ -45,7 +45,6 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
-import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.UriComponentsBuilder;
 import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.oauth2.server.OAuth2Authorization;
@@ -55,7 +54,7 @@ import pub.ihub.secure.oauth2.server.TokenType;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 import pub.ihub.secure.oauth2.server.token.OAuth2AuthorizationCode;
 import pub.ihub.secure.oauth2.server.token.OAuth2Tokens;
-import pub.ihub.secure.oauth2.server.web.OAuth2EndpointUtils;
+import pub.ihub.secure.oauth2.server.web.OAuth2Filter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -68,6 +67,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -78,7 +78,9 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterN
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.REDIRECT_URI;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.RESPONSE_TYPE;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.SCOPE;
-import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.STATE;
+import static pub.ihub.secure.oauth2.server.OAuth2Authorization.AUTHORIZATION_REQUEST;
+import static pub.ihub.secure.oauth2.server.OAuth2Authorization.AUTHORIZED_SCOPES;
+import static pub.ihub.secure.oauth2.server.OAuth2Authorization.STATE;
 
 /**
  * OAuth 2.0授权代码授予的Filter ，用于处理OAuth 2.0授权请求的处理
@@ -86,9 +88,8 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterN
  *
  * @author henry
  */
-public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
+public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 
-	public static final String DEFAULT_AUTHORIZATION_ENDPOINT_URI = "/oauth2/authorize";
 	// TODO
 	private static final String PKCE_ERROR_URI = "https://tools.ietf.org/html/rfc7636#section-4.4.1";
 
@@ -99,11 +100,6 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 	private final StringKeyGenerator codeGenerator = new Base64StringKeyGenerator(Base64.getUrlEncoder().withoutPadding(), 96);
 	private final StringKeyGenerator stateGenerator = new Base64StringKeyGenerator(Base64.getUrlEncoder());
 	private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-
-	public OAuth2AuthorizationEndpointFilter(RegisteredClientRepository registeredClientRepository,
-											 OAuth2AuthorizationService authorizationService) {
-		this(registeredClientRepository, authorizationService, DEFAULT_AUTHORIZATION_ENDPOINT_URI);
-	}
 
 	public OAuth2AuthorizationEndpointFilter(RegisteredClientRepository registeredClientRepository,
 											 OAuth2AuthorizationService authorizationService, String authorizationEndpointUri) {
@@ -150,7 +146,7 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 		OAuth2AuthorizationRequestContext authorizationRequestContext =
 			new OAuth2AuthorizationRequestContext(
 				request.getRequestURL().toString(),
-				OAuth2EndpointUtils.getParameters(request));
+				getParameters(request));
 
 		validateAuthorizationRequest(authorizationRequestContext);
 
@@ -178,14 +174,19 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 
 		RegisteredClient registeredClient = authorizationRequestContext.getRegisteredClient();
 		OAuth2AuthorizationRequest authorizationRequest = authorizationRequestContext.buildAuthorizationRequest();
-		OAuth2Authorization.Builder builder = OAuth2Authorization.withRegisteredClient(registeredClient)
-			.principalName(principal.getName())
-			.attribute(OAuth2Authorization.AUTHORIZATION_REQUEST, authorizationRequest);
+		ObjectBuilder<OAuth2Authorization> builder = ObjectBuilder.builder(OAuth2Authorization::new)
+			.set(OAuth2Authorization::setRegisteredClientId, registeredClient.getId())
+			.set(OAuth2Authorization::setPrincipalName, principal.getName())
+			.set(OAuth2Authorization::setAttributes, new HashMap<>(2) {
+				{
+					put(AUTHORIZATION_REQUEST, authorizationRequest);
+				}
+			});
 
-		if (registeredClient.getClientSettings().requireUserConsent()) {
+		if (registeredClient.isRequireUserConsent()) {
 			String state = this.stateGenerator.generateKey();
 			OAuth2Authorization authorization = builder
-				.attribute(OAuth2Authorization.STATE, state)
+				.put(OAuth2Authorization::getAttributes, STATE, state)
 				.build();
 			this.authorizationService.save(authorization);
 
@@ -198,8 +199,9 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 			OAuth2AuthorizationCode authorizationCode = new OAuth2AuthorizationCode(
 				this.codeGenerator.generateKey(), issuedAt, expiresAt);
 			OAuth2Authorization authorization = builder
-				.tokens(ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::token, authorizationCode).build())
-				.attribute(OAuth2Authorization.AUTHORIZED_SCOPES, authorizationRequest.getScopes())
+				.set(OAuth2Authorization::setTokens,
+					ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::token, authorizationCode).build())
+				.put(OAuth2Authorization::getAttributes, AUTHORIZED_SCOPES, authorizationRequest.getScopes())
 				.build();
 			this.authorizationService.save(authorization);
 
@@ -222,7 +224,7 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 		UserConsentRequestContext userConsentRequestContext =
 			new UserConsentRequestContext(
 				request.getRequestURL().toString(),
-				OAuth2EndpointUtils.getParameters(request));
+				getParameters(request));
 
 		validateUserConsentRequest(userConsentRequestContext);
 
@@ -249,10 +251,11 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 		OAuth2AuthorizationCode authorizationCode = new OAuth2AuthorizationCode(
 			this.codeGenerator.generateKey(), issuedAt, expiresAt);
 		OAuth2Authorization authorization = OAuth2Authorization.from(userConsentRequestContext.getAuthorization())
-			.tokens(ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::token, authorizationCode).build())
-			.attributes(attrs -> {
-				attrs.remove(OAuth2Authorization.STATE);
-				attrs.put(OAuth2Authorization.AUTHORIZED_SCOPES, userConsentRequestContext.getScopes());
+			.set(OAuth2Authorization::setTokens,
+				ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::token, authorizationCode).build())
+			.setSub(OAuth2Authorization::getAttributes, attributes -> {
+				attributes.remove(STATE);
+				attributes.put(AUTHORIZED_SCOPES, userConsentRequestContext.getScopes());
 			})
 			.build();
 		this.authorizationService.save(authorization);
@@ -341,7 +344,7 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 					return;
 				}
 			}
-		} else if (registeredClient.getClientSettings().requireProofKey()) {
+		} else if (registeredClient.isRequireProofKey()) {
 			authorizationRequestContext.setError(
 				createError(OAuth2ErrorCodes.INVALID_REQUEST, PkceParameterNames.CODE_CHALLENGE, PKCE_ERROR_URI));
 			return;
@@ -361,7 +364,7 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 			return;
 		}
 		OAuth2Authorization authorization = this.authorizationService.findByToken(
-			userConsentRequestContext.getState(), new TokenType(OAuth2Authorization.STATE));
+			userConsentRequestContext.getState(), new TokenType(STATE));
 		if (authorization == null) {
 			userConsentRequestContext.setError(
 				createError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.STATE));
@@ -463,7 +466,7 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 			String authorizationUri, MultiValueMap<String, String> parameters) {
 			super(authorizationUri, parameters,
 				parameters.getFirst(CLIENT_ID),
-				parameters.getFirst(STATE),
+				parameters.getFirst(OAuth2ParameterNames.STATE),
 				extractScopes(parameters));
 			this.responseType = parameters.getFirst(RESPONSE_TYPE);
 			this.redirectUri = parameters.getFirst(REDIRECT_URI);
@@ -500,7 +503,7 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 							!e.getKey().equals(CLIENT_ID) &&
 							!e.getKey().equals(REDIRECT_URI) &&
 							!e.getKey().equals(SCOPE) &&
-							!e.getKey().equals(STATE))
+							!e.getKey().equals(OAuth2ParameterNames.STATE))
 						.forEach(e -> additionalParameters.put(e.getKey(), e.getValue().get(0))))
 				.build();
 		}
@@ -516,7 +519,7 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 			String authorizationUri, MultiValueMap<String, String> parameters) {
 			super(authorizationUri, parameters,
 				parameters.getFirst(CLIENT_ID),
-				parameters.getFirst(STATE),
+				parameters.getFirst(OAuth2ParameterNames.STATE),
 				extractScopes(parameters));
 		}
 
@@ -534,7 +537,7 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 		}
 
 		private OAuth2AuthorizationRequest getAuthorizationRequest() {
-			return getAuthorization().getAttribute(OAuth2Authorization.AUTHORIZATION_REQUEST);
+			return getAuthorization().getAttribute(AUTHORIZATION_REQUEST);
 		}
 	}
 
@@ -595,9 +598,9 @@ public class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilter {
 												  RegisteredClient registeredClient, OAuth2Authorization authorization) {
 
 			OAuth2AuthorizationRequest authorizationRequest = authorization.getAttribute(
-				OAuth2Authorization.AUTHORIZATION_REQUEST);
+				AUTHORIZATION_REQUEST);
 			String state = authorization.getAttribute(
-				OAuth2Authorization.STATE);
+				STATE);
 
 			StringBuilder builder = new StringBuilder();
 

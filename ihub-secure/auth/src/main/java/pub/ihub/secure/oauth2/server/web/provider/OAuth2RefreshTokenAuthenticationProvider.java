@@ -33,7 +33,6 @@ import pub.ihub.secure.oauth2.server.OAuth2Authorization;
 import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.TokenType;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
-import pub.ihub.secure.oauth2.server.config.TokenSettings;
 import pub.ihub.secure.oauth2.server.token.OAuth2TokenMetadata;
 import pub.ihub.secure.oauth2.server.token.OAuth2Tokens;
 import pub.ihub.secure.oauth2.server.web.token.OAuth2AccessTokenAuthenticationToken;
@@ -43,7 +42,10 @@ import pub.ihub.secure.oauth2.server.web.token.OAuth2RefreshTokenAuthenticationT
 import java.time.Instant;
 import java.util.Set;
 
+import static pub.ihub.secure.oauth2.server.OAuth2Authorization.ACCESS_TOKEN_ATTRIBUTES;
 import static pub.ihub.secure.oauth2.server.web.provider.OAuth2AuthenticationProviderUtils.getAuthenticatedClientElseThrowInvalidClient;
+import static pub.ihub.secure.oauth2.server.web.provider.OAuth2TokenIssuerUtil.issueJwtAccessToken;
+import static pub.ihub.secure.oauth2.server.web.provider.OAuth2TokenIssuerUtil.issueRefreshToken;
 
 
 /**
@@ -107,21 +109,18 @@ public class OAuth2RefreshTokenAuthenticationProvider implements AuthenticationP
 			throw new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.INVALID_GRANT));
 		}
 
-		Jwt jwt = OAuth2TokenIssuerUtil
-			.issueJwtAccessToken(this.jwtEncoder, authorization.getPrincipalName(), registeredClient.getClientId(), scopes, registeredClient.getTokenSettings().accessTokenTimeToLive());
+		Jwt jwt = issueJwtAccessToken(this.jwtEncoder, authorization.getPrincipalName(), registeredClient.getClientId(), scopes, registeredClient.getAccessTokenTimeToLive());
 		OAuth2AccessToken accessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
 			jwt.getTokenValue(), jwt.getIssuedAt(), jwt.getExpiresAt(), scopes);
 
-		TokenSettings tokenSettings = registeredClient.getTokenSettings();
-
-		if (!tokenSettings.reuseRefreshTokens()) {
-			refreshToken = OAuth2TokenIssuerUtil.issueRefreshToken(tokenSettings.refreshTokenTimeToLive());
+		if (!registeredClient.isReuseRefreshTokens()) {
+			refreshToken = issueRefreshToken(registeredClient.getRefreshTokenTimeToLive());
 		}
 
 		authorization = OAuth2Authorization.from(authorization)
-			.tokens(ObjectBuilder.clone(authorization.getTokens())
+			.set(OAuth2Authorization::setTokens, ObjectBuilder.clone(authorization.getTokens())
 				.set(OAuth2Tokens::accessToken, accessToken).set(OAuth2Tokens::refreshToken, refreshToken).build())
-			.attribute(OAuth2Authorization.ACCESS_TOKEN_ATTRIBUTES, jwt)
+			.put(OAuth2Authorization::getAttributes, ACCESS_TOKEN_ATTRIBUTES, jwt)
 			.build();
 		this.authorizationService.save(authorization);
 

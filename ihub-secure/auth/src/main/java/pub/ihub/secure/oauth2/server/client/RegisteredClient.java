@@ -21,10 +21,9 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
-import pub.ihub.secure.oauth2.server.config.ClientSettings;
-import pub.ihub.secure.oauth2.server.config.TokenSettings;
 
 import java.io.Serializable;
+import java.time.Duration;
 import java.util.Set;
 
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
@@ -47,7 +46,27 @@ public class RegisteredClient implements Serializable {
 	private Set<AuthorizationGrantType> authorizationGrantTypes;
 	private Set<String> redirectUris;
 	private Set<String> scopes;
-	private ClientSettings clientSettings;
-	private TokenSettings tokenSettings;
+
+	/**
+	 * 需要验证密钥
+	 */
+	private boolean requireProofKey = false;
+	/**
+	 * 需要用户确认授权
+	 */
+	private boolean requireUserConsent = false;
+
+	/**
+	 * 认证令牌时效（秒）
+	 */
+	private Duration accessTokenTimeToLive = Duration.ofMinutes(5);
+	/**
+	 * 重复使用刷新令牌
+	 */
+	private boolean reuseRefreshTokens = true;
+	/**
+	 * 刷新令牌时效（秒）
+	 */
+	private Duration refreshTokenTimeToLive = Duration.ofMinutes(60);
 
 }

@@ -22,7 +22,7 @@ import org.springframework.security.oauth2.core.oidc.http.converter.OidcProvider
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
-import pub.ihub.secure.oauth2.server.config.ProviderSettings;
+import pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -39,6 +39,10 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2Authorizat
 import static org.springframework.security.oauth2.core.oidc.OidcScopes.OPENID;
 import static org.springframework.security.oauth2.jose.jws.SignatureAlgorithm.RS256;
 import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_AUTHORIZATION_ENDPOINT_URI;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_JWK_SET_ENDPOINT_URI;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_TOKEN_ENDPOINT_URI;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.ISSUER_URI;
 
 /**
  * 处理OpenID提供程序配置请求的过滤器
@@ -50,13 +54,11 @@ public class OidcProviderConfigurationEndpointFilter extends OncePerRequestFilte
 
 	public static final String DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI = "/.well-known/openid-configuration";
 
-	private final ProviderSettings providerSettings;
 	private final RequestMatcher requestMatcher;
 	private final OidcProviderConfigurationHttpMessageConverter providerConfigurationHttpMessageConverter =
 		new OidcProviderConfigurationHttpMessageConverter();
 
-	public OidcProviderConfigurationEndpointFilter(ProviderSettings providerSettings) {
-		this.providerSettings = providerSettings;
+	public OidcProviderConfigurationEndpointFilter() {
 		this.requestMatcher = new AntPathRequestMatcher(DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI, GET.name());
 	}
 
@@ -69,14 +71,14 @@ public class OidcProviderConfigurationEndpointFilter extends OncePerRequestFilte
 		}
 
 		OidcProviderConfiguration providerConfiguration = OidcProviderConfiguration.builder()
-			.issuer(providerSettings.issuer())
-			.authorizationEndpoint(asUrl(providerSettings.issuer(), providerSettings.authorizationEndpoint()))
-			.tokenEndpoint(asUrl(providerSettings.issuer(), providerSettings.tokenEndpoint()))
+			.issuer(ISSUER_URI)
+			.authorizationEndpoint(asUrl(ISSUER_URI, DEFAULT_AUTHORIZATION_ENDPOINT_URI))
+			.tokenEndpoint(asUrl(ISSUER_URI, DEFAULT_TOKEN_ENDPOINT_URI))
 			// TODO: Use ClientAuthenticationMethod.CLIENT_SECRET_BASIC in Spring Security 5.5.0
 			.tokenEndpointAuthenticationMethod("client_secret_basic")
 			// TODO: Use ClientAuthenticationMethod.CLIENT_SECRET_POST in Spring Security 5.5.0
 			.tokenEndpointAuthenticationMethod("client_secret_post")
-			.jwkSetUri(asUrl(providerSettings.issuer(), providerSettings.jwkSetEndpoint()))
+			.jwkSetUri(asUrl(ISSUER_URI, DEFAULT_JWK_SET_ENDPOINT_URI))
 			.responseType(CODE.getValue())
 			.grantType(AUTHORIZATION_CODE.getValue())
 			.grantType(CLIENT_CREDENTIALS.getValue())

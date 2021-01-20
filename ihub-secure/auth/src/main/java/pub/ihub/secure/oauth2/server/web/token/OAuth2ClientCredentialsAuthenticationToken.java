@@ -39,10 +39,6 @@ public class OAuth2ClientCredentialsAuthenticationToken extends AbstractAuthenti
 	private final Authentication clientPrincipal;
 	private final Set<String> scopes;
 
-	public OAuth2ClientCredentialsAuthenticationToken(Authentication clientPrincipal) {
-		this(clientPrincipal, Collections.emptySet());
-	}
-
 	public OAuth2ClientCredentialsAuthenticationToken(Authentication clientPrincipal, Set<String> scopes) {
 		super(Collections.emptyList());
 		Assert.notNull(clientPrincipal, "clientPrincipal cannot be null");

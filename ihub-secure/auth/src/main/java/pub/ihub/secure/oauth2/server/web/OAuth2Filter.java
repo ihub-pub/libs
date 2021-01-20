@@ -16,15 +16,20 @@
 
 package pub.ihub.secure.oauth2.server.web;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static cn.hutool.core.collection.CollUtil.isEmpty;
 import static cn.hutool.core.lang.Assert.isTrue;
@@ -36,13 +41,17 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterN
 import static org.springframework.security.oauth2.core.endpoint.PkceParameterNames.CODE_VERIFIER;
 
 /**
- * OAuth 2.0协议端点的实用程序方法
+ * OAuth2过滤器
  *
- * @author henry
+ * @author liheng
  */
-public final class OAuth2EndpointUtils {
+public abstract class OAuth2Filter extends OncePerRequestFilter {
 
-	public static MultiValueMap<String, String> getParameters(HttpServletRequest request, String... checkKeys) {
+	protected AntPathRequestMatcher requestMatcher(String pattern, HttpMethod httpMethod) {
+		return new AntPathRequestMatcher(pattern, httpMethod.name());
+	}
+
+	protected static MultiValueMap<String, String> getParameters(HttpServletRequest request, String... checkKeys) {
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>(parameterMap.size());
 		parameterMap.forEach((key, values) -> {
@@ -60,12 +69,18 @@ public final class OAuth2EndpointUtils {
 		return parameters;
 	}
 
-	public static Map<String, Object> getParametersWithPkce(HttpServletRequest request, String... checkKeys) {
+	protected static Map<String, Object> getParametersWithPkce(HttpServletRequest request, String... checkKeys) {
 		if (AUTHORIZATION_CODE.getValue().equals(request.getParameter(GRANT_TYPE)) &&
 			request.getParameter(CODE) != null && request.getParameter(CODE_VERIFIER) != null) {
 			return new HashMap<>(getParameters(request, checkKeys).toSingleValueMap());
 		}
 		return empty();
+	}
+
+	protected static Map<String, Object> filterParameters(MultiValueMap<String, String> parameters, String... exceptKeys) {
+		return parameters.entrySet().stream()
+			.filter(e -> Arrays.stream(exceptKeys).noneMatch(k -> k.equals(e.getKey())))
+			.collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().get(0)));
 	}
 
 }

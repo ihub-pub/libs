@@ -49,15 +49,8 @@ import java.util.stream.Collectors;
  */
 public class JwkSetEndpointFilter extends OncePerRequestFilter {
 
-	public static final String DEFAULT_JWK_SET_ENDPOINT_URI = "/oauth2/jwks";
-
 	private final CryptoKeySource keySource;
 	private final RequestMatcher requestMatcher;
-
-	public JwkSetEndpointFilter(CryptoKeySource keySource) {
-		// TODO
-		this(keySource, DEFAULT_JWK_SET_ENDPOINT_URI);
-	}
 
 	public JwkSetEndpointFilter(CryptoKeySource keySource, String jwkSetEndpointUri) {
 		this.keySource = keySource;

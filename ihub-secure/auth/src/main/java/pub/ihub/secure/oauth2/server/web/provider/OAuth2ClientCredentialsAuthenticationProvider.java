@@ -37,11 +37,14 @@ import pub.ihub.secure.oauth2.server.web.token.OAuth2AccessTokenAuthenticationTo
 import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientAuthenticationToken;
 import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientCredentialsAuthenticationToken;
 
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static pub.ihub.secure.oauth2.server.OAuth2Authorization.ACCESS_TOKEN_ATTRIBUTES;
 import static pub.ihub.secure.oauth2.server.web.provider.OAuth2AuthenticationProviderUtils.getAuthenticatedClientElseThrowInvalidClient;
+import static pub.ihub.secure.oauth2.server.web.provider.OAuth2TokenIssuerUtil.issueJwtAccessToken;
 
 /**
  * OAuth 2.0客户端凭据授予的AuthenticationProvider实现。
@@ -78,15 +81,20 @@ public class OAuth2ClientCredentialsAuthenticationProvider implements Authentica
 			scopes = new LinkedHashSet<>(clientCredentialsAuthentication.getScopes());
 		}
 
-		Jwt jwt = OAuth2TokenIssuerUtil
-			.issueJwtAccessToken(this.jwtEncoder, clientPrincipal.getName(), registeredClient.getClientId(), scopes, registeredClient.getTokenSettings().accessTokenTimeToLive());
+		Jwt jwt = issueJwtAccessToken(this.jwtEncoder, clientPrincipal.getName(), registeredClient.getClientId(), scopes, registeredClient.getAccessTokenTimeToLive());
 		OAuth2AccessToken accessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
 			jwt.getTokenValue(), jwt.getIssuedAt(), jwt.getExpiresAt(), scopes);
 
-		OAuth2Authorization authorization = OAuth2Authorization.withRegisteredClient(registeredClient)
-			.principalName(clientPrincipal.getName())
-			.tokens(ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::accessToken, accessToken).build())
-			.attribute(OAuth2Authorization.ACCESS_TOKEN_ATTRIBUTES, jwt)
+		OAuth2Authorization authorization = ObjectBuilder.builder(OAuth2Authorization::new)
+			.set(OAuth2Authorization::setRegisteredClientId, registeredClient.getId())
+			.set(OAuth2Authorization::setPrincipalName, clientPrincipal.getName())
+			.set(OAuth2Authorization::setTokens,
+				ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::accessToken, accessToken).build())
+			.set(OAuth2Authorization::setAttributes, new HashMap<>(1) {
+				{
+					put(ACCESS_TOKEN_ATTRIBUTES, jwt);
+				}
+			})
 			.build();
 		this.authorizationService.save(authorization);
 

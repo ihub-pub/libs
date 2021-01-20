@@ -38,9 +38,6 @@ import pub.ihub.secure.crypto.StaticKeyGeneratingCryptoKeySource;
 import pub.ihub.secure.oauth2.server.InMemoryRegisteredClientRepository;
 import pub.ihub.secure.oauth2.server.RegisteredClientRepository;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
-import pub.ihub.secure.oauth2.server.config.ClientSettings;
-import pub.ihub.secure.oauth2.server.config.ProviderSettings;
-import pub.ihub.secure.oauth2.server.config.TokenSettings;
 
 import static cn.hutool.core.collection.CollUtil.newHashSet;
 import static cn.hutool.core.lang.UUID.randomUUID;
@@ -75,9 +72,7 @@ public class AuthServerConfig {
 				"http://localhost:8080/login/oauth2/code/messaging-client-oidc",
 				"http://localhost:8080/authorized"))
 			.set(RegisteredClient::setScopes, newHashSet(OPENID, "message.read", "message.write"))
-			.set(RegisteredClient::setClientSettings, new ClientSettings())
-			.set(RegisteredClient::setTokenSettings, new TokenSettings())
-			.setSub(RegisteredClient::getClientSettings, ClientSettings::requireUserConsent, true)
+			.set(RegisteredClient::setRequireUserConsent, true)
 			.build();
 		return new InMemoryRegisteredClientRepository(registeredClient);
 	}
@@ -99,11 +94,6 @@ public class AuthServerConfig {
 	@Bean
 	public CryptoKeySource keySource() {
 		return new StaticKeyGeneratingCryptoKeySource();
-	}
-
-	@Bean
-	public ProviderSettings providerSettings() {
-		return new ProviderSettings().issuer("http://auth-server:9000");
 	}
 
 	@Bean

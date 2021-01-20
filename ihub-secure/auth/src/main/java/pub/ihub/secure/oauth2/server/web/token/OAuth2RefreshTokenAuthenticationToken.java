@@ -39,10 +39,6 @@ public class OAuth2RefreshTokenAuthenticationToken extends AbstractAuthenticatio
 	private final Authentication clientPrincipal;
 	private final Set<String> scopes;
 
-	public OAuth2RefreshTokenAuthenticationToken(String refreshToken, Authentication clientPrincipal) {
-		this(refreshToken, clientPrincipal, Collections.emptySet());
-	}
-
 	public OAuth2RefreshTokenAuthenticationToken(String refreshToken, Authentication clientPrincipal,
 												 Set<String> scopes) {
 		super(Collections.emptySet());

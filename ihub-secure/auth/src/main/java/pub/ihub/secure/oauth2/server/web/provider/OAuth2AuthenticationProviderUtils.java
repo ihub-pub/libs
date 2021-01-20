@@ -66,9 +66,7 @@ final class OAuth2AuthenticationProviderUtils {
 			}
 		}
 
-		return OAuth2Authorization.from(authorization)
-			.tokens(tokens)
-			.build();
+		return OAuth2Authorization.from(authorization).set(OAuth2Authorization::setTokens, tokens).build();
 	}
 
 }

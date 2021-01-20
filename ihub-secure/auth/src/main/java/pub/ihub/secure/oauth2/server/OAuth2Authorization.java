@@ -16,23 +16,19 @@
 
 package pub.ihub.secure.oauth2.server;
 
-import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.extra.validation.ValidationUtil;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.springframework.util.Assert;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pub.ihub.core.ObjectBuilder;
-import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 import pub.ihub.secure.oauth2.server.token.OAuth2Tokens;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.function.Consumer;
 
+import static cn.hutool.core.lang.Assert.notBlank;
+import static cn.hutool.core.lang.Assert.notNull;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
 
 /**
@@ -40,13 +36,13 @@ import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
  *
  * @author henry
  */
+@NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode
 public class OAuth2Authorization implements Serializable {
 
 	public static String STATE = OAuth2Authorization.class.getName().concat(".STATE");
-	@Deprecated
-	public static String CODE = OAuth2Authorization.class.getName().concat(".CODE");
 	public static String AUTHORIZATION_REQUEST = OAuth2Authorization.class.getName().concat(".AUTHORIZATION_REQUEST");
 	public static String AUTHORIZED_SCOPES = OAuth2Authorization.class.getName().concat(".AUTHORIZED_SCOPES");
 	public static String ACCESS_TOKEN_ATTRIBUTES = OAuth2Authorization.class.getName().concat(".ACCESS_TOKEN_ATTRIBUTES");
@@ -56,96 +52,20 @@ public class OAuth2Authorization implements Serializable {
 	private String principalName;
 	private OAuth2Tokens tokens;
 
-	@Deprecated
-	private OAuth2AccessToken accessToken;
-
 	private Map<String, Object> attributes;
-
-	protected OAuth2Authorization() {
-	}
-
-	@Deprecated
-	public OAuth2AccessToken getAccessToken() {
-		return getTokens().getAccessToken();
-	}
 
 	@SuppressWarnings("unchecked")
 	public <T> T getAttribute(String name) {
-		Assert.hasText(name, "name cannot be empty");
-		return (T) this.attributes.get(name);
+		return (T) this.attributes.get(notBlank(name, "name不能为空！"));
 	}
 
-	public static Builder withRegisteredClient(RegisteredClient registeredClient) {
-		Assert.notNull(registeredClient, "registeredClient cannot be null");
-		return new Builder(registeredClient.getId());
-	}
-
-	public static Builder from(OAuth2Authorization authorization) {
-		Assert.notNull(authorization, "authorization cannot be null");
-		return new Builder(authorization.getRegisteredClientId())
-			.principalName(authorization.getPrincipalName())
-			.tokens(ObjectBuilder.clone(authorization.getTokens()).build())
-			.attributes(attrs -> attrs.putAll(authorization.getAttributes()));
-	}
-
-	public static class Builder implements Serializable {
-
-		private static final long serialVersionUID = SERIAL_VERSION_UID;
-		private String registeredClientId;
-		private String principalName;
-		private OAuth2Tokens tokens;
-
-		@Deprecated
-		private OAuth2AccessToken accessToken;
-
-		private Map<String, Object> attributes = new HashMap<>();
-
-		protected Builder(String registeredClientId) {
-			this.registeredClientId = registeredClientId;
-		}
-
-		public Builder principalName(String principalName) {
-			this.principalName = principalName;
-			return this;
-		}
-
-		public Builder tokens(OAuth2Tokens tokens) {
-			this.tokens = tokens;
-			return this;
-		}
-
-		@Deprecated
-		public Builder accessToken(OAuth2AccessToken accessToken) {
-			this.accessToken = accessToken;
-			return this;
-		}
-
-		public Builder attribute(String name, Object value) {
-			Assert.hasText(name, "name cannot be empty");
-			Assert.notNull(value, "value cannot be null");
-			this.attributes.put(name, value);
-			return this;
-		}
-
-		public Builder attributes(Consumer<Map<String, Object>> attributesConsumer) {
-			attributesConsumer.accept(this.attributes);
-			return this;
-		}
-
-		public OAuth2Authorization build() {
-			Assert.hasText(this.principalName, "principalName cannot be empty");
-
-			OAuth2Authorization authorization = new OAuth2Authorization();
-			authorization.registeredClientId = this.registeredClientId;
-			authorization.principalName = this.principalName;
-			if (this.tokens == null) {
-				tokens = ObjectBuilder.builder(OAuth2Tokens::new)
-					.set(Objects::nonNull, OAuth2Tokens::accessToken, accessToken).build();
-			}
-			authorization.tokens = this.tokens;
-			authorization.attributes = Collections.unmodifiableMap(this.attributes);
-			return authorization;
-		}
+	public static ObjectBuilder<OAuth2Authorization> from(OAuth2Authorization authorization) {
+		notNull(authorization);
+		return ObjectBuilder.builder(OAuth2Authorization::new)
+			.set(OAuth2Authorization::setRegisteredClientId, authorization.registeredClientId)
+			.set(OAuth2Authorization::setPrincipalName, authorization.principalName)
+			.set(OAuth2Authorization::setTokens, ObjectBuilder.clone(authorization.getTokens()).build())
+			.set(OAuth2Authorization::setAttributes, new HashMap<>(authorization.getAttributes()));
 	}
 
 }

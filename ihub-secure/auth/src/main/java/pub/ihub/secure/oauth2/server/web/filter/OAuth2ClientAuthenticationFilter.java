@@ -19,22 +19,19 @@ package pub.ihub.secure.oauth2.server.web.filter;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.Setter;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.server.ServletServerHttpResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
-import org.springframework.security.oauth2.core.http.converter.OAuth2ErrorHttpMessageConverter;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.filter.OncePerRequestFilter;
-import pub.ihub.secure.oauth2.server.web.OAuth2EndpointUtils;
+import pub.ihub.secure.oauth2.server.web.OAuth2ManagerFilter;
 import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientAuthenticationToken;
 
 import javax.servlet.FilterChain;
@@ -50,7 +47,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import static cn.hutool.core.lang.Assert.isTrue;
-import static cn.hutool.core.lang.Assert.notNull;
 import static cn.hutool.core.util.StrUtil.isBlankIfStr;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -68,7 +64,6 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterN
 import static org.springframework.security.oauth2.core.endpoint.PkceParameterNames.CODE_VERIFIER;
 import static org.springframework.security.web.authentication.www.BasicAuthenticationConverter.AUTHENTICATION_SCHEME_BASIC;
 import static pub.ihub.core.ObjectBuilder.builder;
-import static pub.ihub.secure.oauth2.server.web.OAuth2EndpointUtils.getParametersWithPkce;
 
 /**
  * OAuth2.0客户端授权令牌认证过滤器
@@ -76,24 +71,15 @@ import static pub.ihub.secure.oauth2.server.web.OAuth2EndpointUtils.getParameter
  * @author henry
  */
 @Setter
-public class OAuth2ClientAuthenticationFilter extends OncePerRequestFilter {
+public class OAuth2ClientAuthenticationFilter extends OAuth2ManagerFilter {
 
-	/**
-	 * 认证管理器
-	 */
-	private final AuthenticationManager authenticationManager;
-	/**
-	 * 请求匹配策略
-	 */
-	private final RequestMatcher requestMatcher;
-	/**
-	 * 异常转换器
-	 */
-	private final HttpMessageConverter<OAuth2Error> errorHttpResponseConverter = new OAuth2ErrorHttpMessageConverter();
 	/**
 	 * 认证凭证转换器
 	 */
-	private List<AuthenticationConverter> converters;
+	private static List<AuthenticationConverter> converters = Arrays.asList(
+		OAuth2ClientAuthenticationFilter::clientSecretBasicConvert,
+		OAuth2ClientAuthenticationFilter::clientSecretPostConvert,
+		OAuth2ClientAuthenticationFilter::publicClientConvert);
 	/**
 	 * 认证成功处理器
 	 */
@@ -105,14 +91,9 @@ public class OAuth2ClientAuthenticationFilter extends OncePerRequestFilter {
 
 	public OAuth2ClientAuthenticationFilter(AuthenticationManager authenticationManager,
 											RequestMatcher requestMatcher) {
-		this.authenticationManager = notNull(authenticationManager, "认证管理器不能为空！");
-		this.requestMatcher = notNull(requestMatcher, "请求匹配策略不能为空！");
-		this.converters = Arrays.asList(
-			OAuth2ClientAuthenticationFilter::clientSecretBasicConvert,
-			OAuth2ClientAuthenticationFilter::clientSecretPostConvert,
-			OAuth2ClientAuthenticationFilter::publicClientConvert);
-		this.authenticationSuccessHandler = this::onAuthenticationSuccess;
-		this.authenticationFailureHandler = this::onAuthenticationFailure;
+		super(authenticationManager, requestMatcher, OAuth2ClientAuthenticationFilter::convert);
+		authenticationSuccessHandler = this::onAuthenticationSuccess;
+		authenticationFailureHandler = this::onAuthenticationFailure;
 	}
 
 	@Override
@@ -121,8 +102,7 @@ public class OAuth2ClientAuthenticationFilter extends OncePerRequestFilter {
 		if (this.requestMatcher.matches(request)) {
 			try {
 				// 获取客户端授权令牌
-				Authentication authenticationRequest = converters.stream().map(converter -> converter.convert(request))
-					.filter(Objects::nonNull).findFirst().orElse(null);
+				Authentication authenticationRequest = authenticationConverter.convert(request);
 				if (authenticationRequest != null) {
 					Authentication authenticationResult = authenticationManager.authenticate(authenticationRequest);
 					authenticationSuccessHandler.onAuthenticationSuccess(request, response, authenticationResult);
@@ -133,6 +113,11 @@ public class OAuth2ClientAuthenticationFilter extends OncePerRequestFilter {
 			}
 		}
 		filterChain.doFilter(request, response);
+	}
+
+	private static Authentication convert(HttpServletRequest request) {
+		return converters.stream().map(converter -> converter.convert(request))
+			.filter(Objects::nonNull).findFirst().orElse(null);
 	}
 
 	/**
@@ -168,7 +153,7 @@ public class OAuth2ClientAuthenticationFilter extends OncePerRequestFilter {
 	 * @return 认证凭证
 	 */
 	private static Authentication clientSecretPostConvert(HttpServletRequest request) {
-		MultiValueMap<String, String> parameters = OAuth2EndpointUtils.getParameters(request, CLIENT_ID, CLIENT_SECRET);
+		MultiValueMap<String, String> parameters = getParameters(request, CLIENT_ID, CLIENT_SECRET);
 
 		String clientId = parameters.getFirst(CLIENT_ID);
 		if (StrUtil.isBlank(clientId)) {
@@ -213,10 +198,12 @@ public class OAuth2ClientAuthenticationFilter extends OncePerRequestFilter {
 	private void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 										 AuthenticationException failed) throws IOException {
 		clearContext();
-		OAuth2Error error = ((OAuth2AuthenticationException) failed).getError();
-		errorHttpResponseConverter.write(error, null,
-			builder(ServletServerHttpResponse::new, response).set(ServletServerHttpResponse::setStatusCode,
-				INVALID_CLIENT.equals(error.getErrorCode()) ? UNAUTHORIZED : BAD_REQUEST).build());
+		sendErrorResponse(response, ((OAuth2AuthenticationException) failed).getError());
+	}
+
+	@Override
+	protected HttpStatus getStatusCode(OAuth2Error error) {
+		return INVALID_CLIENT.equals(error.getErrorCode()) ? UNAUTHORIZED : BAD_REQUEST;
 	}
 
 }

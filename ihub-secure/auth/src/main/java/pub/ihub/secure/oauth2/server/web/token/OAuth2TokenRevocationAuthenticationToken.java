@@ -31,7 +31,7 @@ import static java.util.Collections.emptyList;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
 
 /**
- * 撤销令牌
+ * 令牌撤销
  *
  * @author henry
  */

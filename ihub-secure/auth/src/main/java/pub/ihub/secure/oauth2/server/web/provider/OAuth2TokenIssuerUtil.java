@@ -20,11 +20,11 @@ import org.springframework.security.crypto.keygen.Base64StringKeyGenerator;
 import org.springframework.security.crypto.keygen.StringKeyGenerator;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken2;
-import pub.ihub.secure.oauth2.jose.JoseHeader;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.util.StringUtils;
+import pub.ihub.secure.oauth2.jose.JoseHeader;
 import pub.ihub.secure.oauth2.jwt.JwtClaimsSet;
 import pub.ihub.secure.oauth2.jwt.JwtEncoder;
-import org.springframework.util.StringUtils;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -38,7 +38,6 @@ import static java.util.Collections.singletonList;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.SCOPE;
 import static org.springframework.security.oauth2.core.oidc.IdTokenClaimNames.AZP;
 import static org.springframework.security.oauth2.core.oidc.IdTokenClaimNames.NONCE;
-import static pub.ihub.secure.oauth2.jose.JoseHeader.withAlgorithm;
 import static org.springframework.security.oauth2.jose.jws.SignatureAlgorithm.RS256;
 import static org.springframework.security.oauth2.jwt.JwtClaimNames.AUD;
 import static org.springframework.security.oauth2.jwt.JwtClaimNames.EXP;
@@ -46,6 +45,8 @@ import static org.springframework.security.oauth2.jwt.JwtClaimNames.IAT;
 import static org.springframework.security.oauth2.jwt.JwtClaimNames.ISS;
 import static org.springframework.security.oauth2.jwt.JwtClaimNames.NBF;
 import static org.springframework.security.oauth2.jwt.JwtClaimNames.SUB;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.ISSUER_URI;
+import static pub.ihub.secure.oauth2.jose.JoseHeader.withAlgorithm;
 
 /**
  * @author henry
@@ -57,13 +58,12 @@ final class OAuth2TokenIssuerUtil {
 	static Jwt issueJwtAccessToken(JwtEncoder jwtEncoder, String subject, String audience, Set<String> scopes, Duration tokenTimeToLive) {
 		JoseHeader joseHeader = withAlgorithm(RS256);
 
-		String issuer = "http://auth-server:9000";        // TODO Allow configuration for issuer claim
 		Instant issuedAt = Instant.now();
 		Instant expiresAt = issuedAt.plus(tokenTimeToLive);
 
 		return jwtEncoder.encode(joseHeader, new JwtClaimsSet(new HashMap<>(7) {
 			{
-				put(ISS, issuer);
+				put(ISS, ISSUER_URI);
 				put(SUB, subject);
 				put(AUD, singletonList(audience));
 				put(IAT, issuedAt);
@@ -77,13 +77,12 @@ final class OAuth2TokenIssuerUtil {
 	static Jwt issueIdToken(JwtEncoder jwtEncoder, String subject, String audience, String nonce) {
 		JoseHeader joseHeader = withAlgorithm(RS256);
 
-		String issuer = "http://auth-server:9000";        // TODO Allow configuration for issuer claim
 		Instant issuedAt = Instant.now();
 		Instant expiresAt = issuedAt.plus(30, ChronoUnit.MINUTES);        // TODO Allow configuration for id token time-to-live
 
 		Map<String, Object> claims = new HashMap<>(7) {
 			{
-				put(ISS, issuer);
+				put(ISS, ISSUER_URI);
 				put(SUB, subject);
 				put(AUD, singletonList(audience));
 				put(IAT, issuedAt);
