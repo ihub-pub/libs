@@ -199,8 +199,9 @@ public final class OAuth2AuthorizationServerConfigurer<B extends HttpSecurityBui
 			new OidcProviderConfigurationEndpointFilter();
 		builder.addFilterBefore(postProcess(oidcProviderConfigurationEndpointFilter), AbstractPreAuthenticatedProcessingFilter.class);
 
-		JwkSetEndpointFilter jwkSetEndpointFilter = new JwkSetEndpointFilter(getKeySource(builder), DEFAULT_JWK_SET_ENDPOINT_URI);
-		builder.addFilterBefore(postProcess(jwkSetEndpointFilter), AbstractPreAuthenticatedProcessingFilter.class);
+		// JWK过滤器
+		builder.addFilterBefore(postProcess(new JwkSetEndpointFilter(getKeySource(builder),
+			DEFAULT_JWK_SET_ENDPOINT_URI)), AbstractPreAuthenticatedProcessingFilter.class);
 
 		// OAuth2.0授权令牌认证过滤器
 		OAuth2AuthorizationEndpointFilter authorizationEndpointFilter =

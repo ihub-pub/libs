@@ -19,6 +19,7 @@ package pub.ihub.secure.oauth2.server.token;
 import org.springframework.security.oauth2.core.AbstractOAuth2Token;
 
 import java.time.Instant;
+import java.time.temporal.TemporalAmount;
 
 /**
  * OAuth 2.0授权码
@@ -29,6 +30,11 @@ public class OAuth2AuthorizationCode extends AbstractOAuth2Token {
 
 	public OAuth2AuthorizationCode(String tokenValue, Instant issuedAt, Instant expiresAt) {
 		super(tokenValue, issuedAt, expiresAt);
+	}
+
+	public static OAuth2AuthorizationCode generateAuthCode(String tokenValue, TemporalAmount amountToAdd) {
+		Instant issuedAt = Instant.now();
+		return new OAuth2AuthorizationCode(tokenValue, issuedAt, issuedAt.plus(amountToAdd));
 	}
 
 }

@@ -18,8 +18,6 @@ package pub.ihub.secure.oauth2.server.web.filter;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,22 +25,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.keygen.Base64StringKeyGenerator;
 import org.springframework.security.crypto.keygen.StringKeyGenerator;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
-import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationResponseType;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.core.endpoint.PkceParameterNames;
-import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.util.matcher.AndRequestMatcher;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -61,26 +55,37 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
+import static cn.hutool.core.text.CharSequenceUtil.isNotBlank;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.time.temporal.ChronoUnit.MINUTES;
+import static java.util.Base64.getUrlEncoder;
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.ACCESS_DENIED;
+import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_REQUEST;
+import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_SCOPE;
+import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.UNSUPPORTED_RESPONSE_TYPE;
+import static org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationResponseType.CODE;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CLIENT_ID;
+import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.ERROR;
+import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.ERROR_DESCRIPTION;
+import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.ERROR_URI;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.REDIRECT_URI;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.RESPONSE_TYPE;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.SCOPE;
+import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.STATE;
+import static org.springframework.security.oauth2.core.endpoint.PkceParameterNames.CODE_CHALLENGE;
+import static org.springframework.security.oauth2.core.oidc.OidcScopes.OPENID;
 import static pub.ihub.secure.oauth2.server.OAuth2Authorization.AUTHORIZATION_REQUEST;
 import static pub.ihub.secure.oauth2.server.OAuth2Authorization.AUTHORIZED_SCOPES;
-import static pub.ihub.secure.oauth2.server.OAuth2Authorization.STATE;
+import static pub.ihub.secure.oauth2.server.token.OAuth2AuthorizationCode.generateAuthCode;
 
 /**
  * OAuth2.0授权令牌认证过滤器
@@ -97,56 +102,57 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 	private final OAuth2AuthorizationService authorizationService;
 	private final RequestMatcher authorizationRequestMatcher;
 	private final RequestMatcher userConsentMatcher;
-	private final StringKeyGenerator codeGenerator = new Base64StringKeyGenerator(Base64.getUrlEncoder().withoutPadding(), 96);
-	private final StringKeyGenerator stateGenerator = new Base64StringKeyGenerator(Base64.getUrlEncoder());
+	private final StringKeyGenerator codeGenerator = new Base64StringKeyGenerator(getUrlEncoder().withoutPadding(), 96);
+	private final StringKeyGenerator stateGenerator = new Base64StringKeyGenerator(getUrlEncoder());
 	private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	public OAuth2AuthorizationEndpointFilter(RegisteredClientRepository registeredClientRepository,
-											 OAuth2AuthorizationService authorizationService, String authorizationEndpointUri) {
-		Assert.notNull(registeredClientRepository, "registeredClientRepository cannot be null");
-		Assert.notNull(authorizationService, "authorizationService cannot be null");
-		Assert.hasText(authorizationEndpointUri, "authorizationEndpointUri cannot be empty");
+											 OAuth2AuthorizationService authorizationService,
+											 String authorizationEndpointUri) {
 		this.registeredClientRepository = registeredClientRepository;
 		this.authorizationService = authorizationService;
 
-		RequestMatcher authorizationRequestGetMatcher = new AntPathRequestMatcher(
-			authorizationEndpointUri, HttpMethod.GET.name());
-		RequestMatcher authorizationRequestPostMatcher = new AntPathRequestMatcher(
-			authorizationEndpointUri, HttpMethod.POST.name());
+		RequestMatcher authorizationRequestGetMatcher = requestMatcher(authorizationEndpointUri, GET);
+		RequestMatcher authorizationRequestPostMatcher = requestMatcher(authorizationEndpointUri, POST);
 		RequestMatcher openidScopeMatcher = request -> {
-			String scope = request.getParameter(OAuth2ParameterNames.SCOPE);
-			return StringUtils.hasText(scope) && scope.contains(OidcScopes.OPENID);
+			String scope = request.getParameter(SCOPE);
+			return isNotBlank(scope) && scope.contains(OPENID);
 		};
 		RequestMatcher consentActionMatcher = request ->
 			request.getParameter(UserConsentPage.CONSENT_ACTION_PARAMETER_NAME) != null;
-		this.authorizationRequestMatcher = new OrRequestMatcher(
-			authorizationRequestGetMatcher,
-			new AndRequestMatcher(
-				authorizationRequestPostMatcher, openidScopeMatcher,
+		authorizationRequestMatcher = new OrRequestMatcher(authorizationRequestGetMatcher,
+			new AndRequestMatcher(authorizationRequestPostMatcher, openidScopeMatcher,
 				new NegatedRequestMatcher(consentActionMatcher)));
-		this.userConsentMatcher = new AndRequestMatcher(
-			authorizationRequestPostMatcher, consentActionMatcher);
+		userConsentMatcher = new AndRequestMatcher(authorizationRequestPostMatcher, consentActionMatcher);
 	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 		throws ServletException, IOException {
-		if (this.authorizationRequestMatcher.matches(request)) {
-			processAuthorizationRequest(request, response, filterChain);
-		} else if (this.userConsentMatcher.matches(request)) {
-			processUserConsent(request, response);
-		} else {
-			filterChain.doFilter(request, response);
+		try {
+			if (authorizationRequestMatcher.matches(request)) {
+				processAuthorizationRequest(request, response, filterChain);
+				return;
+			} else if (userConsentMatcher.matches(request)) {
+				processUserConsent(request, response);
+				return;
+			}
+		} catch (OAuth2AuthenticationException e) {
+			OAuth2Error error = e.getError();
+			if (isNotBlank(error.getUri())) {
+				sendErrorResponse(request, response, error.getUri(), error, request.getParameter(STATE));
+			} else {
+				sendErrorResponse(response, error);
+			}
+			return;
 		}
+		filterChain.doFilter(request, response);
 	}
 
 	private void processAuthorizationRequest(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 		throws ServletException, IOException {
-
-		OAuth2AuthorizationRequestContext authorizationRequestContext =
-			new OAuth2AuthorizationRequestContext(
-				request.getRequestURL().toString(),
-				getParameters(request));
+		OAuth2AuthorizationRequestContext authorizationRequestContext = new OAuth2AuthorizationRequestContext(
+			request.getRequestURL().toString(), getParameters(request));
 
 		validateAuthorizationRequest(authorizationRequestContext);
 
@@ -186,7 +192,7 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 		if (registeredClient.isRequireUserConsent()) {
 			String state = this.stateGenerator.generateKey();
 			OAuth2Authorization authorization = builder
-				.put(OAuth2Authorization::getAttributes, STATE, state)
+				.put(OAuth2Authorization::getAttributes, OAuth2Authorization.STATE, state)
 				.build();
 			this.authorizationService.save(authorization);
 
@@ -194,10 +200,8 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 
 			UserConsentPage.displayConsent(request, response, registeredClient, authorization);
 		} else {
-			Instant issuedAt = Instant.now();
-			Instant expiresAt = issuedAt.plus(5, ChronoUnit.MINUTES);        // TODO Allow configuration for authorization code time-to-live
-			OAuth2AuthorizationCode authorizationCode = new OAuth2AuthorizationCode(
-				this.codeGenerator.generateKey(), issuedAt, expiresAt);
+			OAuth2AuthorizationCode authorizationCode = generateAuthCode(codeGenerator.generateKey(),
+				registeredClient.getAccessTokenTimeToLive());
 			OAuth2Authorization authorization = builder
 				.set(OAuth2Authorization::setTokens,
 					ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::token, authorizationCode).build())
@@ -221,10 +225,9 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 	private void processUserConsent(HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		UserConsentRequestContext userConsentRequestContext =
-			new UserConsentRequestContext(
-				request.getRequestURL().toString(),
-				getParameters(request));
+		UserConsentRequestContext userConsentRequestContext = new UserConsentRequestContext(
+			request.getRequestURL().toString(),
+			getParameters(request));
 
 		validateUserConsentRequest(userConsentRequestContext);
 
@@ -240,21 +243,19 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 
 		if (!UserConsentPage.isConsentApproved(request)) {
 			this.authorizationService.remove(userConsentRequestContext.getAuthorization());
-			OAuth2Error error = createError(OAuth2ErrorCodes.ACCESS_DENIED, OAuth2ParameterNames.CLIENT_ID);
+			OAuth2Error error = createError(ACCESS_DENIED, CLIENT_ID);
 			sendErrorResponse(request, response, userConsentRequestContext.resolveRedirectUri(),
 				error, userConsentRequestContext.getAuthorizationRequest().getState());
 			return;
 		}
 
-		Instant issuedAt = Instant.now();
-		Instant expiresAt = issuedAt.plus(5, ChronoUnit.MINUTES);        // TODO Allow configuration for authorization code time-to-live
-		OAuth2AuthorizationCode authorizationCode = new OAuth2AuthorizationCode(
-			this.codeGenerator.generateKey(), issuedAt, expiresAt);
+		OAuth2AuthorizationCode authorizationCode = generateAuthCode(codeGenerator.generateKey(),
+			userConsentRequestContext.getRegisteredClient().getAccessTokenTimeToLive());
 		OAuth2Authorization authorization = OAuth2Authorization.from(userConsentRequestContext.getAuthorization())
 			.set(OAuth2Authorization::setTokens,
 				ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::token, authorizationCode).build())
 			.setSub(OAuth2Authorization::getAttributes, attributes -> {
-				attributes.remove(STATE);
+				attributes.remove(OAuth2Authorization.STATE);
 				attributes.put(AUTHORIZED_SCOPES, userConsentRequestContext.getScopes());
 			})
 			.build();
@@ -271,20 +272,20 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 
 		// client_id (REQUIRED)
 		if (!StringUtils.hasText(authorizationRequestContext.getClientId()) ||
-			authorizationRequestContext.getParameters().get(OAuth2ParameterNames.CLIENT_ID).size() != 1) {
+			authorizationRequestContext.getParameters().get(CLIENT_ID).size() != 1) {
 			authorizationRequestContext.setError(
-				createError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.CLIENT_ID));
+				createError(INVALID_REQUEST, CLIENT_ID));
 			return;
 		}
 		RegisteredClient registeredClient = this.registeredClientRepository.findByClientId(
 			authorizationRequestContext.getClientId());
 		if (registeredClient == null) {
 			authorizationRequestContext.setError(
-				createError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.CLIENT_ID));
+				createError(INVALID_REQUEST, CLIENT_ID));
 			return;
 		} else if (!registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.AUTHORIZATION_CODE)) {
 			authorizationRequestContext.setError(
-				createError(OAuth2ErrorCodes.UNAUTHORIZED_CLIENT, OAuth2ParameterNames.CLIENT_ID));
+				createError(OAuth2ErrorCodes.UNAUTHORIZED_CLIENT, CLIENT_ID));
 			return;
 		}
 		authorizationRequestContext.setRegisteredClient(registeredClient);
@@ -292,28 +293,28 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 		// redirect_uri (OPTIONAL)
 		if (StringUtils.hasText(authorizationRequestContext.getRedirectUri())) {
 			if (!registeredClient.getRedirectUris().contains(authorizationRequestContext.getRedirectUri()) ||
-				authorizationRequestContext.getParameters().get(OAuth2ParameterNames.REDIRECT_URI).size() != 1) {
+				authorizationRequestContext.getParameters().get(REDIRECT_URI).size() != 1) {
 				authorizationRequestContext.setError(
-					createError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.REDIRECT_URI));
+					createError(INVALID_REQUEST, REDIRECT_URI));
 				return;
 			}
 		} else if (authorizationRequestContext.isAuthenticationRequest() ||        // redirect_uri is REQUIRED for OpenID Connect
 			registeredClient.getRedirectUris().size() != 1) {
 			authorizationRequestContext.setError(
-				createError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.REDIRECT_URI));
+				createError(INVALID_REQUEST, REDIRECT_URI));
 			return;
 		}
 		authorizationRequestContext.setRedirectOnError(true);
 
 		// response_type (REQUIRED)
 		if (!StringUtils.hasText(authorizationRequestContext.getResponseType()) ||
-			authorizationRequestContext.getParameters().get(OAuth2ParameterNames.RESPONSE_TYPE).size() != 1) {
+			authorizationRequestContext.getParameters().get(RESPONSE_TYPE).size() != 1) {
 			authorizationRequestContext.setError(
-				createError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.RESPONSE_TYPE));
+				createError(INVALID_REQUEST, RESPONSE_TYPE));
 			return;
-		} else if (!authorizationRequestContext.getResponseType().equals(OAuth2AuthorizationResponseType.CODE.getValue())) {
+		} else if (!authorizationRequestContext.getResponseType().equals(CODE.getValue())) {
 			authorizationRequestContext.setError(
-				createError(OAuth2ErrorCodes.UNSUPPORTED_RESPONSE_TYPE, OAuth2ParameterNames.RESPONSE_TYPE));
+				createError(UNSUPPORTED_RESPONSE_TYPE, RESPONSE_TYPE));
 			return;
 		}
 
@@ -322,16 +323,16 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 		Set<String> allowedScopes = registeredClient.getScopes();
 		if (!requestedScopes.isEmpty() && !allowedScopes.containsAll(requestedScopes)) {
 			authorizationRequestContext.setError(
-				createError(OAuth2ErrorCodes.INVALID_SCOPE, OAuth2ParameterNames.SCOPE));
+				createError(INVALID_SCOPE, SCOPE));
 			return;
 		}
 
 		// code_challenge (REQUIRED for public clients) - RFC 7636 (PKCE)
-		String codeChallenge = authorizationRequestContext.getParameters().getFirst(PkceParameterNames.CODE_CHALLENGE);
+		String codeChallenge = authorizationRequestContext.getParameters().getFirst(CODE_CHALLENGE);
 		if (StringUtils.hasText(codeChallenge)) {
-			if (authorizationRequestContext.getParameters().get(PkceParameterNames.CODE_CHALLENGE).size() != 1) {
+			if (authorizationRequestContext.getParameters().get(CODE_CHALLENGE).size() != 1) {
 				authorizationRequestContext.setError(
-					createError(OAuth2ErrorCodes.INVALID_REQUEST, PkceParameterNames.CODE_CHALLENGE, PKCE_ERROR_URI));
+					createError(INVALID_REQUEST, CODE_CHALLENGE, PKCE_ERROR_URI));
 				return;
 			}
 
@@ -340,13 +341,13 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 				if (authorizationRequestContext.getParameters().get(PkceParameterNames.CODE_CHALLENGE_METHOD).size() != 1 ||
 					(!"S256".equals(codeChallengeMethod) && !"plain".equals(codeChallengeMethod))) {
 					authorizationRequestContext.setError(
-						createError(OAuth2ErrorCodes.INVALID_REQUEST, PkceParameterNames.CODE_CHALLENGE_METHOD, PKCE_ERROR_URI));
+						createError(INVALID_REQUEST, PkceParameterNames.CODE_CHALLENGE_METHOD, PKCE_ERROR_URI));
 					return;
 				}
 			}
 		} else if (registeredClient.isRequireProofKey()) {
 			authorizationRequestContext.setError(
-				createError(OAuth2ErrorCodes.INVALID_REQUEST, PkceParameterNames.CODE_CHALLENGE, PKCE_ERROR_URI));
+				createError(INVALID_REQUEST, CODE_CHALLENGE, PKCE_ERROR_URI));
 			return;
 		}
 	}
@@ -358,16 +359,14 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 
 		// state (REQUIRED)
 		if (!StringUtils.hasText(userConsentRequestContext.getState()) ||
-			userConsentRequestContext.getParameters().get(OAuth2ParameterNames.STATE).size() != 1) {
-			userConsentRequestContext.setError(
-				createError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.STATE));
+			userConsentRequestContext.getParameters().get(STATE).size() != 1) {
+			userConsentRequestContext.setError(createError(INVALID_REQUEST, STATE));
 			return;
 		}
 		OAuth2Authorization authorization = this.authorizationService.findByToken(
-			userConsentRequestContext.getState(), new TokenType(STATE));
+			userConsentRequestContext.getState(), new TokenType(OAuth2Authorization.STATE));
 		if (authorization == null) {
-			userConsentRequestContext.setError(
-				createError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.STATE));
+			userConsentRequestContext.setError(createError(INVALID_REQUEST, STATE));
 			return;
 		}
 		userConsentRequestContext.setAuthorization(authorization);
@@ -375,23 +374,20 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 		// The 'in-flight' authorization must be associated to the current principal
 		Authentication principal = SecurityContextHolder.getContext().getAuthentication();
 		if (!isPrincipalAuthenticated(principal) || !principal.getName().equals(authorization.getPrincipalName())) {
-			userConsentRequestContext.setError(
-				createError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.STATE));
+			userConsentRequestContext.setError(createError(INVALID_REQUEST, STATE));
 			return;
 		}
 
 		// client_id (REQUIRED)
 		if (!StringUtils.hasText(userConsentRequestContext.getClientId()) ||
-			userConsentRequestContext.getParameters().get(OAuth2ParameterNames.CLIENT_ID).size() != 1) {
-			userConsentRequestContext.setError(
-				createError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.CLIENT_ID));
+			userConsentRequestContext.getParameters().get(CLIENT_ID).size() != 1) {
+			userConsentRequestContext.setError(createError(INVALID_REQUEST, CLIENT_ID));
 			return;
 		}
 		RegisteredClient registeredClient = this.registeredClientRepository.findByClientId(
 			userConsentRequestContext.getClientId());
 		if (registeredClient == null || !registeredClient.getId().equals(authorization.getRegisteredClientId())) {
-			userConsentRequestContext.setError(
-				createError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.CLIENT_ID));
+			userConsentRequestContext.setError(createError(INVALID_REQUEST, CLIENT_ID));
 			return;
 		}
 		userConsentRequestContext.setRegisteredClient(registeredClient);
@@ -401,45 +397,39 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 		Set<String> requestedScopes = userConsentRequestContext.getAuthorizationRequest().getScopes();
 		Set<String> authorizedScopes = userConsentRequestContext.getScopes();
 		if (!authorizedScopes.isEmpty() && !requestedScopes.containsAll(authorizedScopes)) {
-			userConsentRequestContext.setError(
-				createError(OAuth2ErrorCodes.INVALID_SCOPE, OAuth2ParameterNames.SCOPE));
-			return;
+			userConsentRequestContext.setError(createError(INVALID_SCOPE, SCOPE));
 		}
 	}
 
 	private void sendAuthorizationResponse(HttpServletRequest request, HttpServletResponse response,
 										   String redirectUri, OAuth2AuthorizationCode authorizationCode, String state) throws IOException {
-
-		UriComponentsBuilder uriBuilder = UriComponentsBuilder
-			.fromUriString(redirectUri)
+		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString(redirectUri)
 			.queryParam(OAuth2ParameterNames.CODE, authorizationCode.getTokenValue());
-		if (StringUtils.hasText(state)) {
-			uriBuilder.queryParam(OAuth2ParameterNames.STATE, state);
+		if (isNotBlank(state)) {
+			uriBuilder.queryParam(STATE, state);
 		}
-		this.redirectStrategy.sendRedirect(request, response, uriBuilder.toUriString());
+		redirectStrategy.sendRedirect(request, response, uriBuilder.toUriString());
 	}
 
 	private void sendErrorResponse(HttpServletRequest request, HttpServletResponse response,
 								   String redirectUri, OAuth2Error error, String state) throws IOException {
-
-		UriComponentsBuilder uriBuilder = UriComponentsBuilder
-			.fromUriString(redirectUri)
-			.queryParam(OAuth2ParameterNames.ERROR, error.getErrorCode());
-		if (StringUtils.hasText(error.getDescription())) {
-			uriBuilder.queryParam(OAuth2ParameterNames.ERROR_DESCRIPTION, error.getDescription());
+		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString(redirectUri)
+			.queryParam(ERROR, error.getErrorCode());
+		if (isNotBlank(error.getDescription())) {
+			uriBuilder.queryParam(ERROR_DESCRIPTION, error.getDescription());
 		}
-		if (StringUtils.hasText(error.getUri())) {
-			uriBuilder.queryParam(OAuth2ParameterNames.ERROR_URI, error.getUri());
+		if (isNotBlank(error.getUri())) {
+			uriBuilder.queryParam(ERROR_URI, error.getUri());
 		}
-		if (StringUtils.hasText(state)) {
-			uriBuilder.queryParam(OAuth2ParameterNames.STATE, state);
+		if (isNotBlank(state)) {
+			uriBuilder.queryParam(STATE, state);
 		}
-		this.redirectStrategy.sendRedirect(request, response, uriBuilder.toUriString());
+		redirectStrategy.sendRedirect(request, response, uriBuilder.toUriString());
 	}
 
 	private void sendErrorResponse(HttpServletResponse response, OAuth2Error error) throws IOException {
 		// TODO Send default html error response
-		response.sendError(HttpStatus.BAD_REQUEST.value(), error.toString());
+		response.sendError(BAD_REQUEST.value(), error.toString());
 	}
 
 	private static OAuth2Error createError(String errorCode, String parameterName) {
@@ -466,21 +456,14 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 			String authorizationUri, MultiValueMap<String, String> parameters) {
 			super(authorizationUri, parameters,
 				parameters.getFirst(CLIENT_ID),
-				parameters.getFirst(OAuth2ParameterNames.STATE),
+				parameters.getFirst(STATE),
 				extractScopes(parameters));
 			this.responseType = parameters.getFirst(RESPONSE_TYPE);
 			this.redirectUri = parameters.getFirst(REDIRECT_URI);
 		}
 
-		private static Set<String> extractScopes(MultiValueMap<String, String> parameters) {
-			String scope = parameters.getFirst(SCOPE);
-			return StringUtils.hasText(scope) ?
-				new HashSet<>(Arrays.asList(StringUtils.delimitedListToStringArray(scope, " "))) :
-				Collections.emptySet();
-		}
-
 		private boolean isAuthenticationRequest() {
-			return getScopes().contains(OidcScopes.OPENID);
+			return getScopes().contains(OPENID);
 		}
 
 		@Override
@@ -503,7 +486,7 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 							!e.getKey().equals(CLIENT_ID) &&
 							!e.getKey().equals(REDIRECT_URI) &&
 							!e.getKey().equals(SCOPE) &&
-							!e.getKey().equals(OAuth2ParameterNames.STATE))
+							!e.getKey().equals(STATE))
 						.forEach(e -> additionalParameters.put(e.getKey(), e.getValue().get(0))))
 				.build();
 		}
@@ -519,13 +502,8 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 			String authorizationUri, MultiValueMap<String, String> parameters) {
 			super(authorizationUri, parameters,
 				parameters.getFirst(CLIENT_ID),
-				parameters.getFirst(OAuth2ParameterNames.STATE),
+				parameters.getFirst(STATE),
 				extractScopes(parameters));
-		}
-
-		private static Set<String> extractScopes(MultiValueMap<String, String> parameters) {
-			List<String> scope = parameters.get(SCOPE);
-			return !CollectionUtils.isEmpty(scope) ? new HashSet<>(scope) : Collections.emptySet();
 		}
 
 		@Override
@@ -568,11 +546,12 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 		}
 
 		protected abstract String resolveRedirectUri();
+
 	}
 
 	private static class UserConsentPage {
 
-		private static final MediaType TEXT_HTML_UTF8 = new MediaType("text", "html", StandardCharsets.UTF_8);
+		private static final MediaType TEXT_HTML_UTF8 = new MediaType("text", "html", UTF_8);
 		private static final String CONSENT_ACTION_PARAMETER_NAME = "consent_action";
 		private static final String CONSENT_ACTION_APPROVE = "approve";
 		private static final String CONSENT_ACTION_CANCEL = "cancel";
@@ -582,7 +561,7 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 
 			String consentPage = generateConsentPage(request, registeredClient, authorization);
 			response.setContentType(TEXT_HTML_UTF8.toString());
-			response.setContentLength(consentPage.getBytes(StandardCharsets.UTF_8).length);
+			response.setContentLength(consentPage.getBytes(UTF_8).length);
 			response.getWriter().write(consentPage);
 		}
 
@@ -599,8 +578,7 @@ public class OAuth2AuthorizationEndpointFilter extends OAuth2Filter {
 
 			OAuth2AuthorizationRequest authorizationRequest = authorization.getAttribute(
 				AUTHORIZATION_REQUEST);
-			String state = authorization.getAttribute(
-				STATE);
+			String state = authorization.getAttribute(OAuth2Authorization.STATE);
 
 			StringBuilder builder = new StringBuilder();
 

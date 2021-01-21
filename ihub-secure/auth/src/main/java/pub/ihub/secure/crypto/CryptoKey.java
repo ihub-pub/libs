@@ -23,6 +23,9 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.RSASSASigner;
+import com.nimbusds.jose.jwk.ECKey;
+import com.nimbusds.jose.jwk.JWK;
+import com.nimbusds.jose.jwk.RSAKey;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,10 +37,16 @@ import java.security.Key;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.interfaces.ECPublicKey;
+import java.security.interfaces.RSAPublicKey;
 import java.util.Map;
 
 import static cn.hutool.crypto.KeyUtil.generateKey;
 import static cn.hutool.crypto.KeyUtil.generateKeyPair;
+import static com.nimbusds.jose.JWSAlgorithm.ES256;
+import static com.nimbusds.jose.JWSAlgorithm.RS256;
+import static com.nimbusds.jose.jwk.Curve.forECParameterSpec;
+import static com.nimbusds.jose.jwk.KeyUse.SIGNATURE;
 import static pub.ihub.secure.oauth2.jose.JoseHeader.MAC_HS256;
 import static pub.ihub.secure.oauth2.jose.JoseHeader.RSA_KEY_TYPE;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
@@ -134,6 +143,32 @@ public abstract class CryptoKey<K extends Key> implements Serializable {
 		public JWSSigner getJwsSigner() {
 			Assert.state(getAlgorithm().equals(RSA_KEY_TYPE), "不支持密钥类型 '" + getAlgorithm() + "'");
 			return new RSASSASigner(getKey());
+		}
+
+		public JWK toJwk() {
+			if (publicKey instanceof RSAPublicKey) {
+				return toJwk((RSAPublicKey) publicKey);
+			} else if (publicKey instanceof ECPublicKey) {
+				return toJwk((ECPublicKey) publicKey);
+			} else {
+				return null;
+			}
+		}
+
+		private JWK toJwk(RSAPublicKey publicKey) {
+			return new RSAKey.Builder(publicKey)
+				.keyUse(SIGNATURE)
+				.algorithm(RS256)
+				.keyID(getId())
+				.build();
+		}
+
+		private JWK toJwk(ECPublicKey publicKey) {
+			return new ECKey.Builder(forECParameterSpec(publicKey.getParams()), publicKey)
+				.keyUse(SIGNATURE)
+				.algorithm(ES256)
+				.keyID(getId())
+				.build();
 		}
 
 	}

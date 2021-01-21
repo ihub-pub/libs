@@ -43,30 +43,22 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static cn.hutool.core.lang.Assert.isTrue;
 import static cn.hutool.core.lang.Assert.notBlank;
 import static cn.hutool.core.lang.Assert.notNull;
-import static cn.hutool.core.text.CharSequenceUtil.isNotBlank;
-import static cn.hutool.core.text.CharSequenceUtil.split;
 import static java.time.temporal.ChronoUnit.SECONDS;
-import static java.util.stream.Collectors.toSet;
 import static org.springframework.security.core.context.SecurityContextHolder.clearContext;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.CLIENT_CREDENTIALS;
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.REFRESH_TOKEN;
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_REQUEST;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse.withToken;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CLIENT_ID;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CODE;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.GRANT_TYPE;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.REDIRECT_URI;
+import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.REFRESH_TOKEN;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.SCOPE;
 import static pub.ihub.core.ObjectBuilder.builder;
 
@@ -82,9 +74,9 @@ public class OAuth2TokenEndpointFilter extends OAuth2ManagerFilter {
 	 */
 	private static Map<AuthorizationGrantType, Converter<HttpServletRequest, Authentication>> converters =
 		new HashMap<>(3) {{
-			put(AUTHORIZATION_CODE, OAuth2TokenEndpointFilter::authorizationCodeConvert);
-			put(REFRESH_TOKEN, OAuth2TokenEndpointFilter::refreshTokenConvert);
-			put(CLIENT_CREDENTIALS, OAuth2TokenEndpointFilter::clientCredentialsConvert);
+			put(AuthorizationGrantType.AUTHORIZATION_CODE, OAuth2TokenEndpointFilter::authorizationCodeConvert);
+			put(AuthorizationGrantType.REFRESH_TOKEN, OAuth2TokenEndpointFilter::refreshTokenConvert);
+			put(AuthorizationGrantType.CLIENT_CREDENTIALS, OAuth2TokenEndpointFilter::clientCredentialsConvert);
 		}};
 	/**
 	 * 认证消息转换器
@@ -114,13 +106,8 @@ public class OAuth2TokenEndpointFilter extends OAuth2ManagerFilter {
 	}
 
 	private static Authentication convert(HttpServletRequest request) {
-		String[] grantTypes = request.getParameterValues(GRANT_TYPE);
-		isTrue(grantTypes == null || grantTypes.length != 1, exceptionSupplier());
-		String grantType = request.getParameter(GRANT_TYPE);
-		if (isNotBlank(grantType)) {
-			return null;
-		}
-		Converter<HttpServletRequest, Authentication> converter = converters.get(new AuthorizationGrantType(grantType));
+		Converter<HttpServletRequest, Authentication> converter = converters
+			.get(new AuthorizationGrantType(notBlank(getParameterValue(request, GRANT_TYPE))));
 		if (converter == null) {
 			return null;
 		}
@@ -137,20 +124,17 @@ public class OAuth2TokenEndpointFilter extends OAuth2ManagerFilter {
 	}
 
 	private static Authentication refreshTokenConvert(HttpServletRequest request) {
-		MultiValueMap<String, String> parameters = getParameters(request, OAuth2ParameterNames.REFRESH_TOKEN, SCOPE);
-		String scope = parameters.getFirst(SCOPE);
+		MultiValueMap<String, String> parameters = getParameters(request, REFRESH_TOKEN, SCOPE);
 		return new OAuth2RefreshTokenAuthenticationToken(
-			notBlank(parameters.getFirst(OAuth2ParameterNames.REFRESH_TOKEN), exceptionSupplier()),
+			notBlank(parameters.getFirst(REFRESH_TOKEN), exceptionSupplier()),
 			getContext().getAuthentication(),
-			isNotBlank(scope) ? Arrays.stream(split(scope, " ")).collect(toSet()) : Collections.emptySet());
+			extractScopes(parameters));
 	}
 
 	private static Authentication clientCredentialsConvert(HttpServletRequest request) {
-		MultiValueMap<String, String> parameters = getParameters(request, SCOPE);
-		String scope = parameters.getFirst(SCOPE);
 		return new OAuth2ClientCredentialsAuthenticationToken(
 			getContext().getAuthentication(),
-			isNotBlank(scope) ? Arrays.stream(split(scope, " ")).collect(toSet()) : Collections.emptySet());
+			extractScopes(getParameters(request, SCOPE)));
 	}
 
 	private void sendAccessTokenResponse(HttpServletResponse response,
@@ -171,12 +155,6 @@ public class OAuth2TokenEndpointFilter extends OAuth2ManagerFilter {
 			null,
 			new ServletServerHttpResponse(response)
 		);
-	}
-
-	private static void throwError(String errorCode, String parameterName) {
-		OAuth2Error error = new OAuth2Error(errorCode, "OAuth 2.0 Parameter: " + parameterName,
-			"https://tools.ietf.org/html/rfc6749#section-5.2");
-		throw new OAuth2AuthenticationException(error);
 	}
 
 	private static Supplier<OAuth2AuthenticationException> exceptionSupplier() {
