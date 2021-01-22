@@ -78,7 +78,8 @@ final class OAuth2TokenIssuerUtil {
 		JoseHeader joseHeader = withAlgorithm(RS256);
 
 		Instant issuedAt = Instant.now();
-		Instant expiresAt = issuedAt.plus(30, ChronoUnit.MINUTES);        // TODO Allow configuration for id token time-to-live
+		// TODO Allow configuration for id token time-to-live
+		Instant expiresAt = issuedAt.plus(30, ChronoUnit.MINUTES);
 
 		Map<String, Object> claims = new HashMap<>(7) {
 			{

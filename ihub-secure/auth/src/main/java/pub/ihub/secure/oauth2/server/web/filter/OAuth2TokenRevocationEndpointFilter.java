@@ -19,8 +19,6 @@ package pub.ihub.secure.oauth2.server.web.filter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.OAuth2Error;
-import org.springframework.util.MultiValueMap;
 import pub.ihub.secure.oauth2.server.web.OAuth2ManagerFilter;
 import pub.ihub.secure.oauth2.server.web.token.OAuth2TokenRevocationAuthenticationToken;
 
@@ -30,11 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static cn.hutool.core.lang.Assert.notBlank;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.security.core.context.SecurityContextHolder.clearContext;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
-import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_REQUEST;
 
 /**
  * OAuth2.0令牌撤销过滤器
@@ -70,11 +66,10 @@ public class OAuth2TokenRevocationEndpointFilter extends OAuth2ManagerFilter {
 	}
 
 	private static Authentication convert(HttpServletRequest request) {
-		MultiValueMap<String, String> parameters = getParameters(request, TOKEN, TOKEN_TYPE_HINT);
-		String token = notBlank(parameters.getFirst(TOKEN),
-			() -> new OAuth2AuthenticationException(new OAuth2Error(INVALID_REQUEST)));
-		return new OAuth2TokenRevocationAuthenticationToken(token, getContext().getAuthentication(),
-			parameters.getFirst(TOKEN_TYPE_HINT));
+		return new OAuth2TokenRevocationAuthenticationToken(
+			getParameterValue(request, TOKEN),
+			getContext().getAuthentication(),
+			getParameterValue(request, TOKEN_TYPE_HINT, true));
 	}
 
 }

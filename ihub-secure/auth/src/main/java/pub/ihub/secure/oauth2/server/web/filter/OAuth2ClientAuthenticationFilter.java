@@ -43,11 +43,10 @@ import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-import static cn.hutool.core.lang.Assert.isTrue;
-import static cn.hutool.core.util.StrUtil.isBlankIfStr;
+import static cn.hutool.core.collection.CollUtil.isEmpty;
+import static cn.hutool.core.text.CharSequenceUtil.isBlank;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -55,12 +54,15 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.security.core.context.SecurityContextHolder.clearContext;
 import static org.springframework.security.core.context.SecurityContextHolder.createEmptyContext;
 import static org.springframework.security.core.context.SecurityContextHolder.setContext;
+import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
 import static org.springframework.security.oauth2.core.ClientAuthenticationMethod.BASIC;
 import static org.springframework.security.oauth2.core.ClientAuthenticationMethod.POST;
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_CLIENT;
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_REQUEST;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CLIENT_ID;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CLIENT_SECRET;
+import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CODE;
+import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.GRANT_TYPE;
 import static org.springframework.security.oauth2.core.endpoint.PkceParameterNames.CODE_VERIFIER;
 import static org.springframework.security.web.authentication.www.BasicAuthenticationConverter.AUTHENTICATION_SCHEME_BASIC;
 import static pub.ihub.core.ObjectBuilder.builder;
@@ -140,7 +142,8 @@ public class OAuth2ClientAuthenticationFilter extends OAuth2ManagerFilter {
 			String[] credentials = new String(decodedCredentials, UTF_8).split(":", 2);
 			String clientId = URLDecoder.decode(credentials[0], UTF_8.name());
 			String clientSecret = URLDecoder.decode(credentials[1], UTF_8.name());
-			return new OAuth2ClientAuthenticationToken(clientId, clientSecret, BASIC, getParametersWithPkce(request));
+			return new OAuth2ClientAuthenticationToken(clientId, clientSecret, BASIC,
+				filterParameters(getParametersWithPkce(request)));
 		} catch (Exception ex) {
 			throw new OAuth2AuthenticationException(new OAuth2Error(INVALID_REQUEST), ex);
 		}
@@ -153,22 +156,20 @@ public class OAuth2ClientAuthenticationFilter extends OAuth2ManagerFilter {
 	 * @return 认证凭证
 	 */
 	private static Authentication clientSecretPostConvert(HttpServletRequest request) {
-		MultiValueMap<String, String> parameters = getParameters(request, CLIENT_ID, CLIENT_SECRET);
-
-		String clientId = parameters.getFirst(CLIENT_ID);
-		if (StrUtil.isBlank(clientId)) {
+		MultiValueMap<String, String> parameters = getParametersWithPkce(request, CLIENT_ID, CLIENT_SECRET);
+		if (isEmpty(parameters)) {
 			return null;
 		}
-
-		String clientSecret = parameters.getFirst(CLIENT_SECRET);
-		if (StrUtil.isBlank(clientSecret)) {
+		String clientId = getParameterValue(parameters, CLIENT_ID, true);
+		if (isBlank(clientId)) {
 			return null;
 		}
-
-		Map<String, Object> additionalParameters = getParametersWithPkce(request);
-		additionalParameters.remove(CLIENT_ID);
-		additionalParameters.remove(CLIENT_SECRET);
-		return new OAuth2ClientAuthenticationToken(clientId, clientSecret, POST, additionalParameters);
+		String clientSecret = getParameterValue(parameters, CLIENT_SECRET, true);
+		if (isBlank(clientSecret)) {
+			return null;
+		}
+		return new OAuth2ClientAuthenticationToken(clientId, clientSecret, POST,
+			filterParameters(parameters, CLIENT_ID, CLIENT_SECRET));
 	}
 
 	/**
@@ -178,16 +179,12 @@ public class OAuth2ClientAuthenticationFilter extends OAuth2ManagerFilter {
 	 * @return 认证凭证
 	 */
 	private static Authentication publicClientConvert(HttpServletRequest request) {
-		Map<String, Object> parameters = getParametersWithPkce(request, CLIENT_ID, CODE_VERIFIER);
-		if (CollUtil.isEmpty(parameters)) {
+		MultiValueMap<String, String> parameters = getParametersWithPkce(request, CODE_VERIFIER);
+		if (isEmpty(parameters)) {
 			return null;
 		}
-
-		Object clientId = parameters.get(CLIENT_ID);
-		isTrue(!isBlankIfStr(clientId), () -> new OAuth2AuthenticationException(new OAuth2Error(INVALID_REQUEST)));
-		parameters.remove(CLIENT_ID);
-
-		return new OAuth2ClientAuthenticationToken(clientId.toString(), parameters);
+		return new OAuth2ClientAuthenticationToken(getParameterValue(parameters, CLIENT_ID),
+			filterParameters(parameters, CLIENT_ID));
 	}
 
 	private void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -204,6 +201,14 @@ public class OAuth2ClientAuthenticationFilter extends OAuth2ManagerFilter {
 	@Override
 	protected HttpStatus getStatusCode(OAuth2Error error) {
 		return INVALID_CLIENT.equals(error.getErrorCode()) ? UNAUTHORIZED : BAD_REQUEST;
+	}
+
+	private static MultiValueMap<String, String> getParametersWithPkce(HttpServletRequest request, String... checkKeys) {
+		if (AUTHORIZATION_CODE.getValue().equals(request.getParameter(GRANT_TYPE)) &&
+			request.getParameter(CODE) != null && request.getParameter(CODE_VERIFIER) != null) {
+			return getParameters(request, checkKeys);
+		}
+		return null;
 	}
 
 }

@@ -26,10 +26,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse.Builder;
-import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
 import org.springframework.util.MultiValueMap;
 import pub.ihub.secure.oauth2.server.web.OAuth2ManagerFilter;
@@ -45,14 +43,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
-import static cn.hutool.core.lang.Assert.notBlank;
 import static cn.hutool.core.lang.Assert.notNull;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.springframework.security.core.context.SecurityContextHolder.clearContext;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
-import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_REQUEST;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse.withToken;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CLIENT_ID;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CODE;
@@ -98,7 +93,7 @@ public class OAuth2TokenEndpointFilter extends OAuth2ManagerFilter {
 
 		try {
 			sendAccessTokenResponse(response, (OAuth2AccessTokenAuthenticationToken) authenticationManager
-				.authenticate(notNull(authenticationConverter.convert(request), exceptionSupplier())));
+				.authenticate(notNull(authenticationConverter.convert(request), exceptionSupplier(GRANT_TYPE))));
 		} catch (OAuth2AuthenticationException ex) {
 			clearContext();
 			sendErrorResponse(response, ex.getError());
@@ -107,7 +102,7 @@ public class OAuth2TokenEndpointFilter extends OAuth2ManagerFilter {
 
 	private static Authentication convert(HttpServletRequest request) {
 		Converter<HttpServletRequest, Authentication> converter = converters
-			.get(new AuthorizationGrantType(notBlank(getParameterValue(request, GRANT_TYPE))));
+			.get(new AuthorizationGrantType(getParameterValue(request, GRANT_TYPE)));
 		if (converter == null) {
 			return null;
 		}
@@ -115,18 +110,18 @@ public class OAuth2TokenEndpointFilter extends OAuth2ManagerFilter {
 	}
 
 	private static Authentication authorizationCodeConvert(HttpServletRequest request) {
-		MultiValueMap<String, String> parameters = getParameters(request, CODE, REDIRECT_URI);
+		MultiValueMap<String, String> parameters = getParameters(request);
 		return new OAuth2AuthorizationCodeAuthenticationToken(
-			notBlank(parameters.getFirst(CODE), exceptionSupplier()),
+			getParameterValue(parameters, CODE),
 			getContext().getAuthentication(),
-			parameters.getFirst(REDIRECT_URI),
+			getParameterValue(parameters, REDIRECT_URI, true),
 			filterParameters(parameters, GRANT_TYPE, CLIENT_ID, CODE, REDIRECT_URI));
 	}
 
 	private static Authentication refreshTokenConvert(HttpServletRequest request) {
-		MultiValueMap<String, String> parameters = getParameters(request, REFRESH_TOKEN, SCOPE);
+		MultiValueMap<String, String> parameters = getParameters(request, SCOPE);
 		return new OAuth2RefreshTokenAuthenticationToken(
-			notBlank(parameters.getFirst(REFRESH_TOKEN), exceptionSupplier()),
+			getParameterValue(parameters, REFRESH_TOKEN),
 			getContext().getAuthentication(),
 			extractScopes(parameters));
 	}
@@ -155,10 +150,6 @@ public class OAuth2TokenEndpointFilter extends OAuth2ManagerFilter {
 			null,
 			new ServletServerHttpResponse(response)
 		);
-	}
-
-	private static Supplier<OAuth2AuthenticationException> exceptionSupplier() {
-		return () -> new OAuth2AuthenticationException(new OAuth2Error(INVALID_REQUEST));
 	}
 
 }
