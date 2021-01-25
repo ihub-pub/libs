@@ -17,7 +17,6 @@
 package pub.ihub.secure.oauth2.server.web.provider;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -26,16 +25,17 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.util.CollectionUtils;
 import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.oauth2.jwt.JwtEncoder;
-import org.springframework.util.CollectionUtils;
 import pub.ihub.secure.oauth2.server.OAuth2Authorization;
 import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 import pub.ihub.secure.oauth2.server.token.OAuth2Tokens;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2AccessTokenAuthenticationToken;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientAuthenticationToken;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientCredentialsAuthenticationToken;
+import pub.ihub.secure.oauth2.server.web.OAuth2AuthProvider;
+import pub.ihub.secure.oauth2.server.web.token.OAuth2AccessAuthToken;
+import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientAuthToken;
+import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientCredentialsToken;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -43,7 +43,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static pub.ihub.secure.oauth2.server.OAuth2Authorization.ACCESS_TOKEN_ATTRIBUTES;
-import static pub.ihub.secure.oauth2.server.web.provider.OAuth2AuthenticationProviderUtils.getAuthenticatedClientElseThrowInvalidClient;
 import static pub.ihub.secure.oauth2.server.web.provider.OAuth2TokenIssuerUtil.issueJwtAccessToken;
 
 /**
@@ -52,33 +51,30 @@ import static pub.ihub.secure.oauth2.server.web.provider.OAuth2TokenIssuerUtil.i
  * @author henry
  */
 @RequiredArgsConstructor
-public class OAuth2ClientCredentialsAuthenticationProvider implements AuthenticationProvider {
+public class OAuth2ClientCredentialsAuthenticationProvider extends OAuth2AuthProvider<OAuth2ClientCredentialsToken> {
 
 	private final OAuth2AuthorizationService authorizationService;
 	private final JwtEncoder jwtEncoder;
 
 	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		OAuth2ClientCredentialsAuthenticationToken clientCredentialsAuthentication =
-			(OAuth2ClientCredentialsAuthenticationToken) authentication;
-
-		OAuth2ClientAuthenticationToken clientPrincipal =
-			getAuthenticatedClientElseThrowInvalidClient(clientCredentialsAuthentication);
+	public Authentication auth(OAuth2ClientCredentialsToken authentication) throws AuthenticationException {
+		OAuth2ClientAuthToken clientPrincipal = authentication.getAuthenticatedClient();
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 
 		if (!registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.CLIENT_CREDENTIALS)) {
 			throw new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.UNAUTHORIZED_CLIENT));
 		}
 
-		Set<String> scopes = registeredClient.getScopes();        // Default to configured scopes
-		if (!CollectionUtils.isEmpty(clientCredentialsAuthentication.getScopes())) {
-			Set<String> unauthorizedScopes = clientCredentialsAuthentication.getScopes().stream()
+		// Default to configured scopes
+		Set<String> scopes = registeredClient.getScopes();
+		if (!CollectionUtils.isEmpty(authentication.getScopes())) {
+			Set<String> unauthorizedScopes = authentication.getScopes().stream()
 				.filter(requestedScope -> !registeredClient.getScopes().contains(requestedScope))
 				.collect(Collectors.toSet());
 			if (!CollectionUtils.isEmpty(unauthorizedScopes)) {
 				throw new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.INVALID_SCOPE));
 			}
-			scopes = new LinkedHashSet<>(clientCredentialsAuthentication.getScopes());
+			scopes = new LinkedHashSet<>(authentication.getScopes());
 		}
 
 		Jwt jwt = issueJwtAccessToken(this.jwtEncoder, clientPrincipal.getName(), registeredClient.getClientId(), scopes, registeredClient.getAccessTokenTimeToLive());
@@ -98,12 +94,7 @@ public class OAuth2ClientCredentialsAuthenticationProvider implements Authentica
 			.build();
 		this.authorizationService.save(authorization);
 
-		return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, accessToken);
-	}
-
-	@Override
-	public boolean supports(Class<?> authentication) {
-		return OAuth2ClientCredentialsAuthenticationToken.class.isAssignableFrom(authentication);
+		return new OAuth2AccessAuthToken(registeredClient, clientPrincipal, accessToken);
 	}
 
 }

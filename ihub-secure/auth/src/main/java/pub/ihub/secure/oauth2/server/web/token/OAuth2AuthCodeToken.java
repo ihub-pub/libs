@@ -18,51 +18,47 @@ package pub.ihub.secure.oauth2.server.web.token;
 
 import lombok.Getter;
 import org.springframework.lang.Nullable;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.util.Assert;
+import pub.ihub.secure.oauth2.server.web.OAuth2AuthToken;
 
-import java.util.Collections;
 import java.util.Map;
 
+import static cn.hutool.core.lang.Assert.notBlank;
+import static cn.hutool.core.lang.Assert.notNull;
+import static java.util.Collections.emptyMap;
+import static java.util.Collections.unmodifiableMap;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
 
 /**
- * 用于OAuth 2.0授权代码授予的Authentication实现。
+ * 授权码授权
  *
  * @author henry
  */
 @Getter
-public class OAuth2AuthorizationCodeAuthenticationToken extends AbstractAuthenticationToken {
+public class OAuth2AuthCodeToken extends OAuth2AuthToken {
 
 	private static final long serialVersionUID = SERIAL_VERSION_UID;
+	/**
+	 * 授权码
+	 */
 	private final String code;
-	private final Authentication clientPrincipal;
+	/**
+	 * 重定向uri
+	 */
 	private final String redirectUri;
+	/**
+	 * 附加参数
+	 */
 	private final Map<String, Object> additionalParameters;
 
-	public OAuth2AuthorizationCodeAuthenticationToken(String code, Authentication clientPrincipal,
-													  @Nullable String redirectUri, @Nullable Map<String, Object> additionalParameters) {
-		super(Collections.emptyList());
-		Assert.hasText(code, "code cannot be empty");
-		Assert.notNull(clientPrincipal, "clientPrincipal cannot be null");
-		this.code = code;
-		this.clientPrincipal = clientPrincipal;
+	public OAuth2AuthCodeToken(String code, Authentication clientPrincipal,
+							   @Nullable String redirectUri,
+							   @Nullable Map<String, Object> additionalParameters) {
+		super(notNull(clientPrincipal, "授权主体不能为空！"));
+		this.code = notBlank(code, "授权码不能为空！");
 		this.redirectUri = redirectUri;
-		this.additionalParameters = Collections.unmodifiableMap(
-			additionalParameters != null ?
-				additionalParameters :
-				Collections.emptyMap());
-	}
-
-	@Override
-	public Object getPrincipal() {
-		return this.clientPrincipal;
-	}
-
-	@Override
-	public Object getCredentials() {
-		return "";
+		this.additionalParameters = unmodifiableMap(additionalParameters != null ? additionalParameters : emptyMap());
 	}
 
 }

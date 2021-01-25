@@ -17,7 +17,6 @@
 package pub.ihub.secure.oauth2.server.web.provider;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -25,7 +24,6 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
-import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.security.oauth2.jwt.Jwt;
 import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.oauth2.jwt.JwtEncoder;
@@ -35,17 +33,17 @@ import pub.ihub.secure.oauth2.server.TokenType;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 import pub.ihub.secure.oauth2.server.token.OAuth2TokenMetadata;
 import pub.ihub.secure.oauth2.server.token.OAuth2Tokens;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2AccessTokenAuthenticationToken;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientAuthenticationToken;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2RefreshTokenAuthenticationToken;
+import pub.ihub.secure.oauth2.server.web.OAuth2AuthProvider;
+import pub.ihub.secure.oauth2.server.web.token.OAuth2AccessAuthToken;
+import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientAuthToken;
+import pub.ihub.secure.oauth2.server.web.token.OAuth2RefreshToken;
 
 import java.time.Instant;
 import java.util.Set;
 
+import static org.springframework.security.oauth2.core.OAuth2RefreshToken2.issueRefreshToken;
 import static pub.ihub.secure.oauth2.server.OAuth2Authorization.ACCESS_TOKEN_ATTRIBUTES;
-import static pub.ihub.secure.oauth2.server.web.provider.OAuth2AuthenticationProviderUtils.getAuthenticatedClientElseThrowInvalidClient;
 import static pub.ihub.secure.oauth2.server.web.provider.OAuth2TokenIssuerUtil.issueJwtAccessToken;
-import static pub.ihub.secure.oauth2.server.web.provider.OAuth2TokenIssuerUtil.issueRefreshToken;
 
 
 /**
@@ -54,22 +52,18 @@ import static pub.ihub.secure.oauth2.server.web.provider.OAuth2TokenIssuerUtil.i
  * @author henry
  */
 @RequiredArgsConstructor
-public class OAuth2RefreshTokenAuthenticationProvider implements AuthenticationProvider {
+public class OAuth2RefreshTokenAuthenticationProvider extends OAuth2AuthProvider<OAuth2RefreshToken> {
 
 	private final OAuth2AuthorizationService authorizationService;
 	private final JwtEncoder jwtEncoder;
 
 	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		OAuth2RefreshTokenAuthenticationToken refreshTokenAuthentication =
-			(OAuth2RefreshTokenAuthenticationToken) authentication;
-
-		OAuth2ClientAuthenticationToken clientPrincipal =
-			getAuthenticatedClientElseThrowInvalidClient(refreshTokenAuthentication);
+	public Authentication auth(OAuth2RefreshToken authentication) throws AuthenticationException {
+		OAuth2ClientAuthToken clientPrincipal = authentication.getAuthenticatedClient();
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 
 		OAuth2Authorization authorization = this.authorizationService.findByToken(
-			refreshTokenAuthentication.getRefreshToken(), TokenType.REFRESH_TOKEN);
+			authentication.getRefreshToken(), TokenType.REFRESH_TOKEN);
 		if (authorization == null) {
 			throw new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.INVALID_GRANT));
 		}
@@ -93,7 +87,7 @@ public class OAuth2RefreshTokenAuthenticationProvider implements AuthenticationP
 		// As per https://tools.ietf.org/html/rfc6749#section-6
 		// The requested scope MUST NOT include any scope not originally granted by the resource owner,
 		// and if omitted is treated as equal to the scope originally granted by the resource owner.
-		Set<String> scopes = refreshTokenAuthentication.getScopes();
+		Set<String> scopes = authentication.getScopes();
 		Set<String> authorizedScopes = authorization.getAttribute(OAuth2Authorization.AUTHORIZED_SCOPES);
 		if (!authorizedScopes.containsAll(scopes)) {
 			throw new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.INVALID_SCOPE));
@@ -102,7 +96,7 @@ public class OAuth2RefreshTokenAuthenticationProvider implements AuthenticationP
 			scopes = authorizedScopes;
 		}
 
-		OAuth2RefreshToken refreshToken = authorization.getTokens().getRefreshToken();
+		org.springframework.security.oauth2.core.OAuth2RefreshToken refreshToken = authorization.getTokens().getRefreshToken();
 		OAuth2TokenMetadata refreshTokenMetadata = authorization.getTokens().getTokenMetadata(refreshToken);
 
 		if (refreshTokenMetadata.isInvalidated()) {
@@ -124,13 +118,8 @@ public class OAuth2RefreshTokenAuthenticationProvider implements AuthenticationP
 			.build();
 		this.authorizationService.save(authorization);
 
-		return new OAuth2AccessTokenAuthenticationToken(
+		return new OAuth2AccessAuthToken(
 			registeredClient, clientPrincipal, accessToken, refreshToken);
-	}
-
-	@Override
-	public boolean supports(Class<?> authentication) {
-		return OAuth2RefreshTokenAuthenticationToken.class.isAssignableFrom(authentication);
 	}
 
 }

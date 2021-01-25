@@ -17,44 +17,38 @@
 package pub.ihub.secure.oauth2.server.web.token;
 
 import lombok.Getter;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.util.Assert;
+import pub.ihub.secure.oauth2.server.web.OAuth2AuthToken;
 
-import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
+import static cn.hutool.core.lang.Assert.notBlank;
+import static cn.hutool.core.lang.Assert.notNull;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
 
 /**
- * 用于OAuth 2.0客户端凭据授予的Authentication实现。
+ * 刷新授权
  *
  * @author henry
  */
 @Getter
-public class OAuth2ClientCredentialsAuthenticationToken extends AbstractAuthenticationToken {
+public class OAuth2RefreshToken extends OAuth2AuthToken {
 
 	private static final long serialVersionUID = SERIAL_VERSION_UID;
-	private final Authentication clientPrincipal;
+	/**
+	 * 刷新令牌
+	 */
+	private final String refreshToken;
+	/**
+	 * 作用域
+	 */
 	private final Set<String> scopes;
 
-	public OAuth2ClientCredentialsAuthenticationToken(Authentication clientPrincipal, Set<String> scopes) {
-		super(Collections.emptyList());
-		Assert.notNull(clientPrincipal, "clientPrincipal cannot be null");
-		Assert.notNull(scopes, "scopes cannot be null");
-		this.clientPrincipal = clientPrincipal;
-		this.scopes = Collections.unmodifiableSet(new LinkedHashSet<>(scopes));
-	}
-
-	@Override
-	public Object getPrincipal() {
-		return this.clientPrincipal;
-	}
-
-	@Override
-	public Object getCredentials() {
-		return "";
+	public OAuth2RefreshToken(String refreshToken, Authentication clientPrincipal,
+							  Set<String> scopes) {
+		super(notNull(clientPrincipal, "授权主体不能为空！"));
+		this.refreshToken = notBlank(refreshToken, "刷新令牌不能为空！");
+		this.scopes = notNull(scopes, "作用域不能为空！");
 	}
 
 }

@@ -20,7 +20,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.oauth2.core.AbstractOAuth2Token;
+import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import pub.ihub.core.ObjectBuilder;
+import pub.ihub.secure.oauth2.server.token.OAuth2AuthorizationCode;
+import pub.ihub.secure.oauth2.server.token.OAuth2TokenMetadata;
 import pub.ihub.secure.oauth2.server.token.OAuth2Tokens;
 
 import java.io.Serializable;
@@ -30,6 +34,7 @@ import java.util.Map;
 import static cn.hutool.core.lang.Assert.notBlank;
 import static cn.hutool.core.lang.Assert.notNull;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
+import static pub.ihub.secure.oauth2.server.token.OAuth2TokenMetadata.INVALIDATED;
 
 /**
  * OAuth 2.0授权的表示形式，其中包含与resource owner授予client的授权相关的状态。
@@ -66,6 +71,23 @@ public class OAuth2Authorization implements Serializable {
 			.set(OAuth2Authorization::setPrincipalName, authorization.principalName)
 			.set(OAuth2Authorization::setTokens, ObjectBuilder.clone(authorization.getTokens()).build())
 			.set(OAuth2Authorization::setAttributes, new HashMap<>(authorization.getAttributes()));
+	}
+
+	public <T extends AbstractOAuth2Token> OAuth2Authorization invalidate(T token) {
+		OAuth2TokenMetadata metadata = ObjectBuilder.builder(OAuth2TokenMetadata::new)
+			.put(OAuth2TokenMetadata::getMetadata, INVALIDATED, true).build();
+		OAuth2Tokens tokens = ObjectBuilder.clone(this.getTokens()).build();
+		tokens.token(token, metadata);
+
+		if (OAuth2RefreshToken.class.isAssignableFrom(token.getClass())) {
+			tokens.token(this.getTokens().getAccessToken(), metadata);
+			OAuth2AuthorizationCode authorizationCode = this.getTokens().getToken(OAuth2AuthorizationCode.class);
+			if (authorizationCode != null && !this.getTokens().getTokenMetadata(authorizationCode).isInvalidated()) {
+				tokens.token(authorizationCode, metadata);
+			}
+		}
+
+		return from(this).set(OAuth2Authorization::setTokens, tokens).build();
 	}
 
 }

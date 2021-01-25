@@ -18,66 +18,62 @@ package pub.ihub.secure.oauth2.server.web.token;
 
 import lombok.Getter;
 import org.springframework.lang.Nullable;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
-import org.springframework.util.Assert;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
+import pub.ihub.secure.oauth2.server.web.OAuth2AuthToken;
 
 import java.util.Collections;
 import java.util.Map;
 
+import static cn.hutool.core.lang.Assert.notNull;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
 
 /**
- * 颁发OAuth 2.0访问令牌和（可选）刷新令牌时使用的Authentication实现。
+ * 访问和刷新（可选）授权
  *
  * @author henry
  */
 @Getter
-public class OAuth2AccessTokenAuthenticationToken extends AbstractAuthenticationToken {
+public class OAuth2AccessAuthToken extends OAuth2AuthToken {
 
 	private static final long serialVersionUID = SERIAL_VERSION_UID;
+	/**
+	 * 注册客户端
+	 */
 	private final RegisteredClient registeredClient;
-	private final Authentication clientPrincipal;
+	/**
+	 * 访问令牌
+	 */
 	private final OAuth2AccessToken accessToken;
-	@Nullable
+	/**
+	 * 刷新令牌
+	 */
 	private final OAuth2RefreshToken refreshToken;
+	/**
+	 * 附加参数
+	 */
 	private final Map<String, Object> additionalParameters;
 
-	public OAuth2AccessTokenAuthenticationToken(RegisteredClient registeredClient,
-												Authentication clientPrincipal, OAuth2AccessToken accessToken) {
+	public OAuth2AccessAuthToken(RegisteredClient registeredClient,
+								 Authentication clientPrincipal, OAuth2AccessToken accessToken) {
 		this(registeredClient, clientPrincipal, accessToken, null);
 	}
 
-	public OAuth2AccessTokenAuthenticationToken(RegisteredClient registeredClient, Authentication clientPrincipal,
-												OAuth2AccessToken accessToken, @Nullable OAuth2RefreshToken refreshToken) {
+	public OAuth2AccessAuthToken(RegisteredClient registeredClient, Authentication clientPrincipal,
+								 OAuth2AccessToken accessToken, @Nullable OAuth2RefreshToken refreshToken) {
 		this(registeredClient, clientPrincipal, accessToken, refreshToken, Collections.emptyMap());
 	}
 
-	public OAuth2AccessTokenAuthenticationToken(RegisteredClient registeredClient, Authentication clientPrincipal,
-												OAuth2AccessToken accessToken, @Nullable OAuth2RefreshToken refreshToken, Map<String, Object> additionalParameters) {
-		super(Collections.emptyList());
-		Assert.notNull(registeredClient, "registeredClient cannot be null");
-		Assert.notNull(clientPrincipal, "clientPrincipal cannot be null");
-		Assert.notNull(accessToken, "accessToken cannot be null");
-		Assert.notNull(additionalParameters, "additionalParameters cannot be null");
-		this.registeredClient = registeredClient;
-		this.clientPrincipal = clientPrincipal;
-		this.accessToken = accessToken;
+	public OAuth2AccessAuthToken(RegisteredClient registeredClient, Authentication clientPrincipal,
+								 OAuth2AccessToken accessToken, @Nullable OAuth2RefreshToken refreshToken,
+								 Map<String, Object> additionalParameters) {
+		super(notNull(clientPrincipal, "授权主体不能为空！"));
+		this.registeredClient = notNull(registeredClient, "注册客户端不能为空！");
+		this.accessToken = notNull(accessToken, "访问令牌不能为空！");
 		this.refreshToken = refreshToken;
-		this.additionalParameters = additionalParameters;
-	}
-
-	@Override
-	public Object getPrincipal() {
-		return clientPrincipal;
-	}
-
-	@Override
-	public Object getCredentials() {
-		return "";
+		this.additionalParameters = notNull(additionalParameters, "附加参数不能为空！");
 	}
 
 }

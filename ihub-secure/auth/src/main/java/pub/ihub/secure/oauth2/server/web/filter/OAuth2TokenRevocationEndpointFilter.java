@@ -20,7 +20,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import pub.ihub.secure.oauth2.server.web.OAuth2ManagerFilter;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2TokenRevocationAuthenticationToken;
+import pub.ihub.secure.oauth2.server.web.token.OAuth2RevocationToken;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -66,7 +66,7 @@ public class OAuth2TokenRevocationEndpointFilter extends OAuth2ManagerFilter {
 	}
 
 	private static Authentication convert(HttpServletRequest request) {
-		return new OAuth2TokenRevocationAuthenticationToken(
+		return new OAuth2RevocationToken(
 			getParameterValue(request, TOKEN),
 			getContext().getAuthentication(),
 			getParameterValue(request, TOKEN_TYPE_HINT, true));

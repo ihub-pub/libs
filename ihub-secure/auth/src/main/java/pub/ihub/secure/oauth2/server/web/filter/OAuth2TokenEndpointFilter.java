@@ -23,6 +23,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.AbstractOAuth2Token;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -31,10 +32,10 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenRespon
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
 import org.springframework.util.MultiValueMap;
 import pub.ihub.secure.oauth2.server.web.OAuth2ManagerFilter;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2AccessTokenAuthenticationToken;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2AuthorizationCodeAuthenticationToken;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientCredentialsAuthenticationToken;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2RefreshTokenAuthenticationToken;
+import pub.ihub.secure.oauth2.server.web.token.OAuth2AccessAuthToken;
+import pub.ihub.secure.oauth2.server.web.token.OAuth2AuthCodeToken;
+import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientCredentialsToken;
+import pub.ihub.secure.oauth2.server.web.token.OAuth2RefreshToken;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -92,7 +93,7 @@ public class OAuth2TokenEndpointFilter extends OAuth2ManagerFilter {
 		}
 
 		try {
-			sendAccessTokenResponse(response, (OAuth2AccessTokenAuthenticationToken) authenticationManager
+			sendAccessTokenResponse(response, (OAuth2AccessAuthToken) authenticationManager
 				.authenticate(notNull(authenticationConverter.convert(request), exceptionSupplier(GRANT_TYPE))));
 		} catch (OAuth2AuthenticationException ex) {
 			clearContext();
@@ -111,7 +112,7 @@ public class OAuth2TokenEndpointFilter extends OAuth2ManagerFilter {
 
 	private static Authentication authorizationCodeConvert(HttpServletRequest request) {
 		MultiValueMap<String, String> parameters = getParameters(request);
-		return new OAuth2AuthorizationCodeAuthenticationToken(
+		return new OAuth2AuthCodeToken(
 			getParameterValue(parameters, CODE),
 			getContext().getAuthentication(),
 			getParameterValue(parameters, REDIRECT_URI, true),
@@ -120,21 +121,20 @@ public class OAuth2TokenEndpointFilter extends OAuth2ManagerFilter {
 
 	private static Authentication refreshTokenConvert(HttpServletRequest request) {
 		MultiValueMap<String, String> parameters = getParameters(request, SCOPE);
-		return new OAuth2RefreshTokenAuthenticationToken(
+		return new OAuth2RefreshToken(
 			getParameterValue(parameters, REFRESH_TOKEN),
 			getContext().getAuthentication(),
 			extractScopes(parameters));
 	}
 
 	private static Authentication clientCredentialsConvert(HttpServletRequest request) {
-		return new OAuth2ClientCredentialsAuthenticationToken(
+		return new OAuth2ClientCredentialsToken(
 			getContext().getAuthentication(),
 			extractScopes(getParameters(request, SCOPE)));
 	}
 
-	private void sendAccessTokenResponse(HttpServletResponse response,
-										 OAuth2AccessTokenAuthenticationToken accessTokenAuthentication) throws IOException {
-
+	private void sendAccessTokenResponse(HttpServletResponse response, OAuth2AccessAuthToken accessTokenAuthentication)
+		throws IOException {
 		OAuth2AccessToken accessToken = accessTokenAuthentication.getAccessToken();
 		accessTokenHttpResponseConverter.write(
 			builder(withToken(accessToken.getTokenValue())
@@ -144,7 +144,7 @@ public class OAuth2TokenEndpointFilter extends OAuth2ManagerFilter {
 					Builder::expiresIn, accessToken,
 					token -> SECONDS.between(token.getIssuedAt(), token.getExpiresAt()))
 				.set(ObjectUtil::isNotNull, Builder::refreshToken,
-					accessTokenAuthentication.getRefreshToken(), rt -> rt.getTokenValue())
+					accessTokenAuthentication.getRefreshToken(), AbstractOAuth2Token::getTokenValue)
 				.set(CollUtil::isNotEmpty, Builder::additionalParameters, accessTokenAuthentication.getAdditionalParameters())
 				.build().build(),
 			null,

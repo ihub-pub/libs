@@ -17,44 +17,47 @@
 package pub.ihub.secure.oauth2.server.web.provider;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.OAuth2Error;
-import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
-import org.springframework.security.oauth2.core.oidc.OidcScopes;
-import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.util.StringUtils;
 import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.oauth2.jwt.JwtEncoder;
 import pub.ihub.secure.oauth2.server.OAuth2Authorization;
 import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
-import pub.ihub.secure.oauth2.server.TokenType;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 import pub.ihub.secure.oauth2.server.token.OAuth2AuthorizationCode;
 import pub.ihub.secure.oauth2.server.token.OAuth2TokenMetadata;
 import pub.ihub.secure.oauth2.server.token.OAuth2Tokens;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2AccessTokenAuthenticationToken;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2AuthorizationCodeAuthenticationToken;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientAuthenticationToken;
+import pub.ihub.secure.oauth2.server.web.OAuth2AuthProvider;
+import pub.ihub.secure.oauth2.server.web.token.OAuth2AccessAuthToken;
+import pub.ihub.secure.oauth2.server.web.token.OAuth2AuthCodeToken;
+import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientAuthToken;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import static cn.hutool.core.lang.Assert.isFalse;
+import static cn.hutool.core.lang.Assert.isTrue;
+import static cn.hutool.core.lang.Assert.notNull;
+import static cn.hutool.core.text.CharSequenceUtil.isBlank;
+import static org.springframework.security.oauth2.core.AuthorizationGrantType.REFRESH_TOKEN;
+import static org.springframework.security.oauth2.core.OAuth2AccessToken.TokenType.BEARER;
+import static org.springframework.security.oauth2.core.OAuth2RefreshToken2.issueRefreshToken;
+import static org.springframework.security.oauth2.core.oidc.OidcScopes.OPENID;
+import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
+import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.NONCE;
 import static pub.ihub.secure.oauth2.server.OAuth2Authorization.ACCESS_TOKEN_ATTRIBUTES;
-import static pub.ihub.secure.oauth2.server.web.provider.OAuth2AuthenticationProviderUtils.getAuthenticatedClientElseThrowInvalidClient;
+import static pub.ihub.secure.oauth2.server.OAuth2Authorization.AUTHORIZATION_REQUEST;
+import static pub.ihub.secure.oauth2.server.OAuth2Authorization.AUTHORIZED_SCOPES;
+import static pub.ihub.secure.oauth2.server.TokenType.AUTHORIZATION_CODE;
 import static pub.ihub.secure.oauth2.server.web.provider.OAuth2TokenIssuerUtil.issueIdToken;
 import static pub.ihub.secure.oauth2.server.web.provider.OAuth2TokenIssuerUtil.issueJwtAccessToken;
-import static pub.ihub.secure.oauth2.server.web.provider.OAuth2TokenIssuerUtil.issueRefreshToken;
 
 
 /**
@@ -63,70 +66,59 @@ import static pub.ihub.secure.oauth2.server.web.provider.OAuth2TokenIssuerUtil.i
  * @author henry
  */
 @RequiredArgsConstructor
-public class OAuth2AuthorizationCodeAuthenticationProvider implements AuthenticationProvider {
+public class OAuth2AuthorizationCodeAuthenticationProvider extends OAuth2AuthProvider<OAuth2AuthCodeToken> {
 
 	private final OAuth2AuthorizationService authorizationService;
 	private final JwtEncoder jwtEncoder;
 
 	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		OAuth2AuthorizationCodeAuthenticationToken authorizationCodeAuthentication =
-			(OAuth2AuthorizationCodeAuthenticationToken) authentication;
-
-		OAuth2ClientAuthenticationToken clientPrincipal =
-			getAuthenticatedClientElseThrowInvalidClient(authorizationCodeAuthentication);
+	public Authentication auth(OAuth2AuthCodeToken authentication) throws AuthenticationException {
+		OAuth2ClientAuthToken clientPrincipal = authentication.getAuthenticatedClient();
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 
 		OAuth2Authorization authorization = this.authorizationService.findByToken(
-			authorizationCodeAuthentication.getCode(), TokenType.AUTHORIZATION_CODE);
-		if (authorization == null) {
-			throw new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.INVALID_GRANT));
-		}
+			authentication.getCode(), AUTHORIZATION_CODE);
+		notNull(authorization, invalidGrantException());
 		OAuth2AuthorizationCode authorizationCode = authorization.getTokens().getToken(OAuth2AuthorizationCode.class);
 		OAuth2TokenMetadata authorizationCodeMetadata = authorization.getTokens().getTokenMetadata(authorizationCode);
 
-		OAuth2AuthorizationRequest authorizationRequest = authorization.getAttribute(
-			OAuth2Authorization.AUTHORIZATION_REQUEST);
+		OAuth2AuthorizationRequest authorizationRequest = authorization.getAttribute(AUTHORIZATION_REQUEST);
 
 		if (!registeredClient.getClientId().equals(authorizationRequest.getClientId())) {
 			if (!authorizationCodeMetadata.isInvalidated()) {
 				// Invalidate the authorization code given that a different client is attempting to use it
-				authorization = OAuth2AuthenticationProviderUtils.invalidate(authorization, authorizationCode);
+				authorization = authorization.invalidate(authorizationCode);
 				this.authorizationService.save(authorization);
 			}
-			throw new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.INVALID_GRANT));
+			throw invalidGrantException().get();
 		}
 
-		if (StringUtils.hasText(authorizationRequest.getRedirectUri()) &&
-			!authorizationRequest.getRedirectUri().equals(authorizationCodeAuthentication.getRedirectUri())) {
-			throw new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.INVALID_GRANT));
-		}
+		isTrue(isBlank(authorizationRequest.getRedirectUri()) ||
+			authorizationRequest.getRedirectUri().equals(authentication.getRedirectUri()), invalidGrantException());
 
-		if (authorizationCodeMetadata.isInvalidated()) {
-			throw new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.INVALID_GRANT));
-		}
+		isFalse(authorizationCodeMetadata.isInvalidated(), invalidGrantException());
 
-		Set<String> authorizedScopes = authorization.getAttribute(OAuth2Authorization.AUTHORIZED_SCOPES);
+		Set<String> authorizedScopes = authorization.getAttribute(AUTHORIZED_SCOPES);
 		Jwt jwt = issueJwtAccessToken(
 			this.jwtEncoder, authorization.getPrincipalName(), registeredClient.getClientId(),
 			authorizedScopes, registeredClient.getAccessTokenTimeToLive());
-		OAuth2AccessToken accessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
+		OAuth2AccessToken accessToken = new OAuth2AccessToken(BEARER,
 			jwt.getTokenValue(), jwt.getIssuedAt(), jwt.getExpiresAt(), authorizedScopes);
 
 		OAuth2Tokens tokens = ObjectBuilder.clone(authorization.getTokens())
 			.set(OAuth2Tokens::accessToken, accessToken).build();
 
 		OAuth2RefreshToken refreshToken = null;
-		if (registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.REFRESH_TOKEN)) {
+		if (registeredClient.getAuthorizationGrantTypes().contains(REFRESH_TOKEN)) {
 			refreshToken = issueRefreshToken(registeredClient.getRefreshTokenTimeToLive());
 			tokens.refreshToken(refreshToken);
 		}
 
 		OidcIdToken idToken = null;
-		if (authorizationRequest.getScopes().contains(OidcScopes.OPENID)) {
+		if (authorizationRequest.getScopes().contains(OPENID)) {
 			Jwt jwtIdToken = issueIdToken(
 				this.jwtEncoder, authorization.getPrincipalName(), registeredClient.getClientId(),
-				(String) authorizationRequest.getAdditionalParameters().get(OidcParameterNames.NONCE));
+				(String) authorizationRequest.getAdditionalParameters().get(NONCE));
 			idToken = new OidcIdToken(jwtIdToken.getTokenValue(), jwtIdToken.getIssuedAt(),
 				jwtIdToken.getExpiresAt(), jwtIdToken.getClaims());
 			tokens.token(idToken);
@@ -138,23 +130,18 @@ public class OAuth2AuthorizationCodeAuthenticationProvider implements Authentica
 			.build();
 
 		// Invalidate the authorization code as it can only be used once
-		authorization = OAuth2AuthenticationProviderUtils.invalidate(authorization, authorizationCode);
+		authorization = authorization.invalidate(authorizationCode);
 
 		this.authorizationService.save(authorization);
 
 		Map<String, Object> additionalParameters = Collections.emptyMap();
 		if (idToken != null) {
 			additionalParameters = new HashMap<>();
-			additionalParameters.put(OidcParameterNames.ID_TOKEN, idToken.getTokenValue());
+			additionalParameters.put(ID_TOKEN, idToken.getTokenValue());
 		}
 
-		return new OAuth2AccessTokenAuthenticationToken(
+		return new OAuth2AccessAuthToken(
 			registeredClient, clientPrincipal, accessToken, refreshToken, additionalParameters);
-	}
-
-	@Override
-	public boolean supports(Class<?> authentication) {
-		return OAuth2AuthorizationCodeAuthenticationToken.class.isAssignableFrom(authentication);
 	}
 
 }

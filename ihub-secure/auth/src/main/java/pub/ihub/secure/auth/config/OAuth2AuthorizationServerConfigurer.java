@@ -70,7 +70,7 @@ public final class OAuth2AuthorizationServerConfigurer<B extends HttpSecurityBui
 	extends AbstractHttpConfigurer<OAuth2AuthorizationServerConfigurer<B>, B> {
 
 	// TODO 整理配置文件
-	public static final String ISSUER_URI = "http://auth-server:9000";
+	public static final String ISSUER_URI = "http://auth-server:9527";
 	public static final String DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI = "/.well-known/openid-configuration";
 	public static final String DEFAULT_JWK_SET_ENDPOINT_URI = "/oauth2/jwks";
 	public static final String DEFAULT_AUTHORIZATION_ENDPOINT_URI = "/oauth2/authorize";

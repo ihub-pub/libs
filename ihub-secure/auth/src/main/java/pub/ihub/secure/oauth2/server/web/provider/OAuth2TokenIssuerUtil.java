@@ -16,10 +16,6 @@
 
 package pub.ihub.secure.oauth2.server.web.provider;
 
-import org.springframework.security.crypto.keygen.Base64StringKeyGenerator;
-import org.springframework.security.crypto.keygen.StringKeyGenerator;
-import org.springframework.security.oauth2.core.OAuth2RefreshToken;
-import org.springframework.security.oauth2.core.OAuth2RefreshToken2;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.util.StringUtils;
 import pub.ihub.secure.oauth2.jose.JoseHeader;
@@ -29,7 +25,6 @@ import pub.ihub.secure.oauth2.jwt.JwtEncoder;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -52,8 +47,6 @@ import static pub.ihub.secure.oauth2.jose.JoseHeader.withAlgorithm;
  * @author henry
  */
 final class OAuth2TokenIssuerUtil {
-
-	private static final StringKeyGenerator TOKEN_GENERATOR = new Base64StringKeyGenerator(Base64.getUrlEncoder().withoutPadding(), 96);
 
 	static Jwt issueJwtAccessToken(JwtEncoder jwtEncoder, String subject, String audience, Set<String> scopes, Duration tokenTimeToLive) {
 		JoseHeader joseHeader = withAlgorithm(RS256);
@@ -98,12 +91,6 @@ final class OAuth2TokenIssuerUtil {
 		// TODO Add 'auth_time' claim
 
 		return jwtEncoder.encode(joseHeader, new JwtClaimsSet(claims));
-	}
-
-	static OAuth2RefreshToken issueRefreshToken(Duration tokenTimeToLive) {
-		Instant issuedAt = Instant.now();
-		Instant expiresAt = issuedAt.plus(tokenTimeToLive);
-		return new OAuth2RefreshToken2(TOKEN_GENERATOR.generateKey(), issuedAt, expiresAt);
 	}
 
 }

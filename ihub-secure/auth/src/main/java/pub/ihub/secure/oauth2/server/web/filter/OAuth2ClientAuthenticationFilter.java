@@ -16,8 +16,6 @@
 
 package pub.ihub.secure.oauth2.server.web.filter;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,7 +30,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.MultiValueMap;
 import pub.ihub.secure.oauth2.server.web.OAuth2ManagerFilter;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientAuthenticationToken;
+import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientAuthToken;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -142,7 +140,7 @@ public class OAuth2ClientAuthenticationFilter extends OAuth2ManagerFilter {
 			String[] credentials = new String(decodedCredentials, UTF_8).split(":", 2);
 			String clientId = URLDecoder.decode(credentials[0], UTF_8.name());
 			String clientSecret = URLDecoder.decode(credentials[1], UTF_8.name());
-			return new OAuth2ClientAuthenticationToken(clientId, clientSecret, BASIC,
+			return new OAuth2ClientAuthToken(clientId, clientSecret, BASIC,
 				filterParameters(getParametersWithPkce(request)));
 		} catch (Exception ex) {
 			throw new OAuth2AuthenticationException(new OAuth2Error(INVALID_REQUEST), ex);
@@ -168,7 +166,7 @@ public class OAuth2ClientAuthenticationFilter extends OAuth2ManagerFilter {
 		if (isBlank(clientSecret)) {
 			return null;
 		}
-		return new OAuth2ClientAuthenticationToken(clientId, clientSecret, POST,
+		return new OAuth2ClientAuthToken(clientId, clientSecret, POST,
 			filterParameters(parameters, CLIENT_ID, CLIENT_SECRET));
 	}
 
@@ -183,7 +181,7 @@ public class OAuth2ClientAuthenticationFilter extends OAuth2ManagerFilter {
 		if (isEmpty(parameters)) {
 			return null;
 		}
-		return new OAuth2ClientAuthenticationToken(getParameterValue(parameters, CLIENT_ID),
+		return new OAuth2ClientAuthToken(getParameterValue(parameters, CLIENT_ID),
 			filterParameters(parameters, CLIENT_ID));
 	}
 

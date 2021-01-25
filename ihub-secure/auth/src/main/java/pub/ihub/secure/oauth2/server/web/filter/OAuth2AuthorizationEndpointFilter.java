@@ -16,8 +16,6 @@
 
 package pub.ihub.secure.oauth2.server.web.filter;
 
-import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.MediaType;
@@ -36,8 +34,6 @@ import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.MultiValueMap;
-import org.springframework.util.StringUtils;
-import org.springframework.web.util.UriComponentsBuilder;
 import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.oauth2.server.OAuth2Authorization;
 import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
@@ -53,12 +49,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import static cn.hutool.core.lang.Assert.isTrue;
 import static cn.hutool.core.lang.Assert.notBlank;

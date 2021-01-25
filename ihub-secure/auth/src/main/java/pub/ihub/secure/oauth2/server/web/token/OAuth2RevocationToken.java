@@ -18,16 +18,12 @@ package pub.ihub.secure.oauth2.server.web.token;
 
 import lombok.Getter;
 import org.springframework.lang.Nullable;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AbstractOAuth2Token;
-import org.springframework.util.Assert;
-
-import java.util.Collections;
+import pub.ihub.secure.oauth2.server.web.OAuth2AuthToken;
 
 import static cn.hutool.core.lang.Assert.notBlank;
 import static cn.hutool.core.lang.Assert.notNull;
-import static java.util.Collections.emptyList;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
 
 /**
@@ -36,39 +32,32 @@ import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
  * @author henry
  */
 @Getter
-public class OAuth2TokenRevocationAuthenticationToken extends AbstractAuthenticationToken {
+public class OAuth2RevocationToken extends OAuth2AuthToken {
 
 	private static final long serialVersionUID = SERIAL_VERSION_UID;
+	/**
+	 * 令牌
+	 */
 	private final String token;
-	private final Authentication clientPrincipal;
+	/**
+	 * 令牌类型提示
+	 */
 	private final String tokenTypeHint;
 
-	public OAuth2TokenRevocationAuthenticationToken(String token,
-													Authentication clientPrincipal,
-													@Nullable String tokenTypeHint) {
-		super(emptyList());
+	public OAuth2RevocationToken(String token,
+								 Authentication clientPrincipal,
+								 @Nullable String tokenTypeHint) {
+		super(notNull(clientPrincipal, "授权主体不能为空！"));
 		this.token = notBlank(token, "令牌不能为空！");
-		this.clientPrincipal = notNull(clientPrincipal, "授权主体不能为空！");
 		this.tokenTypeHint = tokenTypeHint;
 	}
 
-	public OAuth2TokenRevocationAuthenticationToken(AbstractOAuth2Token revokedToken,
-													Authentication clientPrincipal) {
-		super(emptyList());
+	public OAuth2RevocationToken(AbstractOAuth2Token revokedToken,
+								 Authentication clientPrincipal) {
+		super(notNull(clientPrincipal, "授权主体不能为空！"));
 		this.token = notNull(revokedToken, "令牌不能为空！").getTokenValue();
-		this.clientPrincipal = notNull(clientPrincipal, "授权主体不能为空！");
 		this.tokenTypeHint = null;
 		setAuthenticated(true);
-	}
-
-	@Override
-	public Object getPrincipal() {
-		return clientPrincipal;
-	}
-
-	@Override
-	public Object getCredentials() {
-		return "";
 	}
 
 }
