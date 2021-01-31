@@ -25,6 +25,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import static org.springframework.http.HttpMethod.GET;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_JWK_SET_ENDPOINT_URI;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI;
+
 /**
  * @author henry
  */
@@ -46,9 +50,11 @@ public class OAuth2AuthorizationServerConfiguration {
 
 		http
 			.requestMatcher(new OrRequestMatcher(endpointMatchers))
-			.authorizeRequests(authorizeRequests ->
-				authorizeRequests.anyRequest().authenticated()
-			)
+			.authorizeRequests(authorizeRequests -> {
+				authorizeRequests.antMatchers(GET, DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI,
+					DEFAULT_JWK_SET_ENDPOINT_URI).permitAll();
+				authorizeRequests.anyRequest().authenticated();
+			})
 			.csrf(csrf -> csrf.ignoringRequestMatchers(endpointMatchers))
 			.apply(authorizationServerConfigurer);
 	}

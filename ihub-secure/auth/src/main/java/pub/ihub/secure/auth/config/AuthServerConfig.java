@@ -30,24 +30,29 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.auth.repository.DynamicRegisteredClientRepository;
 import pub.ihub.secure.auth.repository.PersistedRegisteredClientRepository;
 import pub.ihub.secure.crypto.CryptoKeySource;
 import pub.ihub.secure.crypto.StaticKeyGeneratingCryptoKeySource;
+import pub.ihub.secure.oauth2.jose.jws.NimbusJwsEncoder;
+import pub.ihub.secure.oauth2.jwt.JwtEncoder;
+import pub.ihub.secure.oauth2.server.InMemoryOAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.InMemoryRegisteredClientRepository;
+import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.RegisteredClientRepository;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 
 import static cn.hutool.core.collection.CollUtil.newHashSet;
 import static cn.hutool.core.lang.UUID.randomUUID;
 import static org.springframework.boot.autoconfigure.security.SecurityProperties.BASIC_AUTH_ORDER;
-import static org.springframework.security.config.Customizer.withDefaults;
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.CLIENT_CREDENTIALS;
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.REFRESH_TOKEN;
 import static org.springframework.security.oauth2.core.ClientAuthenticationMethod.BASIC;
 import static org.springframework.security.oauth2.core.oidc.OidcScopes.OPENID;
+import static pub.ihub.secure.core.GrantType.AUTHORIZATION_CODE;
+import static pub.ihub.secure.core.GrantType.CLIENT_CREDENTIALS;
+import static pub.ihub.secure.core.GrantType.REFRESH_TOKEN;
 
 /**
  * 授权服务配置
@@ -57,7 +62,12 @@ import static org.springframework.security.oauth2.core.oidc.OidcScopes.OPENID;
 @EnableWebSecurity
 @Import(OAuth2AuthorizationServerConfiguration.class)
 @ComponentScan("pub.ihub.secure.auth.web")
-public class AuthServerConfig {
+public class AuthServerConfig implements WebMvcConfigurer {
+
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/login").setViewName("login");
+	}
 
 	@Bean
 	public RegisteredClientRepository registeredClientRepository() {
@@ -66,8 +76,7 @@ public class AuthServerConfig {
 			.set(RegisteredClient::setClientId, "messaging-client")
 			.set(RegisteredClient::setClientSecret, "secret")
 			.set(RegisteredClient::setClientAuthenticationMethods, newHashSet(BASIC))
-			.set(RegisteredClient::setAuthorizationGrantTypes,
-				newHashSet(AUTHORIZATION_CODE, REFRESH_TOKEN, CLIENT_CREDENTIALS))
+			.set(RegisteredClient::setGrantTypes, newHashSet(AUTHORIZATION_CODE, REFRESH_TOKEN, CLIENT_CREDENTIALS))
 			.set(RegisteredClient::setRedirectUris, newHashSet(
 				"http://localhost:8080/login/oauth2/code/messaging-client-oidc",
 				"http://localhost:8080/authorized"))
@@ -92,8 +101,18 @@ public class AuthServerConfig {
 	}
 
 	@Bean
+	public OAuth2AuthorizationService auth2AuthorizationService() {
+		return new InMemoryOAuth2AuthorizationService();
+	}
+
+	@Bean
 	public CryptoKeySource keySource() {
 		return new StaticKeyGeneratingCryptoKeySource();
+	}
+
+	@Bean
+	public JwtEncoder jwtEncoder(CryptoKeySource keySource) {
+		return new NimbusJwsEncoder(keySource);
 	}
 
 	@Bean
@@ -101,9 +120,7 @@ public class AuthServerConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests().antMatchers("/login*").permitAll().anyRequest().authenticated()
-			.and()
-//			.formLogin().loginPage("/login").loginProcessingUrl("/signin");
-			.formLogin(withDefaults());
+			.and().formLogin().loginPage("/login");
 		return http.build();
 	}
 

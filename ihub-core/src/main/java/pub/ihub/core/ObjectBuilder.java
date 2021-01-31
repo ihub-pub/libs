@@ -31,6 +31,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 /**
  * 对象构建
@@ -107,6 +108,33 @@ public class ObjectBuilder<T> {
 	//<editor-fold desc="给对象赋值">
 
 	/**
+	 * 给对象赋值
+	 *
+	 * @param setter 赋值方法
+	 * @param value  值
+	 * @param <V>    值类型
+	 * @return 对象构建器
+	 */
+	public <V> ObjectBuilder<T> set(BiConsumer<T, V> setter, V value) {
+		setter.accept(object, value);
+		return this;
+	}
+
+	/**
+	 * 给对象赋值（带值转换器）
+	 *
+	 * @param setter         赋值方法
+	 * @param value          值
+	 * @param valueConverter 值转换器
+	 * @param <S>            原始值类型
+	 * @param <V>            转换值类型
+	 * @return 对象构建器
+	 */
+	public <S, V> ObjectBuilder<T> set(BiConsumer<T, V> setter, S value, Converter<S, V> valueConverter) {
+		return set(setter, valueConverter.convert(value));
+	}
+
+	/**
 	 * 给对象赋值（外部条件）
 	 *
 	 * @param condition 条件
@@ -117,21 +145,28 @@ public class ObjectBuilder<T> {
 	 */
 	public <V> ObjectBuilder<T> set(boolean condition, BiConsumer<T, V> setter, V value) {
 		if (condition) {
-			setter.accept(object, value);
+			return set(setter, value);
 		}
 		return this;
 	}
 
 	/**
-	 * 给对象赋值
+	 * 给对象赋值（外部条件）
 	 *
-	 * @param setter 赋值方法
-	 * @param value  值
-	 * @param <V>    值类型
+	 * @param condition      条件
+	 * @param setter         赋值方法
+	 * @param value          值
+	 * @param valueConverter 值转换器
+	 * @param <S>            原始值类型
+	 * @param <V>            转换值类型
 	 * @return 对象构建器
 	 */
-	public <V> ObjectBuilder<T> set(BiConsumer<T, V> setter, V value) {
-		return set(true, setter, value);
+	public <S, V> ObjectBuilder<T> set(boolean condition, BiConsumer<T, V> setter,
+									   S value, Converter<S, V> valueConverter) {
+		if (condition) {
+			return set(setter, value, valueConverter);
+		}
+		return this;
 	}
 
 	/**
@@ -160,7 +195,7 @@ public class ObjectBuilder<T> {
 	 */
 	public <V, X> ObjectBuilder<T> set(BiConsumer<V, X> asserter, BiConsumer<T, V> setter, V value, X exception) {
 		asserter.accept(value, exception);
-		return set(true, setter, value);
+		return set(setter, value);
 	}
 
 	/**
@@ -175,7 +210,7 @@ public class ObjectBuilder<T> {
 	 * @return 对象构建器
 	 */
 	public <V, X> ObjectBuilder<T> set(BiFunction<V, X, V> asserter, BiConsumer<T, V> setter, V value, X exception) {
-		return set(true, setter, asserter.apply(value, exception));
+		return set(setter, asserter.apply(value, exception));
 	}
 
 	/**
@@ -191,10 +226,7 @@ public class ObjectBuilder<T> {
 	 */
 	public <S, V> ObjectBuilder<T> set(Predicate<S> predicate, BiConsumer<T, V> setter,
 									   S value, Converter<S, V> valueConverter) {
-		if (predicate.test(value)) {
-			setter.accept(object, valueConverter.convert(value));
-		}
-		return this;
+		return set(predicate.test(value), setter, value, valueConverter);
 	}
 
 	/**
@@ -224,11 +256,25 @@ public class ObjectBuilder<T> {
 	/**
 	 * 对象操作
 	 *
-	 * @param setter 操作方法
+	 * @param operator 操作方法
 	 * @return 对象构建器
 	 */
-	public ObjectBuilder<T> set(Consumer<T> setter) {
-		setter.accept(object);
+	public ObjectBuilder<T> identity(UnaryOperator<T> operator) {
+		operator.apply(object);
+		return this;
+	}
+
+	/**
+	 * 对象操作
+	 *
+	 * @param condition 条件
+	 * @param operator  操作方法
+	 * @return 对象构建器
+	 */
+	public ObjectBuilder<T> identity(boolean condition, UnaryOperator<T> operator) {
+		if (condition) {
+			return identity(operator);
+		}
 		return this;
 	}
 

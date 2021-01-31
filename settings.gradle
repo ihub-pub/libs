@@ -1,16 +1,5 @@
-/**
- +---------------------+
- | Gradle Plugin Repos |
- +---------------------+
- */
-pluginManagement {
-    repositories {
-        mavenLocal()
-    }
-}
-
 plugins {
-    id 'pub.ihub.plugin.ihub-settings' version '1.0.0'
+    id 'pub.ihub.plugin.ihub-settings' version '1.0.0.T1'
 }
 
 includeSubprojects 'ihub-core'

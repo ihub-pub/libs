@@ -19,8 +19,8 @@ package pub.ihub.secure.oauth2.server.client;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import pub.ihub.secure.core.GrantType;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -43,7 +43,7 @@ public class RegisteredClient implements Serializable {
 	private String clientId;
 	private String clientSecret;
 	private Set<ClientAuthenticationMethod> clientAuthenticationMethods;
-	private Set<AuthorizationGrantType> authorizationGrantTypes;
+	private Set<GrantType> grantTypes;
 	private Set<String> redirectUris;
 	private Set<String> scopes;
 

@@ -38,11 +38,10 @@ import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
  * The claims are defined by the OpenID Connect Discovery 1.0 specification.
  *
  * @author Daniel Garnier-Moiroux
- * @see OidcProviderMetadataClaimAccessor
  * @see <a target="_blank" href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfigurationResponse">4.2. OpenID Provider Configuration Response</a>
  * @since 0.1.0
  */
-public final class OidcProviderConfiguration implements OidcProviderMetadataClaimAccessor, Serializable {
+public final class OidcProviderConfiguration implements Serializable {
 
 	private static final long serialVersionUID = SERIAL_VERSION_UID;
 	private final Map<String, Object> claims;
@@ -56,7 +55,6 @@ public final class OidcProviderConfiguration implements OidcProviderMetadataClai
 	 *
 	 * @return a {@code Map} of the metadata values
 	 */
-	@Override
 	public Map<String, Object> getClaims() {
 		return this.claims;
 	}

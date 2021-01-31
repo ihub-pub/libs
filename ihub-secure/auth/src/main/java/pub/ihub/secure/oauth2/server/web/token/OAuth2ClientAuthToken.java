@@ -18,14 +18,15 @@ package pub.ihub.secure.oauth2.server.web.token;
 
 import lombok.Getter;
 import org.springframework.lang.Nullable;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
-import pub.ihub.secure.oauth2.server.web.OAuth2AuthToken;
 
 import java.util.Map;
 
 import static cn.hutool.core.lang.Assert.notBlank;
 import static cn.hutool.core.lang.Assert.notNull;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableMap;
 import static org.springframework.security.oauth2.core.ClientAuthenticationMethod.NONE;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
@@ -36,7 +37,7 @@ import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
  * @author henry
  */
 @Getter
-public class OAuth2ClientAuthToken extends OAuth2AuthToken {
+public class OAuth2ClientAuthToken extends AbstractAuthenticationToken {
 
 	private static final long serialVersionUID = SERIAL_VERSION_UID;
 	/**
@@ -70,12 +71,14 @@ public class OAuth2ClientAuthToken extends OAuth2AuthToken {
 
 	public OAuth2ClientAuthToken(String clientId,
 								 @Nullable Map<String, Object> additionalParameters) {
+		super(emptyList());
 		this.clientId = notBlank(clientId, "客户端ID不能为空！");
 		this.additionalParameters = additionalParameters != null ? unmodifiableMap(additionalParameters) : null;
 		this.clientAuthenticationMethod = NONE;
 	}
 
 	public OAuth2ClientAuthToken(RegisteredClient registeredClient) {
+		super(emptyList());
 		this.registeredClient = notNull(registeredClient, "注册客户端不能为空！");
 		setAuthenticated(true);
 	}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-vue/2.21.2/bootstrap-vue.min.css" rel="stylesheet">
+    <title>Consent required</title>
+</head>
+<body>
+<div class="container">
+    <div class="py-5">
+        <h1 class="text-center">Consent required</h1>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <p><span class="font-weight-bold text-primary" th:text="${clientId}"></span> wants to access
+                your account <span class="font-weight-bold" th:text="${principalName}"></span></p>
+        </div>
+    </div>
+    <div class="row pb-3">
+        <div class="col text-center">
+            <p>The following permissions are requested by the above app.<br/>Please review these and consent if you
+                approve.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <form method="post" th:action="${formPath}">
+                <input type="hidden" name="client_id" th:value="${clientId}">
+                <input type="hidden" name="state" th:value="${state}">
+
+                <div th:each="scope:${scopes}" class="form-group form-check py-1">
+                    <input class="form-check-input" type="checkbox" name="scope" th:value="${scope}" th:id="${scope}" checked>
+                    <label class="form-check-label" th:for="${scope}" th:text="${scope}"></label>
+                </div>
+
+                <div class="form-group pt-3">
+                    <button class="btn btn-primary btn-lg" type="submit" name="consent_action" value="approve">Submit
+                        Consent
+                    </button>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-link regular" type="submit" name="consent_action" value="cancel">Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row pt-4">
+        <div class="col text-center">
+            <p><small>Your consent to provide access is required.<br/>If you do not approve, click Cancel, in which case
+                no information will be shared with the app.</small></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

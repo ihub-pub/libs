@@ -20,12 +20,10 @@ import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
@@ -36,23 +34,12 @@ import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import org.thymeleaf.TemplateEngine;
 import pub.ihub.secure.crypto.CryptoKeySource;
-import pub.ihub.secure.oauth2.jose.jws.NimbusJwsEncoder;
-import pub.ihub.secure.oauth2.jwt.JwtEncoder;
-import pub.ihub.secure.oauth2.server.InMemoryOAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.RegisteredClientRepository;
-import pub.ihub.secure.oauth2.server.oidc.web.OidcProviderConfigurationEndpointFilter;
-import pub.ihub.secure.oauth2.server.web.filter.JwkSetEndpointFilter;
 import pub.ihub.secure.oauth2.server.web.filter.OAuth2AuthorizationEndpointFilter;
 import pub.ihub.secure.oauth2.server.web.filter.OAuth2ClientAuthenticationFilter;
-import pub.ihub.secure.oauth2.server.web.filter.OAuth2TokenEndpointFilter;
-import pub.ihub.secure.oauth2.server.web.filter.OAuth2TokenRevocationEndpointFilter;
-import pub.ihub.secure.oauth2.server.web.provider.OAuth2AuthorizationCodeAuthenticationProvider;
-import pub.ihub.secure.oauth2.server.web.provider.OAuth2ClientAuthenticationProvider;
-import pub.ihub.secure.oauth2.server.web.provider.OAuth2ClientCredentialsAuthenticationProvider;
-import pub.ihub.secure.oauth2.server.web.provider.OAuth2RefreshTokenAuthenticationProvider;
-import pub.ihub.secure.oauth2.server.web.provider.OAuth2TokenRevocationAuthenticationProvider;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -76,7 +63,6 @@ public final class OAuth2AuthorizationServerConfigurer<B extends HttpSecurityBui
 	public static final String DEFAULT_AUTHORIZATION_ENDPOINT_URI = "/oauth2/authorize";
 	public static final String DEFAULT_TOKEN_ENDPOINT_URI = "/oauth2/token";
 	public static final String DEFAULT_TOKEN_REVOCATION_ENDPOINT_URI = "/oauth2/revoke";
-
 	private final RequestMatcher authorizationEndpointMatcher = new OrRequestMatcher(
 		new AntPathRequestMatcher(DEFAULT_AUTHORIZATION_ENDPOINT_URI, GET.name()),
 		new AntPathRequestMatcher(DEFAULT_AUTHORIZATION_ENDPOINT_URI, POST.name()));
@@ -143,37 +129,6 @@ public final class OAuth2AuthorizationServerConfigurer<B extends HttpSecurityBui
 
 	@Override
 	public void init(B builder) {
-		OAuth2ClientAuthenticationProvider clientAuthenticationProvider =
-			new OAuth2ClientAuthenticationProvider(
-				getRegisteredClientRepository(builder),
-				getAuthorizationService(builder));
-		builder.authenticationProvider(postProcess(clientAuthenticationProvider));
-
-		JwtEncoder jwtEncoder = getJwtEncoder(builder);
-
-		OAuth2AuthorizationCodeAuthenticationProvider authorizationCodeAuthenticationProvider =
-			new OAuth2AuthorizationCodeAuthenticationProvider(
-				getAuthorizationService(builder),
-				jwtEncoder);
-		builder.authenticationProvider(postProcess(authorizationCodeAuthenticationProvider));
-
-		OAuth2RefreshTokenAuthenticationProvider refreshTokenAuthenticationProvider =
-			new OAuth2RefreshTokenAuthenticationProvider(
-				getAuthorizationService(builder),
-				jwtEncoder);
-		builder.authenticationProvider(postProcess(refreshTokenAuthenticationProvider));
-
-		OAuth2ClientCredentialsAuthenticationProvider clientCredentialsAuthenticationProvider =
-			new OAuth2ClientCredentialsAuthenticationProvider(
-				getAuthorizationService(builder),
-				jwtEncoder);
-		builder.authenticationProvider(postProcess(clientCredentialsAuthenticationProvider));
-
-		OAuth2TokenRevocationAuthenticationProvider tokenRevocationAuthenticationProvider =
-			new OAuth2TokenRevocationAuthenticationProvider(
-				getAuthorizationService(builder));
-		builder.authenticationProvider(postProcess(tokenRevocationAuthenticationProvider));
-
 		ExceptionHandlingConfigurer<B> exceptionHandling = builder.getConfigurer(ExceptionHandlingConfigurer.class);
 		if (exceptionHandling != null) {
 			LinkedHashMap<RequestMatcher, AuthenticationEntryPoint> entryPoints = new LinkedHashMap<>();
@@ -194,37 +149,19 @@ public final class OAuth2AuthorizationServerConfigurer<B extends HttpSecurityBui
 
 	@Override
 	public void configure(B builder) {
-		// TODO IODC可选
-		OidcProviderConfigurationEndpointFilter oidcProviderConfigurationEndpointFilter =
-			new OidcProviderConfigurationEndpointFilter();
-		builder.addFilterBefore(postProcess(oidcProviderConfigurationEndpointFilter), AbstractPreAuthenticatedProcessingFilter.class);
-
-		// JWK过滤器
-		builder.addFilterBefore(postProcess(new JwkSetEndpointFilter(getKeySource(builder),
-			DEFAULT_JWK_SET_ENDPOINT_URI)), AbstractPreAuthenticatedProcessingFilter.class);
-
 		// OAuth2.0授权令牌认证过滤器
-		OAuth2AuthorizationEndpointFilter authorizationEndpointFilter =
-			new OAuth2AuthorizationEndpointFilter(
-				getRegisteredClientRepository(builder),
-				getAuthorizationService(builder),
-				DEFAULT_AUTHORIZATION_ENDPOINT_URI);
-		builder.addFilterBefore(postProcess(authorizationEndpointFilter), AbstractPreAuthenticatedProcessingFilter.class);
-
-		AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
+		builder.addFilterBefore(postProcess(new OAuth2AuthorizationEndpointFilter(
+			getRegisteredClientRepository(builder),
+			getAuthorizationService(builder),
+			DEFAULT_AUTHORIZATION_ENDPOINT_URI,
+			getBean(builder, TemplateEngine.class))), AbstractPreAuthenticatedProcessingFilter.class);
 
 		// OAuth2.0客户端请求提取身份认证凭证过滤器
-		builder.addFilterAfter(postProcess(new OAuth2ClientAuthenticationFilter(authenticationManager,
+		builder.addFilterAfter(postProcess(new OAuth2ClientAuthenticationFilter(
+			getRegisteredClientRepository(builder),
+			getAuthorizationService(builder),
 			new OrRequestMatcher(tokenEndpointMatcher, tokenRevocationEndpointMatcher))
 		), AbstractPreAuthenticatedProcessingFilter.class);
-
-		// OAuth2.0令牌授予过滤器
-		builder.addFilterAfter(postProcess(new OAuth2TokenEndpointFilter(authenticationManager,
-			DEFAULT_TOKEN_ENDPOINT_URI)), FilterSecurityInterceptor.class);
-
-		// OAuth2.0令牌撤销过滤器
-		builder.addFilterAfter(postProcess(new OAuth2TokenRevocationEndpointFilter(authenticationManager,
-			DEFAULT_TOKEN_REVOCATION_ENDPOINT_URI)), OAuth2TokenEndpointFilter.class);
 	}
 
 	private static <B extends HttpSecurityBuilder<B>> RegisteredClientRepository getRegisteredClientRepository(B builder) {
@@ -240,30 +177,9 @@ public final class OAuth2AuthorizationServerConfigurer<B extends HttpSecurityBui
 		OAuth2AuthorizationService authorizationService = builder.getSharedObject(OAuth2AuthorizationService.class);
 		if (authorizationService == null) {
 			authorizationService = getOptionalBean(builder, OAuth2AuthorizationService.class);
-			if (authorizationService == null) {
-				authorizationService = new InMemoryOAuth2AuthorizationService();
-			}
 			builder.setSharedObject(OAuth2AuthorizationService.class, authorizationService);
 		}
 		return authorizationService;
-	}
-
-	private static <B extends HttpSecurityBuilder<B>> JwtEncoder getJwtEncoder(B builder) {
-		JwtEncoder jwtEncoder = getOptionalBean(builder, JwtEncoder.class);
-		if (jwtEncoder == null) {
-			CryptoKeySource keySource = getKeySource(builder);
-			jwtEncoder = new NimbusJwsEncoder(keySource);
-		}
-		return jwtEncoder;
-	}
-
-	private static <B extends HttpSecurityBuilder<B>> CryptoKeySource getKeySource(B builder) {
-		CryptoKeySource keySource = builder.getSharedObject(CryptoKeySource.class);
-		if (keySource == null) {
-			keySource = getBean(builder, CryptoKeySource.class);
-			builder.setSharedObject(CryptoKeySource.class, keySource);
-		}
-		return keySource;
 	}
 
 	private static <B extends HttpSecurityBuilder<B>, T> T getBean(B builder, Class<T> type) {
@@ -280,4 +196,5 @@ public final class OAuth2AuthorizationServerConfigurer<B extends HttpSecurityBui
 		}
 		return (!beansMap.isEmpty() ? beansMap.values().iterator().next() : null);
 	}
+
 }

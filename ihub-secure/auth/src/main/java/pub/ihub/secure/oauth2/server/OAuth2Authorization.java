@@ -22,6 +22,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.oauth2.core.AbstractOAuth2Token;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.oauth2.server.token.OAuth2AuthorizationCode;
 import pub.ihub.secure.oauth2.server.token.OAuth2TokenMetadata;
@@ -30,6 +31,7 @@ import pub.ihub.secure.oauth2.server.token.OAuth2Tokens;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static cn.hutool.core.lang.Assert.notBlank;
 import static cn.hutool.core.lang.Assert.notNull;
@@ -62,6 +64,14 @@ public class OAuth2Authorization implements Serializable {
 	@SuppressWarnings("unchecked")
 	public <T> T getAttribute(String name) {
 		return (T) this.attributes.get(notBlank(name, "name不能为空！"));
+	}
+
+	public OAuth2AuthorizationRequest getAuthorizationRequest() {
+		return getAttribute(AUTHORIZATION_REQUEST);
+	}
+
+	public Set<String> getAuthorizedScopes() {
+		return getAttribute(AUTHORIZED_SCOPES);
 	}
 
 	public static ObjectBuilder<OAuth2Authorization> from(OAuth2Authorization authorization) {

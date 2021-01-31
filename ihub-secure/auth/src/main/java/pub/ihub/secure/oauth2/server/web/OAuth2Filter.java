@@ -16,8 +16,6 @@
 
 package pub.ihub.secure.oauth2.server.web;
 
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.ObjectUtil;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
@@ -29,7 +27,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,13 +41,8 @@ import static cn.hutool.core.map.MapUtil.empty;
 import static cn.hutool.core.text.CharSequenceUtil.isNotBlank;
 import static cn.hutool.core.text.CharSequenceUtil.split;
 import static java.util.stream.Collectors.toSet;
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_REQUEST;
-import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CODE;
-import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.GRANT_TYPE;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.SCOPE;
-import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.STATE;
-import static org.springframework.security.oauth2.core.endpoint.PkceParameterNames.CODE_VERIFIER;
 
 /**
  * OAuth2过滤器
@@ -63,23 +55,8 @@ public abstract class OAuth2Filter extends OncePerRequestFilter {
 		return new AntPathRequestMatcher(pattern, httpMethod.name());
 	}
 
-	protected static String getParameterValue(HttpServletRequest request, String key, boolean canNull) {
-		String[] values = request.getParameterValues(key);
-		if (canNull && ArrayUtil.isEmpty(values)) {
-			return null;
-		} else if (ArrayUtil.isNotEmpty(values) && values.length == 1) {
-			return values[0];
-		} else {
-			throw exceptionSupplier(key).get();
-		}
-	}
-
-	protected static String getParameterValue(HttpServletRequest request, String key) {
-		return getParameterValue(request, key, false);
-	}
-
 	// TODO 确认多值参数
-	protected static Set<String> extractScopes(MultiValueMap<String, String> parameters) {
+	public static Set<String> extractScopes(MultiValueMap<String, String> parameters) {
 		String scope = getParameterValue(parameters, SCOPE);
 		return isNotBlank(scope) ? Arrays.stream(split(scope, " ")).collect(toSet()) : Collections.emptySet();
 	}
@@ -99,7 +76,7 @@ public abstract class OAuth2Filter extends OncePerRequestFilter {
 		return getParameterValue(parameters, key, false);
 	}
 
-	protected static MultiValueMap<String, String> getParameters(HttpServletRequest request, String... checkKeys) {
+	public static MultiValueMap<String, String> getParameters(HttpServletRequest request, String... checkKeys) {
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>(parameterMap.size());
 		parameterMap.forEach((key, values) -> {
@@ -116,7 +93,7 @@ public abstract class OAuth2Filter extends OncePerRequestFilter {
 		return parameters;
 	}
 
-	protected static Map<String, Object> filterParameters(MultiValueMap<String, String> parameters, String... exceptKeys) {
+	public static Map<String, Object> filterParameters(MultiValueMap<String, String> parameters, String... exceptKeys) {
 		return isEmpty(parameters) ? empty() : parameters.entrySet().stream()
 			.filter(e -> Arrays.stream(exceptKeys).noneMatch(k -> k.equals(e.getKey())))
 			.collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().get(0)));
@@ -133,7 +110,7 @@ public abstract class OAuth2Filter extends OncePerRequestFilter {
 		return exceptionSupplier(errorCode, parameterName, null);
 	}
 
-	protected static Supplier<OAuth2AuthenticationException> exceptionSupplier(String parameterName) {
+	public static Supplier<OAuth2AuthenticationException> exceptionSupplier(String parameterName) {
 		return exceptionSupplier(INVALID_REQUEST, parameterName);
 	}
 

@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-package pub.ihub.secure.oauth2.server.oidc.web;
+package pub.ihub.secure.auth.web;
 
-import org.springframework.http.server.ServletServerHttpResponse;
+import com.nimbusds.jose.jwk.JWKSet;
+import lombok.AllArgsConstructor;
 import org.springframework.security.oauth2.core.oidc.OidcProviderConfiguration;
-import org.springframework.security.oauth2.core.oidc.http.converter.OidcProviderConfigurationHttpMessageConverter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import pub.ihub.secure.crypto.CryptoKey;
+import pub.ihub.secure.crypto.CryptoKeySource;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
 import static org.springframework.security.oauth2.core.AuthorizationGrantType.CLIENT_CREDENTIALS;
 import static org.springframework.security.oauth2.core.AuthorizationGrantType.REFRESH_TOKEN;
@@ -45,30 +43,19 @@ import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DE
 import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.ISSUER_URI;
 
 /**
- * 处理OpenID提供程序配置请求的过滤器
- * TODO
- *
- * @author henry
+ * @author liheng
  */
-public class OidcProviderConfigurationEndpointFilter extends OncePerRequestFilter {
+@RestController
+@AllArgsConstructor
+public class OAuth2WellKnownController {
 
-	private final RequestMatcher requestMatcher;
-	private final OidcProviderConfigurationHttpMessageConverter providerConfigurationHttpMessageConverter =
-		new OidcProviderConfigurationHttpMessageConverter();
+	private final CryptoKeySource keySource;
 
-	public OidcProviderConfigurationEndpointFilter() {
-		this.requestMatcher = new AntPathRequestMatcher(DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI, GET.name());
-	}
-
-	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-		throws ServletException, IOException {
-		if (!this.requestMatcher.matches(request)) {
-			filterChain.doFilter(request, response);
-			return;
-		}
-
-		OidcProviderConfiguration providerConfiguration = OidcProviderConfiguration.builder()
+	@GetMapping(value = DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI, produces = APPLICATION_JSON_VALUE)
+	public Map<String, Object> wellKnown() {
+		// TODO IODC可选
+		// 重构
+		return OidcProviderConfiguration.builder()
 			.issuer(ISSUER_URI)
 			.authorizationEndpoint(asUrl(ISSUER_URI, DEFAULT_AUTHORIZATION_ENDPOINT_URI))
 			.tokenEndpoint(asUrl(ISSUER_URI, DEFAULT_TOKEN_ENDPOINT_URI))
@@ -84,10 +71,18 @@ public class OidcProviderConfigurationEndpointFilter extends OncePerRequestFilte
 			.subjectType("public")
 			.idTokenSigningAlgorithm(RS256.getName())
 			.scope(OPENID)
-			.build();
+			.build().getClaims();
+	}
 
-		ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
-		this.providerConfigurationHttpMessageConverter.write(providerConfiguration, APPLICATION_JSON, httpResponse);
+	@GetMapping(value = DEFAULT_JWK_SET_ENDPOINT_URI, produces = APPLICATION_JSON_VALUE)
+	public String jwkSet() {
+		// TODO 重构密钥资源库
+		return new JWKSet(
+			keySource.getAsymmetricKeys().stream()
+				.map(CryptoKey.AsymmetricKey::toJwk)
+				.filter(Objects::nonNull)
+				.collect(Collectors.toList())
+		).toString();
 	}
 
 	private static String asUrl(String issuer, String endpoint) {
