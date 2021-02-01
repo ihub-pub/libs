@@ -16,14 +16,15 @@
 
 package pub.ihub.secure.auth.web;
 
+import cn.hutool.core.collection.ListUtil;
 import com.nimbusds.jose.jwk.JWKSet;
 import lombok.AllArgsConstructor;
-import org.springframework.security.oauth2.core.oidc.OidcProviderConfiguration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pub.ihub.secure.crypto.CryptoKey;
 import pub.ihub.secure.crypto.CryptoKeySource;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -49,29 +50,78 @@ import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.IS
 @AllArgsConstructor
 public class OAuth2WellKnownController {
 
+	//<editor-fold desc="OpenID wellKnown相关配置">
+
+	/**
+	 * OpenID Provider
+	 */
+	private static final String ISSUER = "issuer";
+
+	/**
+	 * OAuth2授权端点的URL
+	 */
+	private static final String AUTHORIZATION_ENDPOINT = "authorization_endpoint";
+
+	/**
+	 * OAuth2令牌端点的URL
+	 */
+	private static final String TOKEN_ENDPOINT = "token_endpoint";
+
+	/**
+	 * OAuth2令牌端点支持的客户端身份验证方法
+	 */
+	private static final String TOKEN_ENDPOINT_AUTH_METHODS_SUPPORTED = "token_endpoint_auth_methods_supported";
+
+	/**
+	 * JSON Web Key Set URL
+	 */
+	private static final String JWKS_URI = "jwks_uri";
+
+	/**
+	 * 支持的OAuth2响应类型
+	 */
+	private static final String RESPONSE_TYPES_SUPPORTED = "response_types_supported";
+
+	/**
+	 * 支持的OAuth2授权方式
+	 */
+	private static final String GRANT_TYPES_SUPPORTED = "grant_types_supported";
+
+	/**
+	 * 支持的主题标识符类型
+	 */
+	private static final String SUBJECT_TYPES_SUPPORTED = "subject_types_supported";
+
+	/**
+	 * 支持的OAuth2作用域
+	 */
+	private static final String SCOPES_SUPPORTED = "scopes_supported";
+
+	/**
+	 * JWS支持的ID Token签名算法
+	 */
+	private static final String ID_TOKEN_SIGNING_ALG_VALUES_SUPPORTED = "id_token_signing_alg_values_supported";
+
+	//</editor-fold>
+
 	private final CryptoKeySource keySource;
 
 	@GetMapping(value = DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI, produces = APPLICATION_JSON_VALUE)
 	public Map<String, Object> wellKnown() {
-		// TODO IODC可选
-		// 重构
-		return OidcProviderConfiguration.builder()
-			.issuer(ISSUER_URI)
-			.authorizationEndpoint(asUrl(ISSUER_URI, DEFAULT_AUTHORIZATION_ENDPOINT_URI))
-			.tokenEndpoint(asUrl(ISSUER_URI, DEFAULT_TOKEN_ENDPOINT_URI))
-			// TODO: Use ClientAuthenticationMethod.CLIENT_SECRET_BASIC in Spring Security 5.5.0
-			.tokenEndpointAuthenticationMethod("client_secret_basic")
-			// TODO: Use ClientAuthenticationMethod.CLIENT_SECRET_POST in Spring Security 5.5.0
-			.tokenEndpointAuthenticationMethod("client_secret_post")
-			.jwkSetUri(asUrl(ISSUER_URI, DEFAULT_JWK_SET_ENDPOINT_URI))
-			.responseType(CODE.getValue())
-			.grantType(AUTHORIZATION_CODE.getValue())
-			.grantType(CLIENT_CREDENTIALS.getValue())
-			.grantType(REFRESH_TOKEN.getValue())
-			.subjectType("public")
-			.idTokenSigningAlgorithm(RS256.getName())
-			.scope(OPENID)
-			.build().getClaims();
+		return new HashMap<>(10) {{
+			put(ISSUER, ISSUER_URI);
+			put(AUTHORIZATION_ENDPOINT, asUrl(ISSUER_URI, DEFAULT_AUTHORIZATION_ENDPOINT_URI));
+			put(TOKEN_ENDPOINT, asUrl(ISSUER_URI, DEFAULT_TOKEN_ENDPOINT_URI));
+			// TODO: Use ClientAuthenticationMethod.CLIENT_SECRET_BASIC CLIENT_SECRET_POST in Spring Security 5.5.0
+			put(TOKEN_ENDPOINT_AUTH_METHODS_SUPPORTED, ListUtil.list(true, "client_secret_basic", "client_secret_post"));
+			put(JWKS_URI, asUrl(ISSUER_URI, DEFAULT_JWK_SET_ENDPOINT_URI));
+			put(RESPONSE_TYPES_SUPPORTED, ListUtil.list(true, CODE.getValue()));
+			put(GRANT_TYPES_SUPPORTED, ListUtil.list(true,
+				AUTHORIZATION_CODE.getValue(), CLIENT_CREDENTIALS.getValue(), REFRESH_TOKEN.getValue()));
+			put(SUBJECT_TYPES_SUPPORTED, ListUtil.list(true, "public"));
+			put(ID_TOKEN_SIGNING_ALG_VALUES_SUPPORTED, ListUtil.list(true, RS256.getName()));
+			put(SCOPES_SUPPORTED, ListUtil.list(true, OPENID));
+		}};
 	}
 
 	@GetMapping(value = DEFAULT_JWK_SET_ENDPOINT_URI, produces = APPLICATION_JSON_VALUE)

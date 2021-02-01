@@ -31,7 +31,6 @@ import org.springframework.security.oauth2.core.AbstractOAuth2Token;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
-import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
@@ -42,6 +41,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -68,6 +68,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -82,10 +83,12 @@ import static cn.hutool.core.lang.Assert.notNull;
 import static cn.hutool.core.text.CharSequenceUtil.blankToDefault;
 import static cn.hutool.core.text.CharSequenceUtil.isBlank;
 import static cn.hutool.core.text.CharSequenceUtil.isNotBlank;
+import static cn.hutool.core.text.CharSequenceUtil.split;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static java.util.Base64.getUrlEncoder;
 import static java.util.Collections.singletonList;
+import static java.util.stream.Collectors.toSet;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.security.core.context.SecurityContextHolder.clearContext;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
@@ -94,7 +97,7 @@ import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_GRANT;
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_SCOPE;
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.UNAUTHORIZED_CLIENT;
-import static org.springframework.security.oauth2.core.OAuth2RefreshToken2.issueRefreshToken;
+import static pub.ihub.secure.oauth2.server.token.OAuth2RefreshToken2.issueRefreshToken;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse.withToken;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CLIENT_ID;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CODE;
@@ -260,9 +263,10 @@ public class OAuth2Controller {
 	}
 
 	@PostMapping(value = DEFAULT_TOKEN_ENDPOINT_URI, params = GRANT_TYPE_REFRESH_TOKEN)
-	public void token(@RequestParam(REFRESH_TOKEN) @NotBlank String refreshToken,
-					  @RequestParam(value = SCOPE, required = false) Set<String> scopes,
-					  HttpServletResponse response) throws IOException {
+	public void refreshToken(@RequestParam(REFRESH_TOKEN) @NotBlank String refreshToken,
+							 @RequestParam(value = SCOPE, required = false) String scope,
+							 HttpServletResponse response) throws IOException {
+		Set<String> scopes = extractScopes(scope);
 		RegisteredClient registeredClient = getAuthenticatedClient().getRegisteredClient();
 		OAuth2Authorization authorization = notNull(authorizationService.findByToken(refreshToken, TokenType.REFRESH_TOKEN), invalidGrantException());
 		isTrue(registeredClient.getId().equals(authorization.getRegisteredClientId()), invalidGrantException());
@@ -297,8 +301,9 @@ public class OAuth2Controller {
 	}
 
 	@PostMapping(value = DEFAULT_TOKEN_ENDPOINT_URI, params = GRANT_TYPE_CLIENT_CREDENTIALS)
-	public void token(@RequestParam(value = SCOPE, required = false) Set<String> scopes,
+	public void token(@RequestParam(value = SCOPE, required = false) String scope,
 					  HttpServletResponse response) throws IOException {
+		Set<String> scopes = extractScopes(scope);
 		OAuth2ClientAuthToken clientPrincipal = getAuthenticatedClient();
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 
@@ -481,6 +486,11 @@ public class OAuth2Controller {
 		// TODO Add 'auth_time' claim
 
 		return jwtEncoder.encode(joseHeader, new JwtClaimsSet(claims));
+	}
+
+	// TODO 确认多值参数
+	public static Set<String> extractScopes(String scope) {
+		return isNotBlank(scope) ? Arrays.stream(split(scope, " ")).collect(toSet()) : Collections.emptySet();
 	}
 
 }

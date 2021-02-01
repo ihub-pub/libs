@@ -32,10 +32,8 @@ import org.springframework.security.web.authentication.ui.DefaultLoginPageGenera
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.thymeleaf.TemplateEngine;
-import pub.ihub.secure.crypto.CryptoKeySource;
 import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.RegisteredClientRepository;
 import pub.ihub.secure.oauth2.server.web.filter.OAuth2AuthorizationEndpointFilter;
@@ -78,42 +76,6 @@ public final class OAuth2AuthorizationServerConfigurer<B extends HttpSecurityBui
 
 	private final RequestMatcher oidcProviderConfigurationEndpointMatcher = new AntPathRequestMatcher(
 		DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI, GET.name());
-
-	/**
-	 * Sets the repository of registered clients.
-	 *
-	 * @param registeredClientRepository the repository of registered clients
-	 * @return the {@link OAuth2AuthorizationServerConfigurer} for further configuration
-	 */
-	public OAuth2AuthorizationServerConfigurer<B> registeredClientRepository(RegisteredClientRepository registeredClientRepository) {
-		Assert.notNull(registeredClientRepository, "registeredClientRepository cannot be null");
-		this.getBuilder().setSharedObject(RegisteredClientRepository.class, registeredClientRepository);
-		return this;
-	}
-
-	/**
-	 * Sets the authorization service.
-	 *
-	 * @param authorizationService the authorization service
-	 * @return the {@link OAuth2AuthorizationServerConfigurer} for further configuration
-	 */
-	public OAuth2AuthorizationServerConfigurer<B> authorizationService(OAuth2AuthorizationService authorizationService) {
-		Assert.notNull(authorizationService, "authorizationService cannot be null");
-		this.getBuilder().setSharedObject(OAuth2AuthorizationService.class, authorizationService);
-		return this;
-	}
-
-	/**
-	 * Sets the source for cryptographic keys.
-	 *
-	 * @param keySource the source for cryptographic keys
-	 * @return the {@link OAuth2AuthorizationServerConfigurer} for further configuration
-	 */
-	public OAuth2AuthorizationServerConfigurer<B> keySource(CryptoKeySource keySource) {
-		Assert.notNull(keySource, "keySource cannot be null");
-		this.getBuilder().setSharedObject(CryptoKeySource.class, keySource);
-		return this;
-	}
 
 	/**
 	 * Returns a {@code List} of {@link RequestMatcher}'s for the authorization server endpoints.
