@@ -20,9 +20,10 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.net.url.UrlBuilder;
 import cn.hutool.core.util.ObjectUtil;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.keygen.Base64StringKeyGenerator;
@@ -35,20 +36,15 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenRespon
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
 import org.springframework.security.oauth2.core.http.converter.OAuth2ErrorHttpMessageConverter;
-import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.RedirectStrategy;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.MultiValueMap;
-import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.TemplateEngine;
 import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.core.GrantType;
-import pub.ihub.secure.oauth2.jose.JoseHeader;
-import pub.ihub.secure.oauth2.jwt.JwtClaimsSet;
 import pub.ihub.secure.oauth2.jwt.JwtEncoder;
 import pub.ihub.secure.oauth2.server.OAuth2Authorization;
 import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
@@ -65,29 +61,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.io.IOException;
-import java.time.Duration;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
 
 import static cn.hutool.core.lang.Assert.isFalse;
 import static cn.hutool.core.lang.Assert.isTrue;
 import static cn.hutool.core.lang.Assert.notNull;
-import static cn.hutool.core.text.CharSequenceUtil.blankToDefault;
 import static cn.hutool.core.text.CharSequenceUtil.isBlank;
 import static cn.hutool.core.text.CharSequenceUtil.isNotBlank;
 import static cn.hutool.core.text.CharSequenceUtil.split;
+import static cn.hutool.extra.template.engine.thymeleaf.ThymeleafTemplate.wrap;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static java.util.Base64.getUrlEncoder;
-import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toSet;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.security.core.context.SecurityContextHolder.clearContext;
@@ -95,9 +87,9 @@ import static org.springframework.security.core.context.SecurityContextHolder.ge
 import static org.springframework.security.oauth2.core.OAuth2AccessToken.TokenType.BEARER;
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_CLIENT;
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_GRANT;
+import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_REQUEST;
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_SCOPE;
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.UNAUTHORIZED_CLIENT;
-import static pub.ihub.secure.oauth2.server.token.OAuth2RefreshToken2.issueRefreshToken;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse.withToken;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CLIENT_ID;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CODE;
@@ -107,31 +99,28 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterN
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.GRANT_TYPE;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.REDIRECT_URI;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.REFRESH_TOKEN;
+import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.RESPONSE_TYPE;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.SCOPE;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.STATE;
-import static org.springframework.security.oauth2.core.oidc.IdTokenClaimNames.AZP;
+import static org.springframework.security.oauth2.core.endpoint.PkceParameterNames.CODE_CHALLENGE;
+import static org.springframework.security.oauth2.core.endpoint.PkceParameterNames.CODE_CHALLENGE_METHOD;
 import static org.springframework.security.oauth2.core.oidc.OidcScopes.OPENID;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.NONCE;
-import static org.springframework.security.oauth2.jose.jws.SignatureAlgorithm.RS256;
-import static org.springframework.security.oauth2.jwt.JwtClaimNames.AUD;
-import static org.springframework.security.oauth2.jwt.JwtClaimNames.EXP;
-import static org.springframework.security.oauth2.jwt.JwtClaimNames.IAT;
-import static org.springframework.security.oauth2.jwt.JwtClaimNames.ISS;
-import static org.springframework.security.oauth2.jwt.JwtClaimNames.NBF;
-import static org.springframework.security.oauth2.jwt.JwtClaimNames.SUB;
-import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 import static pub.ihub.core.ObjectBuilder.builder;
-import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_AUTHORIZATION_ENDPOINT_URI;
-import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_TOKEN_ENDPOINT_URI;
-import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_TOKEN_REVOCATION_ENDPOINT_URI;
-import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.ISSUER_URI;
-import static pub.ihub.secure.oauth2.jose.JoseHeader.withAlgorithm;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfiguration.DEFAULT_AUTHORIZATION_ENDPOINT_URI;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfiguration.DEFAULT_TOKEN_ENDPOINT_URI;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfiguration.DEFAULT_TOKEN_REVOCATION_ENDPOINT_URI;
+import static pub.ihub.secure.auth.web.filter.OAuth2ClientAuthenticationFilter.filterParameters;
+import static pub.ihub.secure.auth.web.filter.OAuth2ClientAuthenticationFilter.getParameters;
+import static pub.ihub.secure.oauth2.jose.jws.NimbusJwsEncoder.issueIdToken;
+import static pub.ihub.secure.oauth2.jose.jws.NimbusJwsEncoder.issueJwtAccessToken;
 import static pub.ihub.secure.oauth2.server.OAuth2Authorization.ACCESS_TOKEN_ATTRIBUTES;
+import static pub.ihub.secure.oauth2.server.OAuth2Authorization.AUTHORIZATION_REQUEST;
 import static pub.ihub.secure.oauth2.server.OAuth2Authorization.AUTHORIZED_SCOPES;
 import static pub.ihub.secure.oauth2.server.TokenType.AUTHORIZATION_CODE;
 import static pub.ihub.secure.oauth2.server.token.OAuth2AuthorizationCode.generateAuthCode;
-import static pub.ihub.secure.oauth2.server.web.filter.OAuth2AuthorizationEndpointFilter.isPrincipalAuthenticated;
+import static pub.ihub.secure.oauth2.server.token.OAuth2RefreshToken2.issueRefreshToken;
 
 /**
  * @author liheng
@@ -146,12 +135,14 @@ public class OAuth2Controller {
 	private static final String GRANT_TYPE_AUTHORIZATION_CODE = GRANT_TYPE + "=authorization_code";
 	private static final String GRANT_TYPE_REFRESH_TOKEN = GRANT_TYPE + "=refresh_token";
 	private static final String GRANT_TYPE_CLIENT_CREDENTIALS = GRANT_TYPE + "=client_credentials";
+	private static final String SCOPE_OPENID = SCOPE + "=" + OPENID;
 
 	private final RegisteredClientRepository registeredClientRepository;
 	private final OAuth2AuthorizationService authorizationService;
 	private final StringKeyGenerator codeGenerator = new Base64StringKeyGenerator(getUrlEncoder().withoutPadding(), 96);
-	private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+	private final StringKeyGenerator stateGenerator = new Base64StringKeyGenerator(getUrlEncoder());
 	private final JwtEncoder jwtEncoder;
+	private final TemplateEngine engine;
 	/**
 	 * 认证消息转换器
 	 */
@@ -163,21 +154,121 @@ public class OAuth2Controller {
 	private final HttpMessageConverter<OAuth2Error> errorHttpResponseConverter =
 		new OAuth2ErrorHttpMessageConverter();
 
+	@GetMapping(DEFAULT_AUTHORIZATION_ENDPOINT_URI)
+	// TODO 确认POST场景
+	@PostMapping(value = DEFAULT_AUTHORIZATION_ENDPOINT_URI, params = {"!" + CONSENT_ACTION_PARAMETER_NAME, SCOPE_OPENID})
+	public void authorize(@RequestParam(CLIENT_ID) @NotBlank String clientId,
+						  @RequestParam(value = REDIRECT_URI, required = false) String redirectUri,
+						  @RequestParam(STATE) @NotBlank String state,
+						  @RequestParam(value = SCOPE, required = false) String scope,
+						  @RequestParam(value = CODE_CHALLENGE, required = false) String codeChallenge,
+						  @RequestParam(value = CODE_CHALLENGE_METHOD, required = false) String codeChallengeMethod,
+						  HttpServletRequest request,
+						  HttpServletResponse response) throws IOException {
+		Set<String> scopes = extractScopes(scope);
+		RegisteredClient registeredClient = notNull(registeredClientRepository.findByClientId(clientId),
+			invalidRequestException(CLIENT_ID));
+		isTrue(registeredClient.getGrantTypes().contains(GrantType.AUTHORIZATION_CODE),
+			exceptionSupplier(UNAUTHORIZED_CLIENT, CLIENT_ID));
+		// TODO 考虑是否保留多回调地址
+		isTrue(isNotBlank(redirectUri) ? registeredClient.getRedirectUris().contains(redirectUri) :
+				!scopes.contains(OPENID) || registeredClient.getRedirectUris().size() == 1,
+			exceptionSupplier(REDIRECT_URI));
+		redirectUri = isNotBlank(redirectUri) ? redirectUri : registeredClient.getRedirectUris().iterator().next();
+		if (!scopes.isEmpty() && !registeredClient.getScopes().containsAll(scopes)) {
+			redirectError(response, redirectUri, exceptionSupplier(INVALID_SCOPE).get(), state);
+		}
+		// (REQUIRED for public clients) - RFC 7636 (PKCE)
+		if (isNotBlank(codeChallenge)) {
+			if (isNotBlank(codeChallengeMethod) && !"S256".equals(codeChallengeMethod) && !"plain".equals(codeChallengeMethod)) {
+				redirectError(response, redirectUri, invalidRequestException(CODE_CHALLENGE_METHOD).get(), state);
+			}
+		} else {
+			if (registeredClient.isRequireProofKey()) {
+				redirectError(response, redirectUri, invalidRequestException(CODE_CHALLENGE).get(), state);
+			}
+		}
+
+		Authentication principal = SecurityContextHolder.getContext().getAuthentication();
+		// TODO 该判断须在过滤器内完成
+//		if (!isPrincipalAuthenticated(principal)) {
+//			filterChain.doFilter(request, response);
+//			return;
+//		}
+
+		OAuth2AuthorizationRequest authorizationRequest = OAuth2AuthorizationRequest.authorizationCode()
+			.authorizationUri(request.getRequestURL().toString())
+			.clientId(clientId)
+			.redirectUri(redirectUri)
+			.scopes(scopes)
+			.state(state)
+			.additionalParameters(additionalParameters -> additionalParameters
+				.putAll(filterParameters(getParameters(request), RESPONSE_TYPE, CLIENT_ID, REDIRECT_URI, SCOPE, STATE)))
+			.build();
+		ObjectBuilder<OAuth2Authorization> builder = ObjectBuilder.builder(OAuth2Authorization::new)
+			.set(OAuth2Authorization::setRegisteredClientId, registeredClient.getId())
+			.set(OAuth2Authorization::setPrincipalName, principal.getName())
+			.set(OAuth2Authorization::setAttributes, new HashMap<>(2) {
+				{
+					put(AUTHORIZATION_REQUEST, authorizationRequest);
+				}
+			});
+
+		if (registeredClient.isRequireUserConsent()) {
+			OAuth2Authorization authorization = builder
+				.put(OAuth2Authorization::getAttributes, OAuth2Authorization.STATE, stateGenerator.generateKey())
+				.build();
+			authorizationService.save(authorization);
+
+			response.setContentType(new MediaType("text", "html", UTF_8).toString());
+			wrap(engine, "consent", UTF_8).render(new HashMap<>(5) {{
+				put("formPath", request.getRequestURI());
+				put("clientId", registeredClient.getClientId());
+				put("principalName", authorization.getPrincipalName());
+				put("state", authorization.getAttribute(OAuth2Authorization.STATE));
+				put("scopes", authorizationRequest.getScopes());
+			}}, response.getWriter());
+		} else {
+			OAuth2AuthorizationCode authorizationCode = generateAuthCode(codeGenerator.generateKey(),
+				registeredClient.getAccessTokenTimeToLive());
+			authorizationService.save(builder
+				.set(OAuth2Authorization::setTokens,
+					ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::token, authorizationCode).build())
+				.put(OAuth2Authorization::getAttributes, AUTHORIZED_SCOPES, authorizationRequest.getScopes())
+				.build());
+
+//			TODO security checks for code parameter
+//			The authorization code MUST expire shortly after it is issued to mitigate the risk of leaks.
+//			A maximum authorization code lifetime of 10 minutes is RECOMMENDED.
+//			The client MUST NOT use the authorization code more than once.
+//			If an authorization code is used more than once, the authorization server MUST deny the request
+//			and SHOULD revoke (when possible) all tokens previously issued based on that authorization code.
+//			The authorization code is bound to the client identifier and redirection URI.
+
+			response.sendRedirect(ObjectBuilder.builder(UrlBuilder.of(redirectUri, UTF_8))
+				.identity(b -> b.addQuery(CODE, authorizationCode.getTokenValue()))
+				.identity(isNotBlank(authorizationRequest.getState()), b -> b.addQuery(STATE, authorizationRequest.getState()))
+				.build().build());
+		}
+	}
+
 	@PostMapping(value = DEFAULT_AUTHORIZATION_ENDPOINT_URI, params = CONSENT_ACTION_PARAMETER_NAME)
 	public void authorize(@RequestParam(CLIENT_ID) @NotBlank String clientId,
 						  @RequestParam(STATE) @NotBlank String state,
 						  @RequestParam(SCOPE) @NotEmpty Set<String> scopes,
 						  @RequestParam(CONSENT_ACTION_PARAMETER_NAME) @NotBlank String action,
-						  HttpServletRequest request,
 						  HttpServletResponse response) throws IOException {
-		OAuth2Authorization authorization = getAuthorization(state);
-		RegisteredClient registeredClient = getRegisteredClient(clientId, authorization);
+		OAuth2Authorization authorization = authorizationService.findByToken(state, new TokenType(OAuth2Authorization.STATE));
+		Authentication principal = SecurityContextHolder.getContext().getAuthentication();
+		isTrue(isPrincipalAuthenticated(principal) &&
+			principal.getName().equals(authorization.getPrincipalName()), invalidRequestException(STATE));
+		RegisteredClient registeredClient = notNull(registeredClientRepository.findByClientId(clientId), invalidRequestException(CLIENT_ID));
+		isTrue(registeredClient.getId().equals(authorization.getRegisteredClientId()), invalidRequestException(CLIENT_ID));
 		OAuth2AuthorizationRequest authorizationRequest = authorization.getAuthorizationRequest();
 		String redirectUri = isNotBlank(authorizationRequest.getRedirectUri()) ?
 			authorizationRequest.getRedirectUri() : registeredClient.getRedirectUris().iterator().next();
 		if (!authorizationRequest.getScopes().containsAll(scopes)) {
-//			response.sendRedirect(redirectError(redirectUri, exceptionSupplier(SCOPE).get(), state));
-			sendErrorResponse(request, response, redirectUri, exceptionSupplier(SCOPE).get(), state);
+			redirectError(response, redirectUri, invalidRequestException(SCOPE).get(), state);
 		}
 
 		if (CONSENT_ACTION_APPROVE.equals(action)) {
@@ -192,19 +283,16 @@ public class OAuth2Controller {
 				})
 				.build());
 
-			sendAuthorizationResponse(request, response, redirectUri, authorizationCode, state);
-//			response.sendRedirect(ObjectBuilder.builder(UrlBuilder.of(redirectUri, UTF_8))
-//				.identity(b -> b.addQuery(CODE, authorizationCode.getTokenValue()))
-//				.identity(isNotBlank(state), b -> b.addQuery(STATE, state))
-//				.build().build());
+			response.sendRedirect(ObjectBuilder.builder(UrlBuilder.of(redirectUri, UTF_8))
+				.identity(b -> b.addQuery(CODE, authorizationCode.getTokenValue()))
+				.identity(isNotBlank(authorizationRequest.getState()), b -> b.addQuery(STATE, authorizationRequest.getState()))
+				.build().build());
 		} else if (CONSENT_ACTION_CANCEL.equals(action)) {
 			// TODO Need to remove 'in-flight' authorization if consent step is not completed (e.g. approved or cancelled)
-//			response.sendRedirect(redirectError("redirect:/cancel", exceptionSupplier("授权取消！").get(), state));
-			sendErrorResponse(request, response, "redirect:/cancel", exceptionSupplier("授权取消！").get(), state);
+			redirectError(response, "redirect:/cancel", exceptionSupplier(INVALID_REQUEST, "授权取消！").get(), authorizationRequest.getState());
 		} else {
 			authorizationService.remove(authorization);
-//			response.sendRedirect(redirectError(redirectUri, exceptionSupplier("授权失败！").get(), state));
-			sendErrorResponse(request, response, redirectUri, exceptionSupplier("授权失败！").get(), state);
+			redirectError(response, redirectUri, exceptionSupplier(INVALID_REQUEST, "授权失败！").get(), authorizationRequest.getState());
 		}
 	}
 
@@ -282,7 +370,7 @@ public class OAuth2Controller {
 		isFalse(authorization.getTokens().getTokenMetadata(authorization.getTokens().getRefreshToken()).isInvalidated(),
 			invalidGrantException());
 
-		Jwt jwt = issueJwtAccessToken(this.jwtEncoder, authorization.getPrincipalName(), registeredClient.getClientId(),
+		Jwt jwt = issueJwtAccessToken(jwtEncoder, authorization.getPrincipalName(), registeredClient.getClientId(),
 			scopes, registeredClient.getAccessTokenTimeToLive());
 
 		OAuth2Tokens tokens = ObjectBuilder.clone(authorization.getTokens())
@@ -315,7 +403,7 @@ public class OAuth2Controller {
 			scopes = new LinkedHashSet<>(clientScopes);
 		}
 
-		Jwt jwt = issueJwtAccessToken(this.jwtEncoder, clientPrincipal.getName(), registeredClient.getClientId(),
+		Jwt jwt = issueJwtAccessToken(jwtEncoder, clientPrincipal.getName(), registeredClient.getClientId(),
 			scopes, registeredClient.getAccessTokenTimeToLive());
 		OAuth2AccessToken accessToken = new OAuth2AccessToken(BEARER,
 			jwt.getTokenValue(), jwt.getIssuedAt(), jwt.getExpiresAt(), scopes);
@@ -353,28 +441,15 @@ public class OAuth2Controller {
 		}
 	}
 
-	private OAuth2Authorization getAuthorization(String state) {
-		OAuth2Authorization authorization = authorizationService.findByToken(state, new TokenType(OAuth2Authorization.STATE));
-		Authentication principal = SecurityContextHolder.getContext().getAuthentication();
-		isTrue(isPrincipalAuthenticated(principal) &&
-			principal.getName().equals(authorization.getPrincipalName()), exceptionSupplier(STATE));
-		return authorization;
-	}
-
-	private RegisteredClient getRegisteredClient(String clientId, OAuth2Authorization authorization) {
-		RegisteredClient registeredClient = registeredClientRepository.findByClientId(clientId);
-		isTrue(registeredClient.getId().equals(authorization.getRegisteredClientId()), exceptionSupplier(CLIENT_ID));
-		return registeredClient;
-	}
-
-	private String redirectError(String redirectUri, OAuth2AuthenticationException exception, String state) {
+	private void redirectError(HttpServletResponse response, String redirectUri,
+							   OAuth2AuthenticationException exception, String state) throws IOException {
 		OAuth2Error error = exception.getError();
-		return "redirect:" + ObjectBuilder.builder(UrlBuilder.of(redirectUri, UTF_8))
+		response.sendRedirect(ObjectBuilder.builder(UrlBuilder.of(redirectUri, UTF_8))
 			.identity(b -> b.addQuery(ERROR, error.getErrorCode()))
 			.identity(isNotBlank(error.getDescription()), b -> b.addQuery(ERROR_DESCRIPTION, error.getDescription()))
 			.identity(isNotBlank(state), b -> b.addQuery(STATE, state))
 			.identity(isNotBlank(error.getUri()), b -> b.addQuery(ERROR_URI, error.getUri()))
-			.build().build();
+			.build().build());
 	}
 
 	public OAuth2ClientAuthToken getAuthenticatedClient() {
@@ -386,26 +461,9 @@ public class OAuth2Controller {
 		throw new OAuth2AuthenticationException(new OAuth2Error(INVALID_CLIENT));
 	}
 
-	private void sendAuthorizationResponse(HttpServletRequest request, HttpServletResponse response, String redirectUri,
-										   OAuth2AuthorizationCode authorizationCode, String state) throws IOException {
-		redirectStrategy.sendRedirect(request, response, fromUriString(redirectUri)
-			.queryParam(CODE, authorizationCode.getTokenValue())
-			.queryParamIfPresent(STATE, Optional.of(blankToDefault(state, null))).toUriString());
-	}
-
-	private void sendErrorResponse(HttpServletRequest request, HttpServletResponse response, String redirectUri,
-								   OAuth2AuthenticationException exception, String state) throws IOException {
-		OAuth2Error error = exception.getError();
-		redirectStrategy.sendRedirect(request, response, fromUriString(redirectUri)
-			.queryParam(ERROR, error.getErrorCode())
-			.queryParamIfPresent(ERROR_DESCRIPTION, Optional.of(blankToDefault(error.getDescription(), null)))
-			.queryParamIfPresent(ERROR_URI, Optional.of(blankToDefault(error.getUri(), null)))
-			.queryParamIfPresent(STATE, Optional.of(blankToDefault(state, null))).toUriString());
-	}
-
 	private void sendErrorResponse(HttpServletResponse response, OAuth2Error error) throws IOException {
 		this.errorHttpResponseConverter.write(error, null, builder(ServletServerHttpResponse::new, response)
-			.set(ServletServerHttpResponse::setStatusCode, getStatusCode(error)).build());
+			.set(ServletServerHttpResponse::setStatusCode, BAD_REQUEST).build());
 	}
 
 	private void sendAccessTokenResponse(HttpServletResponse response, OAuth2AccessToken accessToken,
@@ -427,12 +485,16 @@ public class OAuth2Controller {
 		);
 	}
 
-	private HttpStatus getStatusCode(OAuth2Error error) {
-		return BAD_REQUEST;
+	private static Supplier<OAuth2AuthenticationException> exceptionSupplier(String errorCode, String description) {
+		return () -> new OAuth2AuthenticationException(new OAuth2Error(errorCode, description, null));
 	}
 
 	private static Supplier<OAuth2AuthenticationException> exceptionSupplier(String errorCode) {
-		return () -> new OAuth2AuthenticationException(new OAuth2Error(errorCode));
+		return exceptionSupplier(errorCode, null);
+	}
+
+	public static Supplier<OAuth2AuthenticationException> invalidRequestException(String parameterName) {
+		return exceptionSupplier(INVALID_REQUEST, "OAuth 2.0参数错误：" + parameterName);
 	}
 
 	private static Supplier<OAuth2AuthenticationException> invalidClientException() {
@@ -443,54 +505,15 @@ public class OAuth2Controller {
 		return exceptionSupplier(INVALID_GRANT);
 	}
 
-	private static Jwt issueJwtAccessToken(JwtEncoder jwtEncoder, String subject, String audience, Set<String> scopes, Duration tokenTimeToLive) {
-		JoseHeader joseHeader = withAlgorithm(RS256);
-
-		Instant issuedAt = Instant.now();
-		Instant expiresAt = issuedAt.plus(tokenTimeToLive);
-
-		return jwtEncoder.encode(joseHeader, new JwtClaimsSet(new HashMap<>(7) {
-			{
-				put(ISS, ISSUER_URI);
-				put(SUB, subject);
-				put(AUD, singletonList(audience));
-				put(IAT, issuedAt);
-				put(EXP, expiresAt);
-				put(NBF, issuedAt);
-				put(SCOPE, scopes);
-			}
-		}));
-	}
-
-	private static Jwt issueIdToken(JwtEncoder jwtEncoder, String subject, String audience, String nonce) {
-		JoseHeader joseHeader = withAlgorithm(RS256);
-
-		Instant issuedAt = Instant.now();
-		// TODO Allow configuration for id token time-to-live
-		Instant expiresAt = issuedAt.plus(30, ChronoUnit.MINUTES);
-
-		Map<String, Object> claims = new HashMap<>(7) {
-			{
-				put(ISS, ISSUER_URI);
-				put(SUB, subject);
-				put(AUD, singletonList(audience));
-				put(IAT, issuedAt);
-				put(EXP, expiresAt);
-				put(AZP, audience);
-			}
-		};
-		if (StringUtils.hasText(nonce)) {
-			claims.put(IdTokenClaimNames.NONCE, nonce);
-		}
-
-		// TODO Add 'auth_time' claim
-
-		return jwtEncoder.encode(joseHeader, new JwtClaimsSet(claims));
-	}
-
 	// TODO 确认多值参数
-	public static Set<String> extractScopes(String scope) {
+	private static Set<String> extractScopes(String scope) {
 		return isNotBlank(scope) ? Arrays.stream(split(scope, " ")).collect(toSet()) : Collections.emptySet();
+	}
+
+	private static boolean isPrincipalAuthenticated(Authentication principal) {
+		return principal != null &&
+			!AnonymousAuthenticationToken.class.isAssignableFrom(principal.getClass()) &&
+			principal.isAuthenticated();
 	}
 
 }

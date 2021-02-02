@@ -16,18 +16,34 @@
 
 package pub.ihub.secure.auth.config;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import pub.ihub.secure.auth.web.filter.OAuth2ClientAuthenticationFilter;
+import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
+import pub.ihub.secure.oauth2.server.RegisteredClientRepository;
+
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 
 import static org.springframework.http.HttpMethod.GET;
-import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_JWK_SET_ENDPOINT_URI;
-import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter.DEFAULT_LOGIN_PAGE_URL;
 
 /**
  * @author henry
@@ -35,28 +51,84 @@ import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DE
 @Configuration
 public class OAuth2AuthorizationServerConfiguration {
 
+	// TODO 整理配置文件
+	public static final String ISSUER_URI = "http://auth-server:9527";
+	public static final String DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI = "/.well-known/openid-configuration";
+	public static final String DEFAULT_JWK_SET_ENDPOINT_URI = "/oauth2/jwks";
+	public static final String DEFAULT_AUTHORIZATION_ENDPOINT_URI = "/oauth2/authorize";
+	public static final String DEFAULT_TOKEN_ENDPOINT_URI = "/oauth2/token";
+	public static final String DEFAULT_TOKEN_REVOCATION_ENDPOINT_URI = "/oauth2/revoke";
+
+	private final RequestMatcher authorizationEndpointMatcher = new OrRequestMatcher(
+		new AntPathRequestMatcher(DEFAULT_AUTHORIZATION_ENDPOINT_URI, GET.name()),
+		new AntPathRequestMatcher(DEFAULT_AUTHORIZATION_ENDPOINT_URI, POST.name()));
+
+	private final RequestMatcher tokenEndpointMatcher = new AntPathRequestMatcher(
+		DEFAULT_TOKEN_ENDPOINT_URI, POST.name());
+
+	private final RequestMatcher tokenRevocationEndpointMatcher = new AntPathRequestMatcher(
+		DEFAULT_TOKEN_REVOCATION_ENDPOINT_URI, POST.name());
+
+	private final RequestMatcher jwkSetEndpointMatcher = new AntPathRequestMatcher(
+		DEFAULT_JWK_SET_ENDPOINT_URI, GET.name());
+
+	private final RequestMatcher oidcProviderConfigurationEndpointMatcher = new AntPathRequestMatcher(
+		DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI, GET.name());
+
+	private final RequestMatcher clientAuthenticationMatcher =
+		new OrRequestMatcher(tokenEndpointMatcher, tokenRevocationEndpointMatcher);
+
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
 	public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
-		applyDefaultSecurity(http);
-		return http.build();
-	}
-
-	public static void applyDefaultSecurity(HttpSecurity http) throws Exception {
-		OAuth2AuthorizationServerConfigurer<HttpSecurity> authorizationServerConfigurer =
-			new OAuth2AuthorizationServerConfigurer<>();
-		RequestMatcher[] endpointMatchers = authorizationServerConfigurer
-			.getEndpointMatchers().toArray(new RequestMatcher[0]);
+		// TODO Initialize matchers using URI's from ProviderSettings
+		RequestMatcher[] endpointMatchers = Arrays.asList(authorizationEndpointMatcher, tokenEndpointMatcher,
+			tokenRevocationEndpointMatcher, jwkSetEndpointMatcher,
+			oidcProviderConfigurationEndpointMatcher).toArray(new RequestMatcher[0]);
 
 		http
 			.requestMatcher(new OrRequestMatcher(endpointMatchers))
 			.authorizeRequests(authorizeRequests -> {
-				authorizeRequests.antMatchers(GET, DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI,
-					DEFAULT_JWK_SET_ENDPOINT_URI).permitAll();
+				authorizeRequests.requestMatchers(oidcProviderConfigurationEndpointMatcher,
+					jwkSetEndpointMatcher).permitAll();
 				authorizeRequests.anyRequest().authenticated();
 			})
 			.csrf(csrf -> csrf.ignoringRequestMatchers(endpointMatchers))
-			.apply(authorizationServerConfigurer);
+			.apply(new ClientAuthenticationConfigurer<>());
+
+		return http.build();
+	}
+
+	private final class ClientAuthenticationConfigurer<B extends HttpSecurityBuilder<B>>
+		extends AbstractHttpConfigurer<ClientAuthenticationConfigurer<B>, B> {
+
+		@Override
+		public void init(B builder) {
+			ExceptionHandlingConfigurer<B> exceptionHandling = builder.getConfigurer(ExceptionHandlingConfigurer.class);
+			if (exceptionHandling != null) {
+				DelegatingAuthenticationEntryPoint authenticationEntryPoint =
+					new DelegatingAuthenticationEntryPoint(new LinkedHashMap<>() {{
+						put(clientAuthenticationMatcher, new HttpStatusEntryPoint(UNAUTHORIZED));
+					}});
+				authenticationEntryPoint.setDefaultEntryPoint(new LoginUrlAuthenticationEntryPoint(DEFAULT_LOGIN_PAGE_URL));
+				exceptionHandling.authenticationEntryPoint(authenticationEntryPoint);
+			}
+		}
+
+		@Override
+		public void configure(B builder) {
+			// OAuth2.0客户端请求提取身份认证凭证过滤器
+			builder.addFilterAfter(postProcess(new OAuth2ClientAuthenticationFilter(
+				getBean(builder, RegisteredClientRepository.class),
+				getBean(builder, OAuth2AuthorizationService.class),
+				clientAuthenticationMatcher)
+			), AbstractPreAuthenticatedProcessingFilter.class);
+		}
+
+		private <T> T getBean(B builder, Class<T> type) {
+			return builder.getSharedObject(ApplicationContext.class).getBean(type);
+		}
+
 	}
 
 }

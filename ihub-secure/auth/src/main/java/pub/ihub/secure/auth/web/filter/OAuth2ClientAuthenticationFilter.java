@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pub.ihub.secure.oauth2.server.web.filter;
+package pub.ihub.secure.auth.web.filter;
 
 import lombok.Setter;
 import org.springframework.core.convert.converter.Converter;
@@ -23,27 +23,22 @@ import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
-import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
-import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
-import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.core.endpoint.PkceParameterNames;
 import org.springframework.security.oauth2.core.http.converter.OAuth2ErrorHttpMessageConverter;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.util.CollectionUtils;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.util.StringUtils;
+import org.springframework.web.filter.OncePerRequestFilter;
 import pub.ihub.secure.oauth2.server.OAuth2Authorization;
 import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.RegisteredClientRepository;
 import pub.ihub.secure.oauth2.server.TokenType;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
-import pub.ihub.secure.oauth2.server.web.OAuth2Filter;
 import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientAuthToken;
 
 import javax.servlet.FilterChain;
@@ -51,8 +46,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -61,13 +54,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static cn.hutool.core.collection.CollUtil.isEmpty;
+import static cn.hutool.core.collection.CollUtil.isNotEmpty;
 import static cn.hutool.core.lang.Assert.isTrue;
+import static cn.hutool.core.lang.Assert.notBlank;
 import static cn.hutool.core.lang.Assert.notNull;
+import static cn.hutool.core.map.MapUtil.empty;
 import static cn.hutool.core.text.CharSequenceUtil.isBlank;
 import static cn.hutool.core.text.CharSequenceUtil.isNotBlank;
+import static java.net.URLDecoder.decode;
+import static java.nio.charset.StandardCharsets.US_ASCII;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Base64.getDecoder;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
@@ -79,6 +79,7 @@ import static org.springframework.security.oauth2.core.ClientAuthenticationMetho
 import static org.springframework.security.oauth2.core.ClientAuthenticationMethod.POST;
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_CLIENT;
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_REQUEST;
+import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.SERVER_ERROR;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CLIENT_ID;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CLIENT_SECRET;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CODE;
@@ -88,12 +89,12 @@ import static org.springframework.security.web.authentication.www.BasicAuthentic
 import static pub.ihub.core.ObjectBuilder.builder;
 
 /**
- * OAuth2.0客户端授权令牌认证过滤器
+ * OAuth2客户端授权令牌认证过滤器
  *
  * @author henry
  */
 @Setter
-public class OAuth2ClientAuthenticationFilter extends OAuth2Filter {
+public class OAuth2ClientAuthenticationFilter extends OncePerRequestFilter {
 
 	private final RegisteredClientRepository registeredClientRepository;
 	private final OAuth2AuthorizationService authorizationService;
@@ -104,12 +105,11 @@ public class OAuth2ClientAuthenticationFilter extends OAuth2Filter {
 	/**
 	 * 认证转换器
 	 */
-	private final Converter<HttpServletRequest, OAuth2ClientAuthToken> authenticationConverter;
+	private Converter<HttpServletRequest, OAuth2ClientAuthToken> authenticationConverter;
 	/**
 	 * 异常转换器
 	 */
-	private final HttpMessageConverter<OAuth2Error> errorHttpResponseConverter =
-		new OAuth2ErrorHttpMessageConverter();
+	private final HttpMessageConverter<OAuth2Error> errorHttpResponseConverter = new OAuth2ErrorHttpMessageConverter();
 	/**
 	 * 认证凭证转换器
 	 */
@@ -132,7 +132,7 @@ public class OAuth2ClientAuthenticationFilter extends OAuth2Filter {
 		this.registeredClientRepository = registeredClientRepository;
 		this.authorizationService = authorizationService;
 		this.requestMatcher = requestMatcher;
-		this.authenticationConverter = OAuth2ClientAuthenticationFilter::convert;
+		authenticationConverter = OAuth2ClientAuthenticationFilter::convert;
 		authenticationSuccessHandler = this::onAuthenticationSuccess;
 		authenticationFailureHandler = this::onAuthenticationFailure;
 	}
@@ -149,13 +149,9 @@ public class OAuth2ClientAuthenticationFilter extends OAuth2Filter {
 					isTrue(registeredClient.getClientAuthenticationMethods().contains(
 						authentication.getClientAuthenticationMethod()), invalidClientException());
 
-					boolean authenticatedCredentials = false;
-					if (authentication.getCredentials() != null) {
-						// TODO Use PasswordEncoder.matches()
-						isTrue(registeredClient.getClientSecret().equals(authentication.getCredentials().toString()),
-							invalidClientException());
-						authenticatedCredentials = true;
-					}
+					// TODO Use PasswordEncoder.matches()
+					boolean authenticatedCredentials = authentication.getCredentials() != null &&
+						registeredClient.getClientSecret().equals(authentication.getCredentials().toString());
 					isTrue(authenticatedCredentials ||
 						authenticatePkceIfAvailable(authentication, registeredClient), invalidClientException());
 
@@ -191,12 +187,10 @@ public class OAuth2ClientAuthenticationFilter extends OAuth2Filter {
 			if (!parts[0].equalsIgnoreCase(AUTHENTICATION_SCHEME_BASIC)) {
 				return null;
 			}
-			byte[] decodedCredentials = Base64.getDecoder().decode(parts[1].getBytes(UTF_8));
-			String[] credentials = new String(decodedCredentials, UTF_8).split(":", 2);
-			String clientId = URLDecoder.decode(credentials[0], UTF_8.name());
-			String clientSecret = URLDecoder.decode(credentials[1], UTF_8.name());
-			return new OAuth2ClientAuthToken(clientId, clientSecret, BASIC,
-				filterParameters(getParametersWithPkce(request)));
+			String[] credentials = new String(getDecoder().decode(parts[1].getBytes(UTF_8)), UTF_8)
+				.split(":", 2);
+			return new OAuth2ClientAuthToken(decode(credentials[0], UTF_8.name()), decode(credentials[1], UTF_8.name()),
+				BASIC, filterParameters(getParametersWithPkce(request)));
 		} catch (Exception ex) {
 			throw new OAuth2AuthenticationException(new OAuth2Error(INVALID_REQUEST), ex);
 		}
@@ -236,7 +230,7 @@ public class OAuth2ClientAuthenticationFilter extends OAuth2Filter {
 		if (isEmpty(parameters)) {
 			return null;
 		}
-		return new OAuth2ClientAuthToken(getParameterValue(parameters, CLIENT_ID),
+		return new OAuth2ClientAuthToken(getParameterValue(parameters, CLIENT_ID, false),
 			filterParameters(parameters, CLIENT_ID));
 	}
 
@@ -248,7 +242,21 @@ public class OAuth2ClientAuthenticationFilter extends OAuth2Filter {
 	private void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 										 AuthenticationException failed) throws IOException {
 		clearContext();
-		sendErrorResponse(response, ((OAuth2AuthenticationException) failed).getError());
+		OAuth2Error error = ((OAuth2AuthenticationException) failed).getError();
+		errorHttpResponseConverter.write(error, null, builder(ServletServerHttpResponse::new, response)
+			.set(ServletServerHttpResponse::setStatusCode,
+				INVALID_CLIENT.equals(error.getErrorCode()) ? UNAUTHORIZED : BAD_REQUEST).build());
+	}
+
+	private static String getParameterValue(MultiValueMap<String, String> parameters, String key, boolean canNull) {
+		List<String> values = parameters.get(key);
+		if (canNull && isEmpty(values)) {
+			return null;
+		} else if (isNotEmpty(values) && values.size() == 1) {
+			return notBlank(values.get(0), exceptionSupplier(key));
+		} else {
+			throw exceptionSupplier(key).get();
+		}
 	}
 
 	private static MultiValueMap<String, String> getParametersWithPkce(HttpServletRequest request, String... checkKeys) {
@@ -259,32 +267,44 @@ public class OAuth2ClientAuthenticationFilter extends OAuth2Filter {
 		return null;
 	}
 
-	private void sendErrorResponse(HttpServletResponse response, OAuth2Error error) throws IOException {
-		this.errorHttpResponseConverter.write(error, null, builder(ServletServerHttpResponse::new, response)
-			.set(ServletServerHttpResponse::setStatusCode,
-				INVALID_CLIENT.equals(error.getErrorCode()) ? UNAUTHORIZED : BAD_REQUEST).build());
+	public static MultiValueMap<String, String> getParameters(HttpServletRequest request, String... checkKeys) {
+		Map<String, String[]> parameterMap = request.getParameterMap();
+		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>(parameterMap.size());
+		parameterMap.forEach((key, values) -> {
+			if (values.length > 0) {
+				for (String value : values) {
+					parameters.add(key, value);
+				}
+			}
+		});
+		for (String key : checkKeys) {
+			List<String> values = parameters.get(key);
+			isTrue(isEmpty(values) || values.size() == 1, exceptionSupplier(key));
+		}
+		return parameters;
+	}
+
+	public static Map<String, Object> filterParameters(MultiValueMap<String, String> parameters, String... exceptKeys) {
+		return isEmpty(parameters) ? empty() : parameters.entrySet().stream()
+			.filter(e -> Arrays.stream(exceptKeys).noneMatch(k -> k.equals(e.getKey())))
+			.collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().get(0)));
 	}
 
 	private boolean authenticatePkceIfAvailable(OAuth2ClientAuthToken clientAuthentication,
 												RegisteredClient registeredClient) {
-
 		Map<String, Object> parameters = clientAuthentication.getAdditionalParameters();
-		if (CollectionUtils.isEmpty(parameters) || !authorizationCodeGrant(parameters)) {
+		if (isEmpty(parameters) || !authorizationCodeGrant(parameters)) {
 			return false;
 		}
 
-		OAuth2Authorization authorization = this.authorizationService.findByToken(
-			(String) parameters.get(CODE), TokenType.AUTHORIZATION_CODE);
-		notNull(authorization, invalidClientException());
+		OAuth2Authorization authorization = notNull(authorizationService.findByToken(
+			(String) parameters.get(CODE), TokenType.AUTHORIZATION_CODE), invalidClientException());
+		Map<String, Object> additionalParameters = authorization.getAuthorizationRequest().getAdditionalParameters();
 
-		OAuth2AuthorizationRequest authorizationRequest = authorization.getAuthorizationRequest();
-
-		String codeChallenge = (String) authorizationRequest.getAdditionalParameters()
-			.get(PkceParameterNames.CODE_CHALLENGE);
+		String codeChallenge = (String) additionalParameters.get(PkceParameterNames.CODE_CHALLENGE);
 		isTrue(isNotBlank(codeChallenge) || registeredClient.isRequireProofKey(), invalidClientException());
 
-		String codeChallengeMethod = (String) authorizationRequest.getAdditionalParameters()
-			.get(PkceParameterNames.CODE_CHALLENGE_METHOD);
+		String codeChallengeMethod = (String) additionalParameters.get(PkceParameterNames.CODE_CHALLENGE_METHOD);
 		String codeVerifier = (String) parameters.get(PkceParameterNames.CODE_VERIFIER);
 		isTrue(codeVerifierValid(codeVerifier, codeChallenge, codeChallengeMethod), invalidClientException());
 
@@ -292,28 +312,30 @@ public class OAuth2ClientAuthenticationFilter extends OAuth2Filter {
 	}
 
 	private static boolean authorizationCodeGrant(Map<String, Object> parameters) {
-		return AuthorizationGrantType.AUTHORIZATION_CODE.getValue().equals(
-			parameters.get(OAuth2ParameterNames.GRANT_TYPE)) &&
-			parameters.get(CODE) != null;
+		return AUTHORIZATION_CODE.getValue().equals(parameters.get(GRANT_TYPE)) && parameters.get(CODE) != null;
 	}
 
 	private static boolean codeVerifierValid(String codeVerifier, String codeChallenge, String codeChallengeMethod) {
-		if (!StringUtils.hasText(codeVerifier)) {
+		if (isBlank(codeVerifier)) {
 			return false;
-		} else if (!StringUtils.hasText(codeChallengeMethod) || "plain".equals(codeChallengeMethod)) {
+		} else if (isBlank(codeChallengeMethod) || "plain".equals(codeChallengeMethod)) {
 			return codeVerifier.equals(codeChallenge);
 		} else if ("S256".equals(codeChallengeMethod)) {
 			try {
-				MessageDigest md = MessageDigest.getInstance("SHA-256");
-				byte[] digest = md.digest(codeVerifier.getBytes(StandardCharsets.US_ASCII));
-				String encodedVerifier = Base64.getUrlEncoder().withoutPadding().encodeToString(digest);
-				return encodedVerifier.equals(codeChallenge);
+				byte[] digest = MessageDigest.getInstance("SHA-256").digest(codeVerifier.getBytes(US_ASCII));
+				return Base64.getUrlEncoder().withoutPadding().encodeToString(digest).equals(codeChallenge);
 			} catch (NoSuchAlgorithmException ex) {
 				// It is unlikely that SHA-256 is not available on the server. If it is not available,
 				// there will likely be bigger issues as well. We default to SERVER_ERROR.
 			}
 		}
-		throw new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.SERVER_ERROR));
+		throw exceptionSupplier(SERVER_ERROR).get();
+	}
+
+	private static Supplier<OAuth2AuthenticationException> exceptionSupplier(String parameterName) {
+		return () -> new OAuth2AuthenticationException(
+			new OAuth2Error(INVALID_REQUEST, "OAuth 2.0参数错误：" + parameterName, null)
+		);
 	}
 
 	private static Supplier<OAuth2AuthenticationException> invalidClientException() {

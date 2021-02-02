@@ -37,11 +37,11 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2Authorizat
 import static org.springframework.security.oauth2.core.oidc.OidcScopes.OPENID;
 import static org.springframework.security.oauth2.jose.jws.SignatureAlgorithm.RS256;
 import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
-import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_AUTHORIZATION_ENDPOINT_URI;
-import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_JWK_SET_ENDPOINT_URI;
-import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI;
-import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.DEFAULT_TOKEN_ENDPOINT_URI;
-import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfigurer.ISSUER_URI;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfiguration.DEFAULT_AUTHORIZATION_ENDPOINT_URI;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfiguration.DEFAULT_JWK_SET_ENDPOINT_URI;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfiguration.DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfiguration.DEFAULT_TOKEN_ENDPOINT_URI;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfiguration.ISSUER_URI;
 
 /**
  * @author liheng

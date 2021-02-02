@@ -20,13 +20,35 @@ import cn.hutool.core.lang.Assert;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.SignedJWT;
 import lombok.RequiredArgsConstructor;
-import pub.ihub.secure.oauth2.jose.JoseHeader;
+import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import org.springframework.security.oauth2.jwt.Jwt;
-import pub.ihub.secure.oauth2.jwt.JwtClaimsSet;
-import pub.ihub.secure.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtException;
+import org.springframework.util.StringUtils;
 import pub.ihub.secure.crypto.CryptoKey;
 import pub.ihub.secure.crypto.CryptoKeySource;
+import pub.ihub.secure.oauth2.jose.JoseHeader;
+import pub.ihub.secure.oauth2.jwt.JwtClaimsSet;
+import pub.ihub.secure.oauth2.jwt.JwtEncoder;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import static java.util.Collections.singletonList;
+import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.SCOPE;
+import static org.springframework.security.oauth2.core.oidc.IdTokenClaimNames.AZP;
+import static org.springframework.security.oauth2.jose.jws.SignatureAlgorithm.RS256;
+import static org.springframework.security.oauth2.jwt.JwtClaimNames.AUD;
+import static org.springframework.security.oauth2.jwt.JwtClaimNames.EXP;
+import static org.springframework.security.oauth2.jwt.JwtClaimNames.IAT;
+import static org.springframework.security.oauth2.jwt.JwtClaimNames.ISS;
+import static org.springframework.security.oauth2.jwt.JwtClaimNames.NBF;
+import static org.springframework.security.oauth2.jwt.JwtClaimNames.SUB;
+import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfiguration.ISSUER_URI;
+import static pub.ihub.secure.oauth2.jose.JoseHeader.withAlgorithm;
 
 /**
  * Jws编码器
@@ -54,6 +76,52 @@ public class NimbusJwsEncoder implements JwtEncoder {
 
 		return new Jwt(signedJwt.serialize(), claims.getIssuedAt(), claims.getExpiresAt(),
 			headers.getHeaders(), claims.getClaims());
+	}
+
+	public static Jwt issueJwtAccessToken(JwtEncoder jwtEncoder, String subject, String audience, Set<String> scopes,
+										  Duration tokenTimeToLive) {
+		JoseHeader joseHeader = withAlgorithm(RS256);
+
+		Instant issuedAt = Instant.now();
+		Instant expiresAt = issuedAt.plus(tokenTimeToLive);
+
+		return jwtEncoder.encode(joseHeader, new JwtClaimsSet(new HashMap<>(7) {
+			{
+				put(ISS, ISSUER_URI);
+				put(SUB, subject);
+				put(AUD, singletonList(audience));
+				put(IAT, issuedAt);
+				put(EXP, expiresAt);
+				put(NBF, issuedAt);
+				put(SCOPE, scopes);
+			}
+		}));
+	}
+
+	public static Jwt issueIdToken(JwtEncoder jwtEncoder, String subject, String audience, String nonce) {
+		JoseHeader joseHeader = withAlgorithm(RS256);
+
+		Instant issuedAt = Instant.now();
+		// TODO Allow configuration for id token time-to-live
+		Instant expiresAt = issuedAt.plus(30, ChronoUnit.MINUTES);
+
+		Map<String, Object> claims = new HashMap<>(7) {
+			{
+				put(ISS, ISSUER_URI);
+				put(SUB, subject);
+				put(AUD, singletonList(audience));
+				put(IAT, issuedAt);
+				put(EXP, expiresAt);
+				put(AZP, audience);
+			}
+		};
+		if (StringUtils.hasText(nonce)) {
+			claims.put(IdTokenClaimNames.NONCE, nonce);
+		}
+
+		// TODO Add 'auth_time' claim
+
+		return jwtEncoder.encode(joseHeader, new JwtClaimsSet(claims));
 	}
 
 }
