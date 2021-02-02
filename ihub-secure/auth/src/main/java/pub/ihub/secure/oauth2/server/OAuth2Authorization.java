@@ -20,6 +20,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.keygen.Base64StringKeyGenerator;
+import org.springframework.security.crypto.keygen.StringKeyGenerator;
 import org.springframework.security.oauth2.core.AbstractOAuth2Token;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
@@ -34,7 +36,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static cn.hutool.core.lang.Assert.notBlank;
-import static cn.hutool.core.lang.Assert.notNull;
+import static java.util.Base64.getUrlEncoder;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
 import static pub.ihub.secure.oauth2.server.token.OAuth2TokenMetadata.INVALIDATED;
 
@@ -55,11 +57,11 @@ public class OAuth2Authorization implements Serializable {
 	public static String ACCESS_TOKEN_ATTRIBUTES = OAuth2Authorization.class.getName().concat(".ACCESS_TOKEN_ATTRIBUTES");
 
 	private static final long serialVersionUID = SERIAL_VERSION_UID;
+	private static final StringKeyGenerator STATE_GENERATOR = new Base64StringKeyGenerator(getUrlEncoder());
 	private String registeredClientId;
 	private String principalName;
 	private OAuth2Tokens tokens;
-
-	private Map<String, Object> attributes;
+	private Map<String, Object> attributes = new HashMap<>(4);
 
 	@SuppressWarnings("unchecked")
 	public <T> T getAttribute(String name) {
@@ -75,7 +77,6 @@ public class OAuth2Authorization implements Serializable {
 	}
 
 	public static ObjectBuilder<OAuth2Authorization> from(OAuth2Authorization authorization) {
-		notNull(authorization);
 		return ObjectBuilder.builder(OAuth2Authorization::new)
 			.set(OAuth2Authorization::setRegisteredClientId, authorization.registeredClientId)
 			.set(OAuth2Authorization::setPrincipalName, authorization.principalName)

@@ -55,7 +55,7 @@ public class OAuth2TokenMetadata implements Serializable {
 
 	@SuppressWarnings("unchecked")
 	public <T> T getMetadata(String name) {
-		return (T) this.metadata.get(notBlank(name));
+		return (T) metadata.get(notBlank(name));
 	}
 
 }

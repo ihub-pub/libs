@@ -54,7 +54,7 @@ import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 import pub.ihub.secure.oauth2.server.token.OAuth2AuthorizationCode;
 import pub.ihub.secure.oauth2.server.token.OAuth2TokenMetadata;
 import pub.ihub.secure.oauth2.server.token.OAuth2Tokens;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientAuthToken;
+import pub.ihub.secure.oauth2.server.token.OAuth2ClientAuthToken;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -139,7 +139,6 @@ public class OAuth2Controller {
 
 	private final RegisteredClientRepository registeredClientRepository;
 	private final OAuth2AuthorizationService authorizationService;
-	private final StringKeyGenerator codeGenerator = new Base64StringKeyGenerator(getUrlEncoder().withoutPadding(), 96);
 	private final StringKeyGenerator stateGenerator = new Base64StringKeyGenerator(getUrlEncoder());
 	private final JwtEncoder jwtEncoder;
 	private final TemplateEngine engine;
@@ -229,8 +228,7 @@ public class OAuth2Controller {
 				put("scopes", authorizationRequest.getScopes());
 			}}, response.getWriter());
 		} else {
-			OAuth2AuthorizationCode authorizationCode = generateAuthCode(codeGenerator.generateKey(),
-				registeredClient.getAccessTokenTimeToLive());
+			OAuth2AuthorizationCode authorizationCode = generateAuthCode(registeredClient.getAccessTokenTimeToLive());
 			authorizationService.save(builder
 				.set(OAuth2Authorization::setTokens,
 					ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::token, authorizationCode).build())
@@ -272,8 +270,7 @@ public class OAuth2Controller {
 		}
 
 		if (CONSENT_ACTION_APPROVE.equals(action)) {
-			OAuth2AuthorizationCode authorizationCode = generateAuthCode(codeGenerator.generateKey(),
-				registeredClient.getAccessTokenTimeToLive());
+			OAuth2AuthorizationCode authorizationCode = generateAuthCode(registeredClient.getAccessTokenTimeToLive());
 			authorizationService.save(OAuth2Authorization.from(authorization)
 				.set(OAuth2Authorization::setTokens,
 					ObjectBuilder.builder(OAuth2Tokens::new).set(OAuth2Tokens::token, authorizationCode).build())
@@ -413,11 +410,7 @@ public class OAuth2Controller {
 			.set(OAuth2Authorization::setPrincipalName, clientPrincipal.getName())
 			.set(OAuth2Authorization::setTokens, ObjectBuilder.builder(OAuth2Tokens::new)
 				.set(OAuth2Tokens::accessToken, accessToken).build())
-			.set(OAuth2Authorization::setAttributes, new HashMap<>(1) {
-				{
-					put(ACCESS_TOKEN_ATTRIBUTES, jwt);
-				}
-			})
+			.put(OAuth2Authorization::getAttributes, ACCESS_TOKEN_ATTRIBUTES, jwt)
 			.build());
 
 		sendAccessTokenResponse(response, accessToken, null, Collections.emptyMap());

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pub.ihub.secure.oauth2.server.web.token;
+package pub.ihub.secure.oauth2.server.token;
 
 import lombok.Getter;
 import org.springframework.lang.Nullable;

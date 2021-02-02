@@ -39,7 +39,7 @@ import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.RegisteredClientRepository;
 import pub.ihub.secure.oauth2.server.TokenType;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
-import pub.ihub.secure.oauth2.server.web.token.OAuth2ClientAuthToken;
+import pub.ihub.secure.oauth2.server.token.OAuth2ClientAuthToken;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

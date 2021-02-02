@@ -66,7 +66,7 @@ public class OAuth2Tokens implements Serializable {
 	@SuppressWarnings("unchecked")
 	public <T extends AbstractOAuth2Token> T getToken(Class<T> tokenType) {
 		Assert.notNull(tokenType, "tokenType cannot be null");
-		OAuth2TokenHolder tokenHolder = this.tokens.get(tokenType);
+		OAuth2TokenHolder tokenHolder = tokens.get(tokenType);
 		return tokenHolder != null ? (T) tokenHolder.getToken() : null;
 	}
 
@@ -74,7 +74,7 @@ public class OAuth2Tokens implements Serializable {
 	@SuppressWarnings("unchecked")
 	public <T extends AbstractOAuth2Token> T getToken(String token) {
 		Assert.hasText(token, "token cannot be empty");
-		OAuth2TokenHolder tokenHolder = this.tokens.values().stream()
+		OAuth2TokenHolder tokenHolder = tokens.values().stream()
 			.filter(holder -> holder.getToken().getTokenValue().equals(token))
 			.findFirst()
 			.orElse(null);
@@ -84,7 +84,7 @@ public class OAuth2Tokens implements Serializable {
 	@Nullable
 	public <T extends AbstractOAuth2Token> OAuth2TokenMetadata getTokenMetadata(T token) {
 		Assert.notNull(token, "token cannot be null");
-		OAuth2TokenHolder tokenHolder = this.tokens.get(token.getClass());
+		OAuth2TokenHolder tokenHolder = tokens.get(token.getClass());
 		return (tokenHolder != null && tokenHolder.getToken().equals(token)) ? tokenHolder.getTokenMetadata() : null;
 	}
 
@@ -124,7 +124,7 @@ public class OAuth2Tokens implements Serializable {
 	@RequiredArgsConstructor
 	@Getter
 	@EqualsAndHashCode
-	protected static class OAuth2TokenHolder implements Serializable {
+	private static class OAuth2TokenHolder implements Serializable {
 
 		private static final long serialVersionUID = SERIAL_VERSION_UID;
 		private final AbstractOAuth2Token token;
