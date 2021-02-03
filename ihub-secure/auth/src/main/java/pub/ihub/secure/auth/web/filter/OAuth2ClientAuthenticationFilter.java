@@ -267,7 +267,7 @@ public class OAuth2ClientAuthenticationFilter extends OncePerRequestFilter {
 		return null;
 	}
 
-	public static MultiValueMap<String, String> getParameters(HttpServletRequest request, String... checkKeys) {
+	private static MultiValueMap<String, String> getParameters(HttpServletRequest request, String... checkKeys) {
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>(parameterMap.size());
 		parameterMap.forEach((key, values) -> {
@@ -284,10 +284,14 @@ public class OAuth2ClientAuthenticationFilter extends OncePerRequestFilter {
 		return parameters;
 	}
 
-	public static Map<String, Object> filterParameters(MultiValueMap<String, String> parameters, String... exceptKeys) {
+	private static Map<String, Object> filterParameters(MultiValueMap<String, String> parameters, String... exceptKeys) {
 		return isEmpty(parameters) ? empty() : parameters.entrySet().stream()
 			.filter(e -> Arrays.stream(exceptKeys).noneMatch(k -> k.equals(e.getKey())))
 			.collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().get(0)));
+	}
+
+	public static Map<String, Object> filterParameters(HttpServletRequest request, String... exceptKeys) {
+		return filterParameters(getParameters(request), exceptKeys);
 	}
 
 	private boolean authenticatePkceIfAvailable(OAuth2ClientAuthToken clientAuthentication,

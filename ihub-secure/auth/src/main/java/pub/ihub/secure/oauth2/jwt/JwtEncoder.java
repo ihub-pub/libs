@@ -16,16 +16,18 @@
 
 package pub.ihub.secure.oauth2.jwt;
 
-import pub.ihub.secure.oauth2.jose.JoseHeader;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtException;
+import pub.ihub.secure.oauth2.jose.JoseHeader;
+import pub.ihub.secure.oauth2.server.client.RegisteredClient;
+
+import java.util.Set;
 
 /**
  * Jws编码器
  *
  * @author henry
  */
-@FunctionalInterface
 public interface JwtEncoder {
 
 	/**
@@ -37,5 +39,27 @@ public interface JwtEncoder {
 	 * @throws JwtException 异常类型
 	 */
 	Jwt encode(JoseHeader headers, JwtClaimsSet claims) throws JwtException;
+
+	/**
+	 * 发放jwt访问令牌
+	 *
+	 * @param subject 令牌服务主体
+	 * @param client  注册客户端
+	 * @param scopes  令牌作用域
+	 * @return 令牌
+	 * @throws JwtException jwt异常
+	 */
+	Jwt issueJwtAccessToken(String subject, RegisteredClient client, Set<String> scopes) throws JwtException;
+
+	/**
+	 * 发放ID令牌
+	 *
+	 * @param subject 令牌服务主体
+	 * @param client  注册客户端
+	 * @param nonce   随机数，用于客户端验证
+	 * @return 令牌
+	 * @throws JwtException jwt异常
+	 */
+	Jwt issueIdToken(String subject, RegisteredClient client, String nonce) throws JwtException;
 
 }

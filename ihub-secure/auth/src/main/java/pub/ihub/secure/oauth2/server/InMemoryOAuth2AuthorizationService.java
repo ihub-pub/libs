@@ -85,7 +85,7 @@ public class InMemoryOAuth2AuthorizationService implements OAuth2AuthorizationSe
 	}
 
 	private static boolean matchesAuthorizationCode(OAuth2Authorization authorization, String token) {
-		OAuth2AuthorizationCode authorizationCode = authorization.getTokens().getToken(OAuth2AuthorizationCode.class);
+		OAuth2AuthorizationCode authorizationCode = authorization.getTokens().getAuthorizationCode();
 		return authorizationCode != null && authorizationCode.getTokenValue().equals(token);
 	}
 

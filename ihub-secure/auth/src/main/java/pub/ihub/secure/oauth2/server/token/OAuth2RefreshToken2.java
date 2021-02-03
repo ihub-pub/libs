@@ -16,14 +16,10 @@
 
 package pub.ihub.secure.oauth2.server.token;
 
-import org.springframework.security.crypto.keygen.Base64StringKeyGenerator;
-import org.springframework.security.crypto.keygen.StringKeyGenerator;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 
-import java.time.Duration;
 import java.time.Instant;
 
-import static java.util.Base64.getUrlEncoder;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
 
 /**
@@ -37,8 +33,6 @@ import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
 public class OAuth2RefreshToken2 extends OAuth2RefreshToken {
 
 	private static final long serialVersionUID = SERIAL_VERSION_UID;
-	private static final StringKeyGenerator TOKEN_GENERATOR =
-		new Base64StringKeyGenerator(getUrlEncoder().withoutPadding(), 96);
 
 	private final Instant expiresAt;
 
@@ -50,11 +44,6 @@ public class OAuth2RefreshToken2 extends OAuth2RefreshToken {
 	@Override
 	public Instant getExpiresAt() {
 		return this.expiresAt;
-	}
-
-	public static OAuth2RefreshToken issueRefreshToken(Duration tokenTimeToLive) {
-		Instant issuedAt = Instant.now();
-		return new OAuth2RefreshToken2(TOKEN_GENERATOR.generateKey(), issuedAt, issuedAt.plus(tokenTimeToLive));
 	}
 
 }

@@ -16,30 +16,30 @@
 
 package pub.ihub.secure.oauth2.jose.jws;
 
-import cn.hutool.core.lang.Assert;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.SignedJWT;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtException;
-import org.springframework.util.StringUtils;
 import pub.ihub.secure.crypto.CryptoKey;
 import pub.ihub.secure.crypto.CryptoKeySource;
 import pub.ihub.secure.oauth2.jose.JoseHeader;
 import pub.ihub.secure.oauth2.jwt.JwtClaimsSet;
 import pub.ihub.secure.oauth2.jwt.JwtEncoder;
+import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 
-import java.time.Duration;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import static cn.hutool.core.lang.Assert.notBlank;
+import static cn.hutool.core.lang.Assert.notNull;
+import static cn.hutool.core.text.CharSequenceUtil.isNotBlank;
 import static java.util.Collections.singletonList;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.SCOPE;
 import static org.springframework.security.oauth2.core.oidc.IdTokenClaimNames.AZP;
+import static org.springframework.security.oauth2.core.oidc.IdTokenClaimNames.NONCE;
 import static org.springframework.security.oauth2.jose.jws.SignatureAlgorithm.RS256;
 import static org.springframework.security.oauth2.jwt.JwtClaimNames.AUD;
 import static org.springframework.security.oauth2.jwt.JwtClaimNames.EXP;
@@ -63,8 +63,8 @@ public class NimbusJwsEncoder implements JwtEncoder {
 
 	@Override
 	public Jwt encode(JoseHeader headers, JwtClaimsSet claims) throws JwtException {
-		String keyAlgorithm = Assert.notBlank(headers.getJwsAlgorithmValue(), "密钥算法不能为空！");
-		CryptoKey<?> cryptoKey = Assert.notNull(keySource.get(keyAlgorithm), "不支持密钥算法'%s'",
+		String keyAlgorithm = notBlank(headers.getJwsAlgorithmValue(), "密钥算法不能为空！");
+		CryptoKey<?> cryptoKey = notNull(keySource.get(keyAlgorithm), "不支持密钥算法'%s'",
 			headers.getJwsAlgorithm().getName());
 
 		SignedJWT signedJwt = new SignedJWT(headers.buildJwsHeader(), claims.buildJwtClaimsSet());
@@ -78,50 +78,40 @@ public class NimbusJwsEncoder implements JwtEncoder {
 			headers.getHeaders(), claims.getClaims());
 	}
 
-	public static Jwt issueJwtAccessToken(JwtEncoder jwtEncoder, String subject, String audience, Set<String> scopes,
-										  Duration tokenTimeToLive) {
-		JoseHeader joseHeader = withAlgorithm(RS256);
-
+	@Override
+	public Jwt issueJwtAccessToken(String subject, RegisteredClient client, Set<String> scopes) throws JwtException {
 		Instant issuedAt = Instant.now();
-		Instant expiresAt = issuedAt.plus(tokenTimeToLive);
-
-		return jwtEncoder.encode(joseHeader, new JwtClaimsSet(new HashMap<>(7) {
+		return encode(withAlgorithm(RS256), new JwtClaimsSet(new HashMap<>(7) {
 			{
 				put(ISS, ISSUER_URI);
 				put(SUB, subject);
-				put(AUD, singletonList(audience));
+				put(AUD, singletonList(client.getClientId()));
 				put(IAT, issuedAt);
-				put(EXP, expiresAt);
+				put(EXP, issuedAt.plus(client.getAccessTokenTimeToLive()));
 				put(NBF, issuedAt);
 				put(SCOPE, scopes);
 			}
 		}));
 	}
 
-	public static Jwt issueIdToken(JwtEncoder jwtEncoder, String subject, String audience, String nonce) {
-		JoseHeader joseHeader = withAlgorithm(RS256);
-
+	@Override
+	public Jwt issueIdToken(String subject, RegisteredClient client, String nonce) throws JwtException {
 		Instant issuedAt = Instant.now();
-		// TODO Allow configuration for id token time-to-live
-		Instant expiresAt = issuedAt.plus(30, ChronoUnit.MINUTES);
-
 		Map<String, Object> claims = new HashMap<>(7) {
 			{
 				put(ISS, ISSUER_URI);
 				put(SUB, subject);
-				put(AUD, singletonList(audience));
+				put(AUD, singletonList(client.getClientId()));
 				put(IAT, issuedAt);
-				put(EXP, expiresAt);
-				put(AZP, audience);
+				put(EXP, issuedAt.plus(client.getIdTokenTimeToLive()));
+				put(AZP, client.getClientId());
 			}
 		};
-		if (StringUtils.hasText(nonce)) {
-			claims.put(IdTokenClaimNames.NONCE, nonce);
+		if (isNotBlank(nonce)) {
+			claims.put(NONCE, nonce);
 		}
-
 		// TODO Add 'auth_time' claim
-
-		return jwtEncoder.encode(joseHeader, new JwtClaimsSet(claims));
+		return encode(withAlgorithm(RS256), new JwtClaimsSet(claims));
 	}
 
 }

@@ -41,7 +41,7 @@ import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
 import static pub.ihub.secure.oauth2.server.token.OAuth2TokenMetadata.INVALIDATED;
 
 /**
- * OAuth 2.0授权的表示形式，其中包含与resource owner授予client的授权相关的状态。
+ * OAuth2授权实体
  *
  * @author henry
  */
@@ -84,16 +84,21 @@ public class OAuth2Authorization implements Serializable {
 			.set(OAuth2Authorization::setAttributes, new HashMap<>(authorization.getAttributes()));
 	}
 
+	public OAuth2Authorization generatorState() {
+		attributes.put(STATE, STATE_GENERATOR.generateKey());
+		return this;
+	}
+
 	public <T extends AbstractOAuth2Token> OAuth2Authorization invalidate(T token) {
 		OAuth2TokenMetadata metadata = ObjectBuilder.builder(OAuth2TokenMetadata::new)
 			.put(OAuth2TokenMetadata::getMetadata, INVALIDATED, true).build();
-		OAuth2Tokens tokens = ObjectBuilder.clone(this.getTokens()).build();
+		OAuth2Tokens tokens = ObjectBuilder.clone(this.tokens).build();
 		tokens.token(token, metadata);
 
 		if (OAuth2RefreshToken.class.isAssignableFrom(token.getClass())) {
-			tokens.token(this.getTokens().getAccessToken(), metadata);
-			OAuth2AuthorizationCode authorizationCode = this.getTokens().getToken(OAuth2AuthorizationCode.class);
-			if (authorizationCode != null && !this.getTokens().getTokenMetadata(authorizationCode).isInvalidated()) {
+			tokens.token(this.tokens.getAccessToken(), metadata);
+			OAuth2AuthorizationCode authorizationCode = this.tokens.getAuthorizationCode();
+			if (authorizationCode != null && !this.tokens.isInvalidated(OAuth2AuthorizationCode.class)) {
 				tokens.token(authorizationCode, metadata);
 			}
 		}

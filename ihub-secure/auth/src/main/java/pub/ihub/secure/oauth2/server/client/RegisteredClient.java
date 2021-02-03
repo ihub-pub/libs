@@ -27,6 +27,11 @@ import java.time.Duration;
 import java.util.Set;
 
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
+import static pub.ihub.secure.core.GrantType.AUTHORIZATION_CODE;
+import static pub.ihub.secure.core.GrantType.CLIENT_CREDENTIALS;
+import static pub.ihub.secure.core.GrantType.IMPLICIT;
+import static pub.ihub.secure.core.GrantType.PASSWORD;
+import static pub.ihub.secure.core.GrantType.REFRESH_TOKEN;
 
 /**
  * OAuth 2.0授权服务器注册客户端
@@ -59,6 +64,10 @@ public class RegisteredClient implements Serializable {
 	/**
 	 * 认证令牌时效（秒）
 	 */
+	private Duration idTokenTimeToLive = Duration.ofMinutes(30);
+	/**
+	 * 认证令牌时效（秒）
+	 */
 	private Duration accessTokenTimeToLive = Duration.ofMinutes(5);
 	/**
 	 * 重复使用刷新令牌
@@ -68,5 +77,25 @@ public class RegisteredClient implements Serializable {
 	 * 刷新令牌时效（秒）
 	 */
 	private Duration refreshTokenTimeToLive = Duration.ofMinutes(60);
+
+	public boolean supportedAuthorizationCode() {
+		return grantTypes.contains(AUTHORIZATION_CODE);
+	}
+
+	public boolean supportedPassword() {
+		return grantTypes.contains(PASSWORD);
+	}
+
+	public boolean supportedRefreshToken() {
+		return grantTypes.contains(REFRESH_TOKEN);
+	}
+
+	public boolean supportedClientCredentials() {
+		return grantTypes.contains(CLIENT_CREDENTIALS);
+	}
+
+	public boolean supportedImplicit() {
+		return grantTypes.contains(IMPLICIT);
+	}
 
 }
