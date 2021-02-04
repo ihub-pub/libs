@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pub.ihub.secure.oauth2.jose;
+package pub.ihub.secure.oauth2.jwt;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
@@ -35,7 +35,6 @@ import pub.ihub.core.ObjectBuilder;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -138,7 +137,7 @@ public class JoseHeader {
 	private final Map<String, Object> headers;
 
 	private JoseHeader(Map<String, Object> headers) {
-		this.headers = Collections.unmodifiableMap(new LinkedHashMap<>(headers));
+		this.headers = new LinkedHashMap<>(headers);
 	}
 
 	/**
@@ -165,8 +164,13 @@ public class JoseHeader {
 		}});
 	}
 
+	public JoseHeader header(String key, Object value) {
+		headers.put(key, value);
+		return this;
+	}
+
 	public JWSHeader buildJwsHeader() {
-		return ObjectBuilder.builder(new Builder(JWSAlgorithm.parse(this.<JwsAlgorithm>getHeader(ALG).getName())))
+		return ObjectBuilder.builder(new Builder(JWSAlgorithm.parse(getJwsAlgorithm().getName())))
 			.set(CollUtil::isNotEmpty, Builder::criticalParams, getHeader(CRIT))
 			.set(StrUtil::isNotBlank, Builder::contentType, getHeader(CTY))
 			.set(Validator::isNotNull, Builder::jwkURL, converterUri(getHeader(JKU), JKU))

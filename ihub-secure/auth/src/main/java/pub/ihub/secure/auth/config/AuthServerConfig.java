@@ -16,6 +16,10 @@
 
 package pub.ihub.secure.auth.config;
 
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +29,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.data.repository.Repository;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,24 +40,28 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.auth.repository.DynamicRegisteredClientRepository;
 import pub.ihub.secure.auth.repository.PersistedRegisteredClientRepository;
-import pub.ihub.secure.crypto.CryptoKeySource;
-import pub.ihub.secure.crypto.StaticKeyGeneratingCryptoKeySource;
-import pub.ihub.secure.oauth2.jose.jws.NimbusJwsEncoder;
 import pub.ihub.secure.oauth2.jwt.JwtEncoder;
+import pub.ihub.secure.oauth2.jwt.NimbusJwsEncoder;
 import pub.ihub.secure.oauth2.server.InMemoryOAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.InMemoryRegisteredClientRepository;
 import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.RegisteredClientRepository;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 
+import java.security.KeyPair;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+
 import static cn.hutool.core.collection.CollUtil.newHashSet;
 import static cn.hutool.core.lang.UUID.randomUUID;
+import static cn.hutool.crypto.KeyUtil.generateKeyPair;
 import static org.springframework.boot.autoconfigure.security.SecurityProperties.BASIC_AUTH_ORDER;
 import static org.springframework.security.oauth2.core.ClientAuthenticationMethod.BASIC;
 import static org.springframework.security.oauth2.core.oidc.OidcScopes.OPENID;
 import static pub.ihub.secure.core.GrantType.AUTHORIZATION_CODE;
 import static pub.ihub.secure.core.GrantType.CLIENT_CREDENTIALS;
 import static pub.ihub.secure.core.GrantType.REFRESH_TOKEN;
+import static pub.ihub.secure.oauth2.jwt.JoseHeader.RSA_KEY_TYPE;
 
 /**
  * 授权服务配置
@@ -63,6 +72,11 @@ import static pub.ihub.secure.core.GrantType.REFRESH_TOKEN;
 @Import(OAuth2AuthorizationServerConfiguration.class)
 @ComponentScan("pub.ihub.secure.auth.web")
 public class AuthServerConfig implements WebMvcConfigurer {
+
+	@Bean
+	WebSecurityCustomizer webSecurityCustomizer() {
+		return (web) -> web.ignoring().antMatchers("/webjars/**");
+	}
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
@@ -106,13 +120,18 @@ public class AuthServerConfig implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public CryptoKeySource keySource() {
-		return new StaticKeyGeneratingCryptoKeySource();
+	public JWKSource<SecurityContext> jwkSource() {
+		KeyPair keyPair = generateKeyPair(RSA_KEY_TYPE, 2048);
+		JWKSet jwkSet = new JWKSet(new RSAKey.Builder((RSAPublicKey) keyPair.getPublic())
+			.privateKey((RSAPrivateKey) keyPair.getPrivate())
+			.keyID(randomUUID().toString())
+			.build());
+		return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
 	}
 
 	@Bean
-	public JwtEncoder jwtEncoder(CryptoKeySource keySource) {
-		return new NimbusJwsEncoder(keySource);
+	public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
+		return new NimbusJwsEncoder(jwkSource);
 	}
 
 	@Bean

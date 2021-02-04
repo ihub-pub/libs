@@ -64,8 +64,12 @@ public class OAuth2Authorization implements Serializable {
 	private Map<String, Object> attributes = new HashMap<>(4);
 
 	@SuppressWarnings("unchecked")
-	public <T> T getAttribute(String name) {
+	private <T> T getAttribute(String name) {
 		return (T) this.attributes.get(notBlank(name, "name不能为空！"));
+	}
+
+	public String getState() {
+		return getAttribute(STATE);
 	}
 
 	public OAuth2AuthorizationRequest getAuthorizationRequest() {

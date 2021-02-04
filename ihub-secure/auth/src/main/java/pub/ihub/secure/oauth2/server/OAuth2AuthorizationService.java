@@ -48,4 +48,12 @@ public interface OAuth2AuthorizationService {
 	 */
 	OAuth2Authorization findByToken(String token, @Nullable TokenType tokenType);
 
+	/**
+	 * 查找授权
+	 *
+	 * @param state 场景值
+	 * @return 授权
+	 */
+	OAuth2Authorization findByState(String state);
+
 }

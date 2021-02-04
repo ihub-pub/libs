@@ -99,7 +99,6 @@ import static pub.ihub.secure.auth.web.filter.OAuth2ClientAuthenticationFilter.f
 import static pub.ihub.secure.oauth2.server.OAuth2Authorization.ACCESS_TOKEN_ATTRIBUTES;
 import static pub.ihub.secure.oauth2.server.OAuth2Authorization.AUTHORIZATION_REQUEST;
 import static pub.ihub.secure.oauth2.server.OAuth2Authorization.AUTHORIZED_SCOPES;
-import static pub.ihub.secure.oauth2.server.TokenType.AUTHORIZATION_CODE;
 
 /**
  * @author liheng
@@ -185,7 +184,7 @@ public class OAuth2Controller {
 				put("formPath", request.getRequestURI());
 				put("clientId", registeredClient.getClientId());
 				put("principalName", authorization.getPrincipalName());
-				put("state", authorization.getAttribute(OAuth2Authorization.STATE));
+				put("state", authorization.getState());
 				put("scopes", scopes);
 			}}, response.getWriter());
 		} else {
@@ -216,7 +215,7 @@ public class OAuth2Controller {
 						  @RequestParam(SCOPE) @NotEmpty Set<String> scopes,
 						  @RequestParam(CONSENT_ACTION_PARAMETER_NAME) @NotBlank String action,
 						  HttpServletResponse response) throws IOException {
-		OAuth2Authorization authorization = authorizationService.findByToken(state, new TokenType(OAuth2Authorization.STATE));
+		OAuth2Authorization authorization = authorizationService.findByState(state);
 		isTrue(getAuthentication().getName().equals(authorization.getPrincipalName()), invalidRequestException(STATE));
 		RegisteredClient registeredClient = notNull(registeredClientRepository.findByClientId(clientId), invalidRequestException(CLIENT_ID));
 		isTrue(registeredClient.getId().equals(authorization.getRegisteredClientId()), invalidRequestException(CLIENT_ID));
@@ -231,10 +230,7 @@ public class OAuth2Controller {
 			OAuth2Tokens tokens = new OAuth2Tokens().authorizationCode(registeredClient);
 			authorizationService.save(OAuth2Authorization.from(authorization)
 				.set(OAuth2Authorization::setTokens, tokens)
-				.setSub(OAuth2Authorization::getAttributes, attributes -> {
-					attributes.remove(OAuth2Authorization.STATE);
-					attributes.put(AUTHORIZED_SCOPES, scopes);
-				})
+				.put(OAuth2Authorization::getAttributes, AUTHORIZED_SCOPES, scopes)
 				.build());
 
 			response.sendRedirect(ObjectBuilder.builder(UrlBuilder.of(redirectUri, UTF_8))
@@ -255,7 +251,7 @@ public class OAuth2Controller {
 					  @RequestParam(value = REDIRECT_URI, required = false) String redirectUri,
 					  HttpServletResponse response) throws IOException {
 		RegisteredClient registeredClient = getAuthenticatedClient().getRegisteredClient();
-		OAuth2Authorization authorization = notNull(authorizationService.findByToken(code, AUTHORIZATION_CODE),
+		OAuth2Authorization authorization = notNull(authorizationService.findByToken(code, TokenType.AUTHORIZATION_CODE),
 			invalidGrantException());
 		OAuth2AuthorizationCode authorizationCode = authorization.getTokens().getAuthorizationCode();
 		OAuth2AuthorizationRequest authorizationRequest = authorization.getAuthorizationRequest();
@@ -345,11 +341,9 @@ public class OAuth2Controller {
 	}
 
 	@PostMapping(DEFAULT_TOKEN_REVOCATION_ENDPOINT_URI)
-	public void revoke(@RequestParam("token") @NotBlank String token,
-					   @RequestParam(value = "token_type_hint", required = false) String tokenTypeHint,
-					   HttpServletResponse response) throws IOException {
+	public void revoke(@RequestParam("token") @NotBlank String token, HttpServletResponse response) throws IOException {
 		try {
-			OAuth2Authorization authorization = authorizationService.findByToken(token, TokenType.of(tokenTypeHint));
+			OAuth2Authorization authorization = authorizationService.findByToken(token, null);
 			if (authorization == null) {
 				return;
 			}

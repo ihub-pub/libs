@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 
-import static cn.hutool.core.text.CharSequenceUtil.isBlank;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
 
 /**
@@ -39,17 +38,5 @@ public final class TokenType implements Serializable {
 	public static final TokenType AUTHORIZATION_CODE = new TokenType("authorization_code");
 
 	private final String value;
-
-	public static TokenType of(String tokenTypeHint) {
-		if (isBlank(tokenTypeHint)) {
-			return null;
-		}
-		if (REFRESH_TOKEN.getValue().equals(tokenTypeHint)) {
-			return REFRESH_TOKEN;
-		} else if (ACCESS_TOKEN.getValue().equals(tokenTypeHint)) {
-			return ACCESS_TOKEN;
-		}
-		return null;
-	}
 
 }

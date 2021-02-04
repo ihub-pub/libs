@@ -18,7 +18,6 @@ package pub.ihub.secure.oauth2.jwt;
 
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtException;
-import pub.ihub.secure.oauth2.jose.JoseHeader;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 
 import java.util.Set;

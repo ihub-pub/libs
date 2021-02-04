@@ -17,17 +17,18 @@
 package pub.ihub.secure.auth.web;
 
 import cn.hutool.core.collection.ListUtil;
+import com.nimbusds.jose.KeySourceException;
+import com.nimbusds.jose.jwk.JWKMatcher;
+import com.nimbusds.jose.jwk.JWKSelector;
 import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pub.ihub.secure.crypto.CryptoKey;
-import pub.ihub.secure.crypto.CryptoKeySource;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
@@ -104,7 +105,8 @@ public class OAuth2WellKnownController {
 
 	//</editor-fold>
 
-	private final CryptoKeySource keySource;
+	private final JWKSource<SecurityContext> jwkSource;
+	private final JWKSelector jwkSelector = new JWKSelector(new JWKMatcher.Builder().build());
 
 	@GetMapping(value = DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI, produces = APPLICATION_JSON_VALUE)
 	public Map<String, Object> wellKnown() {
@@ -125,14 +127,9 @@ public class OAuth2WellKnownController {
 	}
 
 	@GetMapping(value = DEFAULT_JWK_SET_ENDPOINT_URI, produces = APPLICATION_JSON_VALUE)
-	public String jwkSet() {
+	public String jwkSet() throws KeySourceException {
 		// TODO 重构密钥资源库
-		return new JWKSet(
-			keySource.getAsymmetricKeys().stream()
-				.map(CryptoKey.AsymmetricKey::toJwk)
-				.filter(Objects::nonNull)
-				.collect(Collectors.toList())
-		).toString();
+		return new JWKSet(jwkSource.get(jwkSelector, null)).toString();
 	}
 
 	private static String asUrl(String issuer, String endpoint) {

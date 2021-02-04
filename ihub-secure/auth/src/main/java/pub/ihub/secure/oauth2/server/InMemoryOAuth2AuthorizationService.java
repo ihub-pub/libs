@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
+import static pub.ihub.secure.oauth2.server.OAuth2Authorization.STATE;
 
 /**
  * OAuth2授权服务（内存中）TODO
@@ -42,7 +43,7 @@ public class InMemoryOAuth2AuthorizationService implements OAuth2AuthorizationSe
 		Assert.notNull(authorization, "authorization cannot be null");
 		OAuth2AuthorizationId authorizationId = new OAuth2AuthorizationId(
 			authorization.getRegisteredClientId(), authorization.getPrincipalName());
-		this.authorizations.put(authorizationId, authorization);
+		authorizations.put(authorizationId, authorization);
 	}
 
 	@Override
@@ -50,26 +51,35 @@ public class InMemoryOAuth2AuthorizationService implements OAuth2AuthorizationSe
 		Assert.notNull(authorization, "authorization cannot be null");
 		OAuth2AuthorizationId authorizationId = new OAuth2AuthorizationId(
 			authorization.getRegisteredClientId(), authorization.getPrincipalName());
-		this.authorizations.remove(authorizationId, authorization);
+		authorizations.remove(authorizationId, authorization);
 	}
 
 	@Override
 	public OAuth2Authorization findByToken(String token, @Nullable TokenType tokenType) {
 		Assert.hasText(token, "token cannot be empty");
-		return this.authorizations.values().stream()
+		return authorizations.values().stream()
 			.filter(authorization -> hasToken(authorization, token, tokenType))
 			.findFirst()
 			.orElse(null);
 	}
 
+	@Override
+	public OAuth2Authorization findByState(String state) {
+		OAuth2Authorization authorization = authorizations.values().stream()
+			.filter(auth -> state.equals(auth.getState()))
+			.findFirst()
+			.orElse(null);
+		assert authorization != null;
+		// TODO 是否需要移除
+		authorization.getAttributes().remove(STATE);
+		return authorization;
+	}
+
 	private static boolean hasToken(OAuth2Authorization authorization, String token, @Nullable TokenType tokenType) {
 		if (tokenType == null) {
-			return matchesState(authorization, token) ||
-				matchesAuthorizationCode(authorization, token) ||
+			return matchesAuthorizationCode(authorization, token) ||
 				matchesAccessToken(authorization, token) ||
 				matchesRefreshToken(authorization, token);
-		} else if (OAuth2Authorization.STATE.equals(tokenType.getValue())) {
-			return matchesState(authorization, token);
 		} else if (TokenType.AUTHORIZATION_CODE.equals(tokenType)) {
 			return matchesAuthorizationCode(authorization, token);
 		} else if (TokenType.ACCESS_TOKEN.equals(tokenType)) {
@@ -78,10 +88,6 @@ public class InMemoryOAuth2AuthorizationService implements OAuth2AuthorizationSe
 			return matchesRefreshToken(authorization, token);
 		}
 		return false;
-	}
-
-	private static boolean matchesState(OAuth2Authorization authorization, String token) {
-		return token.equals(authorization.getAttribute(OAuth2Authorization.STATE));
 	}
 
 	private static boolean matchesAuthorizationCode(OAuth2Authorization authorization, String token) {

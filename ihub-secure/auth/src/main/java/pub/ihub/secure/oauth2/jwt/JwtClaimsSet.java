@@ -27,7 +27,6 @@ import org.springframework.security.oauth2.jwt.JwtClaimAccessor;
 import pub.ihub.core.ObjectBuilder;
 
 import java.net.URL;
-import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -46,7 +45,12 @@ public class JwtClaimsSet implements JwtClaimAccessor {
 	private final Map<String, Object> claims;
 
 	public JwtClaimsSet(Map<String, Object> claims) {
-		this.claims = Collections.unmodifiableMap(new LinkedHashMap<>(claims));
+		this.claims = new LinkedHashMap<>(claims);
+	}
+
+	public JwtClaimsSet claim(String key, Object value) {
+		claims.put(key, value);
+		return this;
 	}
 
 	public JWTClaimsSet buildJwtClaimsSet() {

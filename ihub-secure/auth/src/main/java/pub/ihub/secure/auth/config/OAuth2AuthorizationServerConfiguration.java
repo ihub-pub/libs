@@ -81,19 +81,19 @@ public class OAuth2AuthorizationServerConfiguration {
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
 	public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
-		// TODO Initialize matchers using URI's from ProviderSettings
-		RequestMatcher[] endpointMatchers = Arrays.asList(authorizationEndpointMatcher, tokenEndpointMatcher,
-			tokenRevocationEndpointMatcher, jwkSetEndpointMatcher,
-			oidcProviderConfigurationEndpointMatcher).toArray(new RequestMatcher[0]);
+		RequestMatcher endpointsMatcher = (request) -> authorizationEndpointMatcher.matches(request) ||
+			tokenEndpointMatcher.matches(request) ||
+			tokenRevocationEndpointMatcher.matches(request) ||
+			jwkSetEndpointMatcher.matches(request) || oidcProviderConfigurationEndpointMatcher.matches(request);
 
 		http
-			.requestMatcher(new OrRequestMatcher(endpointMatchers))
+			.requestMatcher(endpointsMatcher)
 			.authorizeRequests(authorizeRequests -> {
 				authorizeRequests.requestMatchers(oidcProviderConfigurationEndpointMatcher,
 					jwkSetEndpointMatcher).permitAll();
 				authorizeRequests.anyRequest().authenticated();
 			})
-			.csrf(csrf -> csrf.ignoringRequestMatchers(endpointMatchers))
+			.csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher))
 			.apply(new ClientAuthenticationConfigurer<>());
 
 		return http.build();
