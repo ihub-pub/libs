@@ -16,8 +16,6 @@
 
 package pub.ihub.secure.oauth2.server;
 
-import org.springframework.lang.Nullable;
-
 /**
  * OAuth2授权服务
  *
@@ -42,11 +40,19 @@ public interface OAuth2AuthorizationService {
 	/**
 	 * 查找授权
 	 *
+	 * @param token 令牌
+	 * @return 授权
+	 */
+	OAuth2Authorization findByToken(String token);
+
+	/**
+	 * 查找授权
+	 *
 	 * @param token     令牌
 	 * @param tokenType 令牌类型
 	 * @return 授权
 	 */
-	OAuth2Authorization findByToken(String token, @Nullable TokenType tokenType);
+	OAuth2Authorization findByToken(String token, TokenType tokenType);
 
 	/**
 	 * 查找授权

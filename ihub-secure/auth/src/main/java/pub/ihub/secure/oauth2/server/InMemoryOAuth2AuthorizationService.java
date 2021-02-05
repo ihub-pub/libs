@@ -18,14 +18,13 @@ package pub.ihub.secure.oauth2.server;
 
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
-import pub.ihub.secure.oauth2.server.token.OAuth2AuthorizationCode;
 
 import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static cn.hutool.core.lang.Assert.notBlank;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
 import static pub.ihub.secure.oauth2.server.OAuth2Authorization.STATE;
 
@@ -55,12 +54,19 @@ public class InMemoryOAuth2AuthorizationService implements OAuth2AuthorizationSe
 	}
 
 	@Override
-	public OAuth2Authorization findByToken(String token, @Nullable TokenType tokenType) {
-		Assert.hasText(token, "token cannot be empty");
+	public OAuth2Authorization findByToken(String token) {
+		notBlank(token, "令牌不能为空！");
 		return authorizations.values().stream()
-			.filter(authorization -> hasToken(authorization, token, tokenType))
-			.findFirst()
-			.orElse(null);
+			.filter(authorization -> authorization.matchesToken(token))
+			.findFirst().orElse(null);
+	}
+
+	@Override
+	public OAuth2Authorization findByToken(String token, TokenType tokenType) {
+		notBlank(token, "令牌不能为空！");
+		return authorizations.values().stream()
+			.filter(authorization -> authorization.matchesToken(token, tokenType))
+			.findFirst().orElse(null);
 	}
 
 	@Override
@@ -73,36 +79,6 @@ public class InMemoryOAuth2AuthorizationService implements OAuth2AuthorizationSe
 		// TODO 是否需要移除
 		authorization.getAttributes().remove(STATE);
 		return authorization;
-	}
-
-	private static boolean hasToken(OAuth2Authorization authorization, String token, @Nullable TokenType tokenType) {
-		if (tokenType == null) {
-			return matchesAuthorizationCode(authorization, token) ||
-				matchesAccessToken(authorization, token) ||
-				matchesRefreshToken(authorization, token);
-		} else if (TokenType.AUTHORIZATION_CODE.equals(tokenType)) {
-			return matchesAuthorizationCode(authorization, token);
-		} else if (TokenType.ACCESS_TOKEN.equals(tokenType)) {
-			return matchesAccessToken(authorization, token);
-		} else if (TokenType.REFRESH_TOKEN.equals(tokenType)) {
-			return matchesRefreshToken(authorization, token);
-		}
-		return false;
-	}
-
-	private static boolean matchesAuthorizationCode(OAuth2Authorization authorization, String token) {
-		OAuth2AuthorizationCode authorizationCode = authorization.getTokens().getAuthorizationCode();
-		return authorizationCode != null && authorizationCode.getTokenValue().equals(token);
-	}
-
-	private static boolean matchesAccessToken(OAuth2Authorization authorization, String token) {
-		return authorization.getTokens().getAccessToken() != null &&
-			authorization.getTokens().getAccessToken().getTokenValue().equals(token);
-	}
-
-	private static boolean matchesRefreshToken(OAuth2Authorization authorization, String token) {
-		return authorization.getTokens().getRefreshToken() != null &&
-			authorization.getTokens().getRefreshToken().getTokenValue().equals(token);
 	}
 
 	@RequiredArgsConstructor

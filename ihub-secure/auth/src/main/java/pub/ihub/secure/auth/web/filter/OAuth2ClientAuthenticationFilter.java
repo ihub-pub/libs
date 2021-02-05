@@ -34,10 +34,10 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.filter.OncePerRequestFilter;
+import pub.ihub.secure.oauth2.server.TokenType;
 import pub.ihub.secure.oauth2.server.OAuth2Authorization;
 import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.RegisteredClientRepository;
-import pub.ihub.secure.oauth2.server.TokenType;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 import pub.ihub.secure.oauth2.server.token.OAuth2ClientAuthToken;
 

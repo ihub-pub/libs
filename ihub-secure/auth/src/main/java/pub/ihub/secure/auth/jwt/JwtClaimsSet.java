@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pub.ihub.secure.oauth2.jwt;
+package pub.ihub.secure.auth.jwt;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Validator;

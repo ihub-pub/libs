@@ -37,13 +37,17 @@ import pub.ihub.secure.auth.web.filter.OAuth2ClientAuthenticationFilter;
 import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.RegisteredClientRepository;
 
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter.DEFAULT_LOGIN_PAGE_URL;
+import static pub.ihub.secure.core.Constant.DEFAULT_AUTHORIZATION_ENDPOINT_URI;
+import static pub.ihub.secure.core.Constant.DEFAULT_JWK_SET_ENDPOINT_URI;
+import static pub.ihub.secure.core.Constant.DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI;
+import static pub.ihub.secure.core.Constant.DEFAULT_TOKEN_ENDPOINT_URI;
+import static pub.ihub.secure.core.Constant.DEFAULT_TOKEN_REVOCATION_ENDPOINT_URI;
 
 /**
  * @author henry
@@ -53,11 +57,6 @@ public class OAuth2AuthorizationServerConfiguration {
 
 	// TODO 整理配置文件
 	public static final String ISSUER_URI = "http://auth-server:9527";
-	public static final String DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI = "/.well-known/openid-configuration";
-	public static final String DEFAULT_JWK_SET_ENDPOINT_URI = "/oauth2/jwks";
-	public static final String DEFAULT_AUTHORIZATION_ENDPOINT_URI = "/oauth2/authorize";
-	public static final String DEFAULT_TOKEN_ENDPOINT_URI = "/oauth2/token";
-	public static final String DEFAULT_TOKEN_REVOCATION_ENDPOINT_URI = "/oauth2/revoke";
 
 	private final RequestMatcher authorizationEndpointMatcher = new OrRequestMatcher(
 		new AntPathRequestMatcher(DEFAULT_AUTHORIZATION_ENDPOINT_URI, GET.name()),

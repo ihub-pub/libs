@@ -21,9 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Map;
-import java.util.function.Consumer;
-
 import static org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId;
 
 /**
@@ -41,12 +38,11 @@ public class DefaultController {
 							OAuth2AuthorizedClient authorizedClient*/) {
 		// TODO 根据不同授权类型传递授权
 //		oauth2AuthorizedClient(authorizedClient);
-		Consumer<Map<String, Object>> attributesConsumer = clientRegistrationId("messaging-client-client-credentials");
 
-		String messages = this.webClient
+		String messages = webClient
 			.get()
 			.uri(this.messagesBaseUri)
-			.attributes(attributesConsumer)
+			.attributes(clientRegistrationId("messaging-client-client-credentials"))
 			.retrieve()
 			.bodyToMono(String.class)
 			.block();

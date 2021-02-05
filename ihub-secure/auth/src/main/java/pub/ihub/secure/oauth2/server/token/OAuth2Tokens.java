@@ -30,8 +30,9 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenRespon
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.jwt.Jwt;
-import pub.ihub.secure.oauth2.jwt.JwtEncoder;
+import pub.ihub.secure.auth.jwt.JwtEncoder;
 import pub.ihub.secure.oauth2.server.OAuth2Authorization;
+import pub.ihub.secure.oauth2.server.TokenType;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 
 import java.io.Serializable;
@@ -52,6 +53,11 @@ import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParamet
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.NONCE;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
 import static pub.ihub.core.ObjectBuilder.builder;
+import static pub.ihub.secure.oauth2.server.TokenType.ACCESS_TOKEN;
+import static pub.ihub.secure.oauth2.server.TokenType.AUTHORIZATION_CODE;
+import static pub.ihub.secure.oauth2.server.TokenType.OIDC_ID_TOKEN;
+import static pub.ihub.secure.oauth2.server.TokenType.REFRESH_TOKEN;
+import static pub.ihub.secure.oauth2.server.TokenType.REFRESH_TOKEN_2;
 
 /**
  * OAuth2令牌的容器
@@ -64,7 +70,7 @@ public class OAuth2Tokens implements Serializable {
 	private static final long serialVersionUID = SERIAL_VERSION_UID;
 	private static final StringKeyGenerator TOKEN_GENERATOR =
 		new Base64StringKeyGenerator(getUrlEncoder().withoutPadding(), 96);
-	private final Map<Class<? extends AbstractOAuth2Token>, OAuth2TokenHolder> tokens;
+	private final Map<TokenType, OAuth2TokenHolder> tokens;
 
 	public OAuth2Tokens() {
 		this.tokens = new HashMap<>();
@@ -75,23 +81,23 @@ public class OAuth2Tokens implements Serializable {
 	}
 
 	public OAuth2AuthorizationCode getAuthorizationCode() {
-		return getToken(OAuth2AuthorizationCode.class);
+		return getToken(AUTHORIZATION_CODE);
 	}
 
 	@Nullable
 	public OAuth2AccessToken getAccessToken() {
-		return getToken(OAuth2AccessToken.class);
+		return getToken(ACCESS_TOKEN);
 	}
 
 	@Nullable
 	public OAuth2RefreshToken getRefreshToken() {
-		OAuth2RefreshToken refreshToken = getToken(OAuth2RefreshToken.class);
-		return refreshToken != null ? refreshToken : getToken(OAuth2RefreshToken2.class);
+		OAuth2RefreshToken refreshToken = getToken(REFRESH_TOKEN);
+		return refreshToken != null ? refreshToken : getToken(REFRESH_TOKEN_2);
 	}
 
 	@Nullable
 	@SuppressWarnings("unchecked")
-	public <T extends AbstractOAuth2Token> T getToken(Class<T> tokenType) {
+	public <T extends AbstractOAuth2Token> T getToken(TokenType tokenType) {
 		OAuth2TokenHolder tokenHolder = tokens.get(notNull(tokenType, "token类型不能为空！"));
 		return tokenHolder != null ? (T) tokenHolder.getToken() : null;
 	}
@@ -99,28 +105,29 @@ public class OAuth2Tokens implements Serializable {
 	@Nullable
 	@SuppressWarnings("unchecked")
 	public <T extends AbstractOAuth2Token> T getToken(String token) {
+		notBlank(token, "token不能为空！");
 		OAuth2TokenHolder tokenHolder = tokens.values().stream()
-			.filter(holder -> holder.getToken().getTokenValue().equals(notBlank(token, "token不能为空！")))
+			.filter(holder -> holder.getToken().getTokenValue().equals(token))
 			.findFirst().orElse(null);
 		return tokenHolder != null ? (T) tokenHolder.getToken() : null;
 	}
 
 	@Nullable
-	public <T extends AbstractOAuth2Token> OAuth2TokenMetadata getTokenMetadata(Class<T> tokenType) {
+	public OAuth2TokenMetadata getTokenMetadata(TokenType tokenType) {
 		OAuth2TokenHolder tokenHolder = tokens.get(notNull(tokenType, "token类型不能为空！"));
 		return tokenHolder != null ? tokenHolder.tokenMetadata : null;
 	}
 
-	public <T extends AbstractOAuth2Token> boolean isInvalidated(Class<T> tokenType) {
+	public boolean isInvalidated(TokenType tokenType) {
 		return getTokenMetadata(tokenType).isInvalidated();
 	}
 
-	private void addToken(AbstractOAuth2Token token, OAuth2TokenMetadata tokenMetadata) {
+	private <T extends AbstractOAuth2Token> void addToken(T token, OAuth2TokenMetadata tokenMetadata) {
 		notNull(token, "token不能为空！");
 		if (tokenMetadata == null) {
 			tokenMetadata = builder(OAuth2TokenMetadata::new).build();
 		}
-		tokens.put(token.getClass(), new OAuth2TokenHolder(token, tokenMetadata));
+		tokens.put(TokenType.of(token), new OAuth2TokenHolder(token, tokenMetadata));
 	}
 
 	public OAuth2Tokens authorizationCode(RegisteredClient registeredClient) {
@@ -137,7 +144,7 @@ public class OAuth2Tokens implements Serializable {
 	}
 
 	public OAuth2Tokens refreshToken(RegisteredClient registeredClient) {
-		boolean needRefresh = !tokens.containsKey(OAuth2RefreshToken.class) || !registeredClient.isReuseRefreshTokens();
+		boolean needRefresh = !tokens.containsKey(REFRESH_TOKEN) || !registeredClient.isReuseRefreshTokens();
 		if (registeredClient.supportedRefreshToken() && needRefresh) {
 			Instant issuedAt = Instant.now();
 			addToken(new OAuth2RefreshToken2(TOKEN_GENERATOR.generateKey(), issuedAt,
@@ -179,7 +186,7 @@ public class OAuth2Tokens implements Serializable {
 	}
 
 	public OAuth2AccessTokenResponse getAccessOidcTokenResponse() {
-		OidcIdToken idToken = getToken(OidcIdToken.class);
+		OidcIdToken idToken = getToken(OIDC_ID_TOKEN);
 		return getBuilder().additionalParameters(new HashMap<>(1) {{
 			if (idToken != null) {
 				put(ID_TOKEN, idToken.getTokenValue());

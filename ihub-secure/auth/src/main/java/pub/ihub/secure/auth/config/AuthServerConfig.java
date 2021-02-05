@@ -40,8 +40,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import pub.ihub.core.ObjectBuilder;
 import pub.ihub.secure.auth.repository.DynamicRegisteredClientRepository;
 import pub.ihub.secure.auth.repository.PersistedRegisteredClientRepository;
-import pub.ihub.secure.oauth2.jwt.JwtEncoder;
-import pub.ihub.secure.oauth2.jwt.NimbusJwsEncoder;
+import pub.ihub.secure.auth.jwt.JwtEncoder;
+import pub.ihub.secure.auth.jwt.NimbusJwsEncoder;
 import pub.ihub.secure.oauth2.server.InMemoryOAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.InMemoryRegisteredClientRepository;
 import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
@@ -61,7 +61,6 @@ import static org.springframework.security.oauth2.core.oidc.OidcScopes.OPENID;
 import static pub.ihub.secure.core.GrantType.AUTHORIZATION_CODE;
 import static pub.ihub.secure.core.GrantType.CLIENT_CREDENTIALS;
 import static pub.ihub.secure.core.GrantType.REFRESH_TOKEN;
-import static pub.ihub.secure.oauth2.jwt.JoseHeader.RSA_KEY_TYPE;
 
 /**
  * 授权服务配置
@@ -121,7 +120,7 @@ public class AuthServerConfig implements WebMvcConfigurer {
 
 	@Bean
 	public JWKSource<SecurityContext> jwkSource() {
-		KeyPair keyPair = generateKeyPair(RSA_KEY_TYPE, 2048);
+		KeyPair keyPair = generateKeyPair("RSA", 2048);
 		JWKSet jwkSet = new JWKSet(new RSAKey.Builder((RSAPublicKey) keyPair.getPublic())
 			.privateKey((RSAPrivateKey) keyPair.getPrivate())
 			.keyID(randomUUID().toString())

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pub.ihub.secure.oauth2.jwt;
+package pub.ihub.secure.auth.jwt;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
@@ -42,15 +42,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.nimbusds.jose.JWSHeader.getRegisteredParameterNames;
-import static org.springframework.security.oauth2.jose.jws.MacAlgorithm.HS256;
-import static org.springframework.security.oauth2.jose.jws.MacAlgorithm.HS384;
-import static org.springframework.security.oauth2.jose.jws.MacAlgorithm.HS512;
-import static org.springframework.security.oauth2.jose.jws.SignatureAlgorithm.ES256;
-import static org.springframework.security.oauth2.jose.jws.SignatureAlgorithm.ES384;
-import static org.springframework.security.oauth2.jose.jws.SignatureAlgorithm.ES512;
-import static org.springframework.security.oauth2.jose.jws.SignatureAlgorithm.RS256;
-import static org.springframework.security.oauth2.jose.jws.SignatureAlgorithm.RS384;
-import static org.springframework.security.oauth2.jose.jws.SignatureAlgorithm.RS512;
 
 /**
  * JOSE报头
@@ -61,29 +52,6 @@ import static org.springframework.security.oauth2.jose.jws.SignatureAlgorithm.RS
  */
 @Getter
 public class JoseHeader {
-
-	//<editor-fold desc="JWS算法常量">
-
-	public static final String MAC_HS256 = "HmacSHA256";
-	public static final String MAC_HS384 = "HmacSHA384";
-	public static final String MAC_HS512 = "HmacSHA512";
-	public static final String RSA_KEY_TYPE = "RSA";
-	public static final String EC_KEY_TYPE = "EC";
-	private static final Map<JwsAlgorithm, String> JCA_KEY_ALGORITHM_MAPPINGS = new HashMap<>() {
-		{
-			put(HS256, MAC_HS256);
-			put(HS384, MAC_HS384);
-			put(HS512, MAC_HS512);
-			put(RS256, RSA_KEY_TYPE);
-			put(RS384, RSA_KEY_TYPE);
-			put(RS512, RSA_KEY_TYPE);
-			put(ES256, EC_KEY_TYPE);
-			put(ES384, EC_KEY_TYPE);
-			put(ES512, EC_KEY_TYPE);
-		}
-	};
-
-	//</editor-fold>
 
 	//<editor-fold desc="JWS报头key">
 
@@ -147,10 +115,6 @@ public class JoseHeader {
 	 */
 	public JwsAlgorithm getJwsAlgorithm() {
 		return getHeader(ALG);
-	}
-
-	public String getJwsAlgorithmValue() {
-		return JCA_KEY_ALGORITHM_MAPPINGS.get(getJwsAlgorithm());
 	}
 
 	@SuppressWarnings("unchecked")

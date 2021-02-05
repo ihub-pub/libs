@@ -16,27 +16,50 @@
 
 package pub.ihub.secure.oauth2.server;
 
-import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import org.springframework.security.oauth2.core.AbstractOAuth2Token;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.OAuth2RefreshToken;
+import org.springframework.security.oauth2.core.oidc.OidcIdToken;
+import pub.ihub.secure.oauth2.server.token.OAuth2AuthorizationCode;
+import pub.ihub.secure.oauth2.server.token.OAuth2RefreshToken2;
 
-import java.io.Serializable;
-
-import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
+import java.util.Arrays;
 
 /**
- * @author henry
+ * 令牌类型
+ *
+ * @author liheng
  */
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
-@EqualsAndHashCode
-public final class TokenType implements Serializable {
+public enum TokenType {
 
-	private static final long serialVersionUID = SERIAL_VERSION_UID;
-	public static final TokenType ACCESS_TOKEN = new TokenType("access_token");
-	public static final TokenType REFRESH_TOKEN = new TokenType("refresh_token");
-	public static final TokenType AUTHORIZATION_CODE = new TokenType("authorization_code");
+	/**
+	 * 访问令牌
+	 */
+	ACCESS_TOKEN("access_token", OAuth2AccessToken.class),
+	/**
+	 * 刷新令牌
+	 */
+	REFRESH_TOKEN("refresh_token", OAuth2RefreshToken.class),
+	REFRESH_TOKEN_2("refresh_token", OAuth2RefreshToken2.class),
+	/**
+	 * 授权码
+	 */
+	AUTHORIZATION_CODE("authorization_code", OAuth2AuthorizationCode.class),
+	/**
+	 * OpenID令牌
+	 */
+	OIDC_ID_TOKEN("oidc_id_token", OidcIdToken.class);
 
 	private final String value;
+	private final Class<? extends AbstractOAuth2Token> tokenType;
+
+	public static <T extends AbstractOAuth2Token> TokenType of(T token) {
+		return Arrays.stream(values())
+			.filter(t -> t.tokenType.isAssignableFrom(token.getClass())).findFirst().orElse(null);
+	}
 
 }

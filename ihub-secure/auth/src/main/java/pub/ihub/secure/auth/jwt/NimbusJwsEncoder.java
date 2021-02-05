@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pub.ihub.secure.oauth2.jwt;
+package pub.ihub.secure.auth.jwt;
 
 import cn.hutool.core.lang.UUID;
 import com.nimbusds.jose.JOSEException;
@@ -59,9 +59,9 @@ import static org.springframework.security.oauth2.jwt.JwtClaimNames.JTI;
 import static org.springframework.security.oauth2.jwt.JwtClaimNames.NBF;
 import static org.springframework.security.oauth2.jwt.JwtClaimNames.SUB;
 import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfiguration.ISSUER_URI;
-import static pub.ihub.secure.oauth2.jwt.JoseHeader.KID;
-import static pub.ihub.secure.oauth2.jwt.JoseHeader.TYP;
-import static pub.ihub.secure.oauth2.jwt.JoseHeader.withAlgorithm;
+import static pub.ihub.secure.auth.jwt.JoseHeader.KID;
+import static pub.ihub.secure.auth.jwt.JoseHeader.TYP;
+import static pub.ihub.secure.auth.jwt.JoseHeader.withAlgorithm;
 
 /**
  * Jws编码器

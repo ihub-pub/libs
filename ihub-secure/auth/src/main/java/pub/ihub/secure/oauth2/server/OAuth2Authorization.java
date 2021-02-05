@@ -38,6 +38,7 @@ import java.util.Set;
 import static cn.hutool.core.lang.Assert.notBlank;
 import static java.util.Base64.getUrlEncoder;
 import static pub.ihub.core.IHubLibsVersion.SERIAL_VERSION_UID;
+import static pub.ihub.secure.oauth2.server.TokenType.AUTHORIZATION_CODE;
 import static pub.ihub.secure.oauth2.server.token.OAuth2TokenMetadata.INVALIDATED;
 
 /**
@@ -93,21 +94,32 @@ public class OAuth2Authorization implements Serializable {
 		return this;
 	}
 
-	public <T extends AbstractOAuth2Token> OAuth2Authorization invalidate(T token) {
+	public <T extends AbstractOAuth2Token> OAuth2Authorization invalidate(String token) {
+		T holdToken = tokens.getToken(token);
 		OAuth2TokenMetadata metadata = ObjectBuilder.builder(OAuth2TokenMetadata::new)
 			.put(OAuth2TokenMetadata::getMetadata, INVALIDATED, true).build();
 		OAuth2Tokens tokens = ObjectBuilder.clone(this.tokens).build();
-		tokens.token(token, metadata);
+		tokens.token(holdToken, metadata);
 
-		if (OAuth2RefreshToken.class.isAssignableFrom(token.getClass())) {
+		if (OAuth2RefreshToken.class.isAssignableFrom(holdToken.getClass())) {
 			tokens.token(this.tokens.getAccessToken(), metadata);
 			OAuth2AuthorizationCode authorizationCode = this.tokens.getAuthorizationCode();
-			if (authorizationCode != null && !this.tokens.isInvalidated(OAuth2AuthorizationCode.class)) {
+			if (authorizationCode != null && !this.tokens.isInvalidated(AUTHORIZATION_CODE)) {
 				tokens.token(authorizationCode, metadata);
 			}
 		}
 
 		return from(this).set(OAuth2Authorization::setTokens, tokens).build();
+	}
+
+	public <T extends AbstractOAuth2Token> boolean matchesToken(String token) {
+		T holdToken = tokens.getToken(token);
+		return null != holdToken && null != TokenType.of(holdToken);
+	}
+
+	public boolean matchesToken(String token, TokenType tokenType) {
+		AbstractOAuth2Token holdToken = tokens.getToken(tokenType);
+		return null != holdToken && holdToken.getTokenValue().equals(token);
 	}
 
 }

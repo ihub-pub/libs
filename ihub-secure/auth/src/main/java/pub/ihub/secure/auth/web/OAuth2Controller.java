@@ -24,7 +24,6 @@ import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
-import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
@@ -36,13 +35,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.TemplateEngine;
 import pub.ihub.core.ObjectBuilder;
-import pub.ihub.secure.oauth2.jwt.JwtEncoder;
+import pub.ihub.secure.auth.jwt.JwtEncoder;
 import pub.ihub.secure.oauth2.server.OAuth2Authorization;
 import pub.ihub.secure.oauth2.server.OAuth2AuthorizationService;
 import pub.ihub.secure.oauth2.server.RegisteredClientRepository;
 import pub.ihub.secure.oauth2.server.TokenType;
 import pub.ihub.secure.oauth2.server.client.RegisteredClient;
-import pub.ihub.secure.oauth2.server.token.OAuth2AuthorizationCode;
 import pub.ihub.secure.oauth2.server.token.OAuth2ClientAuthToken;
 import pub.ihub.secure.oauth2.server.token.OAuth2Tokens;
 
@@ -92,10 +90,10 @@ import static org.springframework.security.oauth2.core.endpoint.PkceParameterNam
 import static org.springframework.security.oauth2.core.endpoint.PkceParameterNames.CODE_CHALLENGE_METHOD;
 import static org.springframework.security.oauth2.core.oidc.OidcScopes.OPENID;
 import static pub.ihub.core.ObjectBuilder.builder;
-import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfiguration.DEFAULT_AUTHORIZATION_ENDPOINT_URI;
-import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfiguration.DEFAULT_TOKEN_ENDPOINT_URI;
-import static pub.ihub.secure.auth.config.OAuth2AuthorizationServerConfiguration.DEFAULT_TOKEN_REVOCATION_ENDPOINT_URI;
 import static pub.ihub.secure.auth.web.filter.OAuth2ClientAuthenticationFilter.filterParameters;
+import static pub.ihub.secure.core.Constant.DEFAULT_AUTHORIZATION_ENDPOINT_URI;
+import static pub.ihub.secure.core.Constant.DEFAULT_TOKEN_ENDPOINT_URI;
+import static pub.ihub.secure.core.Constant.DEFAULT_TOKEN_REVOCATION_ENDPOINT_URI;
 import static pub.ihub.secure.oauth2.server.OAuth2Authorization.ACCESS_TOKEN_ATTRIBUTES;
 import static pub.ihub.secure.oauth2.server.OAuth2Authorization.AUTHORIZATION_REQUEST;
 import static pub.ihub.secure.oauth2.server.OAuth2Authorization.AUTHORIZED_SCOPES;
@@ -253,13 +251,12 @@ public class OAuth2Controller {
 		RegisteredClient registeredClient = getAuthenticatedClient().getRegisteredClient();
 		OAuth2Authorization authorization = notNull(authorizationService.findByToken(code, TokenType.AUTHORIZATION_CODE),
 			invalidGrantException());
-		OAuth2AuthorizationCode authorizationCode = authorization.getTokens().getAuthorizationCode();
 		OAuth2AuthorizationRequest authorizationRequest = authorization.getAuthorizationRequest();
 
 		if (!registeredClient.getClientId().equals(authorizationRequest.getClientId())) {
 			// 如果已授权，移除授权
-			if (!authorization.getTokens().isInvalidated(OAuth2AuthorizationCode.class)) {
-				authorization = authorization.invalidate(authorizationCode);
+			if (!authorization.getTokens().isInvalidated(TokenType.AUTHORIZATION_CODE)) {
+				authorization = authorization.invalidate(code);
 				authorizationService.save(authorization);
 			}
 			throw invalidGrantException().get();
@@ -267,7 +264,7 @@ public class OAuth2Controller {
 
 		isTrue(isBlank(authorizationRequest.getRedirectUri()) ||
 			authorizationRequest.getRedirectUri().equals(redirectUri), invalidGrantException());
-		isFalse(authorization.getTokens().isInvalidated(OAuth2AuthorizationCode.class), invalidGrantException());
+		isFalse(authorization.getTokens().isInvalidated(TokenType.AUTHORIZATION_CODE), invalidGrantException());
 
 		Set<String> authorizedScopes = authorization.getAuthorizedScopes();
 		Jwt jwt = jwtEncoder.issueJwtAccessToken(authorization.getPrincipalName(), registeredClient, authorizedScopes);
@@ -278,7 +275,7 @@ public class OAuth2Controller {
 		authorizationService.save(OAuth2Authorization.from(authorization)
 			.set(OAuth2Authorization::setTokens, tokens)
 			.put(OAuth2Authorization::getAttributes, ACCESS_TOKEN_ATTRIBUTES, jwt)
-			.build().invalidate(authorizationCode));
+			.build().invalidate(code));
 
 		sendAccessTokenResponse(response, tokens.getAccessOidcTokenResponse());
 	}
@@ -299,7 +296,7 @@ public class OAuth2Controller {
 		if (scopes.isEmpty()) {
 			scopes = authorizedScopes;
 		}
-		isFalse(authorization.getTokens().isInvalidated(OAuth2RefreshToken.class), invalidGrantException());
+		isFalse(authorization.getTokens().isInvalidated(TokenType.REFRESH_TOKEN), invalidGrantException());
 
 		Jwt jwt = jwtEncoder.issueJwtAccessToken(authorization.getPrincipalName(), registeredClient, scopes);
 		OAuth2Tokens tokens = new OAuth2Tokens(authorization.getTokens())
@@ -341,15 +338,15 @@ public class OAuth2Controller {
 	}
 
 	@PostMapping(DEFAULT_TOKEN_REVOCATION_ENDPOINT_URI)
-	public void revoke(@RequestParam("token") @NotBlank String token, HttpServletResponse response) throws IOException {
+	public void revoke(@RequestParam @NotBlank String token, HttpServletResponse response) throws IOException {
 		try {
-			OAuth2Authorization authorization = authorizationService.findByToken(token, null);
+			OAuth2Authorization authorization = authorizationService.findByToken(token);
 			if (authorization == null) {
 				return;
 			}
 			isTrue(getAuthenticatedClient().getRegisteredClient().getId().equals(authorization.getRegisteredClientId()),
 				invalidClientException());
-			authorizationService.save(authorization.invalidate(authorization.getTokens().getToken(token)));
+			authorizationService.save(authorization.invalidate(token));
 		} catch (OAuth2AuthenticationException ex) {
 			clearContext();
 			sendErrorResponse(response, ex.getError());
