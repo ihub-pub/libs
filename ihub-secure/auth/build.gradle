@@ -1,11 +1,12 @@
 description = '安全模块授权服务端组件'
 
 dependencies {
-    compileOnly     'org.springframework.boot:spring-boot-starter-web',
-                    'org.springframework.boot:spring-boot-starter-validation',
-                    'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation  project(':ihub-starter:ihub-cloud-spring-boot-starter')
+    compileOnly     'org.springframework.boot:spring-boot-starter-data-jpa'
     api  'org.springframework.boot:spring-boot-starter-security'
 
+    // TODO 等待正式版本
+    compile ':spring-security-oauth2-authorization-server-0.1.0-SNAPSHOT'
     compile 'org.springframework.security:spring-security-config'
     compile 'org.springframework.security:spring-security-web'
     compile 'org.springframework.security:spring-security-oauth2-core'

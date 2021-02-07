@@ -17,9 +17,9 @@
 package pub.ihub.secure.auth.repository;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.validation.annotation.Validated;
 import pub.ihub.secure.auth.RegisterClientRepository;
-import pub.ihub.secure.oauth2.server.client.RegisteredClient;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,9 +1,4 @@
-server:
-  port: 8090
-
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://auth-server:9527
+ihub:
+  application:
+    name: resource
+    port: 8090

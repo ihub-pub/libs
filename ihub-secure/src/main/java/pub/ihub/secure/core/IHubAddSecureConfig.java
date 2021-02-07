@@ -14,32 +14,20 @@
  * limitations under the License.
  */
 
-package pub.ihub.secure.oauth2.server;
+package pub.ihub.secure.core;
 
-
-import pub.ihub.secure.oauth2.server.client.RegisteredClient;
+import pub.ihub.core.IHubAddConfigEnvironmentPostProcessor;
 
 /**
- * OAuth 2.0 RegisteredClient存储库
+ * 添加secure配置文件
  *
- * @author henry
+ * @author liheng
  */
-public interface RegisteredClientRepository {
+public class IHubAddSecureConfig extends IHubAddConfigEnvironmentPostProcessor {
 
-	/**
-	 * 获取注册客户端
-	 *
-	 * @param id ID
-	 * @return 客户端
-	 */
-	RegisteredClient findById(String id);
-
-	/**
-	 * 获取注册客户端
-	 *
-	 * @param clientId 客户端ID
-	 * @return 客户端
-	 */
-	RegisteredClient findByClientId(String clientId);
+	@Override
+	protected String getActiveProfile() {
+		return "secure";
+	}
 
 }

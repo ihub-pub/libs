@@ -1,3 +1,3 @@
 # Auto Configuration
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-pub.ihub.secure.resource.config.AuthResourceServerConfig
+pub.ihub.secure.resource.AuthResourceServerConfig

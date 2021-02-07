@@ -17,8 +17,8 @@
 package pub.ihub.secure.auth;
 
 
-import pub.ihub.secure.oauth2.server.RegisteredClientRepository;
-import pub.ihub.secure.oauth2.server.client.RegisteredClient;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

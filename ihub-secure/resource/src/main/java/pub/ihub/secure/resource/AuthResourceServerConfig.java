@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pub.ihub.secure.resource.config;
+package pub.ihub.secure.resource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;

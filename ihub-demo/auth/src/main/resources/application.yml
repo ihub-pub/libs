@@ -1,2 +1,4 @@
-server:
-  port: 9527
+ihub:
+  application:
+    name: auth
+    port: 9000
