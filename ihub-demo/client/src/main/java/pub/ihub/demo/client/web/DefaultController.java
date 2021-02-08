@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Set;
+
 import static org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId;
+import static pub.ihub.secure.core.Constant.RESOURCE_SCOPES_ENDPOINT_URI;
 
 /**
  * @author liheng
@@ -48,6 +51,17 @@ public class DefaultController {
 			.block();
 
 		return messages;
+	}
+
+	@GetMapping("/scopes")
+	public Set<?> scopes() {
+		return webClient
+			.get()
+			.uri("http://localhost:8090" + RESOURCE_SCOPES_ENDPOINT_URI)
+			.attributes(clientRegistrationId("messaging-client-client-credentials"))
+			.retrieve()
+			.bodyToMono(Set.class)
+			.block();
 	}
 
 }

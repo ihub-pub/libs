@@ -26,6 +26,7 @@ spring:
             authorization-grant-type: client_credentials
             scope: ${ihub.secure.scope}
             client-name: ${ihub.secure.client-id}-client-credentials
+#          TODO 添加单独客户端接口权限registration
         provider:
           ihub:
             issuer-uri: http://auth-server:9000
@@ -40,4 +41,4 @@ ihub:
     provider: ihub
     client-id: messaging-client
     client-secret: secret
-    scope: message.read,message.write
+    scope: message.read,message.write,resource

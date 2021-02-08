@@ -3,4 +3,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://auth-server:9000
+          issuer-uri: ${ihub.resource.provider-issuer}
+ihub:
+  resource:
+    provider-issuer: http://auth-server:9000

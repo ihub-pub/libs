@@ -16,16 +16,52 @@
 
 package pub.ihub.secure.resource;
 
+import cn.hutool.core.map.MapUtil;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.util.List;
+import java.util.Map;
 
 import static pub.ihub.core.Constant.PROPERTIES_PREFIX;
 
 /**
+ * 资源服务配置属性
+ *
  * @author liheng
  */
 @Data
 @ConfigurationProperties(PROPERTIES_PREFIX + ".resource")
 public class AuthResourceProperties {
+
+	/**
+	 * 授权服务
+	 */
+	private String providerIssuer;
+
+	/**
+	 * 拥有资源作用域（匹配优先级高）
+	 */
+	private Map<String, String> resourceScope = MapUtil.empty();
+
+	/**
+	 * 作用域拥有资源（匹配优先级高）
+	 */
+	private Map<String, String> scopeResource = MapUtil.empty();
+
+	/**
+	 * 拥有资源作用域
+	 */
+	private Map<String, List<String>> resourceScopes = MapUtil.empty();
+
+	/**
+	 * 作用域拥有资源
+	 */
+	private Map<String, List<String>> scopeResources = MapUtil.empty();
+
+	/**
+	 * 复杂条件资源
+	 */
+	private Map<String, List<String>> accessResources = MapUtil.empty();
 
 }

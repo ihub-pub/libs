@@ -16,18 +16,36 @@
 
 package pub.ihub.secure.resource;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static pub.ihub.secure.core.Constant.RESOURCE_SCOPES_ENDPOINT_URI;
 
 /**
  * @author liheng
  */
 @RestController
+@RequiredArgsConstructor
 public class AuthResourceServerController {
 
-	@GetMapping("/scopes")
-	public String authorizationResourceScopes() {
-		return null;
+	private final AuthResourceProperties properties;
+
+	@GetMapping(value = RESOURCE_SCOPES_ENDPOINT_URI, produces = APPLICATION_JSON_VALUE)
+	public Set<String> authorizationResourceScopes() {
+		Set<String> scopes = new HashSet<>();
+		scopes.addAll(properties.getResourceScope().values());
+		scopes.addAll(properties.getScopeResource().keySet());
+		scopes.addAll(properties.getResourceScopes().values().stream()
+			.collect(ArrayList::new, List::addAll, List::addAll));
+		scopes.addAll(properties.getScopeResources().keySet());
+		return scopes;
 	}
 
 }

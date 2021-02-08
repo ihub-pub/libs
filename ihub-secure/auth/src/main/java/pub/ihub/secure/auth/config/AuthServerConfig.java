@@ -86,6 +86,7 @@ public class AuthServerConfig implements WebMvcConfigurer {
 			.scope(OidcScopes.OPENID)
 			.scope("message.read")
 			.scope("message.write")
+			.scope("resource")
 			.clientSettings(clientSettings -> clientSettings.requireUserConsent(true))
 			.build();
 		return new InMemoryRegisteredClientRepository(registeredClient);

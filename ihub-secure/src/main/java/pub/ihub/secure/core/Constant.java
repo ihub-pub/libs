@@ -29,4 +29,6 @@ public final class Constant {
 	public static final String DEFAULT_TOKEN_ENDPOINT_URI = "/oauth2/token";
 	public static final String DEFAULT_TOKEN_REVOCATION_ENDPOINT_URI = "/oauth2/revoke";
 
+	public static final String RESOURCE_SCOPES_ENDPOINT_URI = "/oauth2/scopes";
+
 }
