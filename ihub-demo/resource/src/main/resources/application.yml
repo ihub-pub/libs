@@ -2,15 +2,8 @@ ihub:
   application:
     name: resource
     port: 8090
-  resource:
-    provider-issuer: http://auth-server:9000
-    resource-scope:
-      /messages/**: message.read
-#    resource-scopes:
-#      /messages/**:
-#        - message.read
-#    scope-resource:
-#      message.read: /messages/**
-#    scope-resources:
-#      message.read:
-#        - /messages/**
+  secure:
+    resource:
+      provider-issuer: http://auth-server:9000
+      scope-resources:
+        message.read: /messages/**

@@ -3,42 +3,36 @@ spring:
     oauth2:
       client:
         registration:
-          messaging-client-oidc:
-            provider: ${ihub.secure.provider}
-            client-id: ${ihub.secure.client-id}
-            client-secret: ${ihub.secure.client-secret}
+          ihub-oidc:
+            provider: ihub
+            client-id: ${ihub.secure.client.client-id}
+            client-secret: ${ihub.secure.client.client-secret}
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: openid
-            client-name: ${ihub.secure.client-id}-oidc
-          messaging-client-authorization-code:
-            provider: ${ihub.secure.provider}
-            client-id: ${ihub.secure.client-id}
-            client-secret: ${ihub.secure.client-secret}
+            client-name: ${ihub.secure.client.client-id}-oidc
+          ihub-authorization-code:
+            provider: ihub
+            client-id: ${ihub.secure.client.client-id}
+            client-secret: ${ihub.secure.client.client-secret}
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/authorized"
-            scope: ${ihub.secure.scope}
-            client-name: ${ihub.secure.client-id}-authorization-code
-          messaging-client-client-credentials:
-            provider: ${ihub.secure.provider}
-            client-id: ${ihub.secure.client-id}
-            client-secret: ${ihub.secure.client-secret}
+            scope: ${ihub.secure.client.scope}
+            client-name: ${ihub.secure.client.client-id}-authorization-code
+          ihub-client-credentials:
+            provider: ihub
+            client-id: ${ihub.secure.client.client-id}
+            client-secret: ${ihub.secure.client.client-secret}
             authorization-grant-type: client_credentials
-            scope: ${ihub.secure.scope}
-            client-name: ${ihub.secure.client-id}-client-credentials
-#          TODO 添加单独客户端接口权限registration
+            scope: ${ihub.secure.client.scope}
+            client-name: ${ihub.secure.client.client-id}-client-credentials
+          ihub-internal:
+            provider: ihub
+            client-id: ${ihub.secure.client.client-id}
+            client-secret: ${ihub.secure.client.client-secret}
+            authorization-grant-type: client_credentials
+            scope: internal
+            client-name: ${ihub.secure.client.client-id}-internal
         provider:
           ihub:
-            issuer-uri: http://auth-server:9000
-logging:
-  level:
-    root: INFO
-    org.springframework.web: INFO
-    org.springframework.security: INFO
-    org.springframework.security.oauth2: INFO
-ihub:
-  secure:
-    provider: ihub
-    client-id: messaging-client
-    client-secret: secret
-    scope: message.read,message.write,resource
+            issuer-uri: ${ihub.secure.client.provider-issuer}

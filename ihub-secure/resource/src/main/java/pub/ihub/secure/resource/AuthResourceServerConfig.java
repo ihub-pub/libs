@@ -16,17 +16,13 @@
 
 package pub.ihub.secure.resource;
 
-import cn.hutool.core.util.ArrayUtil;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.util.stream.Collectors;
 
 import static org.springframework.boot.autoconfigure.security.SecurityProperties.IGNORED_ORDER;
 import static org.springframework.http.HttpMethod.GET;
@@ -45,25 +41,17 @@ public class AuthResourceServerConfig {
 	@Bean
 	@Order(IGNORED_ORDER)
 	SecurityFilterChain securityFilterChain(HttpSecurity http, AuthResourceProperties properties) throws Exception {
-		ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry requests =
-			http.authorizeRequests();
-		requests.mvcMatchers(GET, RESOURCE_SCOPES_ENDPOINT_URI).hasAnyAuthority("SCOPE_resource");
-
-		properties.getResourceScope().forEach((resource, scope) -> requests
-			.mvcMatchers(resource).hasAnyAuthority(appendScopePrefix(scope)));
-		properties.getScopeResource().forEach((scope, resource) -> requests
-			.mvcMatchers(resource).hasAnyAuthority(appendScopePrefix(scope)));
-		properties.getResourceScopes().forEach((resource, scopes) -> requests
-			.mvcMatchers(resource).hasAnyAuthority(ArrayUtil.toArray(scopes.stream()
-				.map(AuthResourceServerConfig::appendScopePrefix).collect(Collectors.toList()), String.class)));
-		properties.getScopeResources().forEach((scope, resources) -> requests
-			.mvcMatchers(ArrayUtil.toArray(resources, String.class)).hasAnyAuthority(appendScopePrefix(scope)));
-		properties.getAccessResources().forEach((access, resources) -> requests
-			.mvcMatchers(ArrayUtil.toArray(resources, String.class)).access(access));
-		// TODO 支持带method配置
-
-		requests.anyRequest().authenticated();
-
+		http
+			.authorizeRequests(registry -> registry
+				.mvcMatchers(GET, RESOURCE_SCOPES_ENDPOINT_URI).hasAnyAuthority(appendScopePrefix("internal")))
+			.authorizeRequests(registry -> properties.getAccessResources().forEach((accessResources) -> registry
+				.mvcMatchers(accessResources.getResources()).access(accessResources.getAccess())))
+			.authorizeRequests(registry -> properties.getScopeMethodResources().forEach((scope, matchers) ->
+				matchers.forEach((method, resources) -> registry
+					.mvcMatchers(method, resources).hasAnyAuthority(appendScopePrefix(scope)))))
+			.authorizeRequests(registry -> properties.getScopeResources().forEach((scope, resources) -> registry
+				.mvcMatchers(resources).hasAnyAuthority(appendScopePrefix(scope))))
+			.authorizeRequests().anyRequest().authenticated();
 		http.oauth2ResourceServer()
 			.jwt();
 		return http.build();

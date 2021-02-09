@@ -54,7 +54,7 @@ import static pub.ihub.core.Constant.PROPERTIES_PREFIX;
  */
 @Data
 @ConfigurationProperties(PROPERTIES_PREFIX + ".swagger")
-public class SwaggerProperties {
+public final class SwaggerProperties {
 
 	/**
 	 * 分组名称
@@ -119,7 +119,7 @@ public class SwaggerProperties {
 	private final Oauth2 oauth2 = new Oauth2();
 
 	@Setter
-	public static class Contact {
+	public static final class Contact {
 
 		/**
 		 * 联系人
@@ -141,7 +141,7 @@ public class SwaggerProperties {
 	}
 
 	@Setter
-	public static class Authorization {
+	public static final class Authorization {
 
 		/**
 		 * 开启Authorization，默认：false
@@ -182,7 +182,7 @@ public class SwaggerProperties {
 	}
 
 	@Setter
-	public static class Oauth2 {
+	public static final class Oauth2 {
 
 		/**
 		 * 开启Oauth2，默认：false
@@ -316,7 +316,7 @@ public class SwaggerProperties {
 	}
 
 	@Setter
-	public static class Header {
+	public static final class Header {
 
 		/**
 		 * 请求头名

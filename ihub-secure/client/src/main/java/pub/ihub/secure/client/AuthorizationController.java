@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-package pub.ihub.secure.client.web;
+package pub.ihub.secure.client;
 
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +30,7 @@ import java.util.Map;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.ERROR;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.ERROR_DESCRIPTION;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.ERROR_URI;
+import static pub.ihub.secure.core.Constant.CLIENT_ID_AUTHORIZATION_CODE;
 
 /**
  * @author liheng
@@ -35,7 +39,9 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterN
 public class AuthorizationController {
 
 	@GetMapping(value = "/authorize", params = "grant_type=authorization_code")
-	public String authorizationCodeGrant() {
+	public String authorizationCodeGrant(Model model,
+										 @RegisteredOAuth2AuthorizedClient(CLIENT_ID_AUTHORIZATION_CODE)
+											 OAuth2AuthorizedClient authorizedClient) {
 		return "index.ftl";
 	}
 

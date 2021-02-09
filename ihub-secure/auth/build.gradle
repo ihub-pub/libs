@@ -2,7 +2,6 @@ description = '安全模块授权服务端组件'
 
 dependencies {
     implementation  project(':ihub-starter:ihub-cloud-spring-boot-starter')
-    compileOnly     'org.springframework.boot:spring-boot-starter-data-jpa'
     api  'org.springframework.boot:spring-boot-starter-security'
 
     // TODO 等待正式版本

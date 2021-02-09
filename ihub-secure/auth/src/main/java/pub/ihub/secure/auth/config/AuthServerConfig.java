@@ -20,17 +20,14 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.repository.Repository;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
@@ -43,8 +40,6 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import pub.ihub.secure.auth.repository.DynamicRegisteredClientRepository;
-import pub.ihub.secure.auth.repository.PersistedRegisteredClientRepository;
 
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
@@ -81,29 +76,15 @@ public class AuthServerConfig implements WebMvcConfigurer {
 			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 			.authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
 			.authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-			.redirectUri("http://localhost:8080/login/oauth2/code/messaging-client-oidc")
+			.redirectUri("http://localhost:8080/login/oauth2/code/ihub-oidc")
 			.redirectUri("http://localhost:8080/authorized")
 			.scope(OidcScopes.OPENID)
 			.scope("message.read")
 			.scope("message.write")
-			.scope("resource")
+			.scope("internal")
 			.clientSettings(clientSettings -> clientSettings.requireUserConsent(true))
 			.build();
 		return new InMemoryRegisteredClientRepository(registeredClient);
-	}
-
-	@Bean
-	@ConditionalOnClass(Repository.class)
-	@ConditionalOnMissingBean(RegisteredClientRepository.class)
-	public RegisteredClientRepository persistedRegisteredClientRepository() {
-		// TODO 接入数据库
-		return new PersistedRegisteredClientRepository();
-	}
-
-	@Bean
-	@ConditionalOnMissingBean(RegisteredClientRepository.class)
-	public RegisteredClientRepository dynamicRegisteredClientRepository() {
-		return new DynamicRegisteredClientRepository();
 	}
 
 	@Bean
@@ -130,14 +111,13 @@ public class AuthServerConfig implements WebMvcConfigurer {
 	}
 
 	@Bean
+	@ConditionalOnMissingBean(UserDetailsService.class)
 	UserDetailsService users() {
-		// TODO 接入数据库
-		UserDetails user = User.withDefaultPasswordEncoder()
-			.username("user1")
-			.password("password")
-			.roles("USER")
-			.build();
-		return new InMemoryUserDetailsManager(user);
+		return new InMemoryUserDetailsManager(User.withDefaultPasswordEncoder()
+			.username("admin")
+			.password("admin")
+			.roles("ADMIN")
+			.build());
 	}
 
 }

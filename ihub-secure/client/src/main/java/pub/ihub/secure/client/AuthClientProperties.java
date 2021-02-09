@@ -14,27 +14,21 @@
  * limitations under the License.
  */
 
-package pub.ihub.secure.resource;
+package pub.ihub.secure.client;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.map.MapUtil;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.http.HttpMethod;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import static pub.ihub.secure.core.Constant.PROPERTIES_PREFIX;
 
 /**
- * 资源服务配置属性
- *
  * @author liheng
  */
 @Data
-@ConfigurationProperties(PROPERTIES_PREFIX + ".resource")
-public final class AuthResourceProperties {
+@ConfigurationProperties(PROPERTIES_PREFIX + ".client")
+public class AuthClientProperties {
 
 	/**
 	 * 授权服务
@@ -42,26 +36,18 @@ public final class AuthResourceProperties {
 	private String providerIssuer;
 
 	/**
-	 * 自定义条件资源映射
+	 * 客户端ID
 	 */
-	private List<AccessResources> accessResources = CollUtil.empty(List.class);
+	private String clientId;
 
 	/**
-	 * 作用域方法资源映射
+	 * 客户端密钥
 	 */
-	private Map<String, Map<HttpMethod, String[]>> scopeMethodResources = MapUtil.empty();
+	private String clientSecret;
 
 	/**
-	 * 作用域资源映射
+	 * 作用域
 	 */
-	private Map<String, String[]> scopeResources = MapUtil.empty();
-
-	@Data
-	public static final class AccessResources {
-
-		private String access;
-		private String[] resources;
-
-	}
+	private Set<String> scope;
 
 }

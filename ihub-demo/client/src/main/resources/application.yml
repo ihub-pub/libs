@@ -2,3 +2,9 @@ ihub:
   application:
     name: client
     port: 8080
+  secure:
+    client:
+      provider-issuer: http://auth-server:9000
+      client-id: messaging-client
+      client-secret: secret
+      scope: message.read,message.write

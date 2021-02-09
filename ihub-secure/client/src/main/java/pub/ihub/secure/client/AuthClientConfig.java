@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package pub.ihub.secure.client.config;
+package pub.ihub.secure.client;
 
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.annotation.Order;
@@ -33,12 +34,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import static org.springframework.boot.autoconfigure.security.SecurityProperties.BASIC_AUTH_ORDER;
 import static org.springframework.security.config.Customizer.withDefaults;
+import static pub.ihub.secure.core.Constant.CLIENT_ID_OIDC;
 
 /**
  * @author liheng
  */
 @EnableWebSecurity
-@ComponentScan("pub.ihub.secure.client.web")
+@EnableConfigurationProperties(AuthClientProperties.class)
+@ComponentScan("pub.ihub.secure.client")
 public class AuthClientConfig {
 
 	@Bean
@@ -47,7 +50,7 @@ public class AuthClientConfig {
 		http
 			.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
 			// TODO 动态选择授权类型
-			.oauth2Login(oauth2Login -> oauth2Login.loginPage("/oauth2/authorization/messaging-client-oidc"))
+			.oauth2Login(oauth2Login -> oauth2Login.loginPage("/oauth2/authorization/" + CLIENT_ID_OIDC))
 			.oauth2Client(withDefaults());
 		return http.build();
 	}
@@ -62,10 +65,8 @@ public class AuthClientConfig {
 	}
 
 	@Bean
-	OAuth2AuthorizedClientManager authorizedClientManager(
-		ClientRegistrationRepository clientRegistrationRepository,
-		OAuth2AuthorizedClientRepository authorizedClientRepository) {
-
+	OAuth2AuthorizedClientManager authorizedClientManager(ClientRegistrationRepository clientRegistrationRepository,
+														  OAuth2AuthorizedClientRepository authorizedClientRepository) {
 		OAuth2AuthorizedClientProvider authorizedClientProvider =
 			OAuth2AuthorizedClientProviderBuilder.builder()
 				.authorizationCode()
@@ -75,7 +76,6 @@ public class AuthClientConfig {
 		DefaultOAuth2AuthorizedClientManager authorizedClientManager = new DefaultOAuth2AuthorizedClientManager(
 			clientRegistrationRepository, authorizedClientRepository);
 		authorizedClientManager.setAuthorizedClientProvider(authorizedClientProvider);
-
 		return authorizedClientManager;
 	}
 

@@ -24,6 +24,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.Set;
 
 import static org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId;
+import static pub.ihub.secure.core.Constant.CLIENT_ID_CLIENT_CREDENTIALS;
+import static pub.ihub.secure.core.Constant.CLIENT_ID_INTERNAL;
 import static pub.ihub.secure.core.Constant.RESOURCE_SCOPES_ENDPOINT_URI;
 
 /**
@@ -37,7 +39,7 @@ public class DefaultController {
 	private final String messagesBaseUri = "http://localhost:8090/messages";
 
 	@GetMapping({"/", "/index"})
-	public String index(/*@RegisteredOAuth2AuthorizedClient("messaging-client-authorization-code")
+	public String index(/*@RegisteredOAuth2AuthorizedClient(CLIENT_ID_AUTHORIZATION_CODE)
 							OAuth2AuthorizedClient authorizedClient*/) {
 		// TODO 根据不同授权类型传递授权
 //		oauth2AuthorizedClient(authorizedClient);
@@ -45,7 +47,7 @@ public class DefaultController {
 		String messages = webClient
 			.get()
 			.uri(this.messagesBaseUri)
-			.attributes(clientRegistrationId("messaging-client-client-credentials"))
+			.attributes(clientRegistrationId(CLIENT_ID_CLIENT_CREDENTIALS))
 			.retrieve()
 			.bodyToMono(String.class)
 			.block();
@@ -58,7 +60,7 @@ public class DefaultController {
 		return webClient
 			.get()
 			.uri("http://localhost:8090" + RESOURCE_SCOPES_ENDPOINT_URI)
-			.attributes(clientRegistrationId("messaging-client-client-credentials"))
+			.attributes(clientRegistrationId(CLIENT_ID_INTERNAL))
 			.retrieve()
 			.bodyToMono(Set.class)
 			.block();
