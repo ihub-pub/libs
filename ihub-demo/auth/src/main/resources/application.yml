@@ -1,4 +1,4 @@
 ihub:
   application:
     name: auth
-    port: 9000
+    port: 9527

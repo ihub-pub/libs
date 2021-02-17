@@ -24,6 +24,8 @@ import java.util.Set;
 import static pub.ihub.secure.core.Constant.PROPERTIES_PREFIX;
 
 /**
+ * 客户端服务配置属性
+ *
  * @author liheng
  */
 @Data

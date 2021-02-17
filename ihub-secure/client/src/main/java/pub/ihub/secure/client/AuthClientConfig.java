@@ -37,6 +37,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 import static pub.ihub.secure.core.Constant.CLIENT_ID_OIDC;
 
 /**
+ * 客户端服务配置
+ *
  * @author liheng
  */
 @EnableWebSecurity

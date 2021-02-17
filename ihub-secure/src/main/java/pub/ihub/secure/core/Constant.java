@@ -30,12 +30,6 @@ public final class Constant {
 	public static final String CLIENT_ID_CLIENT_CREDENTIALS = "ihub-client-credentials";
 	public static final String CLIENT_ID_INTERNAL = "ihub-internal";
 
-	public static final String DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI = "/.well-known/openid-configuration";
-	public static final String DEFAULT_JWK_SET_ENDPOINT_URI = "/oauth2/jwks";
-	public static final String DEFAULT_AUTHORIZATION_ENDPOINT_URI = "/oauth2/authorize";
-	public static final String DEFAULT_TOKEN_ENDPOINT_URI = "/oauth2/token";
-	public static final String DEFAULT_TOKEN_REVOCATION_ENDPOINT_URI = "/oauth2/revoke";
-
 	public static final String RESOURCE_SCOPES_ENDPOINT_URI = "/oauth2/scopes";
 
 }

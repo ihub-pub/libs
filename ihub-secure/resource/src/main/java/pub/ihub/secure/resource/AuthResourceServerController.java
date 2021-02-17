@@ -27,6 +27,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static pub.ihub.secure.core.Constant.RESOURCE_SCOPES_ENDPOINT_URI;
 
 /**
+ * 资源服务接口
+ *
  * @author liheng
  */
 @RestController
@@ -35,6 +37,11 @@ public class AuthResourceServerController {
 
 	private final AuthResourceProperties properties;
 
+	/**
+	 * 资源服务配置作用域
+	 *
+	 * @return 作用域
+	 */
 	@GetMapping(value = RESOURCE_SCOPES_ENDPOINT_URI, produces = APPLICATION_JSON_VALUE)
 	public Set<String> authorizationResourceScopes() {
 		Set<String> scopes = new HashSet<>();
