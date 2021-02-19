@@ -1,5 +1,5 @@
 plugins {
-    id 'pub.ihub.plugin.ihub-settings' version '1.0.0.T2'
+    id 'pub.ihub.plugin.ihub-settings' version '1.0.0.T5'
 }
 
 includeSubprojects 'ihub-core'

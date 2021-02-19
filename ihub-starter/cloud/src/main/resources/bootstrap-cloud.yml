@@ -25,8 +25,8 @@ spring:
   output:
     ansi:
       enabled: always
-  profiles:
-    active: dev
+#  profiles:
+#    active: dev TODO
 ihub:
   application:
     prefix: ihub
