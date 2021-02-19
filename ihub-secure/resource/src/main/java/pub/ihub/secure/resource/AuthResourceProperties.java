@@ -25,7 +25,7 @@ import org.springframework.http.HttpMethod;
 import java.util.List;
 import java.util.Map;
 
-import static pub.ihub.secure.core.Constant.PROPERTIES_PREFIX;
+import static pub.ihub.secure.core.Constant.SECURE_PROPERTIES_PREFIX;
 
 /**
  * 资源服务配置属性
@@ -33,13 +33,8 @@ import static pub.ihub.secure.core.Constant.PROPERTIES_PREFIX;
  * @author liheng
  */
 @Data
-@ConfigurationProperties(PROPERTIES_PREFIX + ".resource")
+@ConfigurationProperties(SECURE_PROPERTIES_PREFIX + ".resource")
 public final class AuthResourceProperties {
-
-	/**
-	 * 授权服务
-	 */
-	private String providerIssuer;
 
 	/**
 	 * 自定义条件资源映射

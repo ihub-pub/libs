@@ -19,7 +19,7 @@
     {
       "name": "ihub.application.name.prefix",
       "type": "java.lang.String",
-      "defaultValue": "ihub-",
+      "defaultValue": "ihub",
       "description": "服务名称前缀."
     },
     {
@@ -27,6 +27,12 @@
       "type": "java.lang.String",
       "defaultValue": "localhost",
       "description": "网关服务地址."
+    },
+    {
+      "name": "ihub.application.auth-server-addr",
+      "type": "java.lang.String",
+      "defaultValue": "localhost:9527",
+      "description": "授权服务地址."
     }
   ]
 }

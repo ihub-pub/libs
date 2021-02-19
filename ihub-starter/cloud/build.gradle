@@ -9,4 +9,6 @@ dependencies {
     api 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery',
         'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config',
         'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
+    // TODO 看nacos后续是否会添加此依赖
+    api 'org.springframework.cloud:spring-cloud-starter-bootstrap'
 }

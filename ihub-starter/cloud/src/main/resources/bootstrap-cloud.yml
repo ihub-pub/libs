@@ -1,14 +1,20 @@
+server:
+  port: ${ihub.application.port}
 spring:
+  application:
+    name: ${ihub.application.prefix}-${ihub.application.name}
   cloud:
     nacos:
       config:
-        prefix: ${ihub.application.group}
+        prefix: ${ihub.application.prefix}-${ihub.application.name}
         file-extension: yaml
-        group: ${ihub.application.group}
+        group: ${ihub.application.prefix}
         server-addr: ${ihub.application.config-server-addr}
         namespace: ${ihub.application.namespace}
+        # TODO 暂时关闭刷新，日志太频繁
+        refresh-enabled: false
       discovery:
-        group: ${ihub.application.group}
+        group: ${ihub.application.prefix}
         server-addr: ${ihub.application.discovery-server-addr}
         namespace: ${ihub.application.namespace}
     sentinel:
@@ -16,13 +22,19 @@ spring:
         dashboard: ${ihub.application.sentinel-dashboard-addr}
       log:
         dir: ${ihub.application.sentinel-log-dir}
+  output:
+    ansi:
+      enabled: always
   profiles:
     active: dev
 ihub:
   application:
+    prefix: ihub
     namespace: public
-    group: ihub
     config-server-addr: localhost:8848
     discovery-server-addr: localhost:8848
     sentinel-dashboard-addr: localhost:8858
+    gateway-server-addr: localhost
+    auth-server-addr: http://auth-server:9527
     sentinel-log-dir: ./logs/csp
+management.endpoints.web.exposure.include: "*"

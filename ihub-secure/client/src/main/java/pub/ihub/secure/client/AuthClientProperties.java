@@ -21,7 +21,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.Set;
 
-import static pub.ihub.secure.core.Constant.PROPERTIES_PREFIX;
+import static pub.ihub.secure.core.Constant.SECURE_CLIENT_PROPERTIES_PREFIX;
 
 /**
  * 客户端服务配置属性
@@ -29,23 +29,13 @@ import static pub.ihub.secure.core.Constant.PROPERTIES_PREFIX;
  * @author liheng
  */
 @Data
-@ConfigurationProperties(PROPERTIES_PREFIX + ".client")
+@ConfigurationProperties(SECURE_CLIENT_PROPERTIES_PREFIX)
 public class AuthClientProperties {
-
-	/**
-	 * 授权服务
-	 */
-	private String providerIssuer;
-
-	/**
-	 * 客户端ID
-	 */
-	private String clientId;
 
 	/**
 	 * 客户端密钥
 	 */
-	private String clientSecret;
+	private String secret;
 
 	/**
 	 * 作用域

@@ -1,0 +1,4 @@
+ihub:
+  application:
+    name: client
+    port: 8080

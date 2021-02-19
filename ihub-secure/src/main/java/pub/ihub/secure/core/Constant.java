@@ -16,6 +16,8 @@
 
 package pub.ihub.secure.core;
 
+import static pub.ihub.core.Constant.PROPERTIES_PREFIX;
+
 /**
  * 通用常量
  *
@@ -23,7 +25,7 @@ package pub.ihub.secure.core;
  */
 public final class Constant {
 
-	public static final String PROPERTIES_PREFIX = pub.ihub.core.Constant.PROPERTIES_PREFIX + ".secure";
+	public static final String SECURE_PROPERTIES_PREFIX = PROPERTIES_PREFIX + ".secure";
 
 	public static final String CLIENT_ID_OIDC = "ihub-oidc";
 	public static final String CLIENT_ID_AUTHORIZATION_CODE = "ihub-authorization-code";
@@ -31,5 +33,9 @@ public final class Constant {
 	public static final String CLIENT_ID_INTERNAL = "ihub-internal";
 
 	public static final String RESOURCE_SCOPES_ENDPOINT_URI = "/oauth2/scopes";
+
+	public static final String SECURE_CLIENT_PROPERTIES_PREFIX = SECURE_PROPERTIES_PREFIX + ".client";
+	public static final String SECURE_CLIENT_PROPERTIES_SECRET = SECURE_CLIENT_PROPERTIES_PREFIX + ".secret";
+	public static final String SECURE_CLIENT_PROPERTIES_SCOPE = SECURE_CLIENT_PROPERTIES_PREFIX + ".scope";
 
 }

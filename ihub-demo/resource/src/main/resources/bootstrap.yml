@@ -4,6 +4,5 @@ ihub:
     port: 8090
   secure:
     resource:
-      provider-issuer: http://auth-server:9527
       scope-resources:
         message.read: /messages/**

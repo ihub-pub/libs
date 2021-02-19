@@ -19,7 +19,7 @@ package pub.ihub.demo.auth;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
-import pub.ihub.secure.auth.config.AuthServerConfig;
+import pub.ihub.secure.auth.AuthServerConfig;
 
 /**
  * @author liheng

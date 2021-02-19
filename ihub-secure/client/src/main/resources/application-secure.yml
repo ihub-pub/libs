@@ -5,34 +5,34 @@ spring:
         registration:
           ihub-oidc:
             provider: ihub
-            client-id: ${ihub.secure.client.client-id}
-            client-secret: ${ihub.secure.client.client-secret}
+            client-id: ${spring.application.name}
+            client-secret: ${ihub.secure.client.secret}
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: openid
-            client-name: ${ihub.secure.client.client-id}-oidc
+            client-name: ${spring.application.name}-oidc
           ihub-authorization-code:
             provider: ihub
-            client-id: ${ihub.secure.client.client-id}
-            client-secret: ${ihub.secure.client.client-secret}
+            client-id: ${spring.application.name}
+            client-secret: ${ihub.secure.client.secret}
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/authorized"
             scope: ${ihub.secure.client.scope}
-            client-name: ${ihub.secure.client.client-id}-authorization-code
+            client-name: ${spring.application.name}-authorization-code
           ihub-client-credentials:
             provider: ihub
-            client-id: ${ihub.secure.client.client-id}
-            client-secret: ${ihub.secure.client.client-secret}
+            client-id: ${spring.application.name}
+            client-secret: ${ihub.secure.client.secret}
             authorization-grant-type: client_credentials
             scope: ${ihub.secure.client.scope}
-            client-name: ${ihub.secure.client.client-id}-client-credentials
+            client-name: ${spring.application.name}-client-credentials
           ihub-internal:
             provider: ihub
-            client-id: ${ihub.secure.client.client-id}
-            client-secret: ${ihub.secure.client.client-secret}
+            client-id: ${spring.application.name}
+            client-secret: ${ihub.secure.client.secret}
             authorization-grant-type: client_credentials
             scope: internal
-            client-name: ${ihub.secure.client.client-id}-internal
+            client-name: ${spring.application.name}-internal
         provider:
           ihub:
-            issuer-uri: ${ihub.secure.client.provider-issuer}
+            issuer-uri: ${ihub.application.auth-server-addr}
