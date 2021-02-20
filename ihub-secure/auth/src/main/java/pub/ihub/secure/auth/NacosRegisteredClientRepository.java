@@ -26,6 +26,7 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import java.util.Map;
 
 import static cn.hutool.core.lang.UUID.randomUUID;
+import static cn.hutool.core.util.BooleanUtil.toBoolean;
 import static com.alibaba.cloud.nacos.NacosConfigProperties.COMMAS;
 import static com.alibaba.cloud.nacos.parser.NacosDataParserHandler.getInstance;
 import static com.alibaba.nacos.api.config.ConfigFactory.createConfigService;
@@ -34,6 +35,9 @@ import static org.springframework.security.oauth2.core.AuthorizationGrantType.CL
 import static org.springframework.security.oauth2.core.AuthorizationGrantType.REFRESH_TOKEN;
 import static org.springframework.security.oauth2.core.ClientAuthenticationMethod.BASIC;
 import static org.springframework.security.oauth2.core.oidc.OidcScopes.OPENID;
+import static pub.ihub.secure.core.Constant.SECURE_CLIENT_PROPERTIES_DOMAIN;
+import static pub.ihub.secure.core.Constant.SECURE_CLIENT_PROPERTIES_REQUIRE_PROOF_KEY;
+import static pub.ihub.secure.core.Constant.SECURE_CLIENT_PROPERTIES_REQUIRE_USER_CONSENT;
 import static pub.ihub.secure.core.Constant.SECURE_CLIENT_PROPERTIES_SCOPE;
 import static pub.ihub.secure.core.Constant.SECURE_CLIENT_PROPERTIES_SECRET;
 
@@ -67,6 +71,7 @@ public class NacosRegisteredClientRepository implements RegisteredClientReposito
 			.stream().findFirst().orElse(null);
 		if (null != propertySource) {
 			Map<String, String> source = (Map<String, String>) propertySource.getSource();
+			String domain = source.get(SECURE_CLIENT_PROPERTIES_DOMAIN);
 			RegisteredClient.Builder builder = RegisteredClient.withId(randomUUID().toString())
 				.clientId(propertySource.getName())
 				.clientSecret(source.get(SECURE_CLIENT_PROPERTIES_SECRET))
@@ -74,12 +79,13 @@ public class NacosRegisteredClientRepository implements RegisteredClientReposito
 				.authorizationGrantType(AUTHORIZATION_CODE)
 				.authorizationGrantType(REFRESH_TOKEN)
 				.authorizationGrantType(CLIENT_CREDENTIALS)
-				// TODO 回调地址在请求时传递
-				.redirectUri("http://localhost:8080/login/oauth2/code/ihub-oidc")
-				.redirectUri("http://localhost:8080/authorized")
+				.redirectUri(domain + "/login/oauth2/code/ihub-oidc")
+				.redirectUri(domain + "/authorized")
 				.scope(OPENID)
 				.scope("internal")
-				.clientSettings(clientSettings -> clientSettings.requireUserConsent(true));
+				.clientSettings(clientSettings -> clientSettings
+					.requireProofKey(toBoolean(source.get(SECURE_CLIENT_PROPERTIES_REQUIRE_PROOF_KEY)))
+					.requireUserConsent(toBoolean(source.get(SECURE_CLIENT_PROPERTIES_REQUIRE_USER_CONSENT))));
 			for (String scope : source.get(SECURE_CLIENT_PROPERTIES_SCOPE).split(COMMAS)) {
 				builder.scope(scope);
 			}

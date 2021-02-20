@@ -33,6 +33,11 @@ import static pub.ihub.secure.core.Constant.SECURE_CLIENT_PROPERTIES_PREFIX;
 public class AuthClientProperties {
 
 	/**
+	 * 客户端域名
+	 */
+	private String domain;
+
+	/**
 	 * 客户端密钥
 	 */
 	private String secret;

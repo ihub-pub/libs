@@ -16,13 +16,11 @@
 
 package pub.ihub.secure.client;
 
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,19 +28,17 @@ import java.util.Map;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.ERROR;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.ERROR_DESCRIPTION;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.ERROR_URI;
-import static pub.ihub.secure.core.Constant.CLIENT_ID_AUTHORIZATION_CODE;
+import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.GRANT_TYPE;
 
 /**
  * @author liheng
  */
-@RestController
+@Controller
 public class AuthorizationController {
 
-	@GetMapping(value = "/authorize", params = "grant_type=authorization_code")
-	public String authorizationCodeGrant(Model model,
-										 @RegisteredOAuth2AuthorizedClient(CLIENT_ID_AUTHORIZATION_CODE)
-											 OAuth2AuthorizedClient authorizedClient) {
-		return "index.ftl";
+	@GetMapping(value = "/authorize", params = GRANT_TYPE + "=authorization_code")
+	public String authorizationCodeGrant(Model model) {
+		return "redirect:/index";
 	}
 
 	@GetMapping(value = "/authorized", params = ERROR)
@@ -63,9 +59,9 @@ public class AuthorizationController {
 		return result;
 	}
 
-	@GetMapping(value = "/authorize", params = "grant_type=client_credentials")
+	@GetMapping(value = "/authorize", params = GRANT_TYPE + "=client_credentials")
 	public String clientCredentialsGrant() {
-		return "index.ftl";
+		return "redirect:/index";
 	}
 
 }

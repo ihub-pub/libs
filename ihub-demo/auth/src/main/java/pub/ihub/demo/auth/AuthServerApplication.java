@@ -18,15 +18,13 @@ package pub.ihub.demo.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
-import pub.ihub.secure.auth.AuthServerConfig;
+import pub.ihub.secure.auth.EnableAuthorizationServer;
 
 /**
  * @author liheng
  */
 @SpringBootApplication
-// TODO 配置顺序
-@Import(AuthServerConfig.class)
+@EnableAuthorizationServer
 public class AuthServerApplication {
 
 	public static void main(String[] args) {

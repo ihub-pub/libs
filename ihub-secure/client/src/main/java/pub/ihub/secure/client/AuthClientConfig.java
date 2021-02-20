@@ -51,7 +51,7 @@ public class AuthClientConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
-			// TODO 动态选择授权类型
+			// TODO authorization-code不可用
 			.oauth2Login(oauth2Login -> oauth2Login.loginPage("/oauth2/authorization/" + CLIENT_ID_OIDC))
 			.oauth2Client(withDefaults());
 		return http.build();
