@@ -48,10 +48,9 @@ public class AuthClientConfig {
 
 	@Bean
 	@Order(BASIC_AUTH_ORDER)
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	SecurityFilterChain securityClientFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
-			// TODO authorization-code不可用
 			.oauth2Login(oauth2Login -> oauth2Login.loginPage("/oauth2/authorization/" + CLIENT_ID_OIDC))
 			.oauth2Client(withDefaults());
 		return http.build();

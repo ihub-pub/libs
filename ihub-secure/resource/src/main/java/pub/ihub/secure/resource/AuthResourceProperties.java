@@ -16,13 +16,10 @@
 
 package pub.ihub.secure.resource;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.http.HttpMethod;
 
-import java.util.List;
 import java.util.Map;
 
 import static pub.ihub.secure.core.Constant.SECURE_PROPERTIES_PREFIX;
@@ -37,26 +34,8 @@ import static pub.ihub.secure.core.Constant.SECURE_PROPERTIES_PREFIX;
 public final class AuthResourceProperties {
 
 	/**
-	 * 自定义条件资源映射
-	 */
-	private List<AccessResources> accessResources = CollUtil.empty(List.class);
-
-	/**
-	 * 作用域方法资源映射
-	 */
-	private Map<String, Map<HttpMethod, String[]>> scopeMethodResources = MapUtil.empty();
-
-	/**
 	 * 作用域资源映射
 	 */
 	private Map<String, String[]> scopeResources = MapUtil.empty();
-
-	@Data
-	public static final class AccessResources {
-
-		private String access;
-		private String[] resources;
-
-	}
 
 }

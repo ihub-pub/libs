@@ -32,7 +32,9 @@ public final class Constant {
 	public static final String CLIENT_ID_CLIENT_CREDENTIALS = "ihub-client-credentials";
 	public static final String CLIENT_ID_INTERNAL = "ihub-internal";
 
-	public static final String RESOURCE_SCOPES_ENDPOINT_URI = "/oauth2/scopes";
+	public static final String RESOURCE_INTERNAL_URI = "/internal";
+	public static final String RESOURCE_SCOPES_ENDPOINT_URI = RESOURCE_INTERNAL_URI + "/scopes";
+	public static final String RESOURCE_APIS_ENDPOINT_URI = RESOURCE_INTERNAL_URI + "/apis";
 
 	public static final String SECURE_CLIENT_PROPERTIES_PREFIX = SECURE_PROPERTIES_PREFIX + ".client";
 	public static final String SECURE_CLIENT_PROPERTIES_DOMAIN = SECURE_CLIENT_PROPERTIES_PREFIX + ".domain";

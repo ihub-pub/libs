@@ -84,7 +84,7 @@ public class AuthServerConfig implements WebMvcConfigurer {
 	}
 
 	@Bean
-	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+	SecurityFilterChain securityServerFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests().antMatchers("/login").permitAll().anyRequest().authenticated()
 			.and().formLogin().loginPage("/login");

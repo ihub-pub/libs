@@ -23,12 +23,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Set;
-
 import static org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction.clientRegistrationId;
 import static org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction.oauth2AuthorizedClient;
 import static pub.ihub.secure.core.Constant.CLIENT_ID_CLIENT_CREDENTIALS;
 import static pub.ihub.secure.core.Constant.CLIENT_ID_INTERNAL;
+import static pub.ihub.secure.core.Constant.RESOURCE_APIS_ENDPOINT_URI;
 import static pub.ihub.secure.core.Constant.RESOURCE_SCOPES_ENDPOINT_URI;
 
 /**
@@ -44,25 +43,34 @@ public class DefaultController {
 	@GetMapping({"/", "/index"})
 	public String index(@RegisteredOAuth2AuthorizedClient(CLIENT_ID_CLIENT_CREDENTIALS)
 							OAuth2AuthorizedClient authorizedClient) {
-		String messages = webClient
+		return webClient
 			.get()
 			.uri(this.messagesBaseUri)
 			.attributes(oauth2AuthorizedClient(authorizedClient))
 			.retrieve()
 			.bodyToMono(String.class)
 			.block();
-
-		return messages;
 	}
 
 	@GetMapping("/scopes")
-	public Set<?> scopes() {
+	public String scopes() {
 		return webClient
 			.get()
 			.uri("http://localhost:8090" + RESOURCE_SCOPES_ENDPOINT_URI)
 			.attributes(clientRegistrationId(CLIENT_ID_INTERNAL))
 			.retrieve()
-			.bodyToMono(Set.class)
+			.bodyToMono(String.class)
+			.block();
+	}
+
+	@GetMapping("/apis")
+	public String apis() {
+		return webClient
+			.get()
+			.uri("http://localhost:8090" + RESOURCE_APIS_ENDPOINT_URI)
+			.attributes(clientRegistrationId(CLIENT_ID_INTERNAL))
+			.retrieve()
+			.bodyToMono(String.class)
 			.block();
 	}
 

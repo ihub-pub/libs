@@ -5,4 +5,4 @@ ihub:
   secure:
     resource:
       scope-resources:
-        message.read: /messages/**
+        message: /messages/**
