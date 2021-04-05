@@ -5,7 +5,6 @@
  */
 plugins {
     id 'pub.ihub.plugin'
-    id 'io.spring.dependency-management'
 }
 
 /**
@@ -16,8 +15,6 @@ plugins {
 subprojects {
     apply {
         plugin 'pub.ihub.plugin.ihub-java'
-        plugin 'pub.ihub.plugin.ihub-verification'
-        plugin 'pub.ihub.plugin.ihub-bom'
         if (!(project.name in ['ihub-common', 'ihub-starter'])) {
             plugin 'pub.ihub.plugin.ihub-publish'
         }
