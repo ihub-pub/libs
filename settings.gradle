@@ -7,10 +7,10 @@ plugins {
     id 'pub.ihub.plugin.ihub-settings' version '1.0.0.T10'
 }
 
-includeSubprojects {
-    include 'ihub-core'
-    include 'ihub-secure', 'ihub-secure-', '-spring-boot-starter'
-    include 'ihub-common', 'ihub-'
-    include 'ihub-starter', 'ihub-', '-spring-boot-starter'
-    include 'ihub-demo'
+iHubInclude {
+    includeSubprojects 'ihub-core'
+    includeSubprojects 'ihub-secure', 'ihub-secure-', '-spring-boot-starter'
+    includeSubprojects 'ihub-common', 'ihub-'
+    includeSubprojects 'ihub-starter', 'ihub-', '-spring-boot-starter'
+    includeSubprojects 'ihub-demo'
 }
