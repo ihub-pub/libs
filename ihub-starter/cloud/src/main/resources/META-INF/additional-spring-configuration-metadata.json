@@ -32,7 +32,7 @@
       "name": "ihub.application.auth-server-addr",
       "type": "java.lang.String",
       "defaultValue": "localhost:9527",
-      "description": "授权服务地址."
+      "description": "授权服务地址(该地址不能与其他服务地址相同)."
     }
   ]
 }
