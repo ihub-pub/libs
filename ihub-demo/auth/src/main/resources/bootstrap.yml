@@ -1,4 +1,0 @@
-ihub:
-  application:
-    name: auth
-    port: 9527

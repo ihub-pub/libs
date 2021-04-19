@@ -1,6 +1,0 @@
-description = '安全模块客户端组件'
-
-dependencies {
-    implementation  'org.springframework.boot:spring-boot-starter-web',
-                    project(':ihub-secure:ihub-secure-client-spring-boot-starter')
-}

@@ -1,8 +1,0 @@
-ihub:
-  application:
-    name: resource
-    port: 8090
-  secure:
-    resource:
-      scope-resources:
-        message: /messages/**
