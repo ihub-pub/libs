@@ -7,6 +7,19 @@ plugins {
     id 'pub.ihub.plugin'
 }
 
+apply {
+    plugin 'pub.ihub.plugin.ihub-publish'
+    plugin 'io.spring.dependency-management'
+}
+
+dependencyManagement {
+    dependencies {
+        dependencySet(group: rootProject.group, version: rootProject.version) {
+            rootProject.subprojects.name.each { if (name != it) entry it }
+        }
+    }
+}
+
 /**
  +----------------+
  | Build Settings |
