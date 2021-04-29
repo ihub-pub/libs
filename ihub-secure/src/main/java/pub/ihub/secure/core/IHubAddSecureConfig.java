@@ -16,14 +16,14 @@
 
 package pub.ihub.secure.core;
 
-import pub.ihub.core.IHubAddConfigEnvironmentPostProcessor;
+import pub.ihub.core.BaseConfigEnvironmentPostProcessor;
 
 /**
  * 添加secure配置文件
  *
  * @author liheng
  */
-public class IHubAddSecureConfig extends IHubAddConfigEnvironmentPostProcessor {
+public class IHubAddSecureConfig extends BaseConfigEnvironmentPostProcessor {
 
 	@Override
 	protected String getActiveProfile() {

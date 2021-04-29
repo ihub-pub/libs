@@ -16,14 +16,14 @@
 
 package pub.ihub.core.swagger;
 
-import pub.ihub.core.IHubAddConfigEnvironmentPostProcessor;
+import pub.ihub.core.BaseConfigEnvironmentPostProcessor;
 
 /**
  * 添加swagger配置文件
  *
  * @author liheng
  */
-public class IHubAddSwaggerConfig extends IHubAddConfigEnvironmentPostProcessor {
+public class IHubAddSwaggerConfig extends BaseConfigEnvironmentPostProcessor {
 
 	@Override
 	protected String getActiveProfile() {

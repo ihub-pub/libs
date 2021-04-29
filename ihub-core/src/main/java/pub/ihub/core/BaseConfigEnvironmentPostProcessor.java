@@ -30,7 +30,7 @@ import java.util.Map;
  *
  * @author liheng
  */
-public abstract class IHubAddConfigEnvironmentPostProcessor implements EnvironmentPostProcessor, Ordered {
+public abstract class BaseConfigEnvironmentPostProcessor implements EnvironmentPostProcessor, Ordered {
 
 	/**
 	 * 默认顺序

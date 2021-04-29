@@ -17,7 +17,7 @@
 package pub.ihub.cloud;
 
 import cn.hutool.core.map.MapUtil;
-import pub.ihub.core.IHubAddConfigEnvironmentPostProcessor;
+import pub.ihub.core.BaseConfigEnvironmentPostProcessor;
 
 import java.util.Map;
 
@@ -28,7 +28,7 @@ import static pub.ihub.core.IHubLibsVersion.getVersion;
  *
  * @author liheng
  */
-public class IHubAddCloudConfig extends IHubAddConfigEnvironmentPostProcessor {
+public class IHubAddCloudConfig extends BaseConfigEnvironmentPostProcessor {
 
 	@Override
 	protected String getActiveProfile() {
