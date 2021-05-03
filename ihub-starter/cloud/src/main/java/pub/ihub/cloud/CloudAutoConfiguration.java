@@ -15,28 +15,16 @@
  */
 package pub.ihub.cloud;
 
-import cn.hutool.core.map.MapUtil;
-import pub.ihub.core.BaseConfigEnvironmentPostProcessor;
-
-import java.util.Map;
-
-import static pub.ihub.core.IHubLibsVersion.getVersion;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * 添加Cloud配置文件
+ * 服务自动配置
  *
  * @author liheng
  */
-public class IHubAddCloudConfig extends BaseConfigEnvironmentPostProcessor {
-
-	@Override
-	protected String getActiveProfile() {
-		return "cloud";
-	}
-
-	@Override
-	protected Map<String, Object> getCustomizeProperties() {
-		return MapUtil.<String, Object>builder("ihub-libs.version", getVersion()).build();
-	}
+@Configuration
+@EnableConfigurationProperties(IHubApplicationProperties.class)
+public class CloudAutoConfiguration {
 
 }

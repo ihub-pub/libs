@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pub.ihub.core.swagger;
 
 import pub.ihub.core.BaseConfigEnvironmentPostProcessor;
 
 /**
- * 添加swagger配置文件
+ * 添加Swagger配置文件
  *
  * @author liheng
  */

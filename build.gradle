@@ -36,8 +36,6 @@ subprojects {
         if (project.name != 'ihub-core') {
             api project(':ihub-core')
         }
-        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
         annotationProcessor 'org.springframework.boot:spring-boot-autoconfigure-processor'
     }
-    compileJava.inputs.files(processResources)
 }
