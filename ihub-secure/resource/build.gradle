@@ -1,6 +1,6 @@
 description = '安全模块资源服务组件'
 
 dependencies {
-    implementation  project(':ihub-starter:ihub-cloud-spring-boot-starter')
+    implementation  project(':ihub-starter:ihub-starter-cloud-spring-boot-starter')
     implementation  'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 }

@@ -1,7 +1,7 @@
 description = '安全模块客户端组件'
 
 dependencies {
-    implementation  project(':ihub-starter:ihub-cloud-spring-boot-starter')
+    implementation  project(':ihub-starter:ihub-starter-cloud-spring-boot-starter')
     api 'org.springframework.boot:spring-boot-starter-oauth2-client'
     // TODO 以下为reactive WebClient相关，须结合springCloudClient
     api 'org.springframework:spring-webflux'

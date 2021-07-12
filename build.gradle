@@ -7,19 +7,6 @@ plugins {
     id 'pub.ihub.plugin'
 }
 
-apply {
-    plugin 'pub.ihub.plugin.ihub-publish'
-    plugin 'io.spring.dependency-management'
-}
-
-dependencyManagement {
-    dependencies {
-        dependencySet(group: rootProject.group, version: rootProject.version) {
-            rootProject.subprojects.name.each { if (name != it) entry it }
-        }
-    }
-}
-
 /**
  +----------------+
  | Build Settings |
@@ -28,6 +15,8 @@ dependencyManagement {
 subprojects {
     apply {
         plugin 'pub.ihub.plugin.ihub-java'
+        plugin  'pub.ihub.plugin.ihub-test'
+        plugin  'pub.ihub.plugin.ihub-verification'
         if (!(project.name in ['ihub-common', 'ihub-starter'])) {
             plugin 'pub.ihub.plugin.ihub-publish'
         }
@@ -37,5 +26,17 @@ subprojects {
             api project(':ihub-core')
         }
         annotationProcessor 'org.springframework.boot:spring-boot-autoconfigure-processor'
+    }
+}
+
+apply {
+    plugin 'pub.ihub.plugin.ihub-publish'
+}
+
+iHubBom {
+    dependencyVersions {
+        group rootProject.group.toString() modules subprojects.findAll {
+            it.plugins.hasPlugin 'pub.ihub.plugin.ihub-publish'
+        }.name as String[] version rootProject.version.toString()
     }
 }
