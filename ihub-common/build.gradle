@@ -1,9 +1,0 @@
-/**
- +----------------+
- | Build Settings |
- +----------------+
- */
-description = '业务功能组件集合'
-
-subprojects {
-}

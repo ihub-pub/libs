@@ -57,6 +57,11 @@ public class NacosRegisteredClientRepository implements RegisteredClientReposito
 		this.properties = properties;
 	}
 
+	@Override
+	public void save(RegisteredClient registeredClient) {
+		throw new UnsupportedOperationException("不支持保存Nacos注册客户端！");
+	}
+
 	@SneakyThrows
 	@Override
 	public RegisteredClient findById(String id) {
