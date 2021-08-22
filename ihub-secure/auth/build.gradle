@@ -2,11 +2,11 @@ description = '安全模块授权服务端组件'
 
 dependencies {
     implementation  project(':ihub-starter:ihub-starter-cloud-spring-boot-starter'),
-                    'org.springframework.security.experimental:spring-security-oauth2-authorization-server:0.1.0'
+                    'org.springframework.security.experimental:spring-security-oauth2-authorization-server:0.1.2'
 
     implementation  'org.springframework.boot:spring-boot-starter-thymeleaf',
                     'org.thymeleaf.extras:thymeleaf-extras-springsecurity5',
-                    'org.webjars:bootstrap:4.6.0',
-                    'org.webjars:layui:2.5.7',
-                    'org.webjars:jquery:3.5.1'
+                    'org.webjars:bootstrap:5.1.0',
+                    'org.webjars:layui:2.6.8',
+                    'org.webjars:jquery:3.6.0'
 }

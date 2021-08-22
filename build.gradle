@@ -15,9 +15,9 @@ plugins {
 subprojects {
     apply {
         plugin 'pub.ihub.plugin.ihub-java'
-        plugin  'pub.ihub.plugin.ihub-test'
-        plugin  'pub.ihub.plugin.ihub-verification'
-        if (!(project.name in ['ihub-common', 'ihub-starter'])) {
+        plugin 'pub.ihub.plugin.ihub-test'
+        plugin 'pub.ihub.plugin.ihub-verification'
+        if (project.name != 'ihub-starter') {
             plugin 'pub.ihub.plugin.ihub-publish'
         }
     }
@@ -34,6 +34,11 @@ apply {
 }
 
 iHubBom {
+    bomVersions.clear()
+    dependencyVersions.clear()
+    groupVersions.clear()
+    excludeModules.clear()
+    dependencies.clear()
     dependencyVersions {
         group rootProject.group.toString() modules subprojects.findAll {
             it.plugins.hasPlugin 'pub.ihub.plugin.ihub-publish'
