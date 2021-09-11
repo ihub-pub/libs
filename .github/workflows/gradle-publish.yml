@@ -19,3 +19,4 @@ jobs:
         with:
           repoUsername: ${{ secrets.REPO_USERNAME }}
           repoPassword: ${{ secrets.REPO_PASSWORD }}
+          release: true
