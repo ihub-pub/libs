@@ -40,9 +40,5 @@ public final class Constant {
 	public static final String SECURE_CLIENT_PROPERTIES_DOMAIN = SECURE_CLIENT_PROPERTIES_PREFIX + ".domain";
 	public static final String SECURE_CLIENT_PROPERTIES_SECRET = SECURE_CLIENT_PROPERTIES_PREFIX + ".secret";
 	public static final String SECURE_CLIENT_PROPERTIES_SCOPE = SECURE_CLIENT_PROPERTIES_PREFIX + ".scope";
-	public static final String SECURE_CLIENT_PROPERTIES_REQUIRE_PROOF_KEY =
-		SECURE_CLIENT_PROPERTIES_PREFIX + ".require-proof-key";
-	public static final String SECURE_CLIENT_PROPERTIES_REQUIRE_USER_CONSENT =
-		SECURE_CLIENT_PROPERTIES_PREFIX + ".require-user-consent";
 
 }

@@ -22,11 +22,11 @@ import lombok.SneakyThrows;
 import org.springframework.core.env.PropertySource;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.config.ClientSettings;
 
 import java.util.Map;
 
 import static cn.hutool.core.lang.UUID.randomUUID;
-import static cn.hutool.core.util.BooleanUtil.toBoolean;
 import static com.alibaba.cloud.nacos.NacosConfigProperties.COMMAS;
 import static com.alibaba.cloud.nacos.parser.NacosDataParserHandler.getInstance;
 import static com.alibaba.nacos.api.config.ConfigFactory.createConfigService;
@@ -36,8 +36,6 @@ import static org.springframework.security.oauth2.core.AuthorizationGrantType.RE
 import static org.springframework.security.oauth2.core.ClientAuthenticationMethod.BASIC;
 import static org.springframework.security.oauth2.core.oidc.OidcScopes.OPENID;
 import static pub.ihub.secure.core.Constant.SECURE_CLIENT_PROPERTIES_DOMAIN;
-import static pub.ihub.secure.core.Constant.SECURE_CLIENT_PROPERTIES_REQUIRE_PROOF_KEY;
-import static pub.ihub.secure.core.Constant.SECURE_CLIENT_PROPERTIES_REQUIRE_USER_CONSENT;
 import static pub.ihub.secure.core.Constant.SECURE_CLIENT_PROPERTIES_SCOPE;
 import static pub.ihub.secure.core.Constant.SECURE_CLIENT_PROPERTIES_SECRET;
 
@@ -88,9 +86,7 @@ public class NacosRegisteredClientRepository implements RegisteredClientReposito
 				.redirectUri(domain + "/authorized")
 				.scope(OPENID)
 				.scope("internal")
-				.clientSettings(clientSettings -> clientSettings
-					.requireProofKey(toBoolean(source.get(SECURE_CLIENT_PROPERTIES_REQUIRE_PROOF_KEY)))
-					.requireUserConsent(toBoolean(source.get(SECURE_CLIENT_PROPERTIES_REQUIRE_USER_CONSENT))));
+				.clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build());
 			for (String scope : source.get(SECURE_CLIENT_PROPERTIES_SCOPE).split(COMMAS)) {
 				builder.scope(scope);
 			}

@@ -1,8 +1,8 @@
 description = '安全模块授权服务端组件'
 
 dependencies {
-    implementation  project(':ihub-starter:ihub-starter-cloud-spring-boot-starter'),
-                    'org.springframework.security.experimental:spring-security-oauth2-authorization-server:0.1.2'
+    api             project(':ihub-starter:ihub-starter-cloud-spring-boot-starter'),
+                    'org.springframework.security:spring-security-oauth2-authorization-server:0.2.0'
 
     implementation  'org.springframework.boot:spring-boot-starter-thymeleaf',
                     'org.thymeleaf.extras:thymeleaf-extras-springsecurity5',
