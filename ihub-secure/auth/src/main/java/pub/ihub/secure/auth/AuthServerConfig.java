@@ -25,11 +25,14 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.server.authorization.InMemoryOAuth2AuthorizationConsentService;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -43,6 +46,7 @@ import java.security.interfaces.RSAPublicKey;
 
 import static cn.hutool.core.lang.UUID.randomUUID;
 import static cn.hutool.crypto.SecureUtil.generateKeyPair;
+import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
  * 授权服务配置
@@ -80,10 +84,17 @@ public class AuthServerConfig implements WebMvcConfigurer {
 
 	@Bean
 	public ProviderSettings providerSettings(@Value("${ihub.application.auth-server-addr}") String authServerAddr) {
-		return new ProviderSettings().issuer(authServerAddr);
+		return ProviderSettings.builder().issuer(authServerAddr).build();
 	}
 
 	@Bean
+	public OAuth2AuthorizationConsentService authorizationConsentService() {
+		// Will be used by the ConsentController TODO
+		return new InMemoryOAuth2AuthorizationConsentService();
+	}
+
+	@Bean
+	@Order(HIGHEST_PRECEDENCE)
 	SecurityFilterChain securityServerFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests().antMatchers("/login").permitAll().anyRequest().authenticated()

@@ -33,6 +33,6 @@ ihub:
     discovery-server-addr: localhost:8848
     sentinel-dashboard-addr: localhost:8858
     gateway-server-addr: localhost
-    auth-server-addr: http://auth-server:9527
+    auth-server-addr: localhost:9527
     sentinel-log-dir: ./logs/csp
 management.endpoints.web.exposure.include: "*"

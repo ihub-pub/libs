@@ -5,6 +5,7 @@
  */
 plugins {
     id 'pub.ihub.plugin'
+    id 'pub.ihub.plugin.ihub-git-hooks'
 }
 
 /**
@@ -22,9 +23,9 @@ subprojects {
         }
     }
     dependencies {
-        if (project.name != 'ihub-core') {
-            api project(':ihub-core')
-        }
+//        if (project.name != 'ihub-core') {
+//            api project(':ihub-core')
+//        }
         annotationProcessor 'org.springframework.boot:spring-boot-autoconfigure-processor'
     }
 }
@@ -33,15 +34,79 @@ apply {
     plugin 'pub.ihub.plugin.ihub-publish'
 }
 
+iHubGitHooks {
+    hooks = [
+        'pre-commit': './gradlew build'
+    ]
+}
+
 iHubBom {
     bomVersions.clear()
-    dependencyVersions.clear()
-    groupVersions.clear()
     excludeModules.clear()
     dependencies.clear()
+    // 导入bom
+    importBoms {
+        group 'org.springframework.boot'            module 'spring-boot-dependencies'           version '2.5.4'
+        group 'org.springframework.cloud'           module 'spring-cloud-dependencies'          version '2020.0.3'
+        group 'org.springframework.statemachine'    module 'spring-statemachine-bom'            version '3.0.1'
+        group 'com.alibaba.cloud'                   module 'spring-cloud-alibaba-dependencies'  version '2021.1'
+        group 'de.codecentric'                      module 'spring-boot-admin-dependencies'     version '2.5.1'
+        group 'com.github.xiaoymin'                 module 'knife4j-dependencies'               version '3.0.3'
+        group 'com.sun.xml.bind'                    module 'jaxb-bom-ext'                       version '3.0.2'
+        group 'com.squareup.okhttp3'                module 'okhttp-bom'                         version '4.9.1'
+        group 'org.codehaus.groovy'                 module 'groovy-bom'                         version '3.0.8'
+        group 'org.spockframework'                  module 'spock-bom'                          version '2.0-groovy-3.0'
+    }
+    // 配置组件依赖版本
+    dependencyVersions {
+        group 'com.alibaba'             modules 'fastjson'                                      version '1.2.78'
+        group 'com.alibaba'             modules 'druid', 'druid-spring-boot-starter'            version '1.2.6'
+        group 'com.alibaba.p3c'         modules 'p3c-pmd'                                       version '2.1.1'
+        group 'com.baomidou'            modules 'mybatis-plus-annotation', 'mybatis-plus-core', 'mybatis-plus',
+            'mybatis-plus-extension', 'mybatis-plus-boot-starter'                               version '3.4.3.1'
+        group 'com.baomidou'            modules 'mybatis-plus-generator'                        version '3.5.0'
+        group 'com.github.xiaoymin'     modules 'knife4j-aggregation-spring-boot-starter'       version '2.0.9'
+        group 'org.codehaus.groovy'     modules 'groovy-all'                                    version '3.0.8'
+        group 'com.athaydes'            modules 'spock-reports'                                 version '2.0-groovy-3.0'
+        group 'cn.hutool'               modules 'hutool-all', 'hutool-core', 'hutool-aop', 'hutool-bloomFilter',
+            'hutool-cache', 'hutool-crypto', 'hutool-db', 'hutool-dfa', 'hutool-extra', 'hutool-http', 'hutool-log',
+            'hutool-script', 'hutool-setting', 'hutool-system', 'hutool-cron', 'hutool-json', 'hutool-poi',
+            'hutool-captcha', 'hutool-socket', 'hutool-jwt'                                     version '5.7.12'
+    }
+    // 配置ihub组件依赖版本
     dependencyVersions {
         group rootProject.group.toString() modules subprojects.findAll {
             it.plugins.hasPlugin 'pub.ihub.plugin.ihub-publish'
         }.name as String[] version rootProject.version.toString()
+    }
+}
+
+publishing {
+    publications {
+        mavenJava {
+            pom {
+                artifactId = 'ihub-bom'
+            }
+        }
+    }
+}
+
+allprojects {
+    if (it.plugins.hasPlugin 'pub.ihub.plugin.ihub-publish') {
+        publishing {
+            publications {
+                mavenJava {
+                    pom {
+                        developers {
+                            developer {
+                                id = 'henry-hub'
+                                name = 'henry'
+                                email = 'henry.box@outlook.com'
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
