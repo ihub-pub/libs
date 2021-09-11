@@ -77,6 +77,9 @@ jobs:
 
       - name: Publish to Snapshot Repository
         uses: ihub-pub/actions/publish@main
+        with:
+          repoUsername: ${{ secrets.REPO_USERNAME }}
+          repoPassword: ${{ secrets.REPO_PASSWORD }}
 
   codacy:
     if: ${{ github.event_name == 'push' && github.repository_owner == 'ihub-pub' }}
