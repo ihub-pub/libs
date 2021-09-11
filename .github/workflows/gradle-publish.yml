@@ -20,3 +20,6 @@ jobs:
           repoUsername: ${{ secrets.REPO_USERNAME }}
           repoPassword: ${{ secrets.REPO_PASSWORD }}
           release: true
+          signingKeyId: ${{ secrets.SIGNING_KEY_ID }}
+          signingPassword: ${{ secrets.SIGNING_PASSWORD }}
+          signingSecretKey: ${{ secrets.SIGNING_SECRET_KEY }}
