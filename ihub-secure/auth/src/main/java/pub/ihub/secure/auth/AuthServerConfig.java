@@ -89,7 +89,6 @@ public class AuthServerConfig implements WebMvcConfigurer {
 
 	@Bean
 	public OAuth2AuthorizationConsentService authorizationConsentService() {
-		// Will be used by the ConsentController TODO
 		return new InMemoryOAuth2AuthorizationConsentService();
 	}
 

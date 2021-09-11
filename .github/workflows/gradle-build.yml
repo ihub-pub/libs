@@ -76,12 +76,7 @@ jobs:
           cache: 'gradle'
 
       - name: Publish to Snapshot Repository
-        uses: ihub-pub/actions@main
-        with:
-          run: publish
-        env:
-          REPO_USERNAME: ${{ secrets.REPO_USERNAME }}
-          REPO_PASSWORD: ${{ secrets.REPO_PASSWORD }}
+        uses: ihub-pub/actions/publish@main
 
   codacy:
     if: ${{ github.event_name == 'push' && github.repository_owner == 'ihub-pub' }}
