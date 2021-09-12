@@ -24,7 +24,6 @@ jobs:
           run: build -x test
 
   test:
-    if: ${{ github.event_name != 'push' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -36,7 +35,6 @@ jobs:
           cache: 'gradle'
 
       - name: Test with Gradle
-        if: ${{ github.event_name == 'schedule' }}
         uses: ihub-pub/actions@main
         with:
           run: test
