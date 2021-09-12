@@ -3,6 +3,6 @@ plugins {
 }
 
 iHubSettings {
-//    includeProjects 'ihub-core'      noPrefix
+    includeProjects 'ihub-core' noPrefix
 //    includeProjects 'ihub-starter', 'ihub-secure'   prefix ''   subproject      '-spring-boot-starter'
 }

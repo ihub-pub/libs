@@ -95,8 +95,6 @@ jobs:
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@main
-        with:
-          languages: java
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@main
