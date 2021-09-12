@@ -35,20 +35,14 @@ jobs:
           distribution: 'adopt'
           cache: 'gradle'
 
-      - name: Test with Gradle (fast)
-        if: ${{ github.event_name != 'schedule' }}
-        uses: ihub-pub/actions@main
-        with:
-          run: test -Dfast.test=true
-
-      - name: Test with Gradle (all)
+      - name: Test with Gradle
         if: ${{ github.event_name == 'schedule' }}
         uses: ihub-pub/actions@main
         with:
           run: test
 
       - name: Upload Coverage Reports
-        if: ${{ github.event_name == 'schedule' && github.repository_owner == 'ihub-pub' }}
+        if: ${{ github.repository_owner == 'ihub-pub' }}
         run: |
           bash <(curl -s https://codecov.io/bash)
 
@@ -82,7 +76,7 @@ jobs:
           repoPassword: ${{ secrets.REPO_PASSWORD }}
 
   analyze:
-    if: ${{ github.event_name == 'push' && github.repository_owner == 'ihub-pub' }}
+    if: ${{ github.event_name == 'schedule' && github.repository_owner == 'ihub-pub' }}
     name: Analyze
     runs-on: ubuntu-latest
     permissions:
