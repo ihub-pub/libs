@@ -18,7 +18,12 @@
         nameLink: '/',
         homepage: 'https://cdn.jsdelivr.net/gh/ihub-pub/libs/README.md',
         alias: {
-            '.*?/CHANGELOG': 'https://cdn.jsdelivr.net/gh/ihub-pub/libs/CHANGELOG.md'
+            '.*?/_navbar.md': '/_navbar.md',
+            '/([0-9]+\.[0-9]+\.[0-9]+)/_sidebar.md': 'https://cdn.jsdelivr.net/gh/ihub-pub/libs@$1/docs/_sidebar.md',
+            '/([0-9]+\.[0-9]+\.[0-9]+)/(.*)': 'https://cdn.jsdelivr.net/gh/ihub-pub/libs@$1/docs/$2.md',
+            '/([0-9]+\.[0-9]+\.[0-9]+)': 'https://cdn.jsdelivr.net/gh/ihub-pub/libs@$1/README.md',
+            '.*?/CONTRIBUTING': 'https://cdn.jsdelivr.net/gh/ihub-pub/.github/CONTRIBUTING.md',
+            '.*?/CODE_OF_CONDUCT': 'https://cdn.jsdelivr.net/gh/ihub-pub/.github/CODE_OF_CONDUCT.md'
         },
         auto2top: true,
         loadSidebar: true,
@@ -47,5 +52,7 @@
       };
   </script>
   <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+  <!-- version-nav -->
+  <script src="https://cdn.jsdelivr.net/gh/ihub-pub/ihub-pub.github.io/lib/version-nav.js"></script>
 </body>
 </html>
