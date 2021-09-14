@@ -60,7 +60,7 @@ iHubBom {
         group 'com.github.xiaoymin'                 module 'knife4j-dependencies'               version '3.0.3'
         group 'com.sun.xml.bind'                    module 'jaxb-bom-ext'                       version '3.0.2'
         group 'com.squareup.okhttp3'                module 'okhttp-bom'                         version '4.9.1'
-        group 'org.codehaus.groovy'                 module 'groovy-bom'                         version '3.0.8'
+        group 'org.codehaus.groovy'                 module 'groovy-bom'                         version '3.0.9'
         group 'org.spockframework'                  module 'spock-bom'                          version '2.0-groovy-3.0'
     }
     // 配置组件依赖版本
@@ -72,7 +72,7 @@ iHubBom {
             'mybatis-plus-extension', 'mybatis-plus-boot-starter'                               version '3.4.3.3'
         group 'com.baomidou'            modules 'mybatis-plus-generator'                        version '3.5.0'
         group 'com.github.xiaoymin'     modules 'knife4j-aggregation-spring-boot-starter'       version '2.0.9'
-        group 'org.codehaus.groovy'     modules 'groovy-all'                                    version '3.0.8'
+        group 'org.codehaus.groovy'     modules 'groovy-all'                                    version '3.0.9'
         group 'com.athaydes'            modules 'spock-reports'                                 version '2.1-groovy-3.0'
         group 'cn.hutool'               modules 'hutool-all', 'hutool-core', 'hutool-aop', 'hutool-bloomFilter',
             'hutool-cache', 'hutool-crypto', 'hutool-db', 'hutool-dfa', 'hutool-extra', 'hutool-http', 'hutool-log',
@@ -84,16 +84,6 @@ iHubBom {
         group rootProject.group.toString() modules subprojects.findAll {
             it.plugins.hasPlugin 'pub.ihub.plugin.ihub-publish'
         }.name as String[] version rootProject.version.toString()
-    }
-}
-
-publishing {
-    publications {
-        mavenJava {
-            pom {
-                artifactId = 'ihub-bom'
-            }
-        }
     }
 }
 
