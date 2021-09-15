@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package pub.ihub.core;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.core.convert.converter.Converter;
 
@@ -24,27 +26,22 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
 
 /**
- * 对象构建
+ * 对象DSL构建工具
  *
  * @param <T> 对象类型
  * @author henry
  */
+@RequiredArgsConstructor
 public class ObjectBuilder<T> {
 
 	private final T object;
-
-	public ObjectBuilder(T object) {
-		this.object = object;
-	}
 
 	/**
 	 * 获取对象构建器
@@ -182,37 +179,6 @@ public class ObjectBuilder<T> {
 	}
 
 	/**
-	 * 给对象赋值（含断言）
-	 *
-	 * @param asserter  断言条件
-	 * @param setter    赋值方法
-	 * @param value     值
-	 * @param exception 异常
-	 * @param <V>       值类型
-	 * @param <X>       异常类型
-	 * @return 对象构建器
-	 */
-	public <V, X> ObjectBuilder<T> set(BiConsumer<V, X> asserter, BiConsumer<T, V> setter, V value, X exception) {
-		asserter.accept(value, exception);
-		return set(setter, value);
-	}
-
-	/**
-	 * 给对象赋值（含断言）
-	 *
-	 * @param asserter  断言条件
-	 * @param setter    赋值方法
-	 * @param value     值
-	 * @param exception 异常
-	 * @param <V>       值类型
-	 * @param <X>       异常类型
-	 * @return 对象构建器
-	 */
-	public <V, X> ObjectBuilder<T> set(BiFunction<V, X, V> asserter, BiConsumer<T, V> setter, V value, X exception) {
-		return set(setter, asserter.apply(value, exception));
-	}
-
-	/**
 	 * 给对象赋值（带值转换器）
 	 *
 	 * @param predicate      判断条件
@@ -242,39 +208,15 @@ public class ObjectBuilder<T> {
 	 * @return 对象构建器
 	 * @throws X 赋值异常
 	 */
-	public <S, V, X extends Throwable> ObjectBuilder<T> set(Predicate<S> predicate, BiConsumer<T, V> setter, S value,
-															Converter<S, V> valueConverter, Supplier<X> error) throws X {
+	public <S, V, X extends RuntimeException> ObjectBuilder<T> set(Predicate<S> predicate, BiConsumer<T, V> setter,
+																   S value, Converter<S, V> valueConverter,
+																   Supplier<X> error) throws X {
 		try {
 			return set(predicate, setter, value, valueConverter);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw error.get();
 		}
-	}
-
-	/**
-	 * 对象操作
-	 *
-	 * @param operator 操作方法
-	 * @return 对象构建器
-	 */
-	public ObjectBuilder<T> identity(UnaryOperator<T> operator) {
-		operator.apply(object);
-		return this;
-	}
-
-	/**
-	 * 对象操作
-	 *
-	 * @param condition 条件
-	 * @param operator  操作方法
-	 * @return 对象构建器
-	 */
-	public ObjectBuilder<T> identity(boolean condition, UnaryOperator<T> operator) {
-		if (condition) {
-			return identity(operator);
-		}
-		return this;
 	}
 
 	/**
@@ -342,13 +284,14 @@ public class ObjectBuilder<T> {
 	/**
 	 * 子对象操作
 	 *
-	 * @param getter 获取属性方法
-	 * @param setter 操作方法
-	 * @param <S>    属性类型
+	 * @param getter  获取属性方法
+	 * @param setters 操作方法
+	 * @param <S>     属性类型
 	 * @return 对象构建器
 	 */
-	public <S> ObjectBuilder<T> setSub(Function<T, S> getter, Consumer<S> setter) {
-		setter.accept(getter.apply(object));
+	@SafeVarargs
+	public final <S> ObjectBuilder<T> setSub(Function<T, S> getter, Consumer<S>... setters) {
+		Arrays.stream(setters).forEach((setter) -> setter.accept(getter.apply(object)));
 		return this;
 	}
 
@@ -370,13 +313,9 @@ public class ObjectBuilder<T> {
 	@SafeVarargs
 	public final <I extends Iterable<V>, V> ObjectBuilder<T> set(BiConsumer<T, I> setter, Supplier<I> supplier,
 																 BiConsumer<I, V> accumulator, V... value) {
-		if (null != value) {
-			I collection = supplier.get();
-			for (V v : value) {
-				accumulator.accept(collection, v);
-			}
-			setter.accept(object, collection);
-		}
+		I collection = supplier.get();
+		Arrays.stream(value).forEach((v) -> accumulator.accept(collection, v));
+		setter.accept(object, collection);
 		return this;
 	}
 
@@ -429,9 +368,7 @@ public class ObjectBuilder<T> {
 	 * @return 对象构建器
 	 */
 	public final <C extends Collection<V>, V> ObjectBuilder<T> add(Function<T, C> getter, C collection) {
-		if (null != collection) {
-			getter.apply(object).addAll(collection);
-		}
+		getter.apply(object).addAll(collection);
 		return this;
 	}
 
@@ -446,9 +383,7 @@ public class ObjectBuilder<T> {
 	 */
 	@SafeVarargs
 	public final <C extends Collection<V>, V> ObjectBuilder<T> add(Function<T, C> getter, V... value) {
-		if (null != value) {
-			getter.apply(object).addAll(Arrays.asList(value));
-		}
+		getter.apply(object).addAll(Arrays.asList(value));
 		return this;
 	}
 

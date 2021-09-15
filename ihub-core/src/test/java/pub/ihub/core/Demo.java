@@ -16,9 +16,27 @@
 
 package pub.ihub.core;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author henry
  */
+@Data
+@RequiredArgsConstructor
 public class Demo {
+
+	private String str;
+
+	private Long num;
+
+	private List<String> list;
+
+	private Map<String, String> map;
+
+	private Demo sub;
 
 }

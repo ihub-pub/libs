@@ -37,7 +37,7 @@ jobs:
       - name: Test with Gradle
         uses: ihub-pub/actions@main
         with:
-          run: test
+          run: test -DiHubTest.failFast=true
 
       - name: Upload Coverage Reports
         if: ${{ github.repository_owner == 'ihub-pub' }}
