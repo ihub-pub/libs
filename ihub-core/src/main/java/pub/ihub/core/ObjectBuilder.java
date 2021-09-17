@@ -39,7 +39,7 @@ import java.util.function.Supplier;
  * @author henry
  */
 @RequiredArgsConstructor
-public class ObjectBuilder<T> {
+public final class ObjectBuilder<T> {
 
 	private final T object;
 

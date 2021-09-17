@@ -18,10 +18,6 @@ package pub.ihub.core;
 
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -40,26 +36,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 @DisplayName("对象构建测试")
 class ObjectBuilderTest {
-
-	@BeforeAll
-	public static void init() {
-		System.out.println("初始化数据");
-	}
-
-	@AfterAll
-	public static void cleanup() {
-		System.out.println("清理数据");
-	}
-
-	@BeforeEach
-	public void tearup() {
-		System.out.println("当前测试方法开始");
-	}
-
-	@AfterEach
-	public void tearDown() {
-		System.out.println("当前测试方法结束");
-	}
 
 	@DisplayName("获取对象构建器测试")
 	@Test

@@ -13,17 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package pub.ihub.core;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.JarURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.security.CodeSource;
-import java.util.jar.JarFile;
-
-import static java.util.jar.Attributes.Name.IMPLEMENTATION_VERSION;
 
 /**
  * IHub组件版本
@@ -34,34 +25,7 @@ import static java.util.jar.Attributes.Name.IMPLEMENTATION_VERSION;
 public final class IHubLibsVersion {
 
 	public static String getVersion() {
-		return determineVersion();
-	}
-
-	private static String determineVersion() {
-		String implementationVersion = IHubLibsVersion.class.getPackage().getImplementationVersion();
-		if (implementationVersion != null) {
-			return implementationVersion;
-		}
-		CodeSource codeSource = IHubLibsVersion.class.getProtectionDomain().getCodeSource();
-		if (codeSource == null) {
-			return null;
-		}
-		URL codeSourceLocation = codeSource.getLocation();
-		try {
-			URLConnection connection = codeSourceLocation.openConnection();
-			if (connection instanceof JarURLConnection) {
-				return getImplementationVersion(((JarURLConnection) connection).getJarFile());
-			}
-			try (JarFile jarFile = new JarFile(new File(codeSourceLocation.toURI()))) {
-				return getImplementationVersion(jarFile);
-			}
-		} catch (Exception ex) {
-			return null;
-		}
-	}
-
-	private static String getImplementationVersion(JarFile jarFile) throws IOException {
-		return jarFile.getManifest().getMainAttributes().getValue(IMPLEMENTATION_VERSION);
+		return IHubLibsVersion.class.getPackage().getImplementationVersion();
 	}
 
 }

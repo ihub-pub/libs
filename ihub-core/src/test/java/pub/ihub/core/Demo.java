@@ -17,7 +17,6 @@
 package pub.ihub.core;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,6 @@ import java.util.Map;
  * @author henry
  */
 @Data
-@RequiredArgsConstructor
 public class Demo {
 
 	private String str;
