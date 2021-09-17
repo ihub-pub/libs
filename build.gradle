@@ -28,12 +28,6 @@ subprojects {
         }
         annotationProcessor 'org.springframework.boot:spring-boot-autoconfigure-processor'
     }
-    // TODO 暂时关闭覆盖率检查
-    iHubVerification {
-        jacocoBranchCoverageRuleEnabled = false
-        jacocoInstructionCoverageRuleEnabled = false
-        jacocoPackageCoverageRuleEnabled = false
-    }
 }
 
 apply {
