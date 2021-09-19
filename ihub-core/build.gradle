@@ -3,7 +3,7 @@
  | Build Settings |
  +----------------+
  */
-description = '核心组件集合'
+description = '核心组件'
 
 dependencies {
 	compileOnly 'org.springframework.boot:spring-boot'
