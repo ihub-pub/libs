@@ -1,0 +1,4 @@
+ihub:
+  application:
+    name: cloud
+    port: 12345

@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package pub.ihub.core.swagger;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -40,6 +42,7 @@ import springfox.documentation.swagger.web.ApiKeyVehicle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
@@ -249,46 +252,38 @@ public final class SwaggerProperties {
 		/**
 		 * oauth2 认证类型
 		 */
+		@AllArgsConstructor
 		private enum GrantTypes {
 			/**
 			 * 授权码
 			 */
-			AUTHORIZATION_CODE,
+			AUTHORIZATION_CODE((oauth2) -> new AuthorizationCodeGrant(
+				new TokenRequestEndpointBuilder()
+					.url(oauth2.authorizeUrl)
+					.clientIdName(oauth2.clientIdName)
+					.clientSecretName(oauth2.clientSecretName)
+					.build(),
+				new TokenEndpointBuilder()
+					.url(oauth2.tokenUrl)
+					.tokenName(oauth2.tokenName)
+					.build())),
 			/**
 			 * 客户端凭证
 			 */
-			CLIENT_CREDENTIALS,
+			CLIENT_CREDENTIALS((oauth2) -> new ClientCredentialsGrant(oauth2.tokenUrl)),
 			/**
-			 * implicit
+			 * 隐式
 			 */
-			IMPLICIT,
+			IMPLICIT((oauth2) -> new ImplicitGrant(new LoginEndpoint(oauth2.authorizeUrl), oauth2.tokenName)),
 			/**
 			 * 密码
 			 */
-			PASSWORD;
+			PASSWORD((oauth2) -> new ResourceOwnerPasswordCredentialsGrant(oauth2.tokenUrl));
+
+			private Function<Oauth2, GrantType> grantTypeGetter;
 
 			public GrantType getGrantType(Oauth2 oauth2) {
-				switch (this) {
-					case AUTHORIZATION_CODE:
-						return new AuthorizationCodeGrant(
-							new TokenRequestEndpointBuilder()
-								.url(oauth2.authorizeUrl)
-								.clientIdName(oauth2.clientIdName)
-								.clientSecretName(oauth2.clientSecretName)
-								.build(),
-							new TokenEndpointBuilder()
-								.url(oauth2.tokenUrl)
-								.tokenName(oauth2.tokenName)
-								.build());
-					case CLIENT_CREDENTIALS:
-						return new ClientCredentialsGrant(oauth2.tokenUrl);
-					case IMPLICIT:
-						return new ImplicitGrant(new LoginEndpoint(oauth2.authorizeUrl), oauth2.tokenName);
-					case PASSWORD:
-						return new ResourceOwnerPasswordCredentialsGrant(oauth2.tokenUrl);
-					default:
-						return null;
-				}
+				return grantTypeGetter.apply(oauth2);
 			}
 
 		}
