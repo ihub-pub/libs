@@ -110,7 +110,7 @@ class SwaggerAutoConfigurationTest {
 	}
 
 	@Nested()
-	@DisplayName("请求头")
+	@DisplayName("请求头测试")
 	@IHubFTConfig
 	@SpringBootTest({
 		"ihub.swagger.headers[0].name=name",
