@@ -33,14 +33,6 @@ subprojects {
 		}
 		annotationProcessor 'org.springframework.boot:spring-boot-autoconfigure-processor'
 	}
-	// TODO 由于Lombok插件6.1.0之后不再自动生成lombok.config文件，后续考虑ihub插件维护改功能
-	// 详见：https://github.com/freefair/gradle-plugins/issues/379
-	def lombokConfig = project.file 'lombok.config'
-	if (lombokConfig.exists()) {
-		lombokConfig.delete()
-	}
-	lombokConfig.createNewFile()
-	lombokConfig << 'config.stopBubbling = true\nlombok.addLombokGeneratedAnnotation = true'
 }
 
 apply {
