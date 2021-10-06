@@ -1,0 +1,79 @@
+/*
+ * Copyright (c) 2021 Henry 李恒 (henry.box@outlook.com).
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+apply {
+    plugin 'java-platform'
+    plugin 'pub.ihub.plugin.ihub-publish'
+}
+javaPlatform {
+    allowDependencies()
+}
+dependencies {
+    // 导入bom配置
+    api platform('org.springframework.boot:spring-boot-dependencies:2.5.5'),
+        platform('org.springframework.cloud:spring-cloud-dependencies:2020.0.4'),
+        platform('org.springframework.statemachine:spring-statemachine-bom:3.0.1'),
+        platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1'),
+        platform('de.codecentric:spring-boot-admin-dependencies:2.5.2'),
+        platform('com.github.xiaoymin:knife4j-dependencies:3.0.3'),
+        platform('com.sun.xml.bind:jaxb-bom-ext:3.0.2'),
+        platform('com.squareup.okhttp3:okhttp-bom:4.9.2'),
+        platform('org.codehaus.groovy:groovy-bom:3.0.9'),
+        platform('org.spockframework:spock-bom:2.0-groovy-3.0')
+    // 配置组件版本
+    constraints {
+        api 'com.alibaba:fastjson:1.2.78',
+            'com.alibaba:druid:1.2.8',
+            'com.alibaba:druid-spring-boot-starter:1.2.8',
+            'com.alibaba.p3c:p3c-pmd:2.1.1',
+            'com.baomidou:mybatis-plus-annotation:3.4.3.4',
+            'com.baomidou:mybatis-plus-core:3.4.3.4',
+            'com.baomidou:mybatis-plus:3.4.3.4',
+            'com.baomidou:mybatis-plus-extension:3.4.3.4',
+            'com.baomidou:mybatis-plus-boot-starter:3.4.3.4',
+            'com.baomidou:mybatis-plus-generator:3.5.1',
+            'com.github.xiaoymin:knife4j-aggregation-spring-boot-starter:2.0.9',
+            'org.codehaus.groovy:groovy-all:3.0.9',
+            'com.athaydes:spock-reports:2.1-groovy-3.0',
+            'cn.hutool:hutool-all:5.7.13',
+            'cn.hutool:hutool-core:5.7.13',
+            'cn.hutool:hutool-aop:5.7.13',
+            'cn.hutool:hutool-bloomFilter:5.7.13',
+            'cn.hutool:hutool-cache:5.7.13',
+            'cn.hutool:hutool-crypto:5.7.13',
+            'cn.hutool:hutool-db:5.7.13',
+            'cn.hutool:hutool-dfa:5.7.13',
+            'cn.hutool:hutool-extra:5.7.13',
+            'cn.hutool:hutool-http:5.7.13',
+            'cn.hutool:hutool-log:5.7.13',
+            'cn.hutool:hutool-script:5.7.13',
+            'cn.hutool:hutool-setting:5.7.13',
+            'cn.hutool:hutool-system:5.7.13',
+            'cn.hutool:hutool-cron:5.7.13',
+            'cn.hutool:hutool-json:5.7.13',
+            'cn.hutool:hutool-poi:5.7.13',
+            'cn.hutool:hutool-captcha:5.7.13',
+            'cn.hutool:hutool-socket:5.7.13',
+            'cn.hutool:hutool-jwt:5.7.13'
+    }
+    // 配置ihub组件依赖版本
+    constraints {
+        rootProject.allprojects.each {
+            if (it.plugins.hasPlugin('pub.ihub.plugin.ihub-publish') && it != project) {
+                api "${rootProject.group}:$it.name:${rootProject.version}"
+            }
+        }
+    }
+}
