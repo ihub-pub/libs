@@ -52,23 +52,3 @@ iHubGitHooks {
         'pre-commit': './gradlew build'
     ]
 }
-
-subprojects {
-    afterEvaluate {
-        publishing {
-            publications {
-                mavenJava {
-                    pom {
-                        developers {
-                            developer {
-                                id = 'henry-hub'
-                                name = 'henry'
-                                email = 'henry.box@outlook.com'
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
