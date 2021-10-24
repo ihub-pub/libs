@@ -23,15 +23,16 @@ javaPlatform {
 dependencies {
     // 导入bom配置（优先级由上至下）
     api platform('com.sun.xml.bind:jaxb-bom-ext:3.0.2'),
+        platform('cn.hutool:hutool-bom:5.7.15'),
         platform('com.squareup.okhttp3:okhttp-bom:4.9.2'),
-        platform('org.spockframework:spock-bom:2.0-groovy-3.0'),
         platform('org.junit:junit-bom:5.8.1'),
+        platform('org.spockframework:spock-bom:2.0-groovy-3.0'),
         platform('org.springframework.statemachine:spring-statemachine-bom:3.0.1'),
         platform('org.springframework.cloud:spring-cloud-dependencies:2020.0.4'),
         platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1'),
         platform('de.codecentric:spring-boot-admin-dependencies:2.5.2'),
         platform('com.github.xiaoymin:knife4j-dependencies:3.0.3'),
-        platform('org.springframework.boot:spring-boot-dependencies:2.5.5')
+        platform('org.springframework.boot:spring-boot-dependencies:2.5.6')
     // 配置组件版本
     constraints {
         api 'com.alibaba:fastjson:1.2.78',
@@ -47,26 +48,7 @@ dependencies {
             'com.github.xiaoymin:knife4j-aggregation-spring-boot-starter:2.0.9',
             'org.codehaus.groovy:groovy-all:3.0.9',
             'com.athaydes:spock-reports:2.1-groovy-3.0',
-            'cn.hutool:hutool-all:5.7.14',
-            'cn.hutool:hutool-core:5.7.14',
-            'cn.hutool:hutool-aop:5.7.14',
-            'cn.hutool:hutool-bloomFilter:5.7.14',
-            'cn.hutool:hutool-cache:5.7.14',
-            'cn.hutool:hutool-crypto:5.7.14',
-            'cn.hutool:hutool-db:5.7.14',
-            'cn.hutool:hutool-dfa:5.7.14',
-            'cn.hutool:hutool-extra:5.7.14',
-            'cn.hutool:hutool-http:5.7.14',
-            'cn.hutool:hutool-log:5.7.14',
-            'cn.hutool:hutool-script:5.7.14',
-            'cn.hutool:hutool-setting:5.7.14',
-            'cn.hutool:hutool-system:5.7.14',
-            'cn.hutool:hutool-cron:5.7.14',
-            'cn.hutool:hutool-json:5.7.14',
-            'cn.hutool:hutool-poi:5.7.14',
-            'cn.hutool:hutool-captcha:5.7.14',
-            'cn.hutool:hutool-socket:5.7.14',
-            'cn.hutool:hutool-jwt:5.7.14'
+            'cn.hutool:hutool-all:5.7.15'
     }
     // 配置ihub组件依赖版本
     constraints {
