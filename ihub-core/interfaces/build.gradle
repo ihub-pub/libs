@@ -13,13 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id 'pub.ihub.plugin.ihub-settings' version '1.1.8'
-}
-
-iHubSettings {
-    includeProjects 'ihub-bom' noPrefix
-    includeProjects 'ihub-core' prefix '' skippedDirs 'client' subproject
-    includeProjects 'ihub-starter' prefix 'ihub-' suffix '-spring-boot-starter' onlySubproject
-//	includeProjects 'ihub-starter', 'ihub-secure'   prefix ''   subproject      '-spring-boot-starter'
-}
+description '用户界面层（或表示层）核心组件'

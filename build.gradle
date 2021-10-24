@@ -27,12 +27,13 @@ subprojects {
         plugin 'pub.ihub.plugin.ihub-verification'
         plugin 'pub.ihub.plugin.ihub-publish'
     }
-    iHubBom {
-        importBoms {
-            group 'pub.ihub.lib' module 'ihub-bom' version 'main-SNAPSHOT'
-        }
-    }
+    iHubBom.bomVersions.clear()
     dependencies {
+        platform(project(':ihub-bom')).with {
+            api it
+            pmd it
+            annotationProcessor it
+        }
         if (project.name != 'ihub-core') {
             api project(':ihub-core')
         }
