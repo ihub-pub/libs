@@ -27,13 +27,15 @@ subprojects {
         plugin 'pub.ihub.plugin.ihub-verification'
         plugin 'pub.ihub.plugin.ihub-publish'
     }
-    iHubBom.bomVersions.clear()
+    // TODO ihub插件1.1.9后启用
+//    iHubBom.bomVersions.clear()
     dependencies {
-        platform(project(':ihub-bom')).with {
-            api it
-            pmd it
-            annotationProcessor it
-        }
+    // TODO ihub插件1.1.9后启用
+//        platform(project(':ihub-bom')).with {
+//            api it
+//            pmd it
+//            annotationProcessor it
+//        }
         if (project.name != 'ihub-core') {
             api project(':ihub-core')
         }
