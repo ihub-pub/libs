@@ -19,7 +19,7 @@ jobs:
           cache: 'gradle'
 
       - name: Build with Gradle
-        uses: ihub-pub/actions@main
+        uses: ihub-pub/bot@main
         with:
           run: build -x test
 
@@ -35,7 +35,7 @@ jobs:
           cache: 'gradle'
 
       - name: Test with Gradle
-        uses: ihub-pub/actions@main
+        uses: ihub-pub/bot@main
         with:
           run: test -DiHubTest.failFast=true
 
@@ -68,7 +68,7 @@ jobs:
           cache: 'gradle'
 
       - name: Publish to Snapshot Repository
-        uses: ihub-pub/actions/publish@main
+        uses: ihub-pub/bot/publish@main
         with:
           repoUsername: ${{ secrets.REPO_USERNAME }}
           repoPassword: ${{ secrets.REPO_PASSWORD }}
