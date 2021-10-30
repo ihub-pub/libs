@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 plugins {
-    id 'pub.ihub.plugin.ihub-settings' version '1.1.8'
+    id 'pub.ihub.plugin.ihub-settings' version '1.1.9'
 }
 
 iHubSettings {
-    includeProjects 'ihub-bom', 'ihub-core' noPrefix
-//    includeProjects 'ihub-core' prefix '' skippedDirs 'client' subproject
+    includeProjects 'ihub-bom' noPrefix
+    includeProjects 'ihub-core' prefix '' skippedDirs 'client' subproject
     includeProjects 'ihub-starter' prefix 'ihub-' suffix '-spring-boot-starter' onlySubproject
 //	includeProjects 'ihub-starter', 'ihub-secure'   prefix ''   subproject      '-spring-boot-starter'
 }
