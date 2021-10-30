@@ -5,7 +5,8 @@ dependencies {
 		'org.springframework.boot:spring-boot-starter-validation',
 		'org.springframework.cloud:spring-cloud-starter-bootstrap'
 
-	api 'de.codecentric:spring-boot-admin-starter-client'
+    // TODO 阿里云仓库还未同步
+//	api 'de.codecentric:spring-boot-admin-starter-client'
 
 	api 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery',
 		'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config',
