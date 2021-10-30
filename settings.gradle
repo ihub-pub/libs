@@ -18,8 +18,8 @@ plugins {
 }
 
 iHubSettings {
-    includeProjects 'ihub-bom' noPrefix
-    includeProjects 'ihub-core' prefix '' skippedDirs 'client' subproject
+    includeProjects 'ihub-bom', 'ihub-core' noPrefix
+//    includeProjects 'ihub-core' prefix '' skippedDirs 'client' subproject
     includeProjects 'ihub-starter' prefix 'ihub-' suffix '-spring-boot-starter' onlySubproject
 //	includeProjects 'ihub-starter', 'ihub-secure'   prefix ''   subproject      '-spring-boot-starter'
 }
