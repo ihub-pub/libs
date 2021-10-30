@@ -30,7 +30,7 @@ dependencies {
         platform('org.springframework.statemachine:spring-statemachine-bom:3.0.1'),
         platform('org.springframework.cloud:spring-cloud-dependencies:2020.0.4'),
         platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1'),
-        platform('de.codecentric:spring-boot-admin-dependencies:2.5.2'),
+        platform('de.codecentric:spring-boot-admin-dependencies:2.5.3'),
         platform('com.github.xiaoymin:knife4j-dependencies:3.0.3'),
         platform('org.springframework.boot:spring-boot-dependencies:2.5.6')
     // 配置组件版本
