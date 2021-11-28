@@ -25,7 +25,7 @@ dependencies {
     api platform('com.sun.xml.bind:jaxb-bom-ext:3.0.2'),
         platform('org.drools:drools-bom:7.62.0.Final'),
         platform('io.github.openfeign:feign-bom:11.7'),
-        platform('io.sentry:sentry-bom:5.4.1'),
+        platform('io.sentry:sentry-bom:5.4.2'),
         platform('cn.hutool:hutool-bom:5.7.16'),
         platform('com.squareup.okhttp3:okhttp-bom:4.9.2'),
         platform('org.junit:junit-bom:5.8.1'),
