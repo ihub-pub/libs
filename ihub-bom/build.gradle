@@ -23,25 +23,25 @@ javaPlatform {
 dependencies {
     // 导入bom配置（优先级由上至下）
     api platform('com.sun.xml.bind:jaxb-bom-ext:3.0.2'),
-        platform('org.drools:drools-bom:7.60.0.Final'),
+        platform('org.drools:drools-bom:7.61.0.Final'),
         platform('io.github.openfeign:feign-bom:11.7'),
-        platform('io.sentry:sentry-bom:5.3.0'),
-        platform('cn.hutool:hutool-bom:5.7.15'),
+        platform('io.sentry:sentry-bom:5.4.1'),
+        platform('cn.hutool:hutool-bom:5.7.16'),
         platform('com.squareup.okhttp3:okhttp-bom:4.9.2'),
         platform('org.junit:junit-bom:5.8.1'),
-        platform('org.spockframework:spock-bom:2.0-groovy-3.0'),
+        platform('org.spockframework:spock-bom:2.1-M2-groovy-3.0'),
         platform('org.springframework.statemachine:spring-statemachine-bom:3.0.1'),
         platform('org.springframework.cloud:spring-cloud-dependencies:2020.0.4'),
         platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1'),
-        platform('de.codecentric:spring-boot-admin-dependencies:2.5.3'),
+        platform('de.codecentric:spring-boot-admin-dependencies:2.5.4'),
         platform('com.google.guava:guava-bom:31.0.1-jre'),
         platform('com.google.inject:guice-bom:5.0.1'),
         platform('com.github.xiaoymin:knife4j-dependencies:3.0.3'),
-        platform('org.springframework.boot:spring-boot-dependencies:2.5.6')
+        platform('org.springframework.boot:spring-boot-dependencies:2.5.7'),
+        platform('org.apache.kylin:kylin:4.0.0')
     // 配置组件版本
     constraints {
-        [
-            'com.alibaba:fastjson:1.2.78',
+        api 'com.alibaba:fastjson:1.2.78',
             'com.alibaba:druid:1.2.8',
             'com.alibaba:druid-spring-boot-starter:1.2.8',
             'com.alibaba.p3c:p3c-pmd:2.1.1',
@@ -53,16 +53,10 @@ dependencies {
             'com.baomidou:mybatis-plus-generator:3.5.1',
             'com.github.xiaoymin:knife4j-aggregation-spring-boot-starter:2.0.9',
             'org.codehaus.groovy:groovy-all:3.0.9',
-            'com.athaydes:spock-reports:2.1-groovy-3.0',
-            'cn.hutool:hutool-all:5.7.15',
+            'com.athaydes:spock-reports:2.1.1-groovy-3.0',
+            'cn.hutool:hutool-all:5.7.16',
             'org.mapstruct:mapstruct:1.4.2.Final',
             'org.mapstruct:mapstruct-processor:1.4.2.Final'
-        ].each {
-            def (group, name, version) = it.split ':'
-            add 'api', "$group:$name" version {
-                prefer version
-            }
-        }
     }
     // 配置ihub组件依赖版本
     constraints {
