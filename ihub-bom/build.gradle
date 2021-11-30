@@ -37,7 +37,7 @@ dependencies {
         platform('com.google.guava:guava-bom:31.0.1-jre'),
         platform('com.google.inject:guice-bom:5.0.1'),
         platform('com.github.xiaoymin:knife4j-dependencies:3.0.3'),
-        platform('org.springframework.boot:spring-boot-dependencies:2.5.7'),
+        platform('org.springframework.boot:spring-boot-dependencies:2.6.1'),
         platform('org.apache.kylin:kylin:4.0.0')
     // 配置组件版本
     constraints {
