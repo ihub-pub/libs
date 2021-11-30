@@ -1,3 +1,29 @@
+## 🔖 1.0.4 (2021-11-30)
+
+
+### 📝 Documentation
+
+- 📝 添加CHANGELOG  [@henry-hub](https://github.com/henry-hub) ([#28](https://github.com/ihub-pub/libs/pull/28))
+
+### ⬆️ Dependency Updates
+
+- ⬆️ gradle: Bump spring-boot-dependencies from 2.5.7 to 2.6.1 in /ihub-bom  [@dependabot](https://github.com/dependabot) ([#40](https://github.com/ihub-pub/libs/pull/40))
+- ⬆️ gradle: Bump junit-bom from 5.8.1 to 5.8.2 in /ihub-bom  [@dependabot](https://github.com/dependabot) ([#38](https://github.com/ihub-pub/libs/pull/38))
+- ⬆️ gradle: Bump okhttp-bom from 4.9.2 to 4.9.3 in /ihub-bom  [@dependabot](https://github.com/dependabot) ([#33](https://github.com/ihub-pub/libs/pull/33))
+- ⬆️ gradle: Bump sentry-bom from 5.4.1 to 5.4.2 in /ihub-bom  [@dependabot](https://github.com/dependabot) ([#35](https://github.com/ihub-pub/libs/pull/35))
+- ⬆️ gradle: Bump drools-bom from 7.61.0.Final to 7.62.0.Final in /ihub-bom  [@dependabot](https://github.com/dependabot) ([#36](https://github.com/ihub-pub/libs/pull/36))
+- ⬆️ 升级bom组件版本  [@henry-hub](https://github.com/henry-hub) ([#31](https://github.com/ihub-pub/libs/pull/31))
+- Bump pub.ihub.plugin.ihub-settings from 1.1.9 to 1.1.10  [@dependabot](https://github.com/dependabot) ([#30](https://github.com/ihub-pub/libs/pull/30))
+- ✏️ 设置bom配置组件版本为“首选版本”，以便被覆盖  [@henry-hub](https://github.com/henry-hub) ([#29](https://github.com/ihub-pub/libs/pull/29))
+- ⬆️ 插件版本升至1.1.9  [@henry-hub](https://github.com/henry-hub) ([#27](https://github.com/ihub-pub/libs/pull/27))
+
+### 🧰 Maintenance
+
+- 🔥 兼容SpringBoot2.6.0  [@henry-hub](https://github.com/henry-hub) ([#41](https://github.com/ihub-pub/libs/pull/41))
+
+
+---
+
 ## 🔖 1.0.3 (2021-10-30)
 
 ### ⬆️ Dependency Updates
