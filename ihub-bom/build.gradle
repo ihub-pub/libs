@@ -31,7 +31,7 @@ dependencies {
         platform('org.junit:junit-bom:5.8.2'),
         platform('org.spockframework:spock-bom:2.1-M2-groovy-3.0'),
         platform('org.springframework.statemachine:spring-statemachine-bom:3.0.1'),
-        platform('org.springframework.cloud:spring-cloud-dependencies:2020.0.4'),
+        platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.0'),
         platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1'),
         platform('de.codecentric:spring-boot-admin-dependencies:2.5.4'),
         platform('com.google.guava:guava-bom:31.0.1-jre'),
