@@ -67,14 +67,12 @@ iHubBom.bomVersions.clear()
 dependencies {
     // 导入bom配置（优先级由上至下）
     api platform(project(':ihub-bom')),
-        platform('com.sun.xml.bind:jaxb-bom-ext:3.0.2'),
-        platform('org.drools:drools-bom:7.62.0.Final'),
+        platform('pub.ihub.keel:ihub-bom:main-SNAPSHOT'),
         platform('io.github.openfeign:feign-bom:11.7'),
         platform('io.sentry:sentry-bom:5.4.3'),
         platform('cn.hutool:hutool-bom:5.7.16'),
         platform('com.squareup.okhttp3:okhttp-bom:4.9.3'),
-        platform('org.junit:junit-bom:5.8.2'),
-        platform('org.spockframework:spock-bom:2.1-M2-groovy-3.0'),
+        platform('org.spockframework:spock-bom:2.0-groovy-3.0'),
         platform('org.springframework.statemachine:spring-statemachine-bom:3.0.1'),
         platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.0'),
         platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1'),
