@@ -24,7 +24,7 @@ dependencies {
     // 配置ihub组件依赖版本
     constraints {
         rootProject.allprojects.each {
-            if (it.plugins.hasPlugin('pub.ihub.plugin.ihub-publish') && it != project) {
+            if (it.plugins.hasPlugin('pub.ihub.plugin.ihub-publish') && !it.plugins.hasPlugin('java-platform')) {
                 api "${rootProject.group}:$it.name:${rootProject.version}"
             }
         }
