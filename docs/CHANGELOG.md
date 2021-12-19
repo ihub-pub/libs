@@ -1,3 +1,23 @@
+## 🔖 1.0.5 (2021-12-19)
+
+
+### ⬆️ Dependency Updates
+
+- ⬆️ Gradle升级7.3.2  [@henry-hub](https://github.com/henry-hub) ([#53](https://github.com/ihub-pub/libs/pull/53))、 [@henry-hub](https://github.com/henry-hub) ([#47](https://github.com/ihub-pub/libs/pull/47))
+- ⬆️ gradle: Bump spring-boot-admin-dependencies from 2.5.4 to 2.5.5  [@dependabot](https://github.com/dependabot) ([#52](https://github.com/ihub-pub/libs/pull/52))
+- ⬆️ gradle: Bump sentry-bom from 5.4.2 to 5.5.1  [@dependabot](https://github.com/dependabot) ([#51](https://github.com/ihub-pub/libs/pull/51))、 [@dependabot](https://github.com/dependabot) ([#50](https://github.com/ihub-pub/libs/pull/50))、 [@dependabot](https://github.com/dependabot) ([#43](https://github.com/ihub-pub/libs/pull/43))
+- ⬆️ gradle: Bump hutool-bom from 5.7.16 to 5.7.17  [@dependabot](https://github.com/dependabot) ([#48](https://github.com/ihub-pub/libs/pull/48))
+- ⬆️ gradle: Bump hutool-all from 5.7.16 to 5.7.17  [@dependabot](https://github.com/dependabot) ([#49](https://github.com/ihub-pub/libs/pull/49))
+- ⬆️ gradle: Bump spring-cloud-dependencies from 2020.0.4 to 2021.0.0  [@dependabot](https://github.com/dependabot) ([#44](https://github.com/ihub-pub/libs/pull/44))
+- ⬆️ gradle: Bump pub.ihub.plugin.ihub-settings from 1.1.10 to 1.2.0  [@dependabot](https://github.com/dependabot) ([#42](https://github.com/ihub-pub/libs/pull/42))
+
+### 🧰 Maintenance
+
+- 🎨 拆分ihub-libs、ihub-bom为独立依赖管理组件  [@henry-hub](https://github.com/henry-hub) ([#45](https://github.com/ihub-pub/libs/pull/45))
+
+
+---
+
 ## 🔖 1.0.4 (2021-11-30)
 
 
