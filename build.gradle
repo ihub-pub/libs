@@ -84,7 +84,7 @@ dependencies {
         platform('org.apache.kylin:kylin:4.0.0')
     // 配置组件版本
     constraints {
-        api 'com.alibaba:fastjson:1.2.78',
+        api 'com.alibaba:fastjson:1.2.79',
             'com.alibaba:druid:1.2.8',
             'com.alibaba:druid-spring-boot-starter:1.2.8',
             'com.alibaba.p3c:p3c-pmd:2.1.1',
