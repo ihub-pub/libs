@@ -68,8 +68,9 @@ dependencies {
     // 导入bom配置（优先级由上至下）
     api platform(project(':ihub-bom')),
 //        platform('pub.ihub.keel:ihub-bom:main-SNAPSHOT'), TODO
-        platform('io.github.openfeign:feign-bom:11.7'),
-        platform('io.sentry:sentry-bom:5.5.1'),
+        platform('org.jmolecules:jmolecules-bom:2021.2.1'),
+        platform('io.github.openfeign:feign-bom:11.8'),
+        platform('io.sentry:sentry-bom:5.5.2'),
         platform('cn.hutool:hutool-bom:5.7.17'),
         platform('com.squareup.okhttp3:okhttp-bom:4.9.3'),
         platform('org.spockframework:spock-bom:2.0-groovy-3.0'),
@@ -80,7 +81,7 @@ dependencies {
         platform('com.google.guava:guava-bom:31.0.1-jre'),
         platform('com.google.inject:guice-bom:5.0.1'),
         platform('com.github.xiaoymin:knife4j-dependencies:3.0.3'),
-        platform('org.springframework.boot:spring-boot-dependencies:2.6.1'),
+        platform('org.springframework.boot:spring-boot-dependencies:2.6.2'),
         platform('org.apache.kylin:kylin:4.0.0')
     // 配置组件版本
     constraints {
