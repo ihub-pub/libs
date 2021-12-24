@@ -69,7 +69,7 @@ dependencies {
     api platform(project(':ihub-bom')),
 //        platform('pub.ihub.keel:ihub-bom:main-SNAPSHOT'), TODO
         platform('org.jmolecules:jmolecules-bom:2021.2.1'),
-        platform('io.github.openfeign:feign-bom:11.7'),
+        platform('io.github.openfeign:feign-bom:11.8'),
         platform('io.sentry:sentry-bom:5.5.2'),
         platform('cn.hutool:hutool-bom:5.7.17'),
         platform('com.squareup.okhttp3:okhttp-bom:4.9.3'),
