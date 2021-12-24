@@ -71,7 +71,7 @@ dependencies {
         platform('org.jmolecules:jmolecules-bom:2021.2.1'),
         platform('io.github.openfeign:feign-bom:11.8'),
         platform('io.sentry:sentry-bom:5.5.2'),
-        platform('cn.hutool:hutool-bom:5.7.17'),
+        platform('cn.hutool:hutool-bom:5.7.18'),
         platform('com.squareup.okhttp3:okhttp-bom:4.9.3'),
         platform('org.spockframework:spock-bom:2.0-groovy-3.0'),
         platform('org.springframework.statemachine:spring-statemachine-bom:3.0.1'),
