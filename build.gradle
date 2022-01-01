@@ -93,7 +93,7 @@ dependencies {
             'com.baomidou:mybatis-plus-core:3.4.3.4',
             'com.baomidou:mybatis-plus:3.4.3.4',
             'com.baomidou:mybatis-plus-extension:3.4.3.4',
-            'com.baomidou:mybatis-plus-boot-starter:3.4.3.4',
+            'com.baomidou:mybatis-plus-boot-starter:3.5.0',
             'com.baomidou:mybatis-plus-generator:3.5.1',
             'com.github.xiaoymin:knife4j-aggregation-spring-boot-starter:2.0.9',
             'org.codehaus.groovy:groovy-all:3.0.9',
