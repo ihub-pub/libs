@@ -89,7 +89,7 @@ dependencies {
             'com.alibaba:druid:1.2.8',
             'com.alibaba:druid-spring-boot-starter:1.2.8',
             'com.alibaba.p3c:p3c-pmd:2.1.1',
-            'com.baomidou:mybatis-plus-annotation:3.4.3.4',
+            'com.baomidou:mybatis-plus-annotation:3.5.0',
             'com.baomidou:mybatis-plus-core:3.4.3.4',
             'com.baomidou:mybatis-plus:3.4.3.4',
             'com.baomidou:mybatis-plus-extension:3.5.0',
