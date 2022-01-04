@@ -30,9 +30,10 @@ subprojects {
     iHubBom.bomVersions.clear()
     dependencies {
         platform(rootProject).with {
-            api it
+            implementation it
             pmd it
             annotationProcessor it
+            testAnnotationProcessor it
         }
         if (project.name != 'ihub-core') {
             api project(':ihub-core')
