@@ -1,8 +1,9 @@
 ${AnsiColor.BRIGHT_GREEN}_________                   ______  ${AnsiColor.GREEN} _______           ______
 ${AnsiColor.BRIGHT_GREEN}\__   __/|\     /||\     /|(  ___ \ ${AnsiColor.GREEN}(  ____ )|\     /|(  ___ \
-${AnsiColor.BRIGHT_GREEN}   ) (   | )   ( || )   ( || (   ) )${AnsiColor.GREEN}| (    )|| )   ( || (   ) )  ${AnsiColor.BLUE}${spring.application.name} ${application.version}
-${AnsiColor.BRIGHT_GREEN}   | |   | (___) || |   | || (__/ / ${AnsiColor.GREEN}| (____)|| |   | || (__/ /   ${AnsiColor.BLUE}Running in ${spring.profiles.active}
-${AnsiColor.BRIGHT_GREEN}   | |   |  ___  || |   | ||  __ (  ${AnsiColor.GREEN}|  _____)| |   | ||  __ (    ${AnsiColor.BLUE}IHubLibs ${ihub-libs.version}
-${AnsiColor.BRIGHT_GREEN}   | |   | (   ) || |   | || (  \ \ ${AnsiColor.GREEN}| (      | |   | || (  \ \   ${AnsiColor.BLUE}SpringBoot ${spring-boot.version}
+${AnsiColor.BRIGHT_GREEN}   ) (   | )   ( || )   ( || (   ) )${AnsiColor.GREEN}| (    )|| )   ( || (   ) )
+${AnsiColor.BRIGHT_GREEN}   | |   | (___) || |   | || (__/ / ${AnsiColor.GREEN}| (____)|| |   | || (__/ /
+${AnsiColor.BRIGHT_GREEN}   | |   |  ___  || |   | ||  __ (  ${AnsiColor.GREEN}|  _____)| |   | ||  __ (
+${AnsiColor.BRIGHT_GREEN}   | |   | (   ) || |   | || (  \ \ ${AnsiColor.GREEN}| (      | |   | || (  \ \
 ${AnsiColor.BRIGHT_GREEN}___) (___| )   ( || (___) || )___) )${AnsiColor.GREEN}| )      | (___) || )___) )
-${AnsiColor.BRIGHT_GREEN}\_______/|/     \|(_______)|/ \___/ ${AnsiColor.GREEN}|/       (_______)|/ \___/   ${AnsiStyle.NORMAL}
+${AnsiColor.BRIGHT_GREEN}\_______/|/     \|(_______)|/ \___/ ${AnsiColor.GREEN}|/       (_______)|/ \___/
+${AnsiColor.BLUE}${spring.application.name} ${application.version} Running with (SpringBoot ${spring-boot.version} IHubLibs ${ihub-libs.version})${AnsiStyle.NORMAL}

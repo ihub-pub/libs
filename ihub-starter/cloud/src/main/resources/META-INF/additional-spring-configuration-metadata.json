@@ -9,18 +9,44 @@
     {
       "name": "ihub.application.name",
       "type": "java.lang.String",
+      "defaultValue": "demo",
       "description": "服务名称."
     },
     {
       "name": "ihub.application.port",
       "type": "java.lang.Integer",
+      "defaultValue": 8080,
       "description": "服务端口."
     },
     {
-      "name": "ihub.application.name.prefix",
+      "name": "ihub.application.group",
       "type": "java.lang.String",
       "defaultValue": "ihub",
-      "description": "服务名称前缀."
+      "description": "服务分组."
+    },
+    {
+      "name": "ihub.application.namespace",
+      "type": "java.lang.String",
+      "defaultValue": "public",
+      "description": "命名空间."
+    },
+    {
+      "name": "ihub.application.config-server-addr",
+      "type": "java.lang.String",
+      "defaultValue": "localhost:8848",
+      "description": "配置中心地址."
+    },
+    {
+      "name": "ihub.application.discovery-server-addr",
+      "type": "java.lang.String",
+      "defaultValue": "localhost:8848",
+      "description": "注册中心地址."
+    },
+    {
+      "name": "ihub.application.sentinel-dashboard-addr",
+      "type": "java.lang.String",
+      "defaultValue": "localhost:8858",
+      "description": "监控服务地址."
     },
     {
       "name": "ihub.application.gateway-server-addr",
