@@ -99,7 +99,7 @@ dependencies {
             'com.github.xiaoymin:knife4j-aggregation-spring-boot-starter:2.0.9',
             'org.codehaus.groovy:groovy-all:3.0.9',
             'com.athaydes:spock-reports:2.1.1-groovy-3.0',
-            'cn.hutool:hutool-all:5.7.17',
+            'cn.hutool:hutool-all:5.7.19',
             'org.mapstruct:mapstruct:1.4.2.Final',
             'org.mapstruct:mapstruct-processor:1.4.2.Final'
     }
