@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Henry 李恒 (henry.box@outlook.com).
+ * Copyright (c) 2022 Henry 李恒 (henry.box@outlook.com).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,20 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.core;
+package pub.ihub.process;
 
-import lombok.NoArgsConstructor;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import javax.lang.model.element.Element;
 
 /**
- * 通用常量
- *
- * @author liheng
+ * @author henry
  */
-@NoArgsConstructor
-public final class Constant {
+@DisplayName("基础Javapoet注解处理器测试")
+class JavapoetProcessorTest {
 
-	public static final String PROPERTIES_PREFIX = "ihub";
+	@DisplayName("Javapoet注解处理测试-成功")
+	@Test
+	void process() {
+		new DemoJavapoetProcessor().process(null);
+	}
 
-	public static final String BASE_PACKAGES = "pub.ihub";
+	static class DemoJavapoetProcessor extends BaseJavapoetProcessor {
+
+		@Override
+		protected void process(Element element) {
+		}
+
+	}
 
 }

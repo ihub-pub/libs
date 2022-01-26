@@ -1,6 +1,0 @@
-knife4j:
-  enable: true
-ihub:
-  swagger:
-    authorization:
-      enabled: true

@@ -1,0 +1,39 @@
+server:
+  port: ${ihub.application.port:8080}
+spring:
+  application:
+    name: ${ihub.application.name:demo}
+  cloud:
+    nacos:
+      config:
+        prefix: ${spring.application.name}
+        file-extension: yaml
+        group: ${ihub.application.group:ihub}
+        server-addr: ${ihub.application.config-server-addr:localhost:8848}
+        namespace: ${ihub.application.namespace:public}
+      discovery:
+        group: ${ihub.application.group:ihub}
+        server-addr: ${ihub.application.discovery-server-addr:localhost:8848}
+        namespace: ${ihub.application.namespace:public}
+    sentinel:
+      transport:
+        dashboard: ${ihub.application.sentinel-dashboard-addr:localhost:8858}
+      log:
+        dir: ${ihub.application.sentinel-log-dir:./logs/csp}
+    # TODO SpringBoot2.6.0需要暂时关闭此项
+    compatibility-verifier:
+      enabled: false
+  output:
+    ansi:
+      enabled: always
+  # TODO SpringBoot2.6.0默认禁止循环依赖
+  main:
+    allow-circular-references: true
+ihub:
+  application:
+    gateway-server-addr: localhost
+    auth-server-addr: localhost:9527
+management.endpoints.web.exposure.include: "*"
+logging:
+  level:
+    com.alibaba.nacos.client.config: ERROR

@@ -13,12 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id 'pub.ihub.plugin.ihub-settings' version '1.2.1'
-}
+package pub.ihub.cloud;
 
-iHubSettings {
-    includeProjects 'ihub-core', 'ihub-process' prefix '' subproject
-    includeProjects 'ihub-starter' prefix 'ihub-boot-' suffix '-spring-boot-starter' onlySubproject
-//	includeProjects 'ihub-starter', 'ihub-secure'   prefix ''   subproject      '-spring-boot-starter'
+import cn.hutool.core.map.MapUtil;
+import pub.ihub.core.BaseConfigEnvironmentPostProcessor;
+
+import java.util.Map;
+
+import static pub.ihub.core.IHubLibsVersion.getVersion;
+
+/**
+ * 添加Cloud配置文件
+ *
+ * @author liheng
+ */
+public class CloudConfigPostProcessor extends BaseConfigEnvironmentPostProcessor {
+
+	@Override
+	protected String getActiveProfile() {
+		return "cloud";
+	}
+
+	@Override
+	protected Map<String, Object> getCustomizeProperties() {
+		return MapUtil.<String, Object>builder("ihub-libs.version", getVersion()).build();
+	}
+
 }
