@@ -29,13 +29,13 @@ class JavapoetProcessorTest {
 	@DisplayName("Javapoet注解处理测试-成功")
 	@Test
 	void process() {
-		new DemoJavapoetProcessor().process(null);
+		new DemoJavapoetProcessor().processElement(null);
 	}
 
 	static class DemoJavapoetProcessor extends BaseJavapoetProcessor {
 
 		@Override
-		protected void process(Element element) {
+		protected void processElement(Element element) {
 		}
 
 	}

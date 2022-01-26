@@ -43,7 +43,7 @@ class DocProcessorTest {
 	void controller() {
 		ControllerDocProcessor processor = new ControllerDocProcessor();
 		processor.init(new MockProcessingEnvironment());
-		processor.process(new MockElement());
+		processor.processElement(new MockElement());
 	}
 
 	@DisplayName("实体文档注解处理器测试-成功")
@@ -51,7 +51,7 @@ class DocProcessorTest {
 	void entity() {
 		EntityDocProcessor processor = new EntityDocProcessor();
 		processor.init(new MockProcessingEnvironment());
-		processor.process(new MockElement());
+		processor.processElement(new MockElement());
 	}
 
 	//<editor-fold desc="Mock Element">

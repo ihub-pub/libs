@@ -45,7 +45,7 @@ public abstract class BaseProcessor extends AbstractProcessor {
 	 *
 	 * @param element 元素
 	 */
-	protected abstract void process(Element element);
+	protected abstract void processElement(Element element);
 
 	@Override
 	public synchronized void init(ProcessingEnvironment processingEnvironment) {
@@ -58,7 +58,7 @@ public abstract class BaseProcessor extends AbstractProcessor {
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 		try {
-			annotations.forEach(typeElement -> roundEnv.getElementsAnnotatedWith(typeElement).forEach(this::process));
+			annotations.forEach(typeElement -> roundEnv.getElementsAnnotatedWith(typeElement).forEach(this::processElement));
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

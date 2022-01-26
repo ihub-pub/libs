@@ -92,7 +92,7 @@ class AstProcessorTest {
 		}
 
 		@Override
-		protected void process(Element element) {
+		protected void processElement(Element element) {
 			note("test %s", "mock");
 			appendAnnotation(element, mods, DisplayName.class,
 				(doc, tags) -> com.sun.tools.javac.util.List.of(makeArg("value", doc)));

@@ -49,7 +49,7 @@ public class ControllerDocProcessor extends BaseDocProcessor {
 	};
 
 	@Override
-	protected void process(Element element) {
+	protected void processElement(Element element) {
 		javacTrees.getTree(element).accept(new TreeTranslator() {
 			@Override
 			public void visitClassDef(JCTree.JCClassDecl jcClassDecl) {
