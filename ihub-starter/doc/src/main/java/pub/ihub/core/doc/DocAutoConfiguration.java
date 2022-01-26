@@ -13,20 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.core;
+package pub.ihub.core.doc;
 
-import lombok.NoArgsConstructor;
+import io.swagger.v3.oas.models.OpenAPI;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * 通用常量
+ * Swagger自动配置
  *
  * @author liheng
  */
-@NoArgsConstructor
-public final class Constant {
+@Configuration
+@ConditionalOnClass(OpenAPI.class)
+@EnableConfigurationProperties(DocProperties.class)
+public class DocAutoConfiguration {
 
-	public static final String PROPERTIES_PREFIX = "ihub";
-
-	public static final String BASE_PACKAGES = "pub.ihub";
+	@Bean
+	public OpenAPI openApi(DocProperties properties) {
+		return properties.getOpenApi();
+	}
 
 }

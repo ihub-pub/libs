@@ -34,7 +34,7 @@ public abstract class BaseConfigEnvironmentPostProcessor implements EnvironmentP
 	/**
 	 * 默认顺序
 	 */
-	public static final int ORDER = ConfigDataEnvironmentPostProcessor.ORDER - 5;
+	public static final int ORDER = ConfigDataEnvironmentPostProcessor.ORDER;
 	/**
 	 * 自定义属性源名称
 	 */
