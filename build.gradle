@@ -81,7 +81,7 @@ dependencies {
         platform('de.codecentric:spring-boot-admin-dependencies:2.5.5'),
         platform('com.google.guava:guava-bom:31.0.1-jre'),
         platform('com.google.inject:guice-bom:5.0.1'),
-        platform('org.springframework.boot:spring-boot-dependencies:2.6.2'),
+        platform('org.springframework.boot:spring-boot-dependencies:2.6.3'),
         platform('org.springdoc:springdoc-openapi:1.6.4'),
         platform('org.apache.kylin:kylin:4.0.1')
     // 配置组件版本
@@ -90,7 +90,7 @@ dependencies {
             'com.alibaba:druid:1.2.8',
             'com.alibaba:druid-spring-boot-starter:1.2.8',
             'com.alibaba.p3c:p3c-pmd:2.1.1',
-            'com.baomidou:mybatis-plus-annotation:3.5.0',
+            'com.baomidou:mybatis-plus-annotation:3.5.1',
             'com.baomidou:mybatis-plus-core:3.5.0',
             'com.baomidou:mybatis-plus:3.5.0',
             'com.baomidou:mybatis-plus-extension:3.5.0',
