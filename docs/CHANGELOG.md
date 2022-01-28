@@ -12,6 +12,20 @@
 
 ---
 
+## 🔖 1.0.6 (2021-12-24)
+
+
+### ⬆️ Dependency Updates
+
+- ⬆️ gradle: Bump fastjson from 1.2.78 to 1.2.79  [@dependabot](https://github.com/dependabot) ([#54](https://github.com/ihub-pub/libs/pull/54))
+- ⬆️ gradle: Bump spring-boot-dependencies from 2.6.1 to 2.6.2  [@dependabot](https://github.com/dependabot) ([#55](https://github.com/ihub-pub/libs/pull/55))
+- ⬆️ gradle: Bump feign-bom from 11.7 to 11.8  [@dependabot](https://github.com/dependabot) ([#58](https://github.com/ihub-pub/libs/pull/58))
+- ⬆️ gradle: Bump sentry-bom from 5.5.1 to 5.5.2  [@dependabot](https://github.com/dependabot) ([#56](https://github.com/ihub-pub/libs/pull/56))
+- ⬆️ ihub-libs添加jmolecules-bom  [@henry-hub](https://github.com/henry-hub) ([#57](https://github.com/ihub-pub/libs/pull/57))
+
+
+---
+
 ## 🔖 1.0.5 (2021-12-19)
 
 
