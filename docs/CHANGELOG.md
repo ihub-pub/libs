@@ -1,13 +1,24 @@
-## 🔖 1.0.6 (2021-12-24)
+## 🔖 1.0.7 (2022-01-28)
 
+
+### ✨ Features
+
+- ✨ 添加日志相关组件，编译时自动添加API注解  [@henry-hub](https://github.com/henry-hub) ([#80](https://github.com/ihub-pub/libs/pull/80))
+- ✏️ 调整ihub-cloud-spring-boot-starter默认配置文件  [@henry-hub](https://github.com/henry-hub) ([#67](https://github.com/ihub-pub/libs/pull/67))
 
 ### ⬆️ Dependency Updates
 
-- ⬆️ gradle: Bump fastjson from 1.2.78 to 1.2.79  [@dependabot](https://github.com/dependabot) ([#54](https://github.com/ihub-pub/libs/pull/54))
-- ⬆️ gradle: Bump spring-boot-dependencies from 2.6.1 to 2.6.2  [@dependabot](https://github.com/dependabot) ([#55](https://github.com/ihub-pub/libs/pull/55))
-- ⬆️ gradle: Bump feign-bom from 11.7 to 11.8  [@dependabot](https://github.com/dependabot) ([#58](https://github.com/ihub-pub/libs/pull/58))
-- ⬆️ gradle: Bump sentry-bom from 5.5.1 to 5.5.2  [@dependabot](https://github.com/dependabot) ([#56](https://github.com/ihub-pub/libs/pull/56))
-- ⬆️ ihub-libs添加jmolecules-bom  [@henry-hub](https://github.com/henry-hub) ([#57](https://github.com/ihub-pub/libs/pull/57))
+- ⬆️ gradle: Bump guice-bom from 5.0.1 to 5.1.0  [@dependabot](https://github.com/dependabot) ([#86](https://github.com/ihub-pub/libs/pull/86))
+- ⬆️ gradle: Bump springdoc-openapi from 1.6.4 to 1.6.5  [@dependabot](https://github.com/dependabot) ([#85](https://github.com/ihub-pub/libs/pull/85))
+- ⬆️ gradle: Bump sentry-bom from 5.5.2 to 5.6.0  [@dependabot](https://github.com/dependabot) ([#79](https://github.com/ihub-pub/libs/pull/79))
+- ⬆️ gradle: Bump spring-boot-admin-dependencies from 2.5.5 to 2.6.2  [@dependabot](https://github.com/dependabot) ([#78](https://github.com/ihub-pub/libs/pull/78))
+- ⬆️ gradle: Bump spring-boot-dependencies from 2.6.2 to 2.6.3  [@dependabot](https://github.com/dependabot) ([#77](https://github.com/ihub-pub/libs/pull/77))
+- ⬆️ gradle: Bump hutool-all from 5.7.17 to 5.7.20  [@dependabot](https://github.com/dependabot) ([#76](https://github.com/ihub-pub/libs/pull/76))
+- ⬆️ gradle: Bump hutool-bom from 5.7.17 to 5.7.20  [@dependabot](https://github.com/dependabot) ([#75](https://github.com/ihub-pub/libs/pull/75))
+- ⬆️ gradle: Bump kylin from 4.0.0 to 4.0.1  [@dependabot](https://github.com/dependabot) ([#68](https://github.com/ihub-pub/libs/pull/68))
+- ⬆️ gradle: Bump jmolecules-bom from 2021.2.1 to 2021.2.2  [@dependabot](https://github.com/dependabot) ([#73](https://github.com/ihub-pub/libs/pull/73))
+- ⬆️ gradle: Bump mybatis-plus from 3.4.3.4 to 3.5.1  [@dependabot](https://github.com/dependabot) ([#84](https://github.com/ihub-pub/libs/pull/84))  [@dependabot](https://github.com/dependabot) ([#66](https://github.com/ihub-pub/libs/pull/66))   [@dependabot](https://github.com/dependabot) ([#62](https://github.com/ihub-pub/libs/pull/62))  [@dependabot](https://github.com/dependabot) ([#65](https://github.com/ihub-pub/libs/pull/65))  [@dependabot](https://github.com/dependabot) ([#63](https://github.com/ihub-pub/libs/pull/63))  [@dependabot](https://github.com/dependabot) ([#64](https://github.com/ihub-pub/libs/pull/64))
+- ⬆️ 插件版本升至1.2.1  [@henry-hub](https://github.com/henry-hub) ([#59](https://github.com/ihub-pub/libs/pull/59))
 
 
 ---
