@@ -15,12 +15,15 @@
  */
 package pub.ihub.core;
 
+import lombok.NoArgsConstructor;
+
 /**
  * IHub组件版本
  *
  * @author liheng
  * @see org.springframework.boot.SpringBootVersion
  */
+@NoArgsConstructor
 public final class IHubLibsVersion {
 
 	public static String getVersion() {

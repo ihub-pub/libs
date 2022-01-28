@@ -1,0 +1,4 @@
+#springdoc:
+#  group-configs:
+#    - group: ${ihub.doc.group-name:default}
+

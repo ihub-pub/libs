@@ -11,5 +11,5 @@ dependencies {
 		'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config',
 		'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
 
-	testImplementation project(':ihub-test-spring-boot-starter')
+	testImplementation project(':ihub-boot-test-spring-boot-starter')
 }

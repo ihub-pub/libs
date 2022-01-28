@@ -1,7 +1,0 @@
-# Auto Configuration
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-pub.ihub.core.swagger.SwaggerAutoConfiguration
-
-# Environment Post Processors
-org.springframework.boot.env.EnvironmentPostProcessor=\
-pub.ihub.core.swagger.IHubAddSwaggerConfig
