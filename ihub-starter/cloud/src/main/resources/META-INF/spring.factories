@@ -1,7 +1,3 @@
 # Auto Configuration
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 pub.ihub.cloud.CloudAutoConfiguration
-
-# Environment Post Processors
-org.springframework.boot.env.EnvironmentPostProcessor=\
-pub.ihub.cloud.CloudConfigPostProcessor

@@ -40,6 +40,7 @@ subprojects {
         }
         if (project.name.endsWith('-spring-boot-starter')) {
             implementation 'org.springframework.boot:spring-boot-autoconfigure'
+            annotationProcessor project(':ihub-process:ihub-process-boot')
         }
         annotationProcessor 'org.springframework.boot:spring-boot-autoconfigure-processor'
     }
@@ -102,7 +103,8 @@ dependencies {
             'io.swagger.core.v3:swagger-annotations:2.1.12',
             'com.google.auto.service:auto-service:1.0.1',
             'org.mapstruct:mapstruct:1.4.2.Final',
-            'org.mapstruct:mapstruct-processor:1.4.2.Final'
+            'org.mapstruct:mapstruct-processor:1.4.2.Final',
+            'org.springframework.security:spring-security-oauth2-authorization-server:0.2.2'
     }
 }
 
