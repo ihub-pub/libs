@@ -82,7 +82,7 @@ public class AuthServerConfig implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public ProviderSettings providerSettings(@Value("${ihub.application.auth-server-addr}") String authServerAddr) {
+	public ProviderSettings providerSettings(@Value("${ihub.cloud.auth-server-addr}") String authServerAddr) {
 		return ProviderSettings.builder().issuer(authServerAddr).build();
 	}
 

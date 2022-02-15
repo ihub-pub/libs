@@ -26,7 +26,7 @@ import static pub.ihub.core.Constant.PROPERTIES_PREFIX;
  * @author liheng
  */
 @Data
-@ConfigurationProperties(PROPERTIES_PREFIX + ".application")
-public class IHubApplicationProperties {
+@ConfigurationProperties(PROPERTIES_PREFIX + ".cloud")
+public class CloudProperties {
 
 }

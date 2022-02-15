@@ -15,6 +15,7 @@
  */
 package pub.ihub.core;
 
+import cn.hutool.core.map.MapUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor;
 import org.springframework.boot.env.EnvironmentPostProcessor;
@@ -23,6 +24,8 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
 
 import java.util.Map;
+
+import static pub.ihub.core.IHubLibsVersion.getVersion;
 
 /**
  * 自定义文件集配置处理器
@@ -72,7 +75,7 @@ public abstract class BaseConfigEnvironmentPostProcessor implements EnvironmentP
 	 * @return 自定义属性
 	 */
 	protected Map<String, Object> getCustomizeProperties() {
-		return null;
+		return MapUtil.<String, Object>builder("ihub-libs.version", getVersion()).build();
 	}
 
 }

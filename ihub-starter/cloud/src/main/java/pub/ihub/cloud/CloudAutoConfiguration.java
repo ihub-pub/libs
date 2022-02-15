@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
  * @author liheng
  */
 @Configuration
-@EnableConfigurationProperties(IHubApplicationProperties.class)
+@EnableConfigurationProperties(CloudProperties.class)
 public class CloudAutoConfiguration {
 
 }
