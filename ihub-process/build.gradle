@@ -9,5 +9,6 @@ subprojects {
         implementation project(':ihub-process')
         compileOnly 'com.google.auto.service:auto-service'
         annotationProcessor 'com.google.auto.service:auto-service'
+        testImplementation 'com.google.testing.compile:compile-testing:0.19'
     }
 }

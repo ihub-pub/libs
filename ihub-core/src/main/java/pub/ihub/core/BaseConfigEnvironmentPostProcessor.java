@@ -49,10 +49,8 @@ public abstract class BaseConfigEnvironmentPostProcessor implements EnvironmentP
 		if (null != profile) {
 			environment.addActiveProfile(profile);
 		}
-		Map<String, Object> properties = getCustomizeProperties();
-		if (null != properties) {
-			environment.getPropertySources().addLast(new MapPropertySource(CUSTOMIZE_PROPERTY_SOURCE_NAME, properties));
-		}
+		environment.getPropertySources()
+			.addLast(new MapPropertySource(CUSTOMIZE_PROPERTY_SOURCE_NAME, getCustomizeProperties()));
 	}
 
 	@Override
