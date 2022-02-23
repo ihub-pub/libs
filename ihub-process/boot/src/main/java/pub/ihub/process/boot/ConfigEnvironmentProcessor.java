@@ -21,6 +21,8 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import lombok.SneakyThrows;
+import net.ltgt.gradle.incap.IncrementalAnnotationProcessor;
+import net.ltgt.gradle.incap.IncrementalAnnotationProcessorType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import pub.ihub.core.BaseConfigEnvironmentPostProcessor;
 import pub.ihub.process.BaseJavapoetProcessor;
@@ -39,6 +41,7 @@ import static javax.lang.model.SourceVersion.RELEASE_11;
 @AutoService(Processor.class)
 @SupportedSourceVersion(RELEASE_11)
 @SupportedAnnotationTypes("org.springframework.boot.context.properties.ConfigurationProperties")
+@IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.AGGREGATING)
 public class ConfigEnvironmentProcessor extends BaseJavapoetProcessor {
 
 	@SneakyThrows
@@ -63,8 +66,7 @@ public class ConfigEnvironmentProcessor extends BaseJavapoetProcessor {
 
 		javaFile.writeTo(mFiler);
 
-		writeServiceFile("META-INF/spring.factories", "# Environment Post Processors",
-			"org.springframework.boot.env.EnvironmentPostProcessor=\\",
+		writeServiceFile("META-INF/spring.factories", "org.springframework.boot.env.EnvironmentPostProcessor",
 			javaFile.packageName + "." + javaFile.typeSpec.name);
 	}
 

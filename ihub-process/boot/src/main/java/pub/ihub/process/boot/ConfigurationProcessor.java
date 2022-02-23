@@ -16,6 +16,8 @@
 package pub.ihub.process.boot;
 
 import com.google.auto.service.AutoService;
+import net.ltgt.gradle.incap.IncrementalAnnotationProcessor;
+import net.ltgt.gradle.incap.IncrementalAnnotationProcessorType;
 import pub.ihub.process.BaseJavapoetProcessor;
 
 import javax.annotation.processing.Processor;
@@ -31,12 +33,12 @@ import static javax.lang.model.SourceVersion.RELEASE_11;
 @AutoService(Processor.class)
 @SupportedSourceVersion(RELEASE_11)
 @SupportedAnnotationTypes("org.springframework.context.annotation.Configuration")
+@IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.AGGREGATING)
 public class ConfigurationProcessor extends BaseJavapoetProcessor {
 
 	@Override
 	protected void processElement(Element element) {
-		writeServiceFile("META-INF/spring.factories", "# Auto Configuration",
-			"org.springframework.boot.autoconfigure.EnableAutoConfiguration=\\",
+		writeServiceFile("META-INF/spring.factories", "org.springframework.boot.autoconfigure.EnableAutoConfiguration",
 			element.getEnclosingElement().toString() + "." + element.getSimpleName());
 	}
 
