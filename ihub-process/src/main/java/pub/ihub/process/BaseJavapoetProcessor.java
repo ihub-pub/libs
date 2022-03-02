@@ -15,24 +15,11 @@
  */
 package pub.ihub.process;
 
-import cn.hutool.core.io.file.FileWriter;
-import lombok.SneakyThrows;
-
-import java.util.List;
-
-import static javax.tools.StandardLocation.SOURCE_OUTPUT;
-
 /**
  * 基础Javapoet注解处理器
  *
  * @author henry
  */
 public abstract class BaseJavapoetProcessor extends BaseProcessor {
-
-	@SneakyThrows
-	protected void writeServiceFile(String resourceFile, String... resourceLines) {
-		String sourcePath = mFiler.getResource(SOURCE_OUTPUT, "", resourceFile).getName();
-		new FileWriter(sourcePath).writeLines(List.of(resourceLines), true);
-	}
 
 }

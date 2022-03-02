@@ -40,7 +40,6 @@ subprojects {
         }
         if (project.name.endsWith('-spring-boot-starter')) {
             implementation 'org.springframework.boot:spring-boot-autoconfigure'
-            annotationProcessor 'net.dreamlu:mica-auto'
             annotationProcessor project(':ihub-process:ihub-process-boot')
         }
         annotationProcessor 'org.springframework.boot:spring-boot-autoconfigure-processor'
