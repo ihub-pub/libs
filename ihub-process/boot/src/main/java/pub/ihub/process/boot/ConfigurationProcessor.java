@@ -39,7 +39,7 @@ public class ConfigurationProcessor extends BaseSpringFactoriesProcessor {
 
 	@Override
 	protected void processElement(Element element) {
-		writeSpringFactoriesFile("org.springframework.boot.autoconfigure.EnableAutoConfiguration",
+		addFactories("org.springframework.boot.autoconfigure.EnableAutoConfiguration",
 			element.getEnclosingElement().toString() + "." + element.getSimpleName());
 	}
 

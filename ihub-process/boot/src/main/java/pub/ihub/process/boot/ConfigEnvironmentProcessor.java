@@ -20,7 +20,6 @@ import com.google.auto.service.AutoService;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
-import lombok.SneakyThrows;
 import net.ltgt.gradle.incap.IncrementalAnnotationProcessor;
 import net.ltgt.gradle.incap.IncrementalAnnotationProcessorType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -31,6 +30,7 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
+import java.io.IOException;
 
 import static javax.lang.model.SourceVersion.RELEASE_11;
 
@@ -45,9 +45,8 @@ import static javax.lang.model.SourceVersion.RELEASE_11;
 @IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.AGGREGATING)
 public class ConfigEnvironmentProcessor extends BaseSpringFactoriesProcessor {
 
-	@SneakyThrows
 	@Override
-	protected void processElement(Element element) {
+	protected void processElement(Element element) throws IOException {
 		String profile = element.getAnnotation(ConfigurationProperties.class).value().replaceAll("\\w+\\.", "");
 		MethodSpec activeProfile = MethodSpec.methodBuilder("getActiveProfile")
 			.addModifiers(Modifier.PROTECTED)
@@ -68,7 +67,7 @@ public class ConfigEnvironmentProcessor extends BaseSpringFactoriesProcessor {
 
 		javaFile.writeTo(mFiler);
 
-		writeSpringFactoriesFile("org.springframework.boot.env.EnvironmentPostProcessor",
+		addFactories("org.springframework.boot.env.EnvironmentPostProcessor",
 			javaFile.packageName + "." + javaFile.typeSpec.name);
 	}
 
