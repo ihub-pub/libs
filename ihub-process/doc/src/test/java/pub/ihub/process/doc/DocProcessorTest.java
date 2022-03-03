@@ -39,6 +39,18 @@ class DocProcessorTest {
 		assertThat(compilation).succeededWithoutWarnings();
 	}
 
+	@DisplayName("实体文档注解处理器测试-缺失注释")
+	@Test
+	void commentMiss() {
+		Compilation compilation =
+			Compiler.javac()
+				.withProcessors(new EntityDocProcessor())
+				.compile(JavaFileObjects.forResource("test/CommentMiss.java"));
+		assertThat(compilation).succeeded();
+		assertThat(compilation).hadWarningCount(1);
+		assertThat(compilation).hadWarningContaining("CLASS test.CommentMiss doc comment is miss!");
+	}
+
 	@DisplayName("Controller文档注解处理器测试-成功")
 	@Test
 	void controller() {

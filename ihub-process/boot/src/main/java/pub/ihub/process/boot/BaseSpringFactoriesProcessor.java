@@ -17,11 +17,9 @@ package pub.ihub.process.boot;
 
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.io.file.FileWriter;
-import cn.hutool.core.io.file.PathUtil;
 import lombok.SneakyThrows;
 import pub.ihub.process.BaseJavapoetProcessor;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -47,7 +45,7 @@ public abstract class BaseSpringFactoriesProcessor extends BaseJavapoetProcessor
 		Map<String, Set<String>> factories = new HashMap<>(1);
 
 		// 解析spring.factories
-		if (PathUtil.exists(Path.of(sourcePath), true)) {
+		try {
 			Properties properties = new Properties();
 			properties.load(new FileReader(sourcePath).getInputStream());
 			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
@@ -55,6 +53,8 @@ public abstract class BaseSpringFactoriesProcessor extends BaseJavapoetProcessor
 				factories.put(((String) entry.getKey()).trim(), Arrays.stream(value.split(","))
 					.map(String::trim).collect(Collectors.toSet()));
 			}
+		} catch (Exception e) {
+			note("%s resource file not found.", sourcePath);
 		}
 
 		// 追加新配置

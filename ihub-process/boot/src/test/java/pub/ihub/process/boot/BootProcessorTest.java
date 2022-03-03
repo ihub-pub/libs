@@ -15,11 +15,19 @@
  */
 package pub.ihub.process.boot;
 
+import cn.hutool.core.io.IORuntimeException;
 import com.google.testing.compile.Compilation;
 import com.google.testing.compile.Compiler;
 import com.google.testing.compile.JavaFileObjects;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Answers;
+import org.mockito.Mockito;
+
+import javax.annotation.processing.Filer;
+import javax.annotation.processing.Messager;
+import javax.lang.model.element.Element;
 
 import static com.google.testing.compile.CompilationSubject.assertThat;
 
@@ -54,6 +62,20 @@ class BootProcessorTest {
 					JavaFileObjects.forResource("test/DemoAutoConfiguration.java"),
 					JavaFileObjects.forResource("test/OtherAutoConfiguration.java"));
 		assertThat(compilation).succeededWithoutWarnings();
+	}
+
+	@DisplayName("模拟基础注解处理器测试-失败")
+	@Test
+	void fail() {
+		Assertions.assertThrows(IORuntimeException.class, () -> new BaseSpringFactoriesProcessor() {
+			@Override
+			protected void processElement(Element element) {
+				mFiler = Mockito.mock(Filer.class, Answers.RETURNS_MOCKS);
+				messager = Mockito.mock(Messager.class);
+				writeSpringFactoriesFile("a", "b");
+			}
+		}.processElement(null));
+		Assertions.assertThrows(NullPointerException.class, () -> new ConfigEnvironmentProcessor().processElement(null));
 	}
 
 }
