@@ -23,6 +23,7 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
+import java.io.IOException;
 import java.util.Set;
 
 import static javax.tools.Diagnostic.Kind.ERROR;
@@ -44,8 +45,12 @@ public abstract class BaseProcessor extends AbstractProcessor {
 	 * 注解元素处理方法
 	 *
 	 * @param element 元素
+	 * @throws IOException 异常
 	 */
-	protected abstract void processElement(Element element);
+	protected abstract void processElement(Element element) throws IOException;
+
+	protected void processingOver() throws IOException {
+	}
 
 	@Override
 	public synchronized void init(ProcessingEnvironment processingEnvironment) {
@@ -58,7 +63,14 @@ public abstract class BaseProcessor extends AbstractProcessor {
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 		try {
-			annotations.forEach(typeElement -> roundEnv.getElementsAnnotatedWith(typeElement).forEach(this::processElement));
+			for (TypeElement typeElement : annotations) {
+				for (Element element : roundEnv.getElementsAnnotatedWith(typeElement)) {
+					processElement(element);
+				}
+			}
+			if (roundEnv.processingOver()) {
+				processingOver();
+			}
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

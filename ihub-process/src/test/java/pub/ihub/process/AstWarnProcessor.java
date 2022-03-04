@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Henry 李恒 (henry.box@outlook.com).
+ * Copyright (c) 2022 Henry 李恒 (henry.box@outlook.com).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,20 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.cloud;
+package pub.ihub.process;
 
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.SupportedSourceVersion;
+import javax.lang.model.element.Element;
 
-import static pub.ihub.core.Constant.PROPERTIES_PREFIX;
+import static javax.lang.model.SourceVersion.RELEASE_11;
 
 /**
- * 服务配置属性
- *
  * @author liheng
  */
-@Data
-@ConfigurationProperties(PROPERTIES_PREFIX + ".application")
-public class IHubApplicationProperties {
+@SupportedSourceVersion(RELEASE_11)
+@SupportedAnnotationTypes("java.lang.Deprecated")
+public class AstWarnProcessor extends BaseAstProcessor {
+
+	@Override
+	protected void processElement(Element element) {
+		warning("%s 啥也没有", "此处");
+	}
 
 }

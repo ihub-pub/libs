@@ -40,6 +40,7 @@ subprojects {
         }
         if (project.name.endsWith('-spring-boot-starter')) {
             implementation 'org.springframework.boot:spring-boot-autoconfigure'
+            annotationProcessor project(':ihub-process:ihub-process-boot')
         }
         annotationProcessor 'org.springframework.boot:spring-boot-autoconfigure-processor'
     }
@@ -73,12 +74,14 @@ dependencies {
         platform('io.github.openfeign:feign-bom:11.8'),
         platform('io.sentry:sentry-bom:5.6.0'),
         platform('cn.hutool:hutool-bom:5.7.20'),
+        platform('org.mockito:mockito-bom:4.3.1'),
         platform('com.squareup.okhttp3:okhttp-bom:4.9.3'),
         platform('org.spockframework:spock-bom:2.0-groovy-3.0'),
         platform('org.springframework.statemachine:spring-statemachine-bom:3.0.1'),
         platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.0'),
         platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1'),
         platform('de.codecentric:spring-boot-admin-dependencies:2.6.2'),
+        platform('net.dreamlu:mica-bom:2.6.3'),
         platform('com.google.guava:guava-bom:31.0.1-jre'),
         platform('com.google.inject:guice-bom:5.1.0'),
         platform('org.springframework.boot:spring-boot-dependencies:2.6.3'),
@@ -87,8 +90,6 @@ dependencies {
     // 配置组件版本
     constraints {
         api 'com.alibaba:fastjson:1.2.79',
-            'com.alibaba:druid:1.2.8',
-            'com.alibaba:druid-spring-boot-starter:1.2.8',
             'com.alibaba.p3c:p3c-pmd:2.1.1',
             'com.baomidou:mybatis-plus-annotation:3.5.1',
             'com.baomidou:mybatis-plus-core:3.5.1',
@@ -102,7 +103,8 @@ dependencies {
             'io.swagger.core.v3:swagger-annotations:2.1.12',
             'com.google.auto.service:auto-service:1.0.1',
             'org.mapstruct:mapstruct:1.4.2.Final',
-            'org.mapstruct:mapstruct-processor:1.4.2.Final'
+            'org.mapstruct:mapstruct-processor:1.4.2.Final',
+            'org.springframework.security:spring-security-oauth2-authorization-server:0.2.2'
     }
 }
 

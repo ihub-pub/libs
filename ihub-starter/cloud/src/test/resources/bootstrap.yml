@@ -1,4 +1,4 @@
 ihub:
-  application:
+  cloud:
     name: cloud
     port: 12345

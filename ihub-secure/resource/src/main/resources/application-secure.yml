@@ -3,4 +3,4 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${ihub.application.auth-server-addr}
+          issuer-uri: ${ihub.cloud.auth-server-addr}

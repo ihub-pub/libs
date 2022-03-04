@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Henry 李恒 (henry.box@outlook.com).
+ * Copyright (c) 2022 Henry 李恒 (henry.box@outlook.com).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id 'pub.ihub.plugin.ihub-settings' version '1.2.2'
-}
+package pub.ihub.doc;
 
-iHubSettings {
-    includeProjects 'ihub-core', 'ihub-process' prefix '' subproject
-    includeProjects 'ihub-starter' prefix 'ihub-boot-' suffix '-spring-boot-starter' onlySubproject
-//    includeProjects 'ihub-secure' prefix '' subproject '-spring-boot-starter'
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import pub.ihub.test.IHubFTConfig;
+
+/**
+ * @author henry
+ */
+@DisplayName("文档模块组件测试")
+@IHubFTConfig
+class DocAutoConfigurationTest {
+
+	@DisplayName("文档自动配置测试")
+	@Test
+	void doc() {
+	}
+
 }
