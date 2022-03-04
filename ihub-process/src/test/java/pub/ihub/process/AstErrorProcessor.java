@@ -13,20 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.core.doc;
+package pub.ihub.process;
 
-import pub.ihub.core.BaseConfigEnvironmentPostProcessor;
+import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.SupportedSourceVersion;
+import javax.lang.model.element.Element;
+
+import static javax.lang.model.SourceVersion.RELEASE_11;
 
 /**
- * 添加文档配置文件
- *
  * @author liheng
  */
-public class DocConfigPostProcessor extends BaseConfigEnvironmentPostProcessor {
+@SupportedSourceVersion(RELEASE_11)
+@SupportedAnnotationTypes("java.lang.Deprecated")
+public class AstErrorProcessor extends BaseAstProcessor {
 
 	@Override
-	protected String getActiveProfile() {
-		return "doc";
+	protected void processElement(Element element) {
+		throw new RuntimeException("此处有异常");
 	}
 
 }

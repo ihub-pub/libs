@@ -35,4 +35,4 @@ spring:
             client-name: ${spring.application.name}-internal
         provider:
           ihub:
-            issuer-uri: ${ihub.application.auth-server-addr}
+            issuer-uri: ${ihub.cloud.auth-server-addr}

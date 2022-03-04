@@ -1,0 +1,6 @@
+# Environment Post Processors
+org.springframework.boot.env.EnvironmentPostProcessor=\
+pub.ihub.doc.DocConfigPostProcessor
+# Auto Configuration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+pub.ihub.doc.DocAutoConfiguration

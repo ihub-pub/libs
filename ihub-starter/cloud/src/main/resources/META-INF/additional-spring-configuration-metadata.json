@@ -1,61 +1,61 @@
 {
   "groups": [
     {
-      "name": "ihub.application",
+      "name": "ihub.cloud",
       "description ": "服务相关配置"
     }
   ],
   "properties": [
     {
-      "name": "ihub.application.name",
+      "name": "ihub.cloud.name",
       "type": "java.lang.String",
       "defaultValue": "demo",
       "description": "服务名称."
     },
     {
-      "name": "ihub.application.port",
+      "name": "ihub.cloud.port",
       "type": "java.lang.Integer",
       "defaultValue": 8080,
       "description": "服务端口."
     },
     {
-      "name": "ihub.application.group",
+      "name": "ihub.cloud.group",
       "type": "java.lang.String",
       "defaultValue": "ihub",
       "description": "服务分组."
     },
     {
-      "name": "ihub.application.namespace",
+      "name": "ihub.cloud.namespace",
       "type": "java.lang.String",
       "defaultValue": "public",
       "description": "命名空间."
     },
     {
-      "name": "ihub.application.config-server-addr",
+      "name": "ihub.cloud.config-server-addr",
       "type": "java.lang.String",
       "defaultValue": "localhost:8848",
       "description": "配置中心地址."
     },
     {
-      "name": "ihub.application.discovery-server-addr",
+      "name": "ihub.cloud.discovery-server-addr",
       "type": "java.lang.String",
       "defaultValue": "localhost:8848",
       "description": "注册中心地址."
     },
     {
-      "name": "ihub.application.sentinel-dashboard-addr",
+      "name": "ihub.cloud.sentinel-dashboard-addr",
       "type": "java.lang.String",
       "defaultValue": "localhost:8858",
       "description": "监控服务地址."
     },
     {
-      "name": "ihub.application.gateway-server-addr",
+      "name": "ihub.cloud.gateway-server-addr",
       "type": "java.lang.String",
       "defaultValue": "localhost",
       "description": "网关服务地址."
     },
     {
-      "name": "ihub.application.auth-server-addr",
+      "name": "ihub.cloud.auth-server-addr",
       "type": "java.lang.String",
       "defaultValue": "localhost:9527",
       "description": "授权服务地址(该地址不能与其他服务地址相同)."
