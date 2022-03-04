@@ -98,7 +98,7 @@ dependencies {
             'com.baomidou:mybatis-plus-boot-starter:3.5.1',
             'com.baomidou:mybatis-plus-generator:3.5.1',
             'org.codehaus.groovy:groovy-all:3.0.9',
-            'com.athaydes:spock-reports:2.1.1-groovy-3.0',
+            'com.athaydes:spock-reports:2.3.0-groovy-3.0',
             'cn.hutool:hutool-all:5.7.22',
             'io.swagger.core.v3:swagger-annotations:2.1.12',
             'com.google.auto.service:auto-service:1.0.1',
