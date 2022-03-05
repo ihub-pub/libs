@@ -42,9 +42,7 @@ import static java.util.regex.Pattern.compile;
 public abstract class BaseDocProcessor extends BaseAstProcessor {
 
 	protected void processEntity(JCTree ident) {
-		note(ident.type.toString());
 		TypeElement element = elementUtils.getTypeElement(ident.type.toString());
-		note("%s", element);
 		JCTree.JCClassDecl tree = javacTrees.getTree(element);
 		if (null != tree) {
 			appendSchema(element, tree);
