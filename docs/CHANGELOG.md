@@ -1,3 +1,27 @@
+## 🔖 1.0.8 (2022-03-05)
+
+
+### ✨ Features
+
+- ✨ 添加ihub-process-boot组件  [@henry-hub](https://github.com/henry-hub) ([#96](https://github.com/ihub-pub/libs/pull/96))
+
+### ⬆️ Dependency Updates
+
+- ⬆️ gradle: Bump spock-bom from 2.0-groovy-3.0 to 2.1-groovy-3.0  [@dependabot](https://github.com/dependabot) ([#102](https://github.com/ihub-pub/libs/pull/102))
+- ⬆️ gradle: Bump mybatis-plus-generator from 3.5.1 to 3.5.2  [@dependabot](https://github.com/dependabot) ([#100](https://github.com/ihub-pub/libs/pull/100))
+- ⬆️ gradle: Bump swagger-annotations from 2.1.12 to 2.1.13  [@dependabot](https://github.com/dependabot) ([#93](https://github.com/ihub-pub/libs/pull/93))
+- ⬆️ gradle: Bump spock-reports from 2.1.1-groovy-3.0 to 2.3.0-groovy-3.0  [@dependabot](https://github.com/dependabot) ([#91](https://github.com/ihub-pub/libs/pull/91))
+- ⬆️ gradle: Bump spring-boot-dependencies from 2.6.3 to 2.6.4  [@dependabot](https://github.com/dependabot) ([#101](https://github.com/ihub-pub/libs/pull/101))
+- ⬆️ gradle: Bump spring-cloud-dependencies from 2021.0.0 to 2021.0.1  [@dependabot](https://github.com/dependabot) ([#99](https://github.com/ihub-pub/libs/pull/99))
+- ⬆️ gradle: Bump springdoc-openapi from 1.6.5 to 1.6.6  [@dependabot](https://github.com/dependabot) ([#92](https://github.com/ihub-pub/libs/pull/92))
+- ⬆️ gradle: Bump guava-bom from 31.0.1-jre to 31.1-jre  [@dependabot](https://github.com/dependabot) ([#98](https://github.com/ihub-pub/libs/pull/98))
+- ⬆️ gradle: Bump sentry-bom from 5.6.0 to 5.6.2  [@dependabot](https://github.com/dependabot) ([#97](https://github.com/ihub-pub/libs/pull/97))
+- ⬆️ gradle: Bump hutool-all from 5.7.20 to 5.7.22  [@dependabot](https://github.com/dependabot) ([#95](https://github.com/ihub-pub/libs/pull/95))
+- ⬆️ gradle: Bump pub.ihub.plugin.ihub-settings from 1.2.1 to 1.2.2  [@dependabot](https://github.com/dependabot) ([#87](https://github.com/ihub-pub/libs/pull/87))
+
+
+---
+
 ## 🔖 1.0.7 (2022-01-28)
 
 
