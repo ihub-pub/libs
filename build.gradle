@@ -49,7 +49,6 @@ subprojects {
 apply {
     plugin 'java-platform'
     plugin 'pub.ihub.plugin.ihub-publish'
-    plugin 'pub.ihub.plugin.ihub-git-hooks'
 }
 
 iHubGitHooks {
