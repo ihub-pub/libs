@@ -103,7 +103,7 @@ dependencies {
             'com.google.auto.service:auto-service:1.0.1',
             'org.mapstruct:mapstruct:1.4.2.Final',
             'org.mapstruct:mapstruct-processor:1.4.2.Final',
-            'org.springframework.security:spring-security-oauth2-authorization-server:0.2.2'
+            'org.springframework.security:spring-security-oauth2-authorization-server:0.2.3'
     }
 }
 
