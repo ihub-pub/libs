@@ -88,7 +88,7 @@ dependencies {
         platform('org.apache.kylin:kylin:4.0.1')
     // 配置组件版本
     constraints {
-        api 'com.alibaba:fastjson:1.2.79',
+        api 'com.alibaba:fastjson:1.2.80',
             'com.alibaba.p3c:p3c-pmd:2.1.1',
             'com.baomidou:mybatis-plus-annotation:3.5.1',
             'com.baomidou:mybatis-plus-core:3.5.1',
