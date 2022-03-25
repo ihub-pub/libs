@@ -1,0 +1,13 @@
+description = 'SSO模块授权服务端组件'
+
+dependencies {
+    implementation  'cn.dev33:sa-token-spring-boot-starter',
+                    'cn.dev33:sa-token-dao-redis-jackson',
+                    'org.apache.commons:commons-pool2'
+
+    implementation  'me.zhyd.oauth:JustAuth'
+
+    implementation  'org.springframework.boot:spring-boot-starter-thymeleaf',
+                    'org.webjars:layui:2.6.8',
+                    'org.webjars:jquery:3.6.0'
+}

@@ -103,6 +103,9 @@ dependencies {
             'com.google.auto.service:auto-service:1.0.1',
             'org.mapstruct:mapstruct:1.4.2.Final',
             'org.mapstruct:mapstruct-processor:1.4.2.Final',
+            'cn.dev33:sa-token-dao-redis-jackson:1.29.0',
+            'cn.dev33:sa-token-spring-boot-starter:1.29.0',
+            'me.zhyd.oauth:JustAuth:1.16.5',
             'org.springframework.security:spring-security-oauth2-authorization-server:0.2.2'
     }
 }

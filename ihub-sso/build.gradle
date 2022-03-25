@@ -1,0 +1,11 @@
+description = 'SSO模块组件'
+
+dependencies {
+    compileOnly 'org.springframework.boot:spring-boot'
+}
+
+subprojects {
+    dependencies {
+        api project(':ihub-secure'), project(':ihub-boot-cloud-spring-boot-starter')
+    }
+}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Henry 李恒 (henry.box@outlook.com).
+ * Copyright (c) 2022 Henry 李恒 (henry.box@outlook.com).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id 'pub.ihub.plugin.ihub-settings' version '1.2.4'
-}
+package pub.ihub.sso.server;
 
-iHubSettings {
-    includeProjects 'ihub-core', 'ihub-process' prefix '' subproject
-    includeProjects 'ihub-starter' prefix 'ihub-boot-' suffix '-spring-boot-starter' onlySubproject
-//    includeProjects 'ihub-secure' prefix '' subproject '-spring-boot-starter'
-//    includeProjects 'ihub-sso' prefix '' subproject '-spring-boot-starter'
+/**
+ * 用户
+ *
+ * @author liheng
+ */
+public class User {
+
+	private int id;//	主键
+	private String username;//	用户名
+	private String password;//	密码
+	private String nickname;//	昵称
+	private String gender;//	性别
+	private String avatar;//	头像
+	private String blog;//	个人地址
+	private String company;//	公司名
+	private String location;//	地址
+	private String email;//	邮箱
+
 }
