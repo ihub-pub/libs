@@ -14,4 +14,4 @@ updates:
     allow:
       - dependency-type: "production"
     commit-message:
-      prefix: "⬆️ gradle"
+      prefix: "gradle"
