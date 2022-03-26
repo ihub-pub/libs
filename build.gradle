@@ -53,7 +53,8 @@ apply {
 
 iHubGitHooks {
     hooks = [
-        'pre-commit': './gradlew build'
+        'pre-commit': './gradlew build',
+        'commit-msg': './gradlew commitCheck'
     ]
 }
 
