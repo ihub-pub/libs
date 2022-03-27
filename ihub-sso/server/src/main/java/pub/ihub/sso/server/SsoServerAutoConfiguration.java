@@ -15,22 +15,15 @@
  */
 package pub.ihub.sso.server;
 
-import cn.dev33.satoken.config.SaTokenConfig;
-import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaResult;
 import me.zhyd.oauth.cache.AuthCacheConfig;
 import me.zhyd.oauth.cache.AuthStateCache;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -60,28 +53,6 @@ public class SsoServerAutoConfiguration {
 				return "123456";
 			}
 		};
-	}
-
-	@Autowired
-	private void configSso(SaTokenConfig cfg, @Autowired(required = false) List<SsoLoginTicketHandle> ticketHandles,
-						   SsoUserDetailsService<?> userService) {
-		cfg.sso.setNotLoginView(() -> new ModelAndView("login.html"));
-
-		cfg.sso.setDoLoginHandle((name, pwd) -> {
-			// 前置检查用于一些额外认证
-			assert ticketHandles.isEmpty() || ticketHandles.stream()
-				.anyMatch(h -> h.handle(StpUtil.getSession().getId()));
-
-			SsoUserDetails<?> user = userService.loadUserByUsername(name);
-			// TODO 其他失败判断
-			if (Objects.isNull(user)) {
-				return SaResult.error("登录失败！");
-			} else if (user.getPassword().equals(userService.encryptPassword(pwd))) {
-				StpUtil.login(user.getLoginId());
-				return SaResult.ok("登录成功！").setData(StpUtil.getTokenValue());
-			}
-			return SaResult.error("登录失败！");
-		});
 	}
 
 	@Bean

@@ -6,6 +6,6 @@ dependencies {
 
 subprojects {
     dependencies {
-        api project(':ihub-secure'), project(':ihub-boot-cloud-spring-boot-starter')
+        api project(':ihub-sso'), project(':ihub-boot-cloud-spring-boot-starter')
     }
 }

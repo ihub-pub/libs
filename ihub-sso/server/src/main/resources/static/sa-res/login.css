@@ -4,26 +4,9 @@ body{font-family: Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;}
 
 /* 视图盒子 */
 .view-box{position: relative; width: 100vw; height: 100vh; overflow: hidden;}
-/* 背景 EAEFF3 */
-.bg-1{height: 50%; background: linear-gradient(to bottom right, #0466c5, #3496F5);}
-.bg-2{height: 50%; background-color: #EAEFF3;}
 
-/* 渐变背景 */
-/*.bg-1{
-    background-size: 500%;
-	background-image: linear-gradient(125deg,#0466c5,#3496F5,#0466c5,#3496F5,#0466c5,#2496F5);
-	animation: bganimation 30s infinite;
-}
-@keyframes bganimation{
-    0%{background-position: 0% 50%;}
-    50%{background-position: 100% 50%;}
-    100%{background-position: 0% 50%;}
-}  */
 /* 背景 */
-.bg-1{background: #101C34;}
-.bg-2{background: #101C34;}
-/* .bg-1{height: 100%; background-image: url(./login-bg.png); background-size: 100% 100%;} */
-
+.bg{height: 100%; background: #101C34; background-size: 100% 100%;}
 
 /* 内容盒子 */
 .content-box{position: absolute; width: 100vw; height: 100vh; top: 0px;}
@@ -52,6 +35,12 @@ body{font-family: Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;}
 .reset-box{text-align: left; font-size: 12px;}
 .reset-box a{text-decoration: none;}
 .reset-box a:hover{text-decoration: underline;}
+
+/* 第三方登录按钮 */
+.third-party a{font-size: 40px; color: #666; text-decoration: none;}
+
+/* 版权 */
+.copyright{position: absolute; bottom: 40px; width: 100%; text-align: center; color: #FFF; text-shadow: 1px 1px 20px #666;}
 
 /* loading框样式 */
 .ajax-layer-load.layui-layer-dialog{min-width: 0px !important; background-color: rgba(0,0,0,0.85);}

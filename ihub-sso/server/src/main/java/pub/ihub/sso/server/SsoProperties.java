@@ -23,7 +23,9 @@ import me.zhyd.oauth.config.AuthConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static pub.ihub.core.Constant.PROPERTIES_PREFIX;
 
@@ -49,6 +51,13 @@ public class SsoProperties {
 			authConfig.setRedirectUri(request.getUrl().replace(request.getRequestPath(), "") + "/oauth/callback/" + source);
 		}
 		return authConfig;
+	}
+
+	List<Map<String, String>> getAuthSource() {
+		return socialAuthConfig.keySet().stream().map(source -> new HashMap<String, String>(1) {{
+			put("icon", source.replace("_", "-").toLowerCase());
+			put("source", source);
+		}}).collect(Collectors.toList());
 	}
 
 }
