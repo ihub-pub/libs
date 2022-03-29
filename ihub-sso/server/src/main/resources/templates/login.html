@@ -6,9 +6,8 @@
 		<base th:href="@{/}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<link rel="stylesheet" href="./sa-res/login.css">
-        <link rel="stylesheet" href="./sa-res/vaptcha.css">
+        <link rel="stylesheet" href="./anji-plus/css/verify.css">
         <link rel="stylesheet" href="https://at.alicdn.com/t/font_3281895_qybastejshs.css">
-		<script src="https://v-cn.vaptcha.com/v3.js"></script>
 	</head>
 	<body>
 		<div class="view-box">
@@ -24,44 +23,10 @@
 							<input class="s-input" name="pwd" type="password" placeholder="请输入密码" />
 						</div>
 
-						<!-- 点击式按钮建议高度介于36px与46px  -->
-						<div id="vaptchaContainer" class="from-item" style="width: 300px;height: 36px;">
-							<!--vaptcha-container是用来引入VAPTCHA的容器，下面代码为预加载动画，仅供参考-->
-							<div class="vaptcha-init-main">
-								<div class="vaptcha-init-loading">
-									<a href="/" target="_blank">
-										<svg xmlns="http://www.w3.org/2000/svg" width="48px"
-											 height="60px" viewBox="0 0 24 30"
-											 style="enable-background: new 0 0 50 50; width: 14px; height: 14px; vertical-align: middle"
-											 xml:space="preserve">
-                        <rect x="0" y="9.22656" width="4" height="12.5469" fill="#CCCCCC">
-                            <animate attributeName="height" attributeType="XML" values="5;21;5" begin="0s" dur="0.6s"
-									 repeatCount="indefinite"></animate>
-							<animate attributeName="y" attributeType="XML" values="13; 5; 13" begin="0s" dur="0.6s"
-									 repeatCount="indefinite"></animate>
-                        </rect>
-											<rect x="10" y="5.22656" width="4" height="20.5469" fill="#CCCCCC">
-                            <animate attributeName="height" attributeType="XML" values="5;21;5" begin="0.15s" dur="0.6s"
-									 repeatCount="indefinite"></animate>
-												<animate attributeName="y" attributeType="XML" values="13; 5; 13" begin="0.15s" dur="0.6s"
-														 repeatCount="indefinite"></animate>
-                        </rect>
-											<rect x="20" y="8.77344" width="4" height="13.4531" fill="#CCCCCC">
-                            <animate attributeName="height" attributeType="XML" values="5;21;5" begin="0.3s" dur="0.6s"
-									 repeatCount="indefinite"></animate>
-												<animate attributeName="y" attributeType="XML" values="13; 5; 13" begin="0.3s" dur="0.6s"
-														 repeatCount="indefinite"></animate>
-                        </rect>
-                    </svg>
-									</a>
-									<span class="vaptcha-text">Vaptcha Initializing...</span>
-								</div>
-							</div>
-						</div>
-
 						<div class="from-item">
-							<button class="s-input s-btn login-btn">登录</button>
+							<button id='btn' class="s-input s-btn login-btn">登录</button>
 						</div>
+                        <div id="mpanel2" style="margin-top:50px;"></div>
 
                         <div class="from-item third-party" th:each="auth : ${socialAuths}">
                             <a th:class="'iconfont icon-' + ${auth.icon}" th:href="'javascript: socialAuth(\'' + ${auth.source} +'\');'"></a>
@@ -84,8 +49,49 @@
 		<!-- scripts -->
 		<script src="webjars/jquery/3.6.0/jquery.min.js"></script>
 		<script src="webjars/layui/2.6.8/layui.js"></script>
+        <script src="webjars/crypto-js/4.1.1/crypto-js.js"></script>
 		<script src="./sa-res/login.js"></script>
-        <script src="./sa-res/vaptcha.js"></script>
+        <script src="./anji-plus/js/ase.js"></script>
+        <script src="./anji-plus/js/verify.js" ></script>
+
+
+            <script>
+                $('#mpanel2').slideVerify({
+                    baseUrl:'',
+                    mode:'pop',     //展示模式
+                    containerId:'btn',//pop模式 必填 被点击之后出现行为验证码的元素id
+                    imgSize : {       //图片的大小对象,有默认值{ width: '310px',height: '155px'},可省略
+                        width: '400px',
+                        height: '200px',
+                    },
+                    barSize:{          //下方滑块的大小对象,有默认值{ width: '310px',height: '50px'},可省略
+                        width: '400px',
+                        height: '40px',
+                    },
+                    beforeCheck:function(){  //检验参数合法性的函数  mode ="pop"有效
+                        var flag = true;
+                        //实现: 参数合法性的判断逻辑, 返回一个boolean值
+                        return flag
+                        var name = $("#name").val()
+                        var pass = $('#pass').val()
+                        console.log(name, pass);
+                        if (name == '' || pass == '') {
+                            alert("请完胜输入信息。")
+                            return false
+                        }else {
+                            return true
+                        }
+
+                    },
+                    ready : function() {},  //加载完毕的回调
+                    success : function(params) { //成功的回调
+                        // params为返回的二次验证参数 需要在接下来的实现逻辑回传服务器
+                        // 例如: login($.extend({}, params))
+                        console.log(params.captchaVerification)
+                    },
+                    error : function() {}        //失败的回调
+                });
+            </script>
 
 	</body>
 </html>

@@ -9,5 +9,8 @@ dependencies {
 
     implementation  'org.springframework.boot:spring-boot-starter-thymeleaf',
                     'org.webjars:layui:2.6.8',
-                    'org.webjars:jquery:3.6.0'
+                    'org.webjars:jquery:3.6.0',
+                    'org.webjars.npm:crypto-js:4.1.1'
+
+    implementation  'com.anji-plus:spring-boot-starter-captcha:1.3.0'
 }
