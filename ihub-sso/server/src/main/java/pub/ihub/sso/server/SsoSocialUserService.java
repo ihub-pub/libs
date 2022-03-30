@@ -15,22 +15,17 @@
  */
 package pub.ihub.sso.server;
 
+import me.zhyd.oauth.model.AuthUser;
+
 /**
- * 用户
- *
  * @author liheng
  */
-public class User {
+public interface SsoSocialUserService<T> {
 
-	private int id;//	主键
-	private String username;//	用户名
-	private String password;//	密码
-	private String nickname;//	昵称
-	private String gender;//	性别
-	private String avatar;//	头像
-	private String blog;//	个人地址
-	private String company;//	公司名
-	private String location;//	地址
-	private String email;//	邮箱
+	SsoUserDetails<T> findUserByUuid(String source, String uuid);
+
+	SsoUserDetails<T> createUserByAuth(String source, AuthUser authUser);
+
+	boolean bingUserAndAuth(String source, T loginId, AuthUser authUser);
 
 }

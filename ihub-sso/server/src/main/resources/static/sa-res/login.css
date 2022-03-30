@@ -37,7 +37,7 @@ body{font-family: Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;}
 .reset-box a:hover{text-decoration: underline;}
 
 /* 第三方登录按钮 */
-.third-party a{font-size: 40px; color: #666; text-decoration: none;}
+.third-party a{font-size: 40px; color: #ccc; text-decoration: none;}
 
 /* 版权 */
 .copyright{position: absolute; bottom: 40px; width: 100%; text-align: center; color: #FFF; text-shadow: 1px 1px 20px #666;}

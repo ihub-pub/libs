@@ -26,10 +26,10 @@
 						<div class="from-item">
 							<button id='btn' class="s-input s-btn login-btn">登录</button>
 						</div>
-                        <div id="mpanel2" style="margin-top:50px;"></div>
 
                         <div class="from-item third-party" th:each="auth : ${socialAuths}">
-                            <a th:class="'iconfont icon-' + ${auth.icon}" th:href="'javascript: socialAuth(\'' + ${auth.source} +'\');'"></a>
+                            <a th:class="'iconfont icon-' + ${auth.icon}"
+                               th:href="'javascript: socialAuth(\'' + ${auth.source} +'\');'"></a>
                         </div>
 					</div>
 				</div>
@@ -40,58 +40,11 @@
 			</div>
 		</div>
 
-		<script>
-			function socialAuth(source) {
-				location.href = "/oauth/render/" + source + "?redirect=" + encodeURI(location.href)
-			}
-		</script>
-
 		<!-- scripts -->
 		<script src="webjars/jquery/3.6.0/jquery.min.js"></script>
 		<script src="webjars/layui/2.6.8/layui.js"></script>
         <script src="webjars/crypto-js/4.1.1/crypto-js.js"></script>
+		<script src="./anji-plus/js/verify.js" ></script>
 		<script src="./sa-res/login.js"></script>
-        <script src="./anji-plus/js/ase.js"></script>
-        <script src="./anji-plus/js/verify.js" ></script>
-
-
-            <script>
-                $('#mpanel2').slideVerify({
-                    baseUrl:'',
-                    mode:'pop',     //展示模式
-                    containerId:'btn',//pop模式 必填 被点击之后出现行为验证码的元素id
-                    imgSize : {       //图片的大小对象,有默认值{ width: '310px',height: '155px'},可省略
-                        width: '400px',
-                        height: '200px',
-                    },
-                    barSize:{          //下方滑块的大小对象,有默认值{ width: '310px',height: '50px'},可省略
-                        width: '400px',
-                        height: '40px',
-                    },
-                    beforeCheck:function(){  //检验参数合法性的函数  mode ="pop"有效
-                        var flag = true;
-                        //实现: 参数合法性的判断逻辑, 返回一个boolean值
-                        return flag
-                        var name = $("#name").val()
-                        var pass = $('#pass').val()
-                        console.log(name, pass);
-                        if (name == '' || pass == '') {
-                            alert("请完胜输入信息。")
-                            return false
-                        }else {
-                            return true
-                        }
-
-                    },
-                    ready : function() {},  //加载完毕的回调
-                    success : function(params) { //成功的回调
-                        // params为返回的二次验证参数 需要在接下来的实现逻辑回传服务器
-                        // 例如: login($.extend({}, params))
-                        console.log(params.captchaVerification)
-                    },
-                    error : function() {}        //失败的回调
-                });
-            </script>
-
 	</body>
 </html>

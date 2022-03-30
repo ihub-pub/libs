@@ -15,11 +15,13 @@
  */
 package pub.ihub.sso.server;
 
+import javax.security.auth.login.LoginException;
+
 /**
  * @author liheng
  */
 public interface SsoLoginTicketHandle {
 
-	boolean handle(String sessionId);
+	void handle() throws LoginException;
 
 }

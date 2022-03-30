@@ -66,3 +66,4 @@ aj:
     req-get-lock-seconds: 360
     req-get-minute-limit: 30
     req-check-minute-limit: 30
+    jigsaw: classpath:static/anji-plus/images/jigsaw

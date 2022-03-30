@@ -15,16 +15,26 @@
  */
 package pub.ihub.sso.server;
 
+import cn.dev33.satoken.context.SaHolder;
+import com.anji.captcha.model.common.ResponseModel;
+import com.anji.captcha.model.vo.CaptchaVO;
+import com.anji.captcha.service.CaptchaCacheService;
+import com.anji.captcha.service.CaptchaService;
 import me.zhyd.oauth.cache.AuthCacheConfig;
 import me.zhyd.oauth.cache.AuthStateCache;
+import me.zhyd.oauth.model.AuthUser;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
+import javax.security.auth.login.FailedLoginException;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 /**
  * @author liheng
@@ -34,23 +44,31 @@ import java.util.concurrent.TimeUnit;
 public class SsoServerAutoConfiguration {
 
 	@Bean
-	@ConditionalOnMissingBean(SsoUserDetailsService.class)
+	@ConditionalOnMissingBean
 	SsoUserDetailsService<Long> defaultUserDetailsService() {
-		// 默认实现，实际环境需要重新实现
-		return username -> new SsoUserDetails<>() {
+		// 用户信息接口默认实现，实际环境需要重新实现
+		return username -> Stream.of(defaultUser()).filter(details -> details.getUsername().equals(username))
+			.findFirst().orElse(null);
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	SsoSocialUserService<Long> socialUserService() {
+		// 用户信息接口默认实现，实际环境需要重新实现
+		return new SsoSocialUserService<>() {
 			@Override
-			public Long getLoginId() {
-				return 10001L;
+			public SsoUserDetails<Long> findUserByUuid(String source, String uuid) {
+				return defaultUser();
 			}
 
 			@Override
-			public String getUsername() {
-				return username;
+			public SsoUserDetails<Long> createUserByAuth(String source, AuthUser authUser) {
+				return defaultUser();
 			}
 
 			@Override
-			public String getPassword() {
-				return "123456";
+			public boolean bingUserAndAuth(String source, Long loginId, AuthUser authUser) {
+				return true;
 			}
 		};
 	}
@@ -82,6 +100,75 @@ public class SsoServerAutoConfiguration {
 
 			private String prefixKey(String key) {
 				return "auth-state:" + key;
+			}
+		};
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	@ConditionalOnBean(StringRedisTemplate.class)
+	CaptchaCacheService captchaCacheService(StringRedisTemplate stringRedisTemplate) {
+		return new CaptchaCacheService() {
+			@Override
+			public void set(String key, String value, long expiresInSeconds) {
+				stringRedisTemplate.opsForValue().set(key, value, expiresInSeconds, TimeUnit.SECONDS);
+			}
+
+			@Override
+			public boolean exists(String key) {
+				return Boolean.TRUE.equals(stringRedisTemplate.hasKey(key));
+			}
+
+			@Override
+			public void delete(String key) {
+				stringRedisTemplate.delete(key);
+			}
+
+			@Override
+			public String get(String key) {
+				return stringRedisTemplate.opsForValue().get(key);
+			}
+
+			@Override
+			public Long increment(String key, long val) {
+				return stringRedisTemplate.opsForValue().increment(key, val);
+			}
+
+			@Override
+			public String type() {
+				return "redis";
+			}
+		};
+	}
+
+	@Bean
+	@ConditionalOnBean(CaptchaService.class)
+	SsoLoginTicketHandle captchaVerificationHandle(CaptchaService captchaService) {
+		return () -> {
+			CaptchaVO captchaVO = new CaptchaVO();
+			captchaVO.setCaptchaVerification(SaHolder.getRequest().getParam("captchaVerification"));
+			ResponseModel response = captchaService.verification(captchaVO);
+			if (!response.isSuccess()) {
+				throw new FailedLoginException(response.getRepMsg());
+			}
+		};
+	}
+
+	private SsoUserDetails<Long> defaultUser() {
+		return new SsoUserDetails<>() {
+			@Override
+			public Long getLoginId() {
+				return 10001L;
+			}
+
+			@Override
+			public String getUsername() {
+				return "admin";
+			}
+
+			@Override
+			public String getPassword() {
+				return "123456";
 			}
 		};
 	}

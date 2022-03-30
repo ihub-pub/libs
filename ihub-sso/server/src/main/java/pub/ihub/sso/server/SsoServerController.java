@@ -25,37 +25,41 @@ import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.AuthRequestBuilder;
 import me.zhyd.oauth.cache.AuthStateCache;
 import me.zhyd.oauth.model.AuthCallback;
+import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.request.AuthRequest;
 import me.zhyd.oauth.utils.AuthStateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.security.auth.login.LoginException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * @author liheng
  */
 @AllArgsConstructor
 @RestController
+@Slf4j
 public class SsoServerController {
 
-	private final static String REDIRECT = "redirect";
 	private final SsoProperties ssoProperties;
 	private final RedisTemplate<String, String> redisTemplate;
 	private final AuthStateCache stateCache;
+	private final SsoSocialUserService socialUserService;
 
 	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
@@ -69,9 +73,9 @@ public class SsoServerController {
 	 */
 	@SneakyThrows
 	@RequestMapping("/oauth/render/{source}")
-	public void renderAuth(@PathVariable String source) {
+	public void renderAuth(@PathVariable String source, @RequestParam String redirect) {
 		String state = AuthStateUtils.createState();
-		stateCache.cache(redirectKey(state), SaHolder.getRequest().getParam(REDIRECT));
+		stateCache.cache(redirectKey(state), redirect);
 		String authorizeUrl = getAuthRequest(source).authorize(state);
 		SaHolder.getResponse().redirect(authorizeUrl);
 	}
@@ -84,8 +88,22 @@ public class SsoServerController {
 	 */
 	@RequestMapping("/oauth/callback/{source}")
 	public void login(@PathVariable String source, AuthCallback callback) {
-		getAuthRequest(source).login(callback);
-		// TODO 账号绑定
+		var response = getAuthRequest(source).login(callback);
+		if (response.ok()) {
+			AuthUser authUser = (AuthUser) response.getData();
+			if (StpUtil.isLogin()) {
+				// 用户已登录：绑定第三方账号
+				socialUserService.bingUserAndAuth(source, StpUtil.getLoginId(), authUser);
+			} else {
+				SsoUserDetails<?> user = socialUserService.findUserByUuid(source, authUser.getUuid());
+				// 用户不存在：使用第三方信息自动创建用户
+				if (Objects.isNull(user)) {
+					user = socialUserService.createUserByAuth(source, authUser);
+				}
+				// 用户登录
+				StpUtil.login(user.getLoginId());
+			}
+		}
 		SaHolder.getResponse().redirect(stateCache.get(redirectKey(callback.getState())));
 	}
 
@@ -101,16 +119,36 @@ public class SsoServerController {
 
 		cfg.sso.setDoLoginHandle((name, pwd) -> {
 			// 前置检查用于一些额外认证
-			assert ticketHandles.isEmpty() || ticketHandles.stream()
-				.anyMatch(h -> h.handle(StpUtil.getSession().getId()));
+			if (!ticketHandles.isEmpty()) {
+				try {
+					for (SsoLoginTicketHandle handle : ticketHandles) {
+						handle.handle();
+					}
+				} catch (LoginException e) {
+					return SaResult.error(e.getMessage());
+				}
+			}
 
 			SsoUserDetails<?> user = userService.loadUserByUsername(name);
-			// TODO 其他失败判断
 			if (Objects.isNull(user)) {
-				return SaResult.error("登录失败！");
+				log.debug("账号错误！");
+				return SaResult.error("账号或者密码错误！");
+			} else if (user.isAccountNonExpired()) {
+				log.debug("账号已过期！");
+			} else if (user.isAccountNonLocked()) {
+				log.debug("账号已锁定！");
+				return SaResult.error("账号已锁定！");
+			} else if (user.isCredentialsNonExpired()) {
+				log.debug("用户凭证已过期！");
+			} else if (!user.isEnabled()) {
+				log.debug("账号已禁用！");
 			} else if (user.getPassword().equals(userService.encryptPassword(pwd))) {
 				StpUtil.login(user.getLoginId());
+				log.debug("登录成功！");
 				return SaResult.ok("登录成功！").setData(StpUtil.getTokenValue());
+			} else {
+				log.debug("密码错误！");
+				return SaResult.error("账号或者密码错误！");
 			}
 			return SaResult.error("登录失败！");
 		});
@@ -122,7 +160,7 @@ public class SsoServerController {
 	}
 
 	private String redirectKey(String state) {
-		return REDIRECT + ":" + state;
+		return "redirect:" + state;
 	}
 
 	private String getBingImage() {
