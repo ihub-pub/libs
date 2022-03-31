@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.sso.server;
+package pub.ihub.sso;
 
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
+ * TODO 全局异常处理
  * @author liheng
  */
 @RestControllerAdvice

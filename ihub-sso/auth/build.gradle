@@ -1,0 +1,19 @@
+description = 'SSO网关鉴权服务组件'
+
+dependencies {
+    implementation 'cn.dev33:sa-token-spring-boot-starter',
+        'cn.dev33:sa-token-dao-redis-jackson',
+        'org.apache.commons:commons-pool2'
+
+    implementation 'cn.dev33:sa-token-alone-redis'
+
+
+    implementation('pub.ihub.lib:ihub-cloud-spring-boot-starter') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
+    }
+
+    // Spring
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+    // TODO
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+}

@@ -1,0 +1,9 @@
+description = 'SSO模块资源服务组件'
+
+dependencies {
+    implementation 'cn.dev33:sa-token-spring-boot-starter',
+        'cn.dev33:sa-token-dao-redis-jackson',
+        'org.apache.commons:commons-pool2'
+
+    implementation 'cn.dev33:sa-token-alone-redis'
+}

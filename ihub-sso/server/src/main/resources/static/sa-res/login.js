@@ -93,8 +93,3 @@ $("[name=name]").focus();
 // 打印信息
 var str = "This page is provided by IHub, Please refer to: " + "https://ihub.pub/";
 console.log(str);
-
-// ----------------------------------- 第三方登录 -----------------------------------
-function socialAuth(source) {
-	location.href = "/oauth/render/" + source + "?redirect=" + encodeURI(location.href)
-}

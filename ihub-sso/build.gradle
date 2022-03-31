@@ -1,7 +1,8 @@
 description = 'SSO模块组件'
 
 dependencies {
-    compileOnly 'org.springframework.boot:spring-boot'
+    compileOnly 'org.springframework.boot:spring-boot',
+        'cn.dev33:sa-token-spring-boot-starter'
 }
 
 subprojects {

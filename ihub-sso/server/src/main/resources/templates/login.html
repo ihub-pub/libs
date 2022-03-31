@@ -29,7 +29,8 @@
 
                         <div class="from-item third-party" th:each="auth : ${socialAuths}">
                             <a th:class="'iconfont icon-' + ${auth.icon}"
-                               th:href="'javascript: socialAuth(\'' + ${auth.source} +'\');'"></a>
+                               th:href="'javascript: location.href = \'/oauth/render/' + ${auth.source} +
+                               '?redirect=\' + encodeURI(location.href);'"></a>
                         </div>
 					</div>
 				</div>

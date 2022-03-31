@@ -66,15 +66,6 @@ public interface SsoUserDetails<T> extends Serializable {
 	}
 
 	/**
-	 * 用户凭证是否过期
-	 *
-	 * @return 用户凭证是否过期
-	 */
-	default boolean isCredentialsNonExpired() {
-		return false;
-	}
-
-	/**
 	 * 用户是否启用
 	 *
 	 * @return 用户是否启用

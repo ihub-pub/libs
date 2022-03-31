@@ -138,8 +138,6 @@ public class SsoServerController {
 			} else if (user.isAccountNonLocked()) {
 				log.debug("账号已锁定！");
 				return SaResult.error("账号已锁定！");
-			} else if (user.isCredentialsNonExpired()) {
-				log.debug("用户凭证已过期！");
 			} else if (!user.isEnabled()) {
 				log.debug("账号已禁用！");
 			} else if (user.getPassword().equals(userService.encryptPassword(pwd))) {
