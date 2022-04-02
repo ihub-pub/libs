@@ -1,6 +1,7 @@
-# 端口
-server:
-  port: 9003
+ihub:
+  cloud:
+    name: sso-resource
+    port: 9003
 
 # sa-token配置
 sa-token:

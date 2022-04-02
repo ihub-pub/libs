@@ -37,8 +37,8 @@ public class IndexController {
 			"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" +
 			"<p>登录用户：" + JSONUtil.toJsonPrettyStr(StpUtil.getTokenInfo()) + "</p>" +
 			"<p>请求资源服务：" + resourceClient.index() + "</p>" +
-			"<p><a href=\"javascript:location.href='/sso/login?back=' + encodeURIComponent(location.href);\">登录</a> " +
-			"<a href='/sso/logout?back=self'>注销</a></p>";
+			"<p><a href=\"javascript:location.href='/sso-client/sso/login?back=' + encodeURIComponent(location.href);\">登录</a> " +
+			"<a href='/sso-client/sso/logout?back=self'>注销</a></p>";
 	}
 
 }

@@ -1,18 +1,16 @@
 ihub:
   cloud:
-    name: sso-client
-    port: 9002
+    name: gateway
+    port: 80
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
 
 # sa-token配置
 sa-token:
-  # SSO-相关配置
-  sso:
-    # SSO-Server端 统一认证地址
-    auth-url: http://localhost:9527/sso/auth
-    # auth-url: http://127.0.0.1:8848/sa-token-demo-sso-server-h5/sso-auth.html
-    # 是否打开单点注销接口
-    is-slo: true
-
   # 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
   alone-redis:
     # Redis数据库索引
@@ -35,7 +33,3 @@ sa-token:
         max-idle: 10
         # 连接池中的最小空闲连接
         min-idle: 0
-
-
-
-

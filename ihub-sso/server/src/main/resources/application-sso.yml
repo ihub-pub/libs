@@ -1,6 +1,7 @@
-# 端口
-server:
-  port: 9527
+ihub:
+  cloud:
+    name: sso-server
+    port: 9527
 
 
 # Sa-Token 配置

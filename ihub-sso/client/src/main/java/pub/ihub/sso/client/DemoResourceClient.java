@@ -22,8 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author liheng
  */
 @FeignClient(
-	url = "http://localhost:9003",
-	name = "demo",                 // 服务名称
+	name = "sso-resource",                 // 服务名称
 	configuration = FeignInterceptor.class,
 	fallbackFactory = DemoResourceClientFallback.class    // 服务降级处理
 )
