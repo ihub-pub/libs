@@ -84,7 +84,7 @@ dependencies {
         platform('net.dreamlu:mica-bom:2.6.3'),
         platform('com.google.guava:guava-bom:31.1-jre'),
         platform('com.google.inject:guice-bom:5.1.0'),
-        platform('org.springframework.boot:spring-boot-dependencies:2.6.4'),
+        platform('org.springframework.boot:spring-boot-dependencies:2.6.6'),
         platform('org.springdoc:springdoc-openapi:1.6.6'),
         platform('org.apache.kylin:kylin:4.0.1')
     // 配置组件版本
