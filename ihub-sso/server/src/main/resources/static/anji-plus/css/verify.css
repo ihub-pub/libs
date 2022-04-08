@@ -24,7 +24,7 @@ html{
 	float: left;
 	width: 60%;
 	padding-right: 10px;
-	
+
 }
 
 .verify-change-area {
@@ -33,7 +33,7 @@ html{
 }
 
 .varify-input-code {
-	display:inline-block; 
+	display:inline-block;
 	width: 100%;
 	height: 25px;
 }
@@ -55,7 +55,7 @@ html{
 .verifybox{
     position: relative;
     box-sizing: border-box;
-    border-radius: 2px;
+    border-radius: 1rem;
     border: 1px solid #e4e7eb;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,.3);
@@ -126,11 +126,11 @@ html{
 }
 
 .suc-bg{
-   background-color:rgba(92, 184, 92,.5);  
+   background-color:rgba(92, 184, 92,.5);
    filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#7f5CB85C, endcolorstr=#7f5CB85C);
 }
 .err-bg{
-   background-color:rgba(217, 83, 79,.5);  
+   background-color:rgba(217, 83, 79,.5);
    filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#7fD9534F, endcolorstr=#7fD9534F);
 }
 
@@ -145,7 +145,7 @@ html{
    	border: 1px solid #ddd;
    	-webkit-border-radius: 4px;
 }
- 
+
 .verify-bar-area .verify-move-block {
     position: absolute;
     top: 0px;

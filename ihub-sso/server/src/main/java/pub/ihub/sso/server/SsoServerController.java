@@ -20,9 +20,6 @@ import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.sso.SaSsoHandle;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
-import cn.hutool.core.text.CharSequenceUtil;
-import cn.hutool.http.HttpUtil;
-import cn.hutool.json.JSONUtil;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -44,9 +41,7 @@ import javax.security.auth.login.LoginException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author liheng
@@ -112,7 +107,6 @@ public class SsoServerController {
 						   SsoUserDetailsService<?> userService) {
 		cfg.sso.setNotLoginView(() -> new ModelAndView("login.html", new HashMap<>(3) {{
 			put("title", "IHub SSO 认证中心");
-			put("background", getBingImage());
 			put("copyright", "Copyright © " + LocalDate.now().getYear() + " IHub. All Rights Reserved.");
 			put("socialAuths", ssoProperties.getAuthSource());
 		}}));
@@ -159,22 +153,6 @@ public class SsoServerController {
 
 	private String redirectKey(String state) {
 		return "redirect:" + state;
-	}
-
-	private String getBingImage() {
-		String image = redisTemplate.opsForValue().get(getImageKey());
-		if (CharSequenceUtil.isBlank(image)) {
-			String body = HttpUtil.get("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN");
-			var images = JSONUtil.parseObj(body).getBeanList("images", Map.class).stream().findFirst();
-			image = images.map(map -> "https://cn.bing.com" + map.get("url").toString())
-				.orElse("https://api.sunweihu.com/api/bing1/api.php");
-			redisTemplate.opsForValue().set(getImageKey(), image, 2, TimeUnit.DAYS);
-		}
-		return image;
-	}
-
-	private String getImageKey() {
-		return "bing:" + LocalDate.now();
 	}
 
 }

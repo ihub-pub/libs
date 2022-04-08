@@ -6,7 +6,7 @@ body{font-family: Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;}
 .view-box{position: relative; width: 100vw; height: 100vh; overflow: hidden;}
 
 /* 背景 */
-.bg{height: 100%; background: #101C34; background-size: 100% 100%;}
+.bg{height: 100%; background: url("https://www.coolku.cc/api/bing/mo.php"); background-size: 100% 100%;}
 
 /* 内容盒子 */
 .content-box{position: absolute; width: 100vw; height: 100vh; top: 0px;}
@@ -18,7 +18,7 @@ body{font-family: Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;}
 
 /* 表单 */
 .from-box{flex: 1; padding: 20px 50px; background-color: #FFF;}
-.from-box{border-radius: 1px; box-shadow: 1px 1px 20px #666;}
+.from-box{border-radius: 1rem; box-shadow: 1px 1px 20px #666;}
 .from-title{margin-top: 20px; margin-bottom: 30px; text-align: center;}
 
 /* 输入框 */
