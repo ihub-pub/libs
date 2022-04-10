@@ -1,3 +1,24 @@
+## 🔖 1.0.9 (2022-04-10)
+
+
+### ⬆️ Dependency Updates
+
+- gradle: bump jmolecules-bom from 2021.2.2 to 2021.2.3  [@dependabot](https://github.com/dependabot) ([#119](https://github.com/ihub-pub/libs/pull/119))
+- gradle: bump spring-statemachine-bom from 3.0.1 to 3.1.0  [@dependabot](https://github.com/dependabot) ([#126](https://github.com/ihub-pub/libs/pull/126))
+- gradle: bump swagger-annotations from 2.1.13 to 2.2.0  [@dependabot](https://github.com/dependabot) ([#124](https://github.com/ihub-pub/libs/pull/124))
+- gradle: bump springdoc-openapi from 1.6.6 to 1.6.7  [@dependabot](https://github.com/dependabot) ([#125](https://github.com/ihub-pub/libs/pull/125))
+- gradle: bump spring-boot-admin-dependencies from 2.6.2 to 2.6.6  [@dependabot](https://github.com/dependabot) ([#128](https://github.com/ihub-pub/libs/pull/128))  [@dependabot](https://github.com/dependabot) ([#122](https://github.com/ihub-pub/libs/pull/122))
+- gradle: bump mica-bom from 2.6.3 to 2.6.6  [@dependabot](https://github.com/dependabot) ([#121](https://github.com/ihub-pub/libs/pull/121))
+- gradle: bump spring-boot-dependencies from 2.6.4 to 2.6.6  [@dependabot](https://github.com/dependabot) ([#118](https://github.com/ihub-pub/libs/pull/118))
+- gradle: bump sentry-bom from 5.6.2 to 5.7.2  [@dependabot](https://github.com/dependabot) ([#123](https://github.com/ihub-pub/libs/pull/123))  [@dependabot](https://github.com/dependabot) ([#108](https://github.com/ihub-pub/libs/pull/108))
+- gradle: Bump groovy-all from 3.0.9 to 3.0.10  [@dependabot](https://github.com/dependabot) ([#105](https://github.com/ihub-pub/libs/pull/105))
+- gradle: Bump mockito-bom from 4.3.1 to 4.4.0  [@dependabot](https://github.com/dependabot) ([#106](https://github.com/ihub-pub/libs/pull/106))
+- build(gradle): 升级gradle至7.4.2  [@henry-hub](https://github.com/henry-hub) ([#127](https://github.com/ihub-pub/libs/pull/127))  [@henry-hub](https://github.com/henry-hub) ([#107](https://github.com/ihub-pub/libs/pull/107))
+- gradle: Bump pub.ihub.plugin.ihub-settings from 1.2.2 to 1.2.5  [@dependabot](https://github.com/dependabot) ([#116](https://github.com/ihub-pub/libs/pull/116))  [@dependabot](https://github.com/dependabot) ([#109](https://github.com/ihub-pub/libs/pull/109))  [@dependabot](https://github.com/dependabot) ([#104](https://github.com/ihub-pub/libs/pull/104))
+
+
+---
+
 ## 🔖 1.0.8 (2022-03-05)
 
 
