@@ -74,7 +74,8 @@ public class SsoServerAutoConfiguration {
 	}
 
 	@Bean
-	@ConditionalOnMissingBean(AuthStateCache.class)
+	@ConditionalOnMissingBean
+	@ConditionalOnBean(RedisTemplate.class)
 	AuthStateCache authStateRedisCache(RedisTemplate<String, String> redisTemplate) {
 		ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
 		return new AuthStateCache() {

@@ -30,7 +30,6 @@ import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.request.AuthRequest;
 import me.zhyd.oauth.utils.AuthStateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,7 +51,6 @@ import java.util.Objects;
 public class SsoServerController {
 
 	private final SsoProperties ssoProperties;
-	private final RedisTemplate<String, String> redisTemplate;
 	private final AuthStateCache stateCache;
 	private final SsoSocialUserService socialUserService;
 
