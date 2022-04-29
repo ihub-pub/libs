@@ -1,0 +1,3 @@
+dependencies {
+    implementation project(':ihub-sso:ihub-sso-resource-spring-boot-starter')
+}

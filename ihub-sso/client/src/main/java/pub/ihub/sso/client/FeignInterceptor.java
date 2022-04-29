@@ -20,12 +20,10 @@ import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
-import org.springframework.stereotype.Component;
 
 /**
  * @author liheng
  */
-@Component
 public class FeignInterceptor implements RequestInterceptor {
 
 	@Override

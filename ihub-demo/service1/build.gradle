@@ -1,0 +1,5 @@
+dependencies {
+    implementation project(':ihub-sso:ihub-sso-client-spring-boot-starter')
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+}

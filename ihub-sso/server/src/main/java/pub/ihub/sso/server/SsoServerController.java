@@ -37,7 +37,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.security.auth.login.LoginException;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -103,9 +102,10 @@ public class SsoServerController {
 	@Autowired
 	private void configSso(SaTokenConfig cfg, @Autowired(required = false) List<SsoLoginTicketHandle> ticketHandles,
 						   SsoUserDetailsService<?> userService) {
-		cfg.sso.setNotLoginView(() -> new ModelAndView("login.html", new HashMap<>(3) {{
-			put("title", "IHub SSO 认证中心");
-			put("copyright", "Copyright © " + LocalDate.now().getYear() + " IHub. All Rights Reserved.");
+		cfg.sso.setNotLoginView(() -> new ModelAndView("login.html", new HashMap<>(4) {{
+			put("title", ssoProperties.getTitle());
+			put("copyright", ssoProperties.getCopyright());
+			put("icon", ssoProperties.getIcon());
 			put("socialAuths", ssoProperties.getAuthSource());
 		}}));
 

@@ -1,9 +1,3 @@
-ihub:
-  cloud:
-    name: sso-server
-    port: 9527
-
-
 # Sa-Token 配置
 sa-token:
   # -------------- SSO-模式一相关配置  (非模式一不需要配置)

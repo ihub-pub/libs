@@ -1,8 +1,7 @@
 description = 'SSO模块授权服务端组件'
 
 dependencies {
-    implementation  'cn.dev33:sa-token-spring-boot-starter',
-                    'cn.dev33:sa-token-dao-redis-jackson',
+    implementation  'cn.dev33:sa-token-dao-redis-jackson',
                     'org.apache.commons:commons-pool2'
 
     implementation  'me.zhyd.oauth:JustAuth'

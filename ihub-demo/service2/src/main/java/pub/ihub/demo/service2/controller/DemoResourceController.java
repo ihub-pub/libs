@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.sso.client;
+package pub.ihub.demo.service2.controller;
 
-import cn.dev33.satoken.sso.SaSsoHandle;
+import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @author liheng
  */
 @RestController
-public class SsoClientController {
+public class DemoResourceController {
 
-	@RequestMapping("/sso/*")
-	public Object ssoRequest() {
-		return SaSsoHandle.clientRequest();
+	@RequestMapping("/demo")
+	public String index() {
+		return "resource demo " + StpUtil.isLogin();
 	}
 
 }

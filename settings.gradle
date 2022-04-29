@@ -22,4 +22,5 @@ iHubSettings {
     includeProjects 'ihub-starter' prefix 'ihub-boot-' suffix '-spring-boot-starter' onlySubproject
 //    includeProjects 'ihub-secure' prefix '' subproject '-spring-boot-starter'
 //    includeProjects 'ihub-sso' prefix '' subproject '-spring-boot-starter'
+//    includeProjects 'ihub-demo' onlySubproject
 }

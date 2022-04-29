@@ -13,18 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.sso.client;
+package pub.ihub.demo.service1.feign;
 
-import org.springframework.stereotype.Component;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestMapping;
+import pub.ihub.sso.client.FeignInterceptor;
 
 /**
  * @author liheng
  */
-//@Component
-public class DemoResourceClientFallback implements DemoResourceClient {
+@FeignClient(
+	name = "sso-resource",                 // 服务名称
+	configuration = FeignInterceptor.class,
+	fallbackFactory = DemoResourceClientFallback.class    // 服务降级处理
+)
+public interface DemoResourceClient {
 
-	@Override
-	public String index() {
-		return "降级";
-	}
+	@RequestMapping("/demo")
+	String index();
+
 }

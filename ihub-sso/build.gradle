@@ -8,5 +8,6 @@ dependencies {
 subprojects {
     dependencies {
         api project(':ihub-sso'), project(':ihub-boot-cloud-spring-boot-starter')
+        api 'cn.dev33:sa-token-spring-boot-starter'
     }
 }

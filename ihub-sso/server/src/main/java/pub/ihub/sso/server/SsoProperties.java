@@ -22,6 +22,7 @@ import lombok.Data;
 import me.zhyd.oauth.config.AuthConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,21 @@ import static pub.ihub.core.Constant.PROPERTIES_PREFIX;
 @Data
 @ConfigurationProperties(PROPERTIES_PREFIX + ".sso")
 public class SsoProperties {
+
+	/**
+	 * 标题
+	 */
+	private String title = "IHub SSO 认证中心";
+
+	/**
+	 * 版权
+	 */
+	private String copyright = "Copyright © " + LocalDate.now().getYear() + " IHub. All Rights Reserved.";
+
+	/**
+	 * 图标
+	 */
+	private String icon = "https://cdn.jsdelivr.net/gh/ihub-pub/ihub-pub.github.io/favicon.ico";
 
 	/**
 	 * 第三方授权配置

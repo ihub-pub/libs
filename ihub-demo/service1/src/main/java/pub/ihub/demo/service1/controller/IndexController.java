@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.sso.client;
+package pub.ihub.demo.service1.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pub.ihub.demo.service1.feign.DemoResourceClient;
 
 /**
  * @author liheng
