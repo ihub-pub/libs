@@ -48,7 +48,7 @@ function login(captchaVerification){
 			}
 		});
 	}, 400);
-};
+}
 
 $('#btn').slideVerify({
 	baseUrl:'',
