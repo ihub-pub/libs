@@ -13,21 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.demo.service1.feign;
+package pub.ihub.sso.client;
 
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import static pub.ihub.core.Constant.PROPERTIES_PREFIX;
 
 /**
+ * SSO客户端配置属性
+ *
  * @author liheng
  */
-@FeignClient(
-	name = "sso-resource",                 // 服务名称
-	fallbackFactory = DemoResourceClientFallback.class    // 服务降级处理
-)
-public interface DemoResourceClient {
-
-	@RequestMapping("/demo")
-	String index();
+@Data
+@ConfigurationProperties(PROPERTIES_PREFIX + ".sso")
+public class SsoClientProperties {
 
 }

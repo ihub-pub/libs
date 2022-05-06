@@ -13,21 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.demo.service1.feign;
+package pub.ihub.demo.gateway;
 
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author liheng
  */
-@FeignClient(
-	name = "sso-resource",                 // 服务名称
-	fallbackFactory = DemoResourceClientFallback.class    // 服务降级处理
-)
-public interface DemoResourceClient {
+@SpringBootApplication
+public class GatewayApplication {
 
-	@RequestMapping("/demo")
-	String index();
+	public static void main(String[] args) {
+		SpringApplication.run(GatewayApplication.class, args);
+	}
 
 }

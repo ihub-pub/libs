@@ -1,0 +1,15 @@
+description = '网关服务'
+
+dependencies {
+    implementation project(':ihub-sso:ihub-sso-resource-reactor-spring-boot-starter')
+
+    // Spring
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+}
+
+iHubBom {
+    excludeModules {
+        group 'org.springframework.boot' modules 'spring-boot-starter-web'
+    }
+}

@@ -13,22 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.sso.server;
+package pub.ihub.sso.resource;
 
-import javax.security.auth.login.LoginException;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.time.LocalDate;
+
+import static pub.ihub.core.Constant.PROPERTIES_PREFIX;
 
 /**
- * 登录验证处理接口
+ * SSO资源服务配置属性
  *
  * @author liheng
  */
-public interface SsoLoginTicketHandle {
+@Data
+@ConfigurationProperties(PROPERTIES_PREFIX + ".sso")
+public class SsoResourceProperties {
 
 	/**
-	 * 处理方法
-	 *
-	 * @throws LoginException 登录异常
+	 * 标题
 	 */
-	void handle() throws LoginException;
+	private String title = "IHub SSO 认证中心";
+
+	/**
+	 * 版权
+	 */
+	private String copyright = "Copyright © " + LocalDate.now().getYear() + " IHub. All Rights Reserved.";
+
+	/**
+	 * 图标
+	 */
+	private String icon = "https://cdn.jsdelivr.net/gh/ihub-pub/ihub-pub.github.io/favicon.ico";
 
 }

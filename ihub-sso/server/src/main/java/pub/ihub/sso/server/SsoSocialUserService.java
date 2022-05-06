@@ -18,14 +18,38 @@ package pub.ihub.sso.server;
 import me.zhyd.oauth.model.AuthUser;
 
 /**
+ * 第三方登录接口
+ *
+ * @param <T> ID类型
  * @author liheng
  */
 public interface SsoSocialUserService<T> {
 
+	/**
+	 * 通过第三方UUID查找用户信息
+	 *
+	 * @param source 第三方渠道
+	 * @param uuid   UUID
+	 * @return 用户信息
+	 */
 	SsoUserDetails<T> findUserByUuid(String source, String uuid);
 
+	/**
+	 * 通过第三方授权信息创建用户
+	 *
+	 * @param source   第三方渠道
+	 * @param authUser 授权信息
+	 * @return 创建用户
+	 */
 	SsoUserDetails<T> createUserByAuth(String source, AuthUser authUser);
 
-	boolean bingUserAndAuth(String source, T loginId, AuthUser authUser);
+	/**
+	 * 绑定第三方用户
+	 *
+	 * @param source   第三方渠道
+	 * @param loginId  登录ID
+	 * @param authUser 授权信息
+	 */
+	void bingUserAndAuth(String source, T loginId, AuthUser authUser);
 
 }

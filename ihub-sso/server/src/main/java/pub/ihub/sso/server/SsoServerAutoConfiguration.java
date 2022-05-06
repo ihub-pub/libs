@@ -29,7 +29,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
@@ -41,22 +40,30 @@ import java.util.stream.Stream;
  * @author liheng
  */
 @Configuration
-@EnableConfigurationProperties(SsoProperties.class)
+@EnableConfigurationProperties(SsoServerProperties.class)
 @ComponentScan("pub.ihub.sso.server")
 public class SsoServerAutoConfiguration {
 
+	/**
+	 * 用户信息接口默认实现，实际环境需要重新实现
+	 *
+	 * @return 默认实现
+	 */
 	@Bean
 	@ConditionalOnMissingBean
 	SsoUserDetailsService<Long> defaultUserDetailsService() {
-		// 用户信息接口默认实现，实际环境需要重新实现
 		return username -> Stream.of(defaultUser()).filter(details -> details.getUsername().equals(username))
 			.findFirst().orElse(null);
 	}
 
+	/**
+	 * 用户信息接口默认实现，实际环境需要重新实现
+	 *
+	 * @return 默认实现
+	 */
 	@Bean
 	@ConditionalOnMissingBean
 	SsoSocialUserService<Long> socialUserService() {
-		// 用户信息接口默认实现，实际环境需要重新实现
 		return new SsoSocialUserService<>() {
 			@Override
 			public SsoUserDetails<Long> findUserByUuid(String source, String uuid) {
@@ -69,17 +76,22 @@ public class SsoServerAutoConfiguration {
 			}
 
 			@Override
-			public boolean bingUserAndAuth(String source, Long loginId, AuthUser authUser) {
-				return true;
+			public void bingUserAndAuth(String source, Long loginId, AuthUser authUser) {
 			}
 		};
 	}
 
+	/**
+	 * 授权信息缓存服务
+	 *
+	 * @param stringRedisTemplate redisTemplate
+	 * @return 缓存服务
+	 */
 	@Bean
 	@ConditionalOnMissingBean
-	@ConditionalOnBean(RedisTemplate.class)
-	AuthStateCache authStateRedisCache(RedisTemplate<String, String> redisTemplate) {
-		ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+	@ConditionalOnBean(StringRedisTemplate.class)
+	AuthStateCache authStateRedisCache(StringRedisTemplate stringRedisTemplate) {
+		ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
 		return new AuthStateCache() {
 			@Override
 			public void cache(String key, String value) {
@@ -98,7 +110,7 @@ public class SsoServerAutoConfiguration {
 
 			@Override
 			public boolean containsKey(String key) {
-				return Boolean.TRUE.equals(redisTemplate.hasKey(prefixKey(key)));
+				return Boolean.TRUE.equals(stringRedisTemplate.hasKey(prefixKey(key)));
 			}
 
 			private String prefixKey(String key) {
@@ -107,6 +119,12 @@ public class SsoServerAutoConfiguration {
 		};
 	}
 
+	/**
+	 * 验证码缓存服务
+	 *
+	 * @param stringRedisTemplate redisTemplate
+	 * @return 验证码缓存服务
+	 */
 	@Bean
 	@ConditionalOnMissingBean
 	@ConditionalOnBean(StringRedisTemplate.class)
@@ -144,6 +162,12 @@ public class SsoServerAutoConfiguration {
 		};
 	}
 
+	/**
+	 * 登录验证码检查处理器
+	 *
+	 * @param captchaService 验证码服务
+	 * @return 检查处理器
+	 */
 	@Bean
 	@ConditionalOnBean(CaptchaService.class)
 	SsoLoginTicketHandle captchaVerificationHandle(CaptchaService captchaService) {
@@ -157,6 +181,11 @@ public class SsoServerAutoConfiguration {
 		};
 	}
 
+	/**
+	 * 默认用户
+	 *
+	 * @return 用户
+	 */
 	private SsoUserDetails<Long> defaultUser() {
 		return new SsoUserDetails<>() {
 			@Override

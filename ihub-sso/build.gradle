@@ -1,13 +1,17 @@
 description = 'SSO模块组件'
 
 dependencies {
-    compileOnly 'org.springframework.boot:spring-boot',
-        'cn.dev33:sa-token-spring-boot-starter'
+    compileOnly 'org.springframework.boot:spring-boot', 'cn.dev33:sa-token-spring-boot-starter'
 }
 
 subprojects {
     dependencies {
         api project(':ihub-sso'), project(':ihub-boot-cloud-spring-boot-starter')
+
+        // Sa-Token 权限认证
         api 'cn.dev33:sa-token-spring-boot-starter'
+
+        // Sa-Token 整合 Redis (使用 jackson 序列化方式)
+        implementation 'cn.dev33:sa-token-dao-redis-jackson', 'org.apache.commons:commons-pool2'
     }
 }

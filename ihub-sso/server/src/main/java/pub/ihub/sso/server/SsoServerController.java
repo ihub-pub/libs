@@ -49,10 +49,15 @@ import java.util.Objects;
 @Slf4j
 public class SsoServerController {
 
-	private final SsoProperties ssoProperties;
+	private final SsoServerProperties ssoProperties;
 	private final AuthStateCache stateCache;
 	private final SsoSocialUserService socialUserService;
 
+	/**
+	 * sso授权相关接口
+	 *
+	 * @return 响应
+	 */
 	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
 		return SaSsoHandle.serverRequest();
@@ -110,7 +115,7 @@ public class SsoServerController {
 		}}));
 
 		cfg.sso.setDoLoginHandle((name, pwd) -> {
-			// 前置检查用于一些额外认证
+			// 前置检查用于一些额外认证，如：验证码
 			if (!ticketHandles.isEmpty()) {
 				try {
 					for (SsoLoginTicketHandle handle : ticketHandles) {
