@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Henry 李恒 (henry.box@outlook.com).
+ * Copyright (c) 2022 Henry 李恒 (henry.box@outlook.com).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,20 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.cloud;
-
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+package pub.ihub.cloud.advice.handler;
 
 /**
- * 服务自动配置
+ * 响应报文处理器
  *
  * @author liheng
  */
-@Configuration
-@ComponentScan("pub.ihub.cloud.advice")
-@EnableConfigurationProperties(CloudProperties.class)
-public class CloudAutoConfiguration {
+public interface IResponseBodyHandler extends IBodyHandler {
 
 }

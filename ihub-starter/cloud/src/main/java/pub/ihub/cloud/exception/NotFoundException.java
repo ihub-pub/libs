@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Henry 李恒 (henry.box@outlook.com).
+ * Copyright (c) 2022 Henry 李恒 (henry.box@outlook.com).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,20 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.cloud;
+package pub.ihub.cloud.exception;
 
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import pub.ihub.core.BusinessException;
 
 /**
- * 服务自动配置
+ * 无相应资源异常
  *
  * @author liheng
  */
-@Configuration
-@ComponentScan("pub.ihub.cloud.advice")
-@EnableConfigurationProperties(CloudProperties.class)
-public class CloudAutoConfiguration {
+public class NotFoundException extends BusinessException {
+
+	public NotFoundException(String message) {
+		super(message);
+	}
 
 }
