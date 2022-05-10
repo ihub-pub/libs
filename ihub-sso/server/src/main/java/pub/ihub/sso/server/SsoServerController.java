@@ -15,6 +15,7 @@
  */
 package pub.ihub.sso.server;
 
+import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.sso.SaSsoHandle;
@@ -105,16 +106,16 @@ public class SsoServerController {
 	}
 
 	@Autowired
-	private void configSso(SaTokenConfig cfg, @Autowired(required = false) List<SsoLoginTicketHandle> ticketHandles,
+	private void configSso(SaSsoConfig cfg, @Autowired(required = false) List<SsoLoginTicketHandle> ticketHandles,
 						   SsoUserDetailsService<?> userService) {
-		cfg.sso.setNotLoginView(() -> new ModelAndView("login.html", new HashMap<>(4) {{
+		cfg.setNotLoginView(() -> new ModelAndView("login.html", new HashMap<>(4) {{
 			put("title", ssoProperties.getTitle());
 			put("copyright", ssoProperties.getCopyright());
 			put("icon", ssoProperties.getIcon());
 			put("socialAuths", ssoProperties.getAuthSource());
 		}}));
 
-		cfg.sso.setDoLoginHandle((name, pwd) -> {
+		cfg.setDoLoginHandle((name, pwd) -> {
 			// 前置检查用于一些额外认证，如：验证码
 			if (!ticketHandles.isEmpty()) {
 				try {

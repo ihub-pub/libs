@@ -11,6 +11,9 @@ subprojects {
         // Sa-Token 权限认证
         api 'cn.dev33:sa-token-spring-boot-starter'
 
+        // Sa-Token 插件：整合SSO
+        api 'cn.dev33:sa-token-sso'
+
         // Sa-Token 整合 Redis (使用 jackson 序列化方式)
         implementation 'cn.dev33:sa-token-dao-redis-jackson', 'org.apache.commons:commons-pool2'
     }
