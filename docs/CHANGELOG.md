@@ -1,3 +1,24 @@
+## 🔖 1.0.10 (2022-05-10)
+
+
+### ⬆️ Dependency Updates
+
+- gradle: bump mica-bom from 2.6.6 to 2.6.7  [@dependabot](https://github.com/dependabot) ([#141](https://github.com/ihub-pub/libs/pull/141))
+- gradle: bump fastjson2 from 2.0.1 to 2.0.2  [@dependabot](https://github.com/dependabot) ([#137](https://github.com/ihub-pub/libs/pull/137))
+- gradle: bump spring-statemachine-bom from 3.1.0 to 3.2.0  [@dependabot](https://github.com/dependabot) ([#142](https://github.com/ihub-pub/libs/pull/142))
+- gradle: bump spring-boot-admin-dependencies from 2.6.6 to 2.6.7  [@dependabot](https://github.com/dependabot) ([#140](https://github.com/ihub-pub/libs/pull/140))
+- gradle: bump mockito-bom from 4.4.0 to 4.5.1  [@dependabot](https://github.com/dependabot) ([#134](https://github.com/ihub-pub/libs/pull/134))
+- gradle: bump sentry-bom from 5.7.2 to 5.7.3  [@dependabot](https://github.com/dependabot) ([#130](https://github.com/ihub-pub/libs/pull/130))
+- gradle: bump hutool-bom from 5.7.22 to 5.8.0  [@dependabot](https://github.com/dependabot) ([#138](https://github.com/ihub-pub/libs/pull/138))
+- gradle: bump springdoc-openapi from 1.6.7 to 1.6.8  [@dependabot](https://github.com/dependabot) ([#135](https://github.com/ihub-pub/libs/pull/135))
+- gradle: bump spring-boot-dependencies from 2.6.6 to 2.6.7  [@dependabot](https://github.com/dependabot) ([#133](https://github.com/ihub-pub/libs/pull/133))
+- gradle: bump spring-cloud-dependencies from 2021.0.1 to 2021.0.2  [@dependabot](https://github.com/dependabot) ([#136](https://github.com/ihub-pub/libs/pull/136))
+- gradle: bump fastjson from 1.2.79 to 2.0.1  [@dependabot](https://github.com/dependabot) ([#131](https://github.com/ihub-pub/libs/pull/131))
+- gradle: bump pub.ihub.plugin.ihub-settings from 1.2.5 to 1.2.6  [@dependabot](https://github.com/dependabot) ([#129](https://github.com/ihub-pub/libs/pull/129))
+
+
+---
+
 ## 🔖 1.0.9 (2022-04-10)
 
 
