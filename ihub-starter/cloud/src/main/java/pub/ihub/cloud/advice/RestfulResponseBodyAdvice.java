@@ -16,6 +16,7 @@
 package pub.ihub.cloud.advice;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
@@ -25,28 +26,27 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.AbstractMappingJacksonResponseBodyAdvice;
 import pub.ihub.cloud.Result;
-import pub.ihub.cloud.advice.handler.IResponseBodyHandler;
-
-import java.util.List;
 
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
- * json view 响应拦截器
+ * restful响应处理器
  *
  * @author liheng
  */
 @RequiredArgsConstructor
 @RestControllerAdvice
 @Order(HIGHEST_PRECEDENCE)
-public class JacksonResponseBodyAdvice extends AbstractMappingJacksonResponseBodyAdvice {
-
-	private List<IResponseBodyHandler> handlers;
+@ConditionalOnProperty(value = "ihub.cloud.restful-body", havingValue = "true", matchIfMissing = true)
+public class RestfulResponseBodyAdvice extends AbstractMappingJacksonResponseBodyAdvice {
 
 	@Override
-	protected void beforeBodyWriteInternal(MappingJacksonValue bodyContainer, MediaType contentType, MethodParameter returnType, ServerHttpRequest request, ServerHttpResponse response) {
+	protected void beforeBodyWriteInternal(MappingJacksonValue bodyContainer,
+										   MediaType contentType,
+										   MethodParameter returnType,
+										   ServerHttpRequest request,
+										   ServerHttpResponse response) {
 		var body = bodyContainer.getValue();
-		handlers.forEach(handle -> handle.handle(body));
 		if (body instanceof Result) {
 			response.setStatusCode(((Result<?>) body).httpStatus());
 		} else if (body instanceof Object) {

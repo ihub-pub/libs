@@ -18,7 +18,7 @@ plugins {
 }
 
 subprojects {
-    if (project.name == 'ihub-bom') {
+    if (project in [project(':ihub-bom'), project(':ihub-sso')]) {
         return
     }
     apply {
@@ -35,7 +35,7 @@ subprojects {
             annotationProcessor it
             testAnnotationProcessor it
         }
-        if (project.name != 'ihub-core') {
+        if (project != project(':ihub-core')) {
             api project(':ihub-core')
         }
         if (project.name.endsWith('-spring-boot-starter')) {
