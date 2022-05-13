@@ -18,16 +18,20 @@ package pub.ihub.sso.resource;
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.util.SaResult;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.servlet.Filter;
 
 /**
  * @author liheng
  */
 @Configuration
 @EnableConfigurationProperties(SsoResourceProperties.class)
+@ConditionalOnClass(Filter.class)
 public class SsoResourceAutoConfiguration {
 
 	@Bean

@@ -1,1 +1,13 @@
 description = 'SSO模块资源服务组件'
+
+java {
+    registerFeature('resource') {
+        usingSourceSet sourceSets.main
+    }
+}
+
+// TODO reactor、servlet配置可选
+dependencies {
+    resourceImplementation 'cn.dev33:sa-token-spring-boot-starter'
+    resourceImplementation 'cn.dev33:sa-token-reactor-spring-boot-starter'
+}
