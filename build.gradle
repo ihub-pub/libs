@@ -106,6 +106,10 @@ dependencies {
             'org.mapstruct:mapstruct:1.4.2.Final',
             'org.mapstruct:mapstruct-processor:1.4.2.Final',
             'org.springframework.security:spring-security-oauth2-authorization-server:0.2.2'
+
+        // spring-boot-dependencies维护的bytebuddy版本为1.11，与mockito版本4.5不兼容
+        api 'net.bytebuddy:byte-buddy:1.12.10',
+            'net.bytebuddy:byte-buddy-agent:1.12.10'
     }
 }
 
