@@ -13,12 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.sso.authentication;
+package pub.ihub.sso.resource;
 
 import cn.dev33.satoken.reactor.filter.SaReactorFilter;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.client.ConditionalOnReactiveDiscoveryEnabled;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,9 +30,13 @@ import org.springframework.context.annotation.Configuration;
  * @author liheng
  */
 @Configuration
-public class SsoAuthAutoConfiguration {
+@EnableConfigurationProperties(SsoResourceProperties.class)
+@ConditionalOnReactiveDiscoveryEnabled
+@ConditionalOnClass(SaReactorFilter.class)
+public class SsoResourceReactorAutoConfiguration {
 
 	@Bean
+	@ConditionalOnMissingBean
 	public SaReactorFilter getSaReactorFilter() {
 		return new SaReactorFilter()
 			// 拦截地址

@@ -1,11 +1,25 @@
 description = 'SSO模块组件'
 
 subprojects {
+    java {
+        registerFeature('servlet') {
+            usingSourceSet sourceSets.main
+            capability group, 'sso-support', version
+            capability group, 'servlet-support', version
+        }
+        registerFeature('reactor') {
+            usingSourceSet sourceSets.main
+            capability group, 'sso-support', version
+            capability group, 'reactor-support', version
+        }
+    }
+
     dependencies {
         api project(':ihub-boot-cloud-spring-boot-starter')
 
         // Sa-Token 权限认证
-        api 'cn.dev33:sa-token-spring-boot-starter'
+        servletApi 'cn.dev33:sa-token-spring-boot-starter'
+        reactorApi 'cn.dev33:sa-token-reactor-spring-boot-starter'
 
         // Sa-Token 插件：整合SSO
         api 'cn.dev33:sa-token-sso'

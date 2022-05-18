@@ -1,3 +1,16 @@
 dependencies {
     implementation project(':ihub-sso:ihub-sso-resource-spring-boot-starter')
 }
+
+configurations {
+    apiElements {
+        outgoing {
+            capability 'pub.ihub.lib:servlet-support:' + version
+        }
+    }
+    runtimeElements {
+        outgoing {
+            capability 'pub.ihub.lib:servlet-support:' + version
+        }
+    }
+}

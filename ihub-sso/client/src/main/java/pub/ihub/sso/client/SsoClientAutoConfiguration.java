@@ -15,17 +15,13 @@
  */
 package pub.ihub.sso.client;
 
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.id.SaIdUtil;
+import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.sso.SaSsoHandle;
-import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.builder.GenericBuilder;
-import feign.RequestInterceptor;
-import feign.RequestTemplate;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -39,6 +35,8 @@ import javax.servlet.ServletResponse;
  */
 @Configuration
 @EnableConfigurationProperties(SsoClientProperties.class)
+@ConditionalOnDiscoveryEnabled
+@ConditionalOnClass(SaServletFilter.class)
 public class SsoClientAutoConfiguration {
 
 	/**
@@ -68,23 +66,6 @@ public class SsoClientAutoConfiguration {
 			.with(FilterRegistrationBean::addUrlPatterns, "/sso/*")
 			.with(FilterRegistrationBean::setFilter, ssoFilter())
 			.build();
-	}
-
-	/**
-	 * 服务内部调用鉴权拦截器
-	 *
-	 * @return 鉴权拦截器
-	 */
-	@Bean
-	@ConditionalOnClass(RequestInterceptor.class)
-	@ConditionalOnProperty(value = "ihub.sso.id-token", havingValue = "true", matchIfMissing = true)
-	public RequestInterceptor idTokenInterceptor() {
-		return (RequestTemplate requestTemplate) -> {
-			// 传递登录状态
-			requestTemplate.header(SaManager.config.getTokenName(), StpUtil.getTokenValue());
-			// 内部调用隔离token
-			requestTemplate.header(SaIdUtil.ID_TOKEN, SaIdUtil.getToken());
-		};
 	}
 
 }

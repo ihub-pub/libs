@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.sso.resource;
+package pub.ihub.sso.client;
 
-import cn.dev33.satoken.filter.SaServletFilter;
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.id.SaIdUtil;
-import cn.dev33.satoken.util.SaResult;
+import cn.dev33.satoken.stp.StpUtil;
+import feign.RequestInterceptor;
+import feign.RequestTemplate;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,17 +30,24 @@ import org.springframework.context.annotation.Configuration;
  * @author liheng
  */
 @Configuration
-@EnableConfigurationProperties(SsoResourceProperties.class)
-@ConditionalOnDiscoveryEnabled
-@ConditionalOnClass(SaServletFilter.class)
-public class SsoResourceAutoConfiguration {
+@EnableConfigurationProperties(SsoClientProperties.class)
+@ConditionalOnClass(RequestInterceptor.class)
+public class SsoFeignAutoConfiguration {
 
+	/**
+	 * 服务内部调用鉴权拦截器
+	 *
+	 * @return 鉴权拦截器
+	 */
 	@Bean
-	@ConditionalOnMissingBean
-	public SaServletFilter getSaServletFilter() {
-		return new SaServletFilter().addInclude("/**")
-			.setAuth(obj -> SaIdUtil.checkCurrentRequestToken())
-			.setError(e -> SaResult.error(e.getMessage()));
+	@ConditionalOnProperty(value = "ihub.sso.id-token", matchIfMissing = true)
+	public RequestInterceptor idTokenInterceptor() {
+		return (RequestTemplate requestTemplate) -> {
+			// 传递登录状态
+			requestTemplate.header(SaManager.config.getTokenName(), StpUtil.getTokenValue());
+			// 内部调用隔离token
+			requestTemplate.header(SaIdUtil.ID_TOKEN, SaIdUtil.getToken());
+		};
 	}
 
 }

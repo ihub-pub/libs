@@ -39,7 +39,7 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 @RestControllerAdvice
 @Order(HIGHEST_PRECEDENCE)
 @ConditionalOnClass(AbstractMappingJacksonResponseBodyAdvice.class)
-@ConditionalOnProperty(value = "ihub.cloud.restful-body", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "ihub.cloud.restful-body", matchIfMissing = true)
 public class RestfulResponseBodyAdvice extends AbstractMappingJacksonResponseBodyAdvice {
 
 	@Override

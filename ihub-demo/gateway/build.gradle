@@ -1,11 +1,28 @@
 description = '网关服务'
 
+// TODO 不生效
+configurations {
+    apiElements {
+        outgoing {
+            capability 'pub.ihub.lib:reactor-support:' + version
+        }
+    }
+    runtimeElements {
+        outgoing {
+            capability 'pub.ihub.lib:reactor-support:' + version
+        }
+    }
+}
+
 dependencies {
-    implementation project(':ihub-sso:ihub-sso-resource-reactor-spring-boot-starter')
+    implementation project(':ihub-sso:ihub-sso-resource-spring-boot-starter')
 
     // Spring
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+
+    // TODO
+    implementation 'cn.dev33:sa-token-reactor-spring-boot-starter'
 }
 
 iHubBom {
