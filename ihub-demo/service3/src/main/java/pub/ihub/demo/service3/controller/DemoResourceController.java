@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.demo.service2.controller;
+package pub.ihub.demo.service3.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,8 +36,15 @@ public class DemoResourceController {
 		return "resource demo " + StpUtil.isLogin();
 	}
 
-	@RequestMapping("/{text}")
-	public Map<String, String> hello(@PathVariable("text") String text) {
+	@RequestMapping("/hello1")
+	public Mono<Map<String, String>> hello1(@RequestParam("text") String text) {
+		return Mono.just(new HashMap<>(1) {{
+			put("text", "Hello " + text);
+		}});
+	}
+
+	@RequestMapping("/hello2")
+	public Map<String, String> hello2(@RequestParam("text") String text) {
 		return new HashMap<>(1) {{
 			put("text", "Hello " + text);
 		}};

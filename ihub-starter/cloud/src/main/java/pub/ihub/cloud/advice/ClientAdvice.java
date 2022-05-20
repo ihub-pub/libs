@@ -23,7 +23,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import pub.ihub.cloud.Result;
+import org.springframework.web.server.ServerWebInputException;
+import pub.ihub.cloud.rest.Result;
 import pub.ihub.cloud.exception.NotFoundException;
 
 import java.util.NoSuchElementException;
@@ -31,8 +32,9 @@ import java.util.NoSuchElementException;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static pub.ihub.cloud.ResultCode.INVALID_FORMAT_ERROR;
-import static pub.ihub.cloud.ResultCode.NOT_FOUND_ERROR;
+import static pub.ihub.cloud.rest.ResultCode.CLIENT_ERROR;
+import static pub.ihub.cloud.rest.ResultCode.INVALID_FORMAT_ERROR;
+import static pub.ihub.cloud.rest.ResultCode.NOT_FOUND_ERROR;
 
 /**
  * 客户端错误处理
@@ -69,6 +71,19 @@ public class ClientAdvice {
 	Result<?> invalidFormat(Throwable ex) {
 		log.error("无效格式", ex);
 		return Result.code(INVALID_FORMAT_ERROR);
+	}
+
+	/**
+	 * 客户端异常
+	 *
+	 * @param ex 异常
+	 * @return 标准返回值结构
+	 */
+	@ExceptionHandler(ServerWebInputException.class)
+	@ResponseStatus(BAD_REQUEST)
+	Result<?> webInput(ServerWebInputException ex) {
+		log.error("客户端异常", ex);
+		return Result.code(CLIENT_ERROR);
 	}
 
 }

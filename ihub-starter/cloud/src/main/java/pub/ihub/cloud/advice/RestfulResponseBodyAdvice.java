@@ -15,7 +15,6 @@
  */
 package pub.ihub.cloud.advice;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.MethodParameter;
@@ -26,7 +25,7 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.AbstractMappingJacksonResponseBodyAdvice;
-import pub.ihub.cloud.Result;
+import pub.ihub.cloud.rest.Result;
 
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
@@ -35,7 +34,6 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
  *
  * @author liheng
  */
-@RequiredArgsConstructor
 @RestControllerAdvice
 @Order(HIGHEST_PRECEDENCE)
 @ConditionalOnClass(AbstractMappingJacksonResponseBodyAdvice.class)
@@ -48,11 +46,10 @@ public class RestfulResponseBodyAdvice extends AbstractMappingJacksonResponseBod
 										   MethodParameter returnType,
 										   ServerHttpRequest request,
 										   ServerHttpResponse response) {
-		var body = bodyContainer.getValue();
+		Object body = bodyContainer.getValue();
 		if (body instanceof Result) {
 			response.setStatusCode(((Result<?>) body).httpStatus());
-		} else if (body instanceof Object) {
-			// TODO 定义ABaseDTO
+		} else {
 			bodyContainer.setValue(Result.data(body));
 		}
 	}

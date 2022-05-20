@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import pub.ihub.cloud.Result;
+import pub.ihub.cloud.rest.Result;
 import pub.ihub.core.BusinessException;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;

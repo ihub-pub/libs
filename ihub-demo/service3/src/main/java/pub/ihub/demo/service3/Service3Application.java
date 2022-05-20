@@ -13,32 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.demo.service2.controller;
+package pub.ihub.demo.service3;
 
-import cn.dev33.satoken.stp.StpUtil;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author liheng
  */
-@RestController
-public class DemoResourceController {
+@SpringBootApplication
+public class Service3Application {
 
-	@RequestMapping("/demo")
-	public String index() {
-		return "resource demo " + StpUtil.isLogin();
-	}
-
-	@RequestMapping("/{text}")
-	public Map<String, String> hello(@PathVariable("text") String text) {
-		return new HashMap<>(1) {{
-			put("text", "Hello " + text);
-		}};
+	public static void main(String[] args) {
+		SpringApplication.run(Service3Application.class, args);
 	}
 
 }

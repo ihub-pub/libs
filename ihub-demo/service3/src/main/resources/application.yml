@@ -1,0 +1,4 @@
+ihub:
+  cloud:
+    name: sso-webflux
+    port: 9004

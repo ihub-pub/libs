@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import pub.ihub.cloud.Result;
+import pub.ihub.cloud.rest.Result;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -38,8 +38,8 @@ import static cn.hutool.core.util.ObjectUtil.defaultIfBlank;
 import static java.util.Locale.getDefault;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
-import static pub.ihub.cloud.ResultCode.CONSTRAINT_VIOLATION_ERROR;
-import static pub.ihub.cloud.ResultCode.DATA_VALIDATION_ERROR;
+import static pub.ihub.cloud.rest.ResultCode.CONSTRAINT_VIOLATION_ERROR;
+import static pub.ihub.cloud.rest.ResultCode.DATA_VALIDATION_ERROR;
 
 /**
  * 数据验证错误处理
