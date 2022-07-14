@@ -16,11 +16,12 @@
 package pub.ihub.sso.server;
 
 import cn.dev33.satoken.config.SaSsoConfig;
-import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.sso.SaSsoHandle;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaResult;
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.ICaptcha;
+import cn.hutool.core.util.ObjectUtil;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -31,13 +32,18 @@ import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.request.AuthRequest;
 import me.zhyd.oauth.utils.AuthStateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import pub.ihub.cloud.rest.Result;
 
 import javax.security.auth.login.LoginException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -51,6 +57,7 @@ import java.util.Objects;
 public class SsoServerController {
 
 	private final SsoServerProperties ssoProperties;
+	private final SsoCaptchaProperties captchaProperties;
 	private final AuthStateCache stateCache;
 	private final SsoSocialUserService socialUserService;
 
@@ -105,6 +112,18 @@ public class SsoServerController {
 		SaHolder.getResponse().redirect(stateCache.get(redirectKey(callback.getState())));
 	}
 
+	/**
+	 * 验证码接口
+	 *
+	 * @throws IOException
+	 */
+	@GetMapping("/captcha")
+	public void captcha() throws IOException {
+		var captcha = createCaptcha();
+		((HttpServletRequest) SaHolder.getRequest().getSource()).getSession().setAttribute("captcha", captcha);
+		captcha.write(((HttpServletResponse) SaHolder.getResponse().getSource()).getOutputStream());
+	}
+
 	@Autowired
 	private void configSso(SaSsoConfig cfg, @Autowired(required = false) List<SsoLoginTicketHandle> ticketHandles,
 						   SsoUserDetailsService<?> userService) {
@@ -113,40 +132,41 @@ public class SsoServerController {
 			put("copyright", ssoProperties.getCopyright());
 			put("icon", ssoProperties.getIcon());
 			put("socialAuths", ssoProperties.getAuthSource());
+			put("captchaEnabled", captchaProperties.isEnabled());
 		}}));
 
 		cfg.setDoLoginHandle((name, pwd) -> {
 			// 前置检查用于一些额外认证，如：验证码
-			if (!ticketHandles.isEmpty()) {
+			if (ObjectUtil.isNotEmpty(ticketHandles)) {
 				try {
 					for (SsoLoginTicketHandle handle : ticketHandles) {
 						handle.handle();
 					}
 				} catch (LoginException e) {
-					return SaResult.error(e.getMessage());
+					return Result.error(e.getMessage());
 				}
 			}
 
 			SsoUserDetails<?> user = userService.loadUserByUsername(name);
 			if (Objects.isNull(user)) {
 				log.debug("账号错误！");
-				return SaResult.error("账号或者密码错误！");
+				return Result.error("账号或者密码错误！");
 			} else if (user.isAccountNonExpired()) {
 				log.debug("账号已过期！");
 			} else if (user.isAccountNonLocked()) {
 				log.debug("账号已锁定！");
-				return SaResult.error("账号已锁定！");
+				return Result.error("账号已锁定！");
 			} else if (!user.isEnabled()) {
 				log.debug("账号已禁用！");
 			} else if (user.getPassword().equals(userService.encryptPassword(pwd))) {
 				StpUtil.login(user.getLoginId());
 				log.debug("登录成功！");
-				return SaResult.ok("登录成功！").setData(StpUtil.getTokenValue());
+				return Result.data(StpUtil.getTokenValue(), "登录成功！");
 			} else {
 				log.debug("密码错误！");
-				return SaResult.error("账号或者密码错误！");
+				return Result.error("账号或者密码错误！");
 			}
-			return SaResult.error("登录失败！");
+			return Result.error("登录失败！");
 		});
 	}
 
@@ -157,6 +177,21 @@ public class SsoServerController {
 
 	private String redirectKey(String state) {
 		return "redirect:" + state;
+	}
+
+	private ICaptcha createCaptcha() {
+		int width = 200, height = 100, codeCount = captchaProperties.getCodeCount();
+		switch (captchaProperties.getType()) {
+			case LINE:
+				return CaptchaUtil.createLineCaptcha(width, height, codeCount, captchaProperties.getLineCount());
+			case SHEAR:
+				return CaptchaUtil.createShearCaptcha(width, height, codeCount, captchaProperties.getThickness());
+			case CIRCLE:
+				return CaptchaUtil.createCircleCaptcha(width, height, codeCount, captchaProperties.getCircleCount());
+			case GIF:
+			default:
+				return CaptchaUtil.createGifCaptcha(width, height, codeCount);
+		}
 	}
 
 }

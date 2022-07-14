@@ -17,13 +17,13 @@ package pub.ihub.sso.resource;
 
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.id.SaIdUtil;
-import cn.dev33.satoken.util.SaResult;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import pub.ihub.cloud.rest.Result;
 
 /**
  * @author liheng
@@ -39,7 +39,7 @@ public class SsoResourceAutoConfiguration {
 	public SaServletFilter getSaServletFilter() {
 		return new SaServletFilter().addInclude("/**")
 			.setAuth(obj -> SaIdUtil.checkCurrentRequestToken())
-			.setError(e -> SaResult.error(e.getMessage()));
+			.setError(e -> Result.error(e.getMessage()));
 	}
 
 }

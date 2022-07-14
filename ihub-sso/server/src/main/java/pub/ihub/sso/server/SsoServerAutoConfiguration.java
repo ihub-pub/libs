@@ -16,15 +16,13 @@
 package pub.ihub.sso.server;
 
 import cn.dev33.satoken.context.SaHolder;
-import com.anji.captcha.model.common.ResponseModel;
-import com.anji.captcha.model.vo.CaptchaVO;
-import com.anji.captcha.service.CaptchaCacheService;
-import com.anji.captcha.service.CaptchaService;
+import cn.hutool.captcha.ICaptcha;
 import me.zhyd.oauth.cache.AuthCacheConfig;
 import me.zhyd.oauth.cache.AuthStateCache;
 import me.zhyd.oauth.model.AuthUser;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -33,6 +31,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
 import javax.security.auth.login.FailedLoginException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
@@ -40,7 +39,7 @@ import java.util.stream.Stream;
  * @author liheng
  */
 @Configuration
-@EnableConfigurationProperties(SsoServerProperties.class)
+@EnableConfigurationProperties({SsoServerProperties.class, SsoCaptchaProperties.class})
 @ComponentScan("pub.ihub.sso.server")
 public class SsoServerAutoConfiguration {
 
@@ -120,63 +119,20 @@ public class SsoServerAutoConfiguration {
 	}
 
 	/**
-	 * 验证码缓存服务
-	 *
-	 * @param stringRedisTemplate redisTemplate
-	 * @return 验证码缓存服务
-	 */
-	@Bean
-	@ConditionalOnMissingBean
-	@ConditionalOnBean(StringRedisTemplate.class)
-	CaptchaCacheService captchaCacheService(StringRedisTemplate stringRedisTemplate) {
-		return new CaptchaCacheService() {
-			@Override
-			public void set(String key, String value, long expiresInSeconds) {
-				stringRedisTemplate.opsForValue().set(key, value, expiresInSeconds, TimeUnit.SECONDS);
-			}
-
-			@Override
-			public boolean exists(String key) {
-				return Boolean.TRUE.equals(stringRedisTemplate.hasKey(key));
-			}
-
-			@Override
-			public void delete(String key) {
-				stringRedisTemplate.delete(key);
-			}
-
-			@Override
-			public String get(String key) {
-				return stringRedisTemplate.opsForValue().get(key);
-			}
-
-			@Override
-			public Long increment(String key, long val) {
-				return stringRedisTemplate.opsForValue().increment(key, val);
-			}
-
-			@Override
-			public String type() {
-				return "redis";
-			}
-		};
-	}
-
-	/**
 	 * 登录验证码检查处理器
 	 *
-	 * @param captchaService 验证码服务
 	 * @return 检查处理器
 	 */
 	@Bean
-	@ConditionalOnBean(CaptchaService.class)
-	SsoLoginTicketHandle captchaVerificationHandle(CaptchaService captchaService) {
+	@ConditionalOnProperty(value = "ihub.sso.captcha.enabled", matchIfMissing = true)
+	SsoLoginTicketHandle captchaVerificationHandle() {
 		return () -> {
-			CaptchaVO captchaVO = new CaptchaVO();
-			captchaVO.setCaptchaVerification(SaHolder.getRequest().getParam("captchaVerification"));
-			ResponseModel response = captchaService.verification(captchaVO);
-			if (!response.isSuccess()) {
-				throw new FailedLoginException(response.getRepMsg());
+			var session = ((HttpServletRequest) SaHolder.getRequest().getSource()).getSession();
+			var captcha = session.getAttribute("captcha");
+			var captchaCode = SaHolder.getRequest().getParam("captcha");
+			session.removeAttribute("captcha");
+			if (null == captcha || !((ICaptcha) captcha).verify(captchaCode)) {
+				throw new FailedLoginException("验证码错误！");
 			}
 		};
 	}

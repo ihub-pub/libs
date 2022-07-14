@@ -7,22 +7,3 @@ sa-token:
     allow-url: "*"
     # 是否打开单点注销功能
     is-slo: true
-
-# 验证码配置
-aj:
-  captcha:
-    cache-type: local
-    type: default
-    water-mark: ihub.pub
-    slip-offset: 5
-    aes-status: true
-    interference-options: 2
-    font-style: 1
-    font-size: 25
-    history-data-clear-enable: false
-    req-frequency-limit-enable: false
-    req-get-lock-limit: 5
-    req-get-lock-seconds: 360
-    req-get-minute-limit: 30
-    req-check-minute-limit: 30
-    jigsaw: classpath:static/anji-plus/images/jigsaw

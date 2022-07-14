@@ -27,6 +27,11 @@ body{font-family: Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;}
 .s-input{font-size: 12px;}
 .s-input:focus{border-color: #409eff}
 
+/* 验证码 */
+.from-captcha{align-items: center;display: flex;}
+.s-input[name="captcha"]{width: 70%;}
+.s-captcha{height: 32px; width: auto; padding-left: 10px;}
+
 /* 登录按钮 */
 .s-btn{ text-indent: 0; cursor: pointer; background-color: #409EFF; border-color: #409EFF; color: #FFF;}
 .s-btn:hover{background-color: #50aEFF;}

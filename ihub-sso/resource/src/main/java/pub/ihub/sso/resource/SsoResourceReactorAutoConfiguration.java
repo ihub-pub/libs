@@ -18,13 +18,13 @@ package pub.ihub.sso.resource;
 import cn.dev33.satoken.reactor.filter.SaReactorFilter;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaResult;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.ConditionalOnReactiveDiscoveryEnabled;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import pub.ihub.cloud.rest.Result;
 
 /**
  * @author liheng
@@ -54,7 +54,7 @@ public class SsoResourceReactorAutoConfiguration {
 				SaRouter.match("/goods/**", r -> StpUtil.checkPermission("goods"));
 				SaRouter.match("/orders/**", r -> StpUtil.checkPermission("orders"));
 			})
-			.setError(e -> SaResult.error(e.getMessage()));
+			.setError(e -> Result.error(e.getMessage()));
 	}
 
 }

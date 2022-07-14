@@ -3,7 +3,7 @@ dependencies {
 
     // TODO 全局能力未生效
     implementation 'org.springframework.boot:spring-boot-starter-web'
-//    implementation 'cn.dev33:sa-token-spring-boot-starter'
+    implementation 'cn.dev33:sa-token-spring-boot-starter'
 }
 
 configurations {

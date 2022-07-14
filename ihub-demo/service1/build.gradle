@@ -2,4 +2,7 @@ dependencies {
     implementation project(':ihub-sso:ihub-sso-client-spring-boot-starter')
 
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    // TODO 全局能力未生效
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'cn.dev33:sa-token-spring-boot-starter'
 }
