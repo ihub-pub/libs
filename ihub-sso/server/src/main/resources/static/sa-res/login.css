@@ -6,7 +6,7 @@ body{font-family: Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;}
 .view-box{position: relative; width: 100vw; height: 100vh; overflow: hidden;}
 
 /* 背景 */
-.bg{height: 100%; background: url("https://www.coolku.cc/api/bing/mo.php"); background-size: 100% 100%;}
+.bg{height: 100%; background: url("https://bing.img.run/1920x1080.php"); background-size: 100% 100%;}
 
 /* 内容盒子 */
 .content-box{position: absolute; width: 100vw; height: 100vh; top: 0px;}

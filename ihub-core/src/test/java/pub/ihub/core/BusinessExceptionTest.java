@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Henry 李恒 (henry.box@outlook.com).
+ * Copyright (c) 2022 Henry 李恒 (henry.box@outlook.com).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.test;
+package pub.ihub.core;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-/**
- * @author henry
- */
-@DisplayName("FT测试模块组件测试")
-@IHubFTConfig
-class IHubTestConfigurationTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-	@DisplayName("测试模块组件")
+/**
+ * @author liheng
+ */
+@DisplayName("通用业务异常测试")
+class BusinessExceptionTest {
+
+	@DisplayName("异常构造方法测试")
 	@Test
-	void test() {
+	void builder() {
+		assertEquals("message", new BusinessException("message").getMessage());
+		assertEquals("message", new BusinessException("message", new RuntimeException()).getMessage());
+		assertEquals("java.lang.RuntimeException", new BusinessException(new RuntimeException()).getMessage());
 	}
 
 }

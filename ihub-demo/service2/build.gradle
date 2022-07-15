@@ -1,4 +1,5 @@
 dependencies {
+//    implementation project(':ihub-boot-cloud-spring-boot-starter')
     implementation project(':ihub-sso:ihub-sso-resource-spring-boot-starter')
 
     // TODO 全局能力未生效
@@ -6,15 +7,14 @@ dependencies {
     implementation 'cn.dev33:sa-token-spring-boot-starter'
 }
 
-configurations {
-    apiElements {
-        outgoing {
-            capability 'pub.ihub.lib:servlet-support:' + version
-        }
-    }
-    runtimeElements {
-        outgoing {
-            capability 'pub.ihub.lib:servlet-support:' + version
-        }
-    }
-}
+//configurations {
+//    all {
+//        incoming.beforeResolve {
+//            dependencies.find { it.name == 'ihub-sso-resource-spring-boot-starter' }?.with { dep ->
+//                dep.capabilities {
+//                    it.requireCapability "${dep.group}:servlet-support"
+//                }
+//            }
+//        }
+//    }
+//}
