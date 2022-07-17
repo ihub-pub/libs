@@ -1,5 +1,0 @@
-description = '授权服务'
-
-dependencies {
-    implementation project(':ihub-sso:ihub-sso-server-spring-boot-starter')
-}

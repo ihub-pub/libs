@@ -1,4 +1,0 @@
-ihub:
-  cloud:
-    name: sso-resource
-    port: 9003

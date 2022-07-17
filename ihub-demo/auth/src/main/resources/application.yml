@@ -1,4 +1,0 @@
-ihub:
-  cloud:
-    name: ihub-auth
-    port: 9527

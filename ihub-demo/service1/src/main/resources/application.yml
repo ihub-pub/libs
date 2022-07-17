@@ -1,4 +1,0 @@
-ihub:
-  cloud:
-    name: sso-client
-    port: 9002

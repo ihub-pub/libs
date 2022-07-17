@@ -36,8 +36,8 @@ import java.util.stream.Collectors;
 
 import static cn.hutool.core.util.ObjectUtil.defaultIfBlank;
 import static java.util.Locale.getDefault;
-import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
+import static pub.ihub.cloud.advice.DataValidationAdvice.ORDER;
 import static pub.ihub.cloud.rest.ResultCode.CONSTRAINT_VIOLATION_ERROR;
 import static pub.ihub.cloud.rest.ResultCode.DATA_VALIDATION_ERROR;
 
@@ -49,10 +49,15 @@ import static pub.ihub.cloud.rest.ResultCode.DATA_VALIDATION_ERROR;
 @RequiredArgsConstructor
 @Slf4j
 @RestControllerAdvice
-@Order(HIGHEST_PRECEDENCE)
+@Order(ORDER)
 @ResponseBody
 @ResponseStatus(UNPROCESSABLE_ENTITY)
 public class DataValidationAdvice {
+
+	/**
+	 * 默认顺序
+	 */
+	public static final int ORDER = ClientAdvice.ORDER - 1;
 
 	@Qualifier("validationMessageSource")
 	private final MessageSource validationMessageSource;

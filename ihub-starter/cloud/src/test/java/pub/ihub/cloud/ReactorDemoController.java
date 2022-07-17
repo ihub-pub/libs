@@ -15,19 +15,25 @@
  */
 package pub.ihub.cloud;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 
 /**
  * @author liheng
  */
 @RestController
 @RequestMapping("/reactor")
+@Validated
 public class ReactorDemoController {
 
 	@RequestMapping("/demo")
@@ -35,18 +41,20 @@ public class ReactorDemoController {
 		return "reactor demo";
 	}
 
-	@RequestMapping("/hello1")
-	public Mono<Map<String, String>> hello1(@RequestParam("text") String text) {
-		return Mono.just(new HashMap<>(1) {{
-			put("text", "Hello " + text);
-		}});
+	@RequestMapping("/client")
+	public Mono<Integer> client(@RequestBody @Valid ReqBody body) {
+		return Mono.just(body.data);
 	}
 
-	@RequestMapping("/hello2")
-	public Map<String, String> hello2(@RequestParam("text") String text) {
-		return new HashMap<>(1) {{
-			put("text", "Hello " + text);
-		}};
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class ReqBody {
+
+		@NotEmpty
+		@Positive
+		private Integer data;
+
 	}
 
 }

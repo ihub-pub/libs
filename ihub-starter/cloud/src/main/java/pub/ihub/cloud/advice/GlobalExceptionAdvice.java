@@ -16,6 +16,7 @@
 package pub.ihub.cloud.advice;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,6 +27,7 @@ import pub.ihub.core.BusinessException;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.OK;
+import static pub.ihub.cloud.advice.GlobalExceptionAdvice.ORDER;
 
 /**
  * 全局异常处理
@@ -34,9 +36,14 @@ import static org.springframework.http.HttpStatus.OK;
  */
 @Slf4j
 @ControllerAdvice
-@Order
+@Order(ORDER)
 @ResponseBody
 public class GlobalExceptionAdvice {
+
+	/**
+	 * 默认顺序
+	 */
+	public static final int ORDER = Ordered.HIGHEST_PRECEDENCE + 10;
 
 	@ExceptionHandler(BusinessException.class)
 	@ResponseStatus(OK)

@@ -24,14 +24,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ServerWebInputException;
-import pub.ihub.cloud.rest.Result;
 import pub.ihub.cloud.exception.NotFoundException;
+import pub.ihub.cloud.rest.Result;
 
 import java.util.NoSuchElementException;
 
-import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static pub.ihub.cloud.advice.ClientAdvice.ORDER;
 import static pub.ihub.cloud.rest.ResultCode.CLIENT_ERROR;
 import static pub.ihub.cloud.rest.ResultCode.INVALID_FORMAT_ERROR;
 import static pub.ihub.cloud.rest.ResultCode.NOT_FOUND_ERROR;
@@ -43,9 +43,14 @@ import static pub.ihub.cloud.rest.ResultCode.NOT_FOUND_ERROR;
  */
 @Slf4j
 @RestControllerAdvice
-@Order(HIGHEST_PRECEDENCE)
+@Order(ORDER)
 @ResponseBody
 public class ClientAdvice {
+
+	/**
+	 * 默认顺序
+	 */
+	public static final int ORDER = GlobalExceptionAdvice.ORDER - 1;
 
 	/**
 	 * 捕获无相应资源异常

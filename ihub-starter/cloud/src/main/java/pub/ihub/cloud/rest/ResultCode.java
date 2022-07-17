@@ -18,6 +18,8 @@ package pub.ihub.cloud.rest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
+
 /**
  * 标准响应编码
  *
@@ -68,5 +70,9 @@ public enum ResultCode implements IResultCode {
 	 * 响应信息
 	 */
 	private final String message;
+
+	static ResultCode of(int code) {
+		return Arrays.stream(values()).filter(resultCode -> resultCode.code == code).findFirst().orElse(null);
+	}
 
 }

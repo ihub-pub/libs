@@ -25,7 +25,15 @@ import java.util.Map;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
+import static pub.ihub.cloud.rest.IResultCode.Series.SUCCESS_SERIES;
+import static pub.ihub.cloud.rest.ResultCode.NOT_FOUND_ERROR;
 
 /**
  * 统一响应结果
@@ -100,8 +108,28 @@ public class Result<T> implements Serializable {
 	}
 
 	public HttpStatus httpStatus() {
-		// TODO 映射状态码
-		return OK;
+		if (ResultCode.of(code) == NOT_FOUND_ERROR) {
+			return NOT_FOUND;
+		}
+
+		// 映射状态码
+		IResultCode.Series series = IResultCode.Series.resolve(code);
+		switch (series != null ? series : SUCCESS_SERIES) {
+			case DATA_VALIDATION_SERIES:
+				return UNPROCESSABLE_ENTITY;
+			case AUTHENTICATION_SERIES:
+				return UNAUTHORIZED;
+			case AUTHORIZATION_SERIES:
+				return FORBIDDEN;
+			case CLIENT_SERIES:
+				return BAD_REQUEST;
+			case SERVER_SERIES:
+				return INTERNAL_SERVER_ERROR;
+			case SUCCESS_SERIES:
+			case BUSINESS_SERIES:
+			default:
+				return OK;
+		}
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="构建方法">
@@ -119,11 +147,11 @@ public class Result<T> implements Serializable {
 	}
 
 	public static <T> Result<T> code(IResultCode code, String message) {
-		return code(code.getCode(), message);
+		return new Result<>(code, message);
 	}
 
 	public static <T> Result<T> code(int code, String message) {
-		return new Result<>(code, null, message);
+		return data(code, null, message);
 	}
 
 	public static <T> Result<T> data(T data) {
