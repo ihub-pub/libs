@@ -1,0 +1,14 @@
+description = 'SSO模块授权服务端组件'
+
+dependencies {
+    runtimeOnly 'cn.dev33:sa-token-spring-boot-starter'
+
+    // 第三方登录组件
+    implementation  'me.zhyd.oauth:JustAuth'
+
+    // 前端页面静态资源
+    implementation  'org.springframework.boot:spring-boot-starter-thymeleaf',
+                    'org.webjars:layui:2.6.8',
+                    'org.webjars:jquery:3.6.0',
+                    'org.webjars.npm:crypto-js:4.1.1'
+}

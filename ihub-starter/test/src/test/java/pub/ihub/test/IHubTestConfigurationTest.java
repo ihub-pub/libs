@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 /**
  * @author henry
  */
-@DisplayName("测试模块组件测试")
+@DisplayName("FT测试模块组件测试")
 @IHubFTConfig
 class IHubTestConfigurationTest {
 
