@@ -70,6 +70,7 @@ dependencies {
     // 导入bom配置（优先级由上至下）
     api platform(project(':ihub-bom')),
 //        platform('pub.ihub.keel:ihub-bom:main-SNAPSHOT'), TODO
+        platform('org.apache.groovy:groovy-bom:4.0.3'),
         platform('org.jmolecules:jmolecules-bom:2021.2.3'),
         platform('io.github.openfeign:feign-bom:11.8'),
         platform('io.sentry:sentry-bom:5.7.4'),
@@ -97,7 +98,8 @@ dependencies {
             'com.baomidou:mybatis-plus-extension:3.5.1',
             'com.baomidou:mybatis-plus-boot-starter:3.5.1',
             'com.baomidou:mybatis-plus-generator:3.5.2',
-            'org.codehaus.groovy:groovy-all:3.0.10',
+            'org.apache.groovy:groovy-all:4.0.3',
+            'org.codehaus.groovy:groovy-all:3.0.11',
             'com.athaydes:spock-reports:2.3.0-groovy-3.0',
             'cn.hutool:hutool-all:5.8.4',
             'io.swagger.core.v3:swagger-annotations:2.2.0',
