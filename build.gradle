@@ -95,7 +95,7 @@ dependencies {
             'com.baomidou:mybatis-plus-annotation:3.5.1',
             'com.baomidou:mybatis-plus-core:3.5.1',
             'com.baomidou:mybatis-plus:3.5.1',
-            'com.baomidou:mybatis-plus-extension:3.5.1',
+            'com.baomidou:mybatis-plus-extension:3.5.2',
             'com.baomidou:mybatis-plus-boot-starter:3.5.1',
             'com.baomidou:mybatis-plus-generator:3.5.2',
             'org.apache.groovy:groovy-all:4.0.3',
