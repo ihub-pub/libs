@@ -85,7 +85,7 @@ dependencies {
         platform('com.google.guava:guava-bom:31.1-jre'),
         platform('com.google.inject:guice-bom:5.1.0'),
         platform('org.springframework.boot:spring-boot-dependencies:2.7.1'),
-        platform('org.springdoc:springdoc-openapi:1.6.8'),
+        platform('org.springdoc:springdoc-openapi:1.6.9'),
         platform('org.apache.kylin:kylin:4.0.1')
     // 配置组件版本
     constraints {
@@ -114,7 +114,7 @@ dependencies {
 
         // spring-boot-dependencies维护的bytebuddy版本为1.11，与mockito版本4.5不兼容
         api 'net.bytebuddy:byte-buddy:1.12.10',
-            'net.bytebuddy:byte-buddy-agent:1.12.10'
+            'net.bytebuddy:byte-buddy-agent:1.12.12'
     }
 }
 
