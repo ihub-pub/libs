@@ -24,7 +24,8 @@ $('.login-btn').click(function(){
 		layer.msg("密码不能为空", {anim: 6, icon: 2 });
 		return false
 	}
-	if ($('[name=captcha]').length > 0 && $('[name=captcha]').val() === '') {
+    const captcha = $('[name=captcha]')
+	if (captcha.length > 0 && captcha.val() === '') {
 		layer.msg("验证码不能为空", {anim: 6, icon: 2 });
 		return false
 	}
@@ -42,7 +43,7 @@ $('.login-btn').click(function(){
 			dataType: 'json',
 			success: function(res){
 				sa.hideLoading();
-				if(res.code == 0) {
+				if(res.code === 0) {
 					layer.msg('登录成功', {anim: 0, icon: 6 });
 					setTimeout(function() {
 						location.reload();
@@ -55,7 +56,7 @@ $('.login-btn').click(function(){
 			error: function(xhr, type, errorThrown){
 				sa.hideLoading();
 				$('.s-captcha').click();
-				if(xhr.status == 0){
+				if(xhr.status === 0){
 					return layer.alert('无法连接到服务器，请检查网络');
 				}
 				return layer.alert("异常：" + JSON.stringify(xhr));
@@ -66,7 +67,7 @@ $('.login-btn').click(function(){
 
 // 绑定回车事件
 $('[name=name],[name=pwd],[name=captcha]').bind('keypress', function(event){
-	if(event.keyCode == "13") {
+	if(event.keyCode === "13") {
 		$('.login-btn').click();
 	}
 });

@@ -13,8 +13,7 @@ body{font-family: Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;}
 
 /* 登录盒子 */
 /* .login-box{width: 400px; height: 400px; position: absolute; left: calc(50% - 200px); top: calc(50% - 200px); max-width: 90%; } */
-.login-box{width: 400px; margin: auto; max-width: 90%; height: 100%;}
-.login-box{display: flex; align-items: center; text-align: center;}
+.login-box{width: 400px; margin: auto; max-width: 90%; height: 100%; display: flex; align-items: center; text-align: center;}
 
 /* 表单 */
 .from-box{flex: 1; padding: 20px 50px; background-color: #FFF;}
@@ -22,9 +21,8 @@ body{font-family: Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;}
 .from-title{margin-top: 20px; margin-bottom: 30px; text-align: center;}
 
 /* 输入框 */
-.from-item{border: 0px #000 solid; margin-bottom: 15px;}
-.s-input{width: 100%; line-height: 32px; height: 32px; text-indent: 1em; outline: 0; border: 1px #ccc solid; border-radius: 3px; transition: all 0.2s;}
-.s-input{font-size: 12px;}
+.from-item{border: 0 #000 solid; margin-bottom: 15px;}
+.s-input{width: 100%; line-height: 32px; height: 32px; text-indent: 1em; outline: 0; border: 1px #ccc solid; border-radius: 3px; transition: all 0.2s; font-size: 12px;}
 .s-input:focus{border-color: #409eff}
 
 /* 验证码 */
