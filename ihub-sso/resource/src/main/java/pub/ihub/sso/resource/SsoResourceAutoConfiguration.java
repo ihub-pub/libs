@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Henry 李恒 (henry.box@outlook.com).
+ * Copyright (c) 2022 Henry 李恒 (henry.box@outlook.com).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,25 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.cloud;
+package pub.ihub.sso.resource;
 
+import cn.dev33.satoken.filter.SaServletFilter;
+import cn.dev33.satoken.id.SaIdUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import pub.ihub.cloud.rest.Result;
 
 /**
- * 服务自动配置
- *
  * @author liheng
  */
 @Configuration
-@ComponentScan("pub.ihub.cloud.advice")
-@EnableConfigurationProperties(CloudProperties.class)
+@EnableConfigurationProperties(SsoResourceProperties.class)
 @ConditionalOnDiscoveryEnabled
-@ConditionalOnClass(EnableWebMvc.class)
-public class CloudAutoConfiguration {
+@ConditionalOnClass(SaServletFilter.class)
+public class SsoResourceAutoConfiguration {
+
+	@Bean
+	@ConditionalOnMissingBean
+	public SaServletFilter getSaServletFilter() {
+		return new SaServletFilter().addInclude("/**")
+			.setAuth(obj -> SaIdUtil.checkCurrentRequestToken())
+			.setError(e -> Result.error(e.getMessage()));
+	}
 
 }

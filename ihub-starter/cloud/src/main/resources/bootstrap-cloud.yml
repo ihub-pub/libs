@@ -9,15 +9,15 @@ spring:
         prefix: ${spring.application.name}
         file-extension: yaml
         group: ${ihub.cloud.group:ihub}
-        server-addr: ${ihub.cloud.config-server-addr:localhost:8848}
+        server-addr: ${ihub.cloud.config-server-addr:http://localhost:8848}
         namespace: ${ihub.cloud.namespace:public}
       discovery:
         group: ${ihub.cloud.group:ihub}
-        server-addr: ${ihub.cloud.discovery-server-addr:localhost:8848}
+        server-addr: ${ihub.cloud.discovery-server-addr:http://localhost:8848}
         namespace: ${ihub.cloud.namespace:public}
     sentinel:
       transport:
-        dashboard: ${ihub.cloud.sentinel-dashboard-addr:localhost:8858}
+        dashboard: ${ihub.cloud.sentinel-dashboard-addr:http://localhost:8858}
       log:
         dir: ${ihub.cloud.sentinel-log-dir:./logs/csp}
     # TODO SpringBoot2.6.0需要暂时关闭此项
@@ -31,8 +31,8 @@ spring:
     allow-circular-references: true
 ihub:
   cloud:
-    gateway-server-addr: localhost
-    auth-server-addr: localhost:9527
+    gateway-server-addr: http://localhost
+    auth-server-addr: http://localhost:9527
 management.endpoints.web.exposure.include: "*"
 logging:
   level:

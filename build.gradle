@@ -18,7 +18,7 @@ plugins {
 }
 
 subprojects {
-    if (project.name == 'ihub-bom') {
+    if (project in [project(':ihub-bom'), project(':ihub-sso')]) {
         return
     }
     apply {
@@ -35,7 +35,7 @@ subprojects {
             annotationProcessor it
             testAnnotationProcessor it
         }
-        if (project.name != 'ihub-core') {
+        if (project != project(':ihub-core')) {
             api project(':ihub-core')
         }
         if (project.name.endsWith('-spring-boot-starter')) {
@@ -105,7 +105,11 @@ dependencies {
             'com.google.auto.service:auto-service:1.0.1',
             'org.mapstruct:mapstruct:1.4.2.Final',
             'org.mapstruct:mapstruct-processor:1.4.2.Final',
-            'org.springframework.security:spring-security-oauth2-authorization-server:0.2.2'
+            'cn.dev33:sa-token-sso:1.30.0',
+            'cn.dev33:sa-token-dao-redis-jackson:1.30.0',
+            'cn.dev33:sa-token-spring-boot-starter:1.30.0',
+            'cn.dev33:sa-token-reactor-spring-boot-starter:1.30.0',
+            'me.zhyd.oauth:JustAuth:1.16.5'
 
         // spring-boot-dependencies维护的bytebuddy版本为1.11，与mockito版本4.5不兼容
         api 'net.bytebuddy:byte-buddy:1.12.10',

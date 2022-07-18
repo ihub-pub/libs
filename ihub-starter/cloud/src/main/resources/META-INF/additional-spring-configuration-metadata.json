@@ -33,31 +33,31 @@
     {
       "name": "ihub.cloud.config-server-addr",
       "type": "java.lang.String",
-      "defaultValue": "localhost:8848",
+      "defaultValue": "http://localhost:8848",
       "description": "配置中心地址."
     },
     {
       "name": "ihub.cloud.discovery-server-addr",
       "type": "java.lang.String",
-      "defaultValue": "localhost:8848",
+      "defaultValue": "http://localhost:8848",
       "description": "注册中心地址."
     },
     {
       "name": "ihub.cloud.sentinel-dashboard-addr",
       "type": "java.lang.String",
-      "defaultValue": "localhost:8858",
+      "defaultValue": "http://localhost:8858",
       "description": "监控服务地址."
     },
     {
       "name": "ihub.cloud.gateway-server-addr",
       "type": "java.lang.String",
-      "defaultValue": "localhost",
+      "defaultValue": "http://localhost",
       "description": "网关服务地址."
     },
     {
       "name": "ihub.cloud.auth-server-addr",
       "type": "java.lang.String",
-      "defaultValue": "localhost:9527",
+      "defaultValue": "http://localhost:9527",
       "description": "授权服务地址(该地址不能与其他服务地址相同)."
     }
   ]

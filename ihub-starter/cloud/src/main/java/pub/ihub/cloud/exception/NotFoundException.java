@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Henry 李恒 (henry.box@outlook.com).
+ * Copyright (c) 2022 Henry 李恒 (henry.box@outlook.com).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id 'pub.ihub.plugin.ihub-settings' version '1.2.8'
-}
+package pub.ihub.cloud.exception;
 
-iHubSettings {
-    includeProjects 'ihub-core', 'ihub-process' prefix '' subproject
-    includeProjects 'ihub-starter' prefix 'ihub-boot-' suffix '-spring-boot-starter' onlySubproject
-    includeProjects 'ihub-sso' prefix '' subproject '-spring-boot-starter'
+import pub.ihub.core.BusinessException;
+
+/**
+ * 无相应资源异常
+ *
+ * @author liheng
+ */
+public class NotFoundException extends BusinessException {
+
+	public NotFoundException(String message) {
+		super(message);
+	}
+
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Henry 李恒 (henry.box@outlook.com).
+ * Copyright (c) 2022 Henry 李恒 (henry.box@outlook.com).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,10 @@
  */
 package pub.ihub.cloud;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
+import org.springframework.cloud.client.ConditionalOnReactiveDiscoveryEnabled;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
  * 服务自动配置
@@ -30,8 +28,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @ComponentScan("pub.ihub.cloud.advice")
 @EnableConfigurationProperties(CloudProperties.class)
-@ConditionalOnDiscoveryEnabled
-@ConditionalOnClass(EnableWebMvc.class)
-public class CloudAutoConfiguration {
+@ConditionalOnReactiveDiscoveryEnabled
+public class CloudReactorAutoConfiguration {
 
 }

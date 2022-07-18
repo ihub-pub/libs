@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Henry 李恒 (henry.box@outlook.com).
+ * Copyright (c) 2022 Henry 李恒 (henry.box@outlook.com).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id 'pub.ihub.plugin.ihub-settings' version '1.2.8'
-}
+package pub.ihub.sso.resource;
 
-iHubSettings {
-    includeProjects 'ihub-core', 'ihub-process' prefix '' subproject
-    includeProjects 'ihub-starter' prefix 'ihub-boot-' suffix '-spring-boot-starter' onlySubproject
-    includeProjects 'ihub-sso' prefix '' subproject '-spring-boot-starter'
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import static pub.ihub.core.Constant.PROPERTIES_PREFIX;
+
+/**
+ * SSO资源服务配置属性
+ *
+ * @author liheng
+ */
+@Data
+@ConfigurationProperties(PROPERTIES_PREFIX + ".sso")
+public class SsoResourceProperties {
+
 }

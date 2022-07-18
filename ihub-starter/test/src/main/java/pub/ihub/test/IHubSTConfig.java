@@ -15,6 +15,7 @@
  */
 package pub.ihub.test;
 
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -26,17 +27,18 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * IHub功能测试注解
+ * IHub系统测试注解
  *
  * @author henry
  */
 @SpringBootTest
+@AutoConfigureMockMvc
 @ContextConfiguration(
 	classes = IHubTestConfiguration.class,
 	initializers = ConfigDataApplicationContextInitializer.class
 )
 @Retention(RUNTIME)
 @Target(TYPE)
-public @interface IHubFTConfig {
+public @interface IHubSTConfig {
 
 }
