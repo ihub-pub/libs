@@ -26,7 +26,7 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * IHub测试注解
+ * IHub功能测试注解
  *
  * @author henry
  */
