@@ -104,7 +104,7 @@ dependencies {
             'io.swagger.core.v3:swagger-annotations:2.2.0',
             'com.google.auto.service:auto-service:1.0.1',
             'org.mapstruct:mapstruct:1.4.2.Final',
-            'org.mapstruct:mapstruct-processor:1.4.2.Final',
+            'org.mapstruct:mapstruct-processor:1.5.2.Final',
             'cn.dev33:sa-token-sso:1.30.0',
             'cn.dev33:sa-token-dao-redis-jackson:1.30.0',
             'cn.dev33:sa-token-spring-boot-starter:1.30.0',
