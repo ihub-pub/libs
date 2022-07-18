@@ -73,7 +73,7 @@ dependencies {
         platform('org.apache.groovy:groovy-bom:4.0.3'),
         platform('org.jmolecules:jmolecules-bom:2022.2.0'),
         platform('io.github.openfeign:feign-bom:11.9'),
-        platform('io.sentry:sentry-bom:5.7.4'),
+        platform('io.sentry:sentry-bom:6.2.1'),
         platform('cn.hutool:hutool-bom:5.8.4'),
         platform('org.mockito:mockito-bom:4.6.1'),
         platform('org.spockframework:spock-bom:2.1-groovy-3.0'),
