@@ -102,7 +102,7 @@ dependencies {
             'org.codehaus.groovy:groovy-all:3.0.11',
             'com.athaydes:spock-reports:2.3.0-groovy-3.0',
             'cn.hutool:hutool-all:5.8.4',
-            'io.swagger.core.v3:swagger-annotations:2.2.0',
+            'io.swagger.core.v3:swagger-annotations:2.2.1',
             'com.google.auto.service:auto-service:1.0.1',
             'org.mapstruct:mapstruct:1.5.2.Final',
             'org.mapstruct:mapstruct-processor:1.5.2.Final',
