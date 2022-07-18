@@ -97,7 +97,7 @@ dependencies {
             'com.baomidou:mybatis-plus:3.5.2',
             'com.baomidou:mybatis-plus-extension:3.5.2',
             'com.baomidou:mybatis-plus-boot-starter:3.5.2',
-            'com.baomidou:mybatis-plus-generator:3.5.2',
+            'com.baomidou:mybatis-plus-generator:3.5.3',
             'org.apache.groovy:groovy-all:4.0.3',
             'org.codehaus.groovy:groovy-all:3.0.11',
             'com.athaydes:spock-reports:2.3.0-groovy-3.0',
