@@ -75,7 +75,6 @@ dependencies {
         platform('io.sentry:sentry-bom:5.7.4'),
         platform('cn.hutool:hutool-bom:5.8.4'),
         platform('org.mockito:mockito-bom:4.6.1'),
-        platform('com.squareup.okhttp3:okhttp-bom:4.9.3'),
         platform('org.spockframework:spock-bom:2.1-groovy-3.0'),
         platform('org.springframework.statemachine:spring-statemachine-bom:3.2.0'),
         platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.2'),
@@ -84,7 +83,7 @@ dependencies {
         platform('net.dreamlu:mica-bom:2.7.1.1'),
         platform('com.google.guava:guava-bom:31.1-jre'),
         platform('com.google.inject:guice-bom:5.1.0'),
-        platform('org.springframework.boot:spring-boot-dependencies:2.6.7'),
+        platform('org.springframework.boot:spring-boot-dependencies:2.7.1'),
         platform('org.springdoc:springdoc-openapi:1.6.8'),
         platform('org.apache.kylin:kylin:4.0.1')
     // 配置组件版本
@@ -98,7 +97,7 @@ dependencies {
             'com.baomidou:mybatis-plus-extension:3.5.1',
             'com.baomidou:mybatis-plus-boot-starter:3.5.1',
             'com.baomidou:mybatis-plus-generator:3.5.2',
-            'org.codehaus.groovy:groovy-all:3.0.10',
+            'org.codehaus.groovy:groovy-all:3.0.11',
             'com.athaydes:spock-reports:2.3.0-groovy-3.0',
             'cn.hutool:hutool-all:5.8.4',
             'io.swagger.core.v3:swagger-annotations:2.2.0',
