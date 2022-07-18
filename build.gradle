@@ -72,7 +72,7 @@ dependencies {
 //        platform('pub.ihub.keel:ihub-bom:main-SNAPSHOT'), TODO
         platform('org.apache.groovy:groovy-bom:4.0.3'),
         platform('org.jmolecules:jmolecules-bom:2021.2.3'),
-        platform('io.github.openfeign:feign-bom:11.8'),
+        platform('io.github.openfeign:feign-bom:11.9'),
         platform('io.sentry:sentry-bom:5.7.4'),
         platform('cn.hutool:hutool-bom:5.8.4'),
         platform('org.mockito:mockito-bom:4.6.1'),
@@ -85,7 +85,7 @@ dependencies {
         platform('com.google.guava:guava-bom:31.1-jre'),
         platform('com.google.inject:guice-bom:5.1.0'),
         platform('org.springframework.boot:spring-boot-dependencies:2.7.1'),
-        platform('org.springdoc:springdoc-openapi:1.6.8'),
+        platform('org.springdoc:springdoc-openapi:1.6.9'),
         platform('org.apache.kylin:kylin:4.0.1')
     // 配置组件版本
     constraints {
