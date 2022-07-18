@@ -20,5 +20,5 @@ plugins {
 iHubSettings {
     includeProjects 'ihub-core', 'ihub-process' prefix '' subproject
     includeProjects 'ihub-starter' prefix 'ihub-boot-' suffix '-spring-boot-starter' onlySubproject
-//    includeProjects 'ihub-secure' prefix '' subproject '-spring-boot-starter'
+    includeProjects 'ihub-sso' prefix '' subproject '-spring-boot-starter'
 }

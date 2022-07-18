@@ -1,0 +1,11 @@
+description = 'SSO模块客户端组件'
+
+java {
+    registerFeature('client') {
+        usingSourceSet sourceSets.main
+    }
+}
+
+dependencies {
+    clientImplementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+}
