@@ -72,8 +72,6 @@ dependencies {
 //        platform('pub.ihub.keel:ihub-bom:main-SNAPSHOT'), TODO
         platform('org.apache.groovy:groovy-bom:4.0.3'),
         platform('org.jmolecules:jmolecules-bom:2022.2.0'),
-        platform('io.github.openfeign:feign-bom:11.9'),
-        platform('io.sentry:sentry-bom:5.7.4'),
         platform('cn.hutool:hutool-bom:5.8.4'),
         platform('org.mockito:mockito-bom:4.6.1'),
         platform('org.spockframework:spock-bom:2.1-groovy-3.0'),
@@ -111,10 +109,6 @@ dependencies {
             'cn.dev33:sa-token-spring-boot-starter:1.30.0',
             'cn.dev33:sa-token-reactor-spring-boot-starter:1.30.0',
             'me.zhyd.oauth:JustAuth:1.16.5'
-
-        // spring-boot-dependencies维护的bytebuddy版本为1.11，与mockito版本4.5不兼容
-        api 'net.bytebuddy:byte-buddy:1.12.10',
-            'net.bytebuddy:byte-buddy-agent:1.12.10'
     }
 }
 
