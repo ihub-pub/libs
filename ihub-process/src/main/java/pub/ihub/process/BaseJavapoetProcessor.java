@@ -15,11 +15,33 @@
  */
 package pub.ihub.process;
 
+import javax.tools.FileObject;
+import javax.tools.JavaFileManager;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.util.List;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 /**
  * 基础Javapoet注解处理器
  *
  * @author henry
  */
 public abstract class BaseJavapoetProcessor extends BaseProcessor {
+
+	protected void writeResource(JavaFileManager.Location location, String resourcePkg, List<String> lines) throws IOException {
+		FileObject resource = mFiler.createResource(location, "", resourcePkg);
+		try (OutputStream out = resource.openOutputStream()) {
+			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, UTF_8));
+			for (String line : lines) {
+				writer.write(line);
+				writer.newLine();
+			}
+			writer.flush();
+		}
+	}
 
 }
