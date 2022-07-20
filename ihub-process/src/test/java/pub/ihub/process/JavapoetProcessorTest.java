@@ -54,6 +54,16 @@ class JavapoetProcessorTest {
 			.containsMatch("line1[\\S\\s]*line2[\\S\\s]*line3");
 	}
 
+	@DisplayName("Javapoet注解处理测试-忽略")
+	@Test
+	void ignore() {
+		Compilation compilation =
+			Compiler.javac()
+				.withProcessors(new DemoJavapoetProcessor())
+				.compile(JavaFileObjects.forResource("test/IgnoreDemo.java"));
+		assertThat(compilation).succeededWithoutWarnings();
+	}
+
 	@SupportedSourceVersion(RELEASE_11)
 	@SupportedAnnotationTypes("java.lang.Deprecated")
 	static class DemoJavapoetProcessor extends BaseJavapoetProcessor {

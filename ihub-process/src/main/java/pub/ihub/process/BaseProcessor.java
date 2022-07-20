@@ -15,6 +15,8 @@
  */
 package pub.ihub.process;
 
+import pub.ihub.core.ProcessorIgnore;
+
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
@@ -65,7 +67,9 @@ public abstract class BaseProcessor extends AbstractProcessor {
 		try {
 			for (TypeElement typeElement : annotations) {
 				for (Element element : roundEnv.getElementsAnnotatedWith(typeElement)) {
-					processElement(element);
+					if (null == element.getAnnotation(ProcessorIgnore.class)) {
+						processElement(element);
+					}
 				}
 			}
 			if (roundEnv.processingOver()) {
