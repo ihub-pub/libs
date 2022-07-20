@@ -35,7 +35,6 @@ import java.util.Set;
 import static javax.lang.model.SourceVersion.RELEASE_11;
 import static javax.tools.StandardLocation.CLASS_OUTPUT;
 import static javax.tools.StandardLocation.SOURCE_OUTPUT;
-import static pub.ihub.process.boot.AutoConfigurationProcessor.AUTO_CONFIGURATION_ANNOTATION;
 
 /**
  * 自动配置处理器
@@ -44,11 +43,9 @@ import static pub.ihub.process.boot.AutoConfigurationProcessor.AUTO_CONFIGURATIO
  */
 @AutoService(Processor.class)
 @SupportedSourceVersion(RELEASE_11)
-@SupportedAnnotationTypes(AUTO_CONFIGURATION_ANNOTATION)
+@SupportedAnnotationTypes("org.springframework.boot.autoconfigure.AutoConfiguration")
 @IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.AGGREGATING)
 public class AutoConfigurationProcessor extends BaseJavapoetProcessor {
-
-	static final String AUTO_CONFIGURATION_ANNOTATION = "org.springframework.boot.autoconfigure.AutoConfiguration";
 
 	protected static final String IMPORTS_RESOURCE = "META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports";
 	protected final Set<String> imports = new HashSet<>();

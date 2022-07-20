@@ -17,6 +17,7 @@ package pub.ihub.sso.server;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import pub.ihub.core.ProcessorIgnore;
 
 import static pub.ihub.core.Constant.PROPERTIES_PREFIX;
 
@@ -27,6 +28,7 @@ import static pub.ihub.core.Constant.PROPERTIES_PREFIX;
  */
 @Data
 @ConfigurationProperties(PROPERTIES_PREFIX + ".sso.captcha")
+@ProcessorIgnore
 public class SsoCaptchaProperties {
 
 	/**
