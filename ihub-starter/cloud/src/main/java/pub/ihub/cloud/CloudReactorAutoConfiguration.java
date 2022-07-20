@@ -15,17 +15,17 @@
  */
 package pub.ihub.cloud;
 
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.ConditionalOnReactiveDiscoveryEnabled;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * 服务自动配置
  *
  * @author liheng
  */
-@Configuration
+@AutoConfiguration
 @ComponentScan("pub.ihub.cloud.advice")
 @EnableConfigurationProperties(CloudProperties.class)
 @ConditionalOnReactiveDiscoveryEnabled

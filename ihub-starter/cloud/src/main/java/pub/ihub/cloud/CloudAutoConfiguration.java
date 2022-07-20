@@ -15,11 +15,11 @@
  */
 package pub.ihub.cloud;
 
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
@@ -27,7 +27,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  *
  * @author liheng
  */
-@Configuration
+@AutoConfiguration
 @ComponentScan("pub.ihub.cloud.advice")
 @EnableConfigurationProperties(CloudProperties.class)
 @ConditionalOnDiscoveryEnabled

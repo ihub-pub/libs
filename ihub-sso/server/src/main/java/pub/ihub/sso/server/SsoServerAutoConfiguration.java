@@ -20,15 +20,16 @@ import cn.hutool.captcha.ICaptcha;
 import me.zhyd.oauth.cache.AuthCacheConfig;
 import me.zhyd.oauth.cache.AuthStateCache;
 import me.zhyd.oauth.model.AuthUser;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import pub.ihub.cloud.CloudAutoConfiguration;
 
 import javax.security.auth.login.FailedLoginException;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +39,7 @@ import java.util.stream.Stream;
 /**
  * @author liheng
  */
-@Configuration
+@AutoConfiguration(after = CloudAutoConfiguration.class)
 @EnableConfigurationProperties({SsoServerProperties.class, SsoCaptchaProperties.class})
 @ComponentScan("pub.ihub.sso.server")
 public class SsoServerAutoConfiguration {

@@ -17,18 +17,19 @@ package pub.ihub.sso.resource;
 
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.id.SaIdUtil;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import pub.ihub.cloud.CloudAutoConfiguration;
 import pub.ihub.cloud.rest.Result;
 
 /**
  * @author liheng
  */
-@Configuration
+@AutoConfiguration(after = CloudAutoConfiguration.class)
 @EnableConfigurationProperties(SsoResourceProperties.class)
 @ConditionalOnDiscoveryEnabled
 @ConditionalOnClass(SaServletFilter.class)

@@ -16,17 +16,17 @@
 package pub.ihub.doc;
 
 import io.swagger.v3.oas.models.OpenAPI;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * Swagger自动配置
  *
  * @author liheng
  */
-@Configuration
+@AutoConfiguration
 @ConditionalOnClass(OpenAPI.class)
 @EnableConfigurationProperties(DocProperties.class)
 public class DocAutoConfiguration {
