@@ -18,12 +18,13 @@ package pub.ihub.sso.client;
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.sso.SaSsoHandle;
 import cn.hutool.core.builder.GenericBuilder;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import pub.ihub.cloud.CloudAutoConfiguration;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -33,7 +34,7 @@ import javax.servlet.ServletResponse;
 /**
  * @author liheng
  */
-@Configuration
+@AutoConfiguration(after = CloudAutoConfiguration.class)
 @EnableConfigurationProperties(SsoClientProperties.class)
 @ConditionalOnDiscoveryEnabled
 @ConditionalOnClass(SaServletFilter.class)

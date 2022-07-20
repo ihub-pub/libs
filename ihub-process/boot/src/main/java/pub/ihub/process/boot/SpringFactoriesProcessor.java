@@ -27,12 +27,7 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
-import javax.tools.FileObject;
-import javax.tools.JavaFileManager;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,13 +38,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static javax.lang.model.SourceVersion.RELEASE_11;
 import static javax.tools.StandardLocation.CLASS_OUTPUT;
 import static javax.tools.StandardLocation.SOURCE_OUTPUT;
-import static javax.tools.StandardLocation.SOURCE_PATH;
 import static pub.ihub.process.boot.SpringFactoriesProcessor.AUTO_CONFIG_POST_PROCESSOR_ANNOTATION;
-import static pub.ihub.process.boot.SpringFactoriesProcessor.CONFIGURATION_ANNOTATION;
 
 /**
  * spring.factories配置处理器
@@ -58,11 +50,10 @@ import static pub.ihub.process.boot.SpringFactoriesProcessor.CONFIGURATION_ANNOT
  */
 @AutoService(Processor.class)
 @SupportedSourceVersion(RELEASE_11)
-@SupportedAnnotationTypes({CONFIGURATION_ANNOTATION, AUTO_CONFIG_POST_PROCESSOR_ANNOTATION})
+@SupportedAnnotationTypes({AUTO_CONFIG_POST_PROCESSOR_ANNOTATION})
 @IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.AGGREGATING)
 public class SpringFactoriesProcessor extends BaseJavapoetProcessor {
 
-	static final String CONFIGURATION_ANNOTATION = "org.springframework.context.annotation.Configuration";
 	static final String AUTO_CONFIG_POST_PROCESSOR_ANNOTATION = "pub.ihub.core.AutoConfigPostProcessor";
 
 	protected static final String FACTORIES_RESOURCE = "META-INF/spring.factories";
@@ -95,30 +86,14 @@ public class SpringFactoriesProcessor extends BaseJavapoetProcessor {
 			lines.add(k + "=\\");
 			lines.add(String.join(",\\\n", v));
 		});
-		writeFactoriesResource(CLASS_OUTPUT, lines);
+		writeResource(CLASS_OUTPUT, FACTORIES_RESOURCE, lines);
 		// annotationProcessor也保存一份便于代码阅读
-		writeFactoriesResource(SOURCE_OUTPUT, lines);
-	}
-
-	private void writeFactoriesResource(JavaFileManager.Location location, List<String> lines) throws IOException {
-		FileObject resource = mFiler.createResource(location, "", FACTORIES_RESOURCE);
-		try (OutputStream out = resource.openOutputStream()) {
-			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, UTF_8));
-			for (String line : lines) {
-				writer.write(line);
-				writer.newLine();
-			}
-			writer.flush();
-		}
+		writeResource(SOURCE_OUTPUT, FACTORIES_RESOURCE, lines);
 	}
 
 	@Getter
 	private enum SpringFactoriesAnnotation {
 
-		/**
-		 * 自动配置
-		 */
-		AUTO_CONFIGURATION("org.springframework.boot.autoconfigure.EnableAutoConfiguration", CONFIGURATION_ANNOTATION),
 		/**
 		 * 环境后处理器
 		 */

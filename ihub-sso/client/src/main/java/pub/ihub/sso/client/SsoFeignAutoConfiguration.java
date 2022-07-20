@@ -20,16 +20,16 @@ import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * @author liheng
  */
-@Configuration
+@AutoConfiguration(after = SsoClientAutoConfiguration.class)
 @EnableConfigurationProperties(SsoClientProperties.class)
 @ConditionalOnClass(RequestInterceptor.class)
 public class SsoFeignAutoConfiguration {

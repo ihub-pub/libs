@@ -15,15 +15,15 @@
  */
 package pub.ihub.test;
 
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * 测试自动配置
  *
  * @author henry
  */
-@Configuration
+@AutoConfiguration
 @EnableAutoConfiguration
 public class IHubTestConfiguration {
 
