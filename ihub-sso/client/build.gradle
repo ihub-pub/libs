@@ -1,9 +1,7 @@
 description = 'SSO模块客户端组件'
 
-java {
-    registerFeature('client') {
-        usingSourceSet sourceSets.main
-    }
+iHubJava {
+    registerFeature 'client'
 }
 
 dependencies {
