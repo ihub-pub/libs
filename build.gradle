@@ -79,7 +79,7 @@ dependencies {
         platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.3'),
         platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1'),
         platform('de.codecentric:spring-boot-admin-dependencies:2.7.3'),
-        platform('net.dreamlu:mica-bom:2.7.1.1'),
+        platform('net.dreamlu:mica-bom:2.7.2'),
         platform('com.google.guava:guava-bom:31.1-jre'),
         platform('com.google.inject:guice-bom:5.1.0'),
         platform('org.springframework.boot:spring-boot-dependencies:2.7.2'),
