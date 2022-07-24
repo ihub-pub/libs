@@ -1,17 +1,9 @@
 description = 'SSO模块组件'
 
 subprojects {
-    java {
-        registerFeature('servlet') {
-            usingSourceSet sourceSets.main
-            capability group, 'sso-support', version
-            capability group, 'servlet-support', version
-        }
-        registerFeature('reactor') {
-            usingSourceSet sourceSets.main
-            capability group, 'sso-support', version
-            capability group, 'reactor-support', version
-        }
+    iHubJava {
+        registerFeature 'servlet', 'sso-support', 'servlet-support'
+        registerFeature 'reactor', 'sso-support', 'reactor-support'
     }
 
     dependencies {

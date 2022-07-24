@@ -1,16 +1,8 @@
 description = 'spring cloud自动配置'
 
-java {
-    registerFeature('servlet') {
-        usingSourceSet sourceSets.main
-        capability group, 'cloud-support', version
-        capability group, 'servlet-support', version
-    }
-    registerFeature('reactor') {
-        usingSourceSet sourceSets.main
-        capability group, 'cloud-support', version
-        capability group, 'reactor-support', version
-    }
+iHubJava {
+    registerFeature 'servlet', 'cloud-support', 'servlet-support'
+    registerFeature 'reactor', 'cloud-support', 'reactor-support'
 }
 
 dependencies {
