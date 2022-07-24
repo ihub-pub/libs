@@ -1,3 +1,34 @@
+## 🔖 1.0.11 (2022-07-24)
+
+
+### ✨ Features
+
+- feat(process): 支持忽略自动处理器注解@ProcessorIgnore  [@henry-hub](https://github.com/henry-hub) ([#190](https://github.com/ihub-pub/libs/pull/190))
+- feat(process): 自动配置处理器弃用spring.factories  [@henry-hub](https://github.com/henry-hub) ([#189](https://github.com/ihub-pub/libs/pull/189))
+- ✨ 添加sso组件  [@henry-hub](https://github.com/henry-hub) ([#115](https://github.com/ihub-pub/libs/pull/115))
+
+### ⬆️ Dependency Updates
+
+- gradle: bump fastjson from 2.0.2 to 2.0.10  [@dependabot](https://github.com/dependabot) ([#194](https://github.com/ihub-pub/libs/pull/194))  [@dependabot](https://github.com/dependabot) ([#168](https://github.com/ihub-pub/libs/pull/168))
+- gradle: bump groovy-bom from 4.0.3 to 4.0.4  [@dependabot](https://github.com/dependabot) ([#198](https://github.com/ihub-pub/libs/pull/198))
+- gradle: bump spring-boot-admin-dependencies from 2.6.7 to 2.7.3  [@dependabot](https://github.com/dependabot) ([#193](https://github.com/ihub-pub/libs/pull/193))  [@dependabot](https://github.com/dependabot) ([#183](https://github.com/ihub-pub/libs/pull/183))
+- gradle: bump spring-boot-dependencies from 2.6.7 to 2.7.2  [@dependabot](https://github.com/dependabot) ([#192](https://github.com/ihub-pub/libs/pull/192))  [@dependabot](https://github.com/dependabot) ([#163](https://github.com/ihub-pub/libs/pull/163))
+- gradle: bump jmolecules-bom from 2021.2.3 to 2022.2.0  [@dependabot](https://github.com/dependabot) ([#162](https://github.com/ihub-pub/libs/pull/162))
+- gradle: bump springdoc-openapi from 1.6.8 to 1.6.9  [@dependabot](https://github.com/dependabot) ([#178](https://github.com/ihub-pub/libs/pull/178))
+- gradle: bump mybatis-plus from 3.5.1 to 3.5.2  [@dependabot](https://github.com/dependabot) ([#182](https://github.com/ihub-pub/libs/pull/182))
+- gradle: bump spring-cloud-dependencies from 2021.0.2 to 2021.0.3  [@dependabot](https://github.com/dependabot) ([#181](https://github.com/ihub-pub/libs/pull/181))
+- gradle: bump groovy-all from 3.0.10 to 3.0.12  [@dependabot](https://github.com/dependabot) ([#179](https://github.com/ihub-pub/libs/pull/179))
+- gradle: bump mapstruct from 1.4.2.Final to 1.5.2.Final  [@dependabot](https://github.com/dependabot) ([#176](https://github.com/ihub-pub/libs/pull/176))
+- gradle: bump mica-bom from 2.6.7 to 2.7.1.1  [@dependabot](https://github.com/dependabot) ([#166](https://github.com/ihub-pub/libs/pull/166))
+- gradle: bump mapstruct-processor from 1.4.2.Final to 1.5.2.Final  [@dependabot](https://github.com/dependabot) ([#174](https://github.com/ihub-pub/libs/pull/174))
+- gradle: bump mockito-bom from 4.5.1 to 4.6.1  [@dependabot](https://github.com/dependabot) ([#173](https://github.com/ihub-pub/libs/pull/173))
+- gradle: bump hutool-bom from 5.8.0 to 5.8.4  [@dependabot](https://github.com/dependabot) ([#171](https://github.com/ihub-pub/libs/pull/171))  [@dependabot](https://github.com/dependabot) ([#149](https://github.com/ihub-pub/libs/pull/149))
+- build(gradle): 升级gradle至7.5  [@henry-hub](https://github.com/henry-hub) ([#170](https://github.com/ihub-pub/libs/pull/170))
+- gradle: bump pub.ihub.plugin.ihub-settings from 1.2.6 to 1.2.8  [@dependabot](https://github.com/dependabot) ([#144](https://github.com/ihub-pub/libs/pull/144))
+
+
+---
+
 ## 🔖 1.0.10 (2022-05-10)
 
 
