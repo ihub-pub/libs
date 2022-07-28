@@ -74,7 +74,8 @@ public class SsoServerController {
 	/**
 	 * 获取授权链接并跳转到第三方授权页面
 	 *
-	 * @param source 第三方渠道
+	 * @param source   第三方渠道
+	 * @param redirect 重定向地址
 	 */
 	@SneakyThrows
 	@RequestMapping("/oauth/render/{source}")
@@ -115,7 +116,7 @@ public class SsoServerController {
 	/**
 	 * 验证码接口
 	 *
-	 * @throws IOException
+	 * @throws IOException 生成验证码异常
 	 */
 	@GetMapping("/captcha")
 	public void captcha() throws IOException {

@@ -15,7 +15,6 @@
  */
 package pub.ihub.sso.server;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import pub.ihub.core.ProcessorIgnore;
 
@@ -26,10 +25,9 @@ import static pub.ihub.core.Constant.PROPERTIES_PREFIX;
  *
  * @author liheng
  */
-@Data
 @ConfigurationProperties(PROPERTIES_PREFIX + ".sso.captcha")
 @ProcessorIgnore
-public class SsoCaptchaProperties {
+public final class SsoCaptchaProperties {
 
 	/**
 	 * 启用验证码
@@ -60,6 +58,54 @@ public class SsoCaptchaProperties {
 	 * 圆圈干扰验证码-干扰圆圈条数
 	 */
 	private int circleCount = 15;
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public CaptchaType getType() {
+		return type;
+	}
+
+	public void setType(CaptchaType type) {
+		this.type = type;
+	}
+
+	public int getCodeCount() {
+		return codeCount;
+	}
+
+	public void setCodeCount(int codeCount) {
+		this.codeCount = codeCount;
+	}
+
+	public int getLineCount() {
+		return lineCount;
+	}
+
+	public void setLineCount(int lineCount) {
+		this.lineCount = lineCount;
+	}
+
+	public int getThickness() {
+		return thickness;
+	}
+
+	public void setThickness(int thickness) {
+		this.thickness = thickness;
+	}
+
+	public int getCircleCount() {
+		return circleCount;
+	}
+
+	public void setCircleCount(int circleCount) {
+		this.circleCount = circleCount;
+	}
 
 	enum CaptchaType {
 		/**

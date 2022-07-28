@@ -79,12 +79,10 @@ dependencies {
         platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.3'),
         platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1'),
         platform('de.codecentric:spring-boot-admin-dependencies:2.7.3'),
-        platform('net.dreamlu:mica-bom:2.7.1.1'),
         platform('com.google.guava:guava-bom:31.1-jre'),
         platform('com.google.inject:guice-bom:5.1.0'),
         platform('org.springframework.boot:spring-boot-dependencies:2.7.2'),
-        platform('org.springdoc:springdoc-openapi:1.6.9'),
-        platform('org.apache.kylin:kylin:4.0.1')
+        platform('org.springdoc:springdoc-openapi:1.6.9')
     // 配置组件版本
     constraints {
         api 'com.alibaba:fastjson:2.0.10',
@@ -100,6 +98,7 @@ dependencies {
             'org.codehaus.groovy:groovy-all:3.0.12',
             'com.athaydes:spock-reports:2.3.0-groovy-3.0',
             'cn.hutool:hutool-all:5.8.4',
+            'io.swagger.core.v3:swagger-annotations:2.2.1',
             'com.google.auto.service:auto-service:1.0.1',
             'org.mapstruct:mapstruct:1.5.2.Final',
             'org.mapstruct:mapstruct-processor:1.5.2.Final',
