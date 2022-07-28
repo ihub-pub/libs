@@ -18,7 +18,6 @@ package pub.ihub.sso.server;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.hutool.core.text.CharSequenceUtil;
-import lombok.Data;
 import me.zhyd.oauth.config.AuthConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -35,9 +34,8 @@ import static pub.ihub.core.Constant.PROPERTIES_PREFIX;
  *
  * @author liheng
  */
-@Data
 @ConfigurationProperties(PROPERTIES_PREFIX + ".sso")
-public class SsoServerProperties {
+public final class SsoServerProperties {
 
 	/**
 	 * 标题
@@ -58,6 +56,38 @@ public class SsoServerProperties {
 	 * 第三方授权配置
 	 */
 	private Map<String, AuthConfig> socialAuthConfig = new HashMap<>();
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getCopyright() {
+		return copyright;
+	}
+
+	public void setCopyright(String copyright) {
+		this.copyright = copyright;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public Map<String, AuthConfig> getSocialAuthConfig() {
+		return socialAuthConfig;
+	}
+
+	public void setSocialAuthConfig(Map<String, AuthConfig> socialAuthConfig) {
+		this.socialAuthConfig = socialAuthConfig;
+	}
 
 	AuthConfig getAuthConfig(String source) {
 		AuthConfig authConfig = socialAuthConfig.get(source);

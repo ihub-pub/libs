@@ -1,6 +1,8 @@
 description = 'SSO模块授权服务端组件'
 
 dependencies {
+    compileOnly 'org.springframework.security:spring-security-core'
+
     runtimeOnly 'cn.dev33:sa-token-spring-boot-starter'
 
     // 第三方登录组件
