@@ -3,6 +3,9 @@ description = 'spring cloud自动配置'
 iHubJava {
     registerFeature 'servlet', 'cloud-support', 'servlet-support'
     registerFeature 'reactor', 'cloud-support', 'reactor-support'
+    registerFeature 'admin', 'monitor-support', 'admin-support'
+    registerFeature 'nacos', 'discovery-support', 'config-support', 'nacos-support'
+    registerFeature 'sentinel', 'breaker-support', 'sentinel-support'
 }
 
 dependencies {
@@ -10,14 +13,14 @@ dependencies {
     reactorApi 'org.springframework.boot:spring-boot-starter-webflux'
 
     api 'org.springframework.boot:spring-boot-starter-validation',
-        'org.springframework.cloud:spring-cloud-starter-bootstrap',
         'org.springframework.cloud:spring-cloud-starter-loadbalancer'
 
-    api 'de.codecentric:spring-boot-admin-starter-client'
+    adminApi 'de.codecentric:spring-boot-admin-starter-client'
 
-    api 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery',
-        'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config',
-        'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
+    nacosApi 'org.springframework.cloud:spring-cloud-starter-bootstrap',
+        'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery',
+        'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+    sentinelApi 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
 
     testImplementation project(':ihub-boot-test-spring-boot-starter')
 }
