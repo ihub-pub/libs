@@ -1,15 +1,28 @@
 description = 'spring cloud自动配置'
 
 iHubJava {
-    registerFeature 'servlet', 'cloud-support', 'servlet-support'
-    registerFeature 'reactor', 'cloud-support', 'reactor-support'
+    // Web Support
+    registerFeature 'servlet', 'web-support', 'servlet-support'
+    registerFeature 'reactor', 'web-support', 'reactor-support'
+    // Monitor Support
     registerFeature 'admin', 'monitor-support', 'admin-support'
+    // Discovery Support
     registerFeature 'nacos', 'discovery-support', 'config-support', 'nacos-support'
+    // Breaker Support
     registerFeature 'sentinel', 'breaker-support', 'sentinel-support'
+    // Container Support
+    registerFeature 'tomcat', 'container-support', 'tomcat-support'
+    registerFeature 'jetty', 'container-support', 'jetty-support'
+    registerFeature 'undertow', 'container-support', 'undertow-support'
 }
 
 dependencies {
-    servletApi 'org.springframework.boot:spring-boot-starter-web'
+    servletApi('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+    tomcatRuntimeOnly 'org.springframework.boot:spring-boot-starter-tomcat'
+    jettyRuntimeOnly 'org.springframework.boot:spring-boot-starter-jetty'
+    undertowRuntimeOnly 'org.springframework.boot:spring-boot-starter-undertow'
     reactorApi 'org.springframework.boot:spring-boot-starter-webflux'
 
     api 'org.springframework.boot:spring-boot-starter-validation',
