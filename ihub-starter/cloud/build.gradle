@@ -6,9 +6,19 @@ iHubJava {
     registerFeature 'reactor', 'web-support', 'reactor-support'
     // Monitor Support
     registerFeature 'admin', 'monitor-support', 'admin-support'
+    // Eureka Support
+    registerFeature 'eureka', 'discovery-support', 'eureka-support'
+    // Zookeeper Support
+    registerFeature 'zookeeper', 'discovery-support', 'config-support', 'zookeeper-support'
+    // Consul Support
+    registerFeature 'consul', 'discovery-support', 'config-support', 'bus-support', 'consul-support'
     // Discovery Support
     registerFeature 'nacos', 'discovery-support', 'config-support', 'nacos-support'
-    // Breaker Support
+    // Spring Cloud Config Support
+    registerFeature 'springConfig', 'config-support', 'springConfig-support'
+    // Apollo Support （暂不适配）
+    registerFeature 'apollo', 'config-support', 'apollo-support'
+    // Breaker Support （暂不适配）
     registerFeature 'sentinel', 'breaker-support', 'sentinel-support'
     // Container Support
     registerFeature 'tomcat', 'container-support', 'tomcat-support'
@@ -26,14 +36,20 @@ dependencies {
     reactorApi 'org.springframework.boot:spring-boot-starter-webflux'
 
     api 'org.springframework.boot:spring-boot-starter-validation',
-        'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+        'org.springframework.cloud:spring-cloud-starter-bootstrap'
 
     adminApi 'de.codecentric:spring-boot-admin-starter-client'
 
-    nacosApi 'org.springframework.cloud:spring-cloud-starter-bootstrap',
-        'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery',
-        'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+    eurekaApi 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    nacosApi 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery',
+        'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config',
+        'org.springframework.cloud:spring-cloud-starter-loadbalancer'
     sentinelApi 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
+
+    zookeeperApi 'org.springframework.cloud:spring-cloud-starter-zookeeper-all'
+
+    consulApi 'org.springframework.cloud:spring-cloud-starter-consul-all'
 
     testImplementation project(':ihub-boot-test-spring-boot-starter')
 }
