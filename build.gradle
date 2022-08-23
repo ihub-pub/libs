@@ -82,7 +82,7 @@ dependencies {
         platform('com.google.guava:guava-bom:31.1-jre'),
         platform('com.google.inject:guice-bom:5.1.0'),
         platform('org.springframework.boot:spring-boot-dependencies:2.7.3'),
-        platform('org.springdoc:springdoc-openapi:1.6.9')
+        platform('org.springdoc:springdoc-openapi:1.6.11')
     // 配置组件版本
     constraints {
         api 'com.alibaba:fastjson:2.0.12',
