@@ -1,0 +1,5 @@
+logging:
+  level:
+    com.alibaba.nacos.client.config: ERROR
+  pattern:
+    level: '%5p [%X{traceId}/%X{spanId}]'
