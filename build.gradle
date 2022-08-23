@@ -97,7 +97,7 @@ dependencies {
             'org.apache.groovy:groovy-all:4.0.4',
             'org.codehaus.groovy:groovy-all:3.0.12',
             'com.athaydes:spock-reports:2.3.0-groovy-3.0',
-            'cn.hutool:hutool-all:5.8.4',
+            'cn.hutool:hutool-all:5.8.5',
             'io.swagger.core.v3:swagger-annotations:2.2.1',
             'com.google.auto.service:auto-service:1.0.1',
             'org.mapstruct:mapstruct:1.5.2.Final',
