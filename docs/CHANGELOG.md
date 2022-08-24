@@ -1,3 +1,29 @@
+## 🔖 1.0.12 (2022-08-24)
+
+
+### ✨ Features
+
+- feat(cloud): cloud组件功能整理  [@henry-hub](https://github.com/henry-hub) ([#205](https://github.com/ihub-pub/libs/pull/205))
+- feat(cloud): 可选功能组件整理  [@henry-hub](https://github.com/henry-hub) ([#204](https://github.com/ihub-pub/libs/pull/204))
+
+### 📝 Documentation
+
+- docs(lombok): 修正由于lombok导致的javadoc失败的问题  [@henry-hub](https://github.com/henry-hub) ([#201](https://github.com/ihub-pub/libs/pull/201))
+
+### ⬆️ Dependency Updates
+
+- build(gradle): 升级gradle至7.5.1  [@henry-hub](https://github.com/henry-hub) ([#214](https://github.com/ihub-pub/libs/pull/214))
+- gradle: bump spring-boot-admin-dependencies from 2.7.3 to 2.7.4  [@dependabot](https://github.com/dependabot) ([#206](https://github.com/ihub-pub/libs/pull/206))
+- gradle: bump springdoc-openapi from 1.6.9 to 1.6.11  [@dependabot](https://github.com/dependabot) ([#211](https://github.com/ihub-pub/libs/pull/211))
+- gradle: bump spring-boot-dependencies from 2.7.2 to 2.7.3  [@dependabot](https://github.com/dependabot) ([#212](https://github.com/ihub-pub/libs/pull/212))
+- gradle: bump mockito-bom from 4.6.1 to 4.7.0  [@dependabot](https://github.com/dependabot) ([#213](https://github.com/ihub-pub/libs/pull/213))
+- gradle: bump fastjson from 2.0.10 to 2.0.12  [@dependabot](https://github.com/dependabot) ([#209](https://github.com/ihub-pub/libs/pull/209))
+- gradle: bump hutool-bom from 5.8.4 to 5.8.5  [@dependabot](https://github.com/dependabot) ([#203](https://github.com/ihub-pub/libs/pull/203))
+- gradle: bump pub.ihub.plugin.ihub-settings from 1.2.8 to 1.2.9  [@dependabot](https://github.com/dependabot) ([#199](https://github.com/ihub-pub/libs/pull/199))
+
+
+---
+
 ## 🔖 1.0.11 (2022-07-24)
 
 
