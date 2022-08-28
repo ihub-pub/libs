@@ -1,9 +1,0 @@
-# Sa-Token 配置
-sa-token:
-  sso:
-    # Ticket有效期 (单位: 秒)，默认五分钟
-    ticket-timeout: 300
-    # 所有允许的授权回调地址
-    allow-url: "*"
-    # 是否打开单点注销功能
-    is-slo: true

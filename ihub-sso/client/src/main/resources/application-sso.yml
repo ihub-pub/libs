@@ -1,8 +1,0 @@
-# sa-token配置
-sa-token:
-  # SSO-相关配置
-  sso:
-    # SSO-Server端 统一认证地址
-    auth-url: ${ihub.cloud.auth-server-addr}/sso/auth
-    # 是否打开单点注销接口
-    is-slo: true
