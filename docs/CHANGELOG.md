@@ -1,3 +1,21 @@
+## 🔖 1.0.13 (2022-09-14)
+
+
+### ⬆️ Dependency Updates
+
+- update spock-bom to 2.2-groovy-3.0
+- gradle: bump sa-token-sso from 1.30.0 to 1.31.0  [@dependabot](https://github.com/dependabot) ([#227](https://github.com/ihub-pub/libs/pull/227))
+- gradle: bump spock-reports from 2.3.0-groovy-3.0 to 2.3.1-groovy-3.0  [@dependabot](https://github.com/dependabot) ([#215](https://github.com/ihub-pub/libs/pull/215))
+- gradle: bump fastjson2 from 2.0.12 to 2.0.13  [@dependabot](https://github.com/dependabot) ([#224](https://github.com/ihub-pub/libs/pull/224))
+- gradle: bump spring-cloud-dependencies from 2021.0.3 to 2021.0.4  [@dependabot](https://github.com/dependabot) ([#225](https://github.com/ihub-pub/libs/pull/225))
+- gradle: bump groovy-bom from 4.0.4 to 4.0.5  [@dependabot](https://github.com/dependabot) ([#223](https://github.com/ihub-pub/libs/pull/223))
+- gradle: bump hutool-bom from 5.8.5 to 5.8.6  [@dependabot](https://github.com/dependabot) ([#219](https://github.com/ihub-pub/libs/pull/219))
+- gradle: bump mockito-bom from 4.7.0 to 4.8.0  [@dependabot](https://github.com/dependabot) ([#220](https://github.com/ihub-pub/libs/pull/220))
+- gradle: bump pub.ihub.plugin.ihub-settings from 1.2.9 to 1.2.10  [@dependabot](https://github.com/dependabot) ([#216](https://github.com/ihub-pub/libs/pull/216))
+
+
+---
+
 ## 🔖 1.0.12 (2022-08-24)
 
 
