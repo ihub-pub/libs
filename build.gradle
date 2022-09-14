@@ -70,7 +70,7 @@ dependencies {
     // 导入bom配置（优先级由上至下）
     api platform(project(':ihub-bom')),
 //        platform('pub.ihub.keel:ihub-bom:main-SNAPSHOT'), TODO
-        platform('org.apache.groovy:groovy-bom:4.0.4'),
+        platform('org.apache.groovy:groovy-bom:4.0.5'),
         platform('org.jmolecules:jmolecules-bom:2022.2.0'),
         platform('cn.hutool:hutool-bom:5.8.6'),
         platform('org.mockito:mockito-bom:4.8.0'),
