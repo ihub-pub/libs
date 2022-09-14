@@ -76,7 +76,7 @@ dependencies {
         platform('org.mockito:mockito-bom:4.8.0'),
         platform('org.spockframework:spock-bom:2.1-groovy-3.0'),
         platform('org.springframework.statemachine:spring-statemachine-bom:3.2.0'),
-        platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.3'),
+        platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.4'),
         platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1'),
         platform('de.codecentric:spring-boot-admin-dependencies:2.7.4'),
         platform('com.google.guava:guava-bom:31.1-jre'),
@@ -104,7 +104,7 @@ dependencies {
             'org.mapstruct:mapstruct-processor:1.5.2.Final',
             'cn.dev33:sa-token-sso:1.30.0',
             'cn.dev33:sa-token-dao-redis-jackson:1.30.0',
-            'cn.dev33:sa-token-spring-boot-starter:1.30.0',
+            'cn.dev33:sa-token-spring-boot-starter:1.31.0',
             'cn.dev33:sa-token-reactor-spring-boot-starter:1.30.0',
             'me.zhyd.oauth:JustAuth:1.16.5'
     }
