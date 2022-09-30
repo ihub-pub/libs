@@ -1,3 +1,20 @@
+## 🔖 1.0.14 (2022-09-30)
+
+
+### ⬆️ Dependency Updates
+
+- update spock-bom to 2.3-groovy-3.0
+- gradle: bump jmolecules-bom from 2022.2.0 to 2022.2.1  [@dependabot](https://github.com/dependabot) ([#239](https://github.com/ihub-pub/libs/pull/239))
+- gradle: bump swagger-annotations from 2.2.1 to 2.2.3  [@dependabot](https://github.com/dependabot) ([#237](https://github.com/ihub-pub/libs/pull/237))
+- gradle: bump fastjson2 from 2.0.13 to 2.0.14  [@dependabot](https://github.com/dependabot) ([#232](https://github.com/ihub-pub/libs/pull/232))
+- gradle: bump spring-boot-admin-dependencies from 2.7.4 to 2.7.5  [@dependabot](https://github.com/dependabot) ([#231](https://github.com/ihub-pub/libs/pull/231))
+- gradle: bump groovy-all from 3.0.12 to 3.0.13  [@dependabot](https://github.com/dependabot) ([#238](https://github.com/ihub-pub/libs/pull/238))
+- gradle: bump spring-boot-dependencies from 2.7.3 to 2.7.4  [@dependabot](https://github.com/dependabot) ([#236](https://github.com/ihub-pub/libs/pull/236))
+- gradle: bump hutool-bom from 5.8.6 to 5.8.8  [@dependabot](https://github.com/dependabot) ([#233](https://github.com/ihub-pub/libs/pull/233))
+
+
+---
+
 ## 🔖 1.0.13 (2022-09-14)
 
 
