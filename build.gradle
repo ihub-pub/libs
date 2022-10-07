@@ -99,7 +99,7 @@ dependencies {
             'cn.hutool:hutool-all:5.8.8',
             'io.swagger.core.v3:swagger-annotations:2.2.3',
             'com.google.auto.service:auto-service:1.0.1',
-            'org.mapstruct:mapstruct:1.5.2.Final',
+            'org.mapstruct:mapstruct:1.5.3.Final',
             'org.mapstruct:mapstruct-processor:1.5.2.Final',
             'cn.dev33:sa-token-sso:1.31.0',
             'cn.dev33:sa-token-dao-redis-jackson:1.31.0',
