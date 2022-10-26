@@ -70,7 +70,7 @@ dependencies {
     // 导入bom配置（优先级由上至下）
     api platform(project(':ihub-bom')),
 //        platform('pub.ihub.keel:ihub-bom:main-SNAPSHOT'), TODO
-        platform('org.apache.groovy:groovy-bom:4.0.5'),
+        platform('org.apache.groovy:groovy-bom:4.0.6'),
         platform('org.jmolecules:jmolecules-bom:2022.2.1'),
         platform('cn.hutool:hutool-bom:5.8.8'),
         platform('org.mockito:mockito-bom:4.8.0'),
@@ -93,7 +93,7 @@ dependencies {
             'com.baomidou:mybatis-plus-extension:3.5.2',
             'com.baomidou:mybatis-plus-boot-starter:3.5.2',
             'com.baomidou:mybatis-plus-generator:3.5.3',
-            'org.apache.groovy:groovy-all:4.0.5',
+            'org.apache.groovy:groovy-all:4.0.6',
             'org.codehaus.groovy:groovy-all:3.0.13',
             'com.athaydes:spock-reports:2.3.1-groovy-3.0',
             'cn.hutool:hutool-all:5.8.8',
