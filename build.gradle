@@ -104,7 +104,7 @@ dependencies {
             'cn.dev33:sa-token-sso:1.31.0',
             'cn.dev33:sa-token-dao-redis-jackson:1.31.0',
             'cn.dev33:sa-token-spring-boot-starter:1.31.0',
-            'cn.dev33:sa-token-reactor-spring-boot-starter:1.31.0',
+            'cn.dev33:sa-token-reactor-spring-boot-starter:1.31.3.temp',
             'me.zhyd.oauth:JustAuth:1.16.5'
     }
 }
