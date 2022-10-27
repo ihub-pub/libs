@@ -73,7 +73,7 @@ dependencies {
         platform('org.apache.groovy:groovy-bom:4.0.6'),
         platform('org.jmolecules:jmolecules-bom:2022.2.1'),
         platform('cn.hutool:hutool-bom:5.8.9'),
-        platform('org.mockito:mockito-bom:4.8.0'),
+        platform('org.mockito:mockito-bom:4.8.1'),
         platform('org.spockframework:spock-bom:2.3-groovy-3.0'),
         platform('org.springframework.statemachine:spring-statemachine-bom:3.2.0'),
         platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.4'),
