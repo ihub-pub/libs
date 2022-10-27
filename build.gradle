@@ -82,7 +82,8 @@ dependencies {
         platform('com.google.guava:guava-bom:31.1-jre'),
         platform('com.google.inject:guice-bom:5.1.0'),
         platform('org.springframework.boot:spring-boot-dependencies:2.7.5'),
-        platform('org.springdoc:springdoc-openapi:1.6.11')
+        platform('org.springdoc:springdoc-openapi:1.6.11'),
+        platform('cn.dev33:sa-token-dependencies:1.31.3.temp')
     // 配置组件版本
     constraints {
         api 'com.alibaba.fastjson2:fastjson2:2.0.16',
@@ -101,10 +102,6 @@ dependencies {
             'com.google.auto.service:auto-service:1.0.1',
             'org.mapstruct:mapstruct:1.5.3.Final',
             'org.mapstruct:mapstruct-processor:1.5.3.Final',
-            'cn.dev33:sa-token-sso:1.31.3.temp',
-            'cn.dev33:sa-token-dao-redis-jackson:1.31.0',
-            'cn.dev33:sa-token-spring-boot-starter:1.31.0',
-            'cn.dev33:sa-token-reactor-spring-boot-starter:1.31.0',
             'me.zhyd.oauth:JustAuth:1.16.5'
     }
 }
