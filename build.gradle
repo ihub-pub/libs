@@ -102,7 +102,7 @@ dependencies {
             'org.mapstruct:mapstruct:1.5.3.Final',
             'org.mapstruct:mapstruct-processor:1.5.3.Final',
             'cn.dev33:sa-token-sso:1.31.0',
-            'cn.dev33:sa-token-dao-redis-jackson:1.31.0',
+            'cn.dev33:sa-token-dao-redis-jackson:1.31.3.temp',
             'cn.dev33:sa-token-spring-boot-starter:1.31.0',
             'cn.dev33:sa-token-reactor-spring-boot-starter:1.31.0',
             'me.zhyd.oauth:JustAuth:1.16.5'
