@@ -1,3 +1,22 @@
+## 🔖 1.0.15 (2022-10-28)
+
+
+### ⬆️ Dependency Updates
+
+- gradle: bump springdoc-openapi from 1.6.11 to 1.6.12  [@dependabot](https://github.com/dependabot) ([#256](https://github.com/ihub-pub/libs/pull/256))
+- gradle: bump mockito-bom from 4.8.0 to 4.8.1  [@dependabot](https://github.com/dependabot) ([#255](https://github.com/ihub-pub/libs/pull/255))
+- gradle: bump sa-token-sso from 1.31.0 to 1.31.3.temp  [@dependabot](https://github.com/dependabot) ([#250](https://github.com/ihub-pub/libs/pull/250))
+- gradle: bump spring-boot-admin-dependencies from 2.7.5 to 2.7.6  [@dependabot](https://github.com/dependabot) ([#253](https://github.com/ihub-pub/libs/pull/253))
+- gradle: bump hutool-bom from 5.8.8 to 5.8.9  [@dependabot](https://github.com/dependabot) ([#249](https://github.com/ihub-pub/libs/pull/249))
+- gradle: bump groovy-bom from 4.0.5 to 4.0.6  [@dependabot](https://github.com/dependabot) ([#248](https://github.com/ihub-pub/libs/pull/248))
+- gradle: bump spring-boot-dependencies from 2.7.4 to 2.7.5  [@dependabot](https://github.com/dependabot) ([#245](https://github.com/ihub-pub/libs/pull/245))
+- gradle: bump swagger-annotations from 2.2.3 to 2.2.4  [@dependabot](https://github.com/dependabot) ([#243](https://github.com/ihub-pub/libs/pull/243))
+- gradle: bump mapstruct from 1.5.2.Final to 1.5.3.Final  [@dependabot](https://github.com/dependabot) ([#242](https://github.com/ihub-pub/libs/pull/242))
+- gradle: bump fastjson2 from 2.0.14 to 2.0.16  [@dependabot](https://github.com/dependabot) ([#244](https://github.com/ihub-pub/libs/pull/244))
+
+
+---
+
 ## 🔖 1.0.14 (2022-09-30)
 
 
