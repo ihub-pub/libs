@@ -1,3 +1,20 @@
+## 🔖 1.0.16 (2022-11-09)
+
+
+### ⬆️ Dependency Updates
+
+- gradle: bump swagger-annotations from 2.2.4 to 2.2.6  [@dependabot](https://github.com/dependabot) ([#263](https://github.com/ihub-pub/libs/pull/263))
+- gradle: bump jmolecules-bom from 2022.2.1 to 2022.2.2  [@dependabot](https://github.com/dependabot) ([#261](https://github.com/ihub-pub/libs/pull/261))
+- gradle: bump sa-token-dependencies from 1.31.3.temp to 1.32.0  [@dependabot](https://github.com/dependabot) ([#258](https://github.com/ihub-pub/libs/pull/258))
+- gradle: bump spring-boot-admin-dependencies from 2.7.6 to 2.7.7  [@dependabot](https://github.com/dependabot) ([#259](https://github.com/ihub-pub/libs/pull/259))
+- gradle: bump spring-cloud-dependencies from 2021.0.4 to 2021.0.5  [@dependabot](https://github.com/dependabot) ([#264](https://github.com/ihub-pub/libs/pull/264))
+- gradle: bump spock-bom from 2.2-groovy-3.0 to 2.3-groovy-4.0  [@dependabot](https://github.com/dependabot) ([#235](https://github.com/ihub-pub/libs/pull/235))
+- gradle: bump fastjson2 from 2.0.16 to 2.0.18  [@dependabot](https://github.com/dependabot) ([#262](https://github.com/ihub-pub/libs/pull/262))
+- gradle: bump pub.ihub.plugin.ihub-settings from 1.2.10 to 1.2.11  [@dependabot](https://github.com/dependabot) ([#257](https://github.com/ihub-pub/libs/pull/257))
+
+
+---
+
 ## 🔖 1.0.15 (2022-10-28)
 
 
