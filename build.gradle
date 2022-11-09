@@ -76,7 +76,7 @@ dependencies {
         platform('org.mockito:mockito-bom:4.8.1'),
         platform('org.spockframework:spock-bom:2.3-groovy-4.0'),
         platform('org.springframework.statemachine:spring-statemachine-bom:3.2.0'),
-        platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.4'),
+        platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.5'),
         platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1'),
         platform('de.codecentric:spring-boot-admin-dependencies:2.7.6'),
         platform('com.google.guava:guava-bom:31.1-jre'),
