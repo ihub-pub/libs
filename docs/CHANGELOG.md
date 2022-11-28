@@ -1,3 +1,21 @@
+## 🔖 1.0.17 (2022-11-28)
+
+
+### ⬆️ Dependency Updates
+
+- gradle: bump springdoc-openapi from 1.6.12 to 1.6.13  [@dependabot](https://github.com/dependabot) ([#273](https://github.com/ihub-pub/libs/pull/273))
+- build(gradle): 升级gradle至7.6  [@henry-hub](https://github.com/henry-hub) ([#276](https://github.com/ihub-pub/libs/pull/276))
+- gradle: bump swagger-annotations from 2.2.6 to 2.2.7  [@dependabot](https://github.com/dependabot) ([#268](https://github.com/ihub-pub/libs/pull/268))
+- gradle: bump spring-boot-dependencies from 2.7.5 to 2.7.6  [@dependabot](https://github.com/dependabot) ([#272](https://github.com/ihub-pub/libs/pull/272))
+- gradle: bump fastjson2 from 2.0.18 to 2.0.20  [@dependabot](https://github.com/dependabot) ([#275](https://github.com/ihub-pub/libs/pull/275))
+- gradle: bump mockito-bom from 4.8.1 to 4.9.0  [@dependabot](https://github.com/dependabot) ([#265](https://github.com/ihub-pub/libs/pull/265))
+- gradle: bump hutool-bom from 5.8.9 to 5.8.10  [@dependabot](https://github.com/dependabot) ([#270](https://github.com/ihub-pub/libs/pull/270))
+- gradle: bump sa-token-dependencies from 1.32.0 to 1.33.0  [@dependabot](https://github.com/dependabot) ([#269](https://github.com/ihub-pub/libs/pull/269))
+- gradle: bump spock-reports from 2.3.1-groovy-3.0 to 2.4.0-groovy-4.0  [@dependabot](https://github.com/dependabot) ([#267](https://github.com/ihub-pub/libs/pull/267))
+
+
+---
+
 ## 🔖 1.0.16 (2022-11-09)
 
 
