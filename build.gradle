@@ -82,7 +82,7 @@ dependencies {
         platform('com.google.guava:guava-bom:31.1-jre'),
         platform('com.google.inject:guice-bom:5.1.0'),
         platform('org.springframework.boot:spring-boot-dependencies:2.7.6'),
-        platform('org.springdoc:springdoc-openapi:1.6.12'),
+        platform('org.springdoc:springdoc-openapi:2.0.0'),
         platform('cn.dev33:sa-token-dependencies:1.33.0')
     // 配置组件版本
     constraints {
