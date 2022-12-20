@@ -84,7 +84,7 @@ dependencies {
         platform('com.google.inject:guice-bom:5.1.0'),
         platform('org.axonframework:axon-bom:4.6.2'),
         platform('org.springframework.boot:spring-boot-dependencies:2.7.6'),
-        platform('io.quarkus:quarkus-bom:2.14.2.Final'),
+        platform('io.quarkus:quarkus-bom:2.15.0.Final'),
         platform('org.springdoc:springdoc-openapi:1.6.13'),
         platform('cn.dev33:sa-token-dependencies:1.33.0')
     // 配置组件版本
