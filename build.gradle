@@ -18,7 +18,7 @@ plugins {
 }
 
 subprojects {
-    if (project in [project(':ihub-bom'), project(':ihub-sso')]) {
+    if (project in [project(':ihub-bom')/*, project(':ihub-sso')*/]) {
         return
     }
     apply {
@@ -70,7 +70,6 @@ dependencies {
     // 导入bom配置（优先级由上至下）
     api platform(project(':ihub-bom')),
 //        platform('pub.ihub.keel:ihub-bom:main-SNAPSHOT'), TODO
-        platform('org.apache.groovy:groovy-bom:4.0.6'),
         platform('org.jmolecules:jmolecules-bom:2022.2.2'),
 //        platform('org.springframework.experimental:spring-modulith-bom:0.1.0'),
         platform('cn.hutool:hutool-bom:5.8.10'),
@@ -83,8 +82,8 @@ dependencies {
         platform('com.google.guava:guava-bom:31.1-jre'),
         platform('com.google.inject:guice-bom:5.1.0'),
         platform('org.axonframework:axon-bom:4.6.2'),
-        platform('org.springframework.boot:spring-boot-dependencies:2.7.6'),
-        platform('io.quarkus:quarkus-bom:2.14.2.Final'),
+        platform('org.springframework.boot:spring-boot-dependencies:3.0.0'),
+        platform('io.quarkus:quarkus-bom:2.15.1.Final'),
         platform('org.springdoc:springdoc-openapi:2.0.2'),
         platform('cn.dev33:sa-token-dependencies:1.33.0')
     // 配置组件版本
@@ -98,7 +97,6 @@ dependencies {
             'com.baomidou:mybatis-plus-boot-starter:3.5.2',
             'com.baomidou:mybatis-plus-generator:3.5.3',
             'org.apache.groovy:groovy-all:4.0.6',
-            'org.codehaus.groovy:groovy-all:3.0.13',
             'com.athaydes:spock-reports:2.4.0-groovy-4.0',
             'cn.hutool:hutool-all:5.8.10',
             'io.swagger.core.v3:swagger-annotations:2.2.7',
