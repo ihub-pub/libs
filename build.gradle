@@ -70,22 +70,22 @@ dependencies {
     // 导入bom配置（优先级由上至下）
     api platform(project(':ihub-bom')),
 //        platform('pub.ihub.keel:ihub-bom:main-SNAPSHOT'), TODO
-//        platform('org.jmolecules:jmolecules-bom:2022.2.2'),
-//        platform('org.springframework.experimental:spring-modulith-bom:0.1.0'),
+        platform('org.jmolecules:jmolecules-bom:2022.2.2'),
+        platform('org.springframework.experimental:spring-modulith-bom:0.1.0'),
         platform('cn.hutool:hutool-bom:5.8.10'),
         platform('org.mockito:mockito-bom:4.9.0'),
         platform('org.spockframework:spock-bom:2.3-groovy-4.0'),
-//        platform('org.springframework.statemachine:spring-statemachine-bom:3.2.0'),
-        platform('org.springframework.cloud:spring-cloud-dependencies:2022.0.0'),
-//        platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1'),
-//        platform('de.codecentric:spring-boot-admin-dependencies:2.7.9'),
+        platform('org.springframework.statemachine:spring-statemachine-bom:3.2.0'),
+        platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.5'),
+        platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1'),
+        platform('de.codecentric:spring-boot-admin-dependencies:2.7.7'),
         platform('com.google.guava:guava-bom:31.1-jre'),
         platform('com.google.inject:guice-bom:5.1.0'),
-//        platform('org.axonframework:axon-bom:4.6.2'),
+        platform('org.axonframework:axon-bom:4.6.2'),
         platform('org.springframework.boot:spring-boot-dependencies:3.0.0'),
-//        platform('io.quarkus:quarkus-bom:2.14.2.Final'),
-        platform('org.springdoc:springdoc-openapi:2.0.2')
-//        platform('cn.dev33:sa-token-dependencies:1.33.0')
+        platform('io.quarkus:quarkus-bom:2.15.1.Final'),
+        platform('org.springdoc:springdoc-openapi:2.0.0'),
+        platform('cn.dev33:sa-token-dependencies:1.33.0')
     // 配置组件版本
     constraints {
         api 'com.alibaba.fastjson2:fastjson2:2.0.20',
