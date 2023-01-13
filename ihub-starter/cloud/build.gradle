@@ -46,8 +46,8 @@ dependencies {
 
     adminApi 'de.codecentric:spring-boot-admin-starter-client'
 
-    zipkinApi 'org.springframework.cloud:spring-cloud-starter-sleuth',
-        'org.springframework.cloud:spring-cloud-sleuth-zipkin'
+//    zipkinApi 'org.springframework.cloud:spring-cloud-starter-sleuth',
+//        'org.springframework.cloud:spring-cloud-sleuth-zipkin'
 
     eurekaApi 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 

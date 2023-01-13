@@ -19,12 +19,12 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.element.Element;
 
-import static javax.lang.model.SourceVersion.RELEASE_11;
+import static javax.lang.model.SourceVersion.RELEASE_17;
 
 /**
  * @author liheng
  */
-@SupportedSourceVersion(RELEASE_11)
+@SupportedSourceVersion(RELEASE_17)
 @SupportedAnnotationTypes("java.lang.Deprecated")
 public class AstErrorProcessor extends BaseAstProcessor {
 

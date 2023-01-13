@@ -28,10 +28,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import pub.ihub.cloud.rest.Result;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.UnexpectedTypeException;
-import javax.validation.ValidationException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.UnexpectedTypeException;
+import jakarta.validation.ValidationException;
 import java.util.stream.Collectors;
 
 import static cn.hutool.core.util.ObjectUtil.defaultIfBlank;

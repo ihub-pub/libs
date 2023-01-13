@@ -32,7 +32,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static javax.lang.model.SourceVersion.RELEASE_11;
+import static javax.lang.model.SourceVersion.RELEASE_17;
 import static javax.tools.StandardLocation.CLASS_OUTPUT;
 import static javax.tools.StandardLocation.SOURCE_OUTPUT;
 
@@ -42,7 +42,7 @@ import static javax.tools.StandardLocation.SOURCE_OUTPUT;
  * @author henry
  */
 @AutoService(Processor.class)
-@SupportedSourceVersion(RELEASE_11)
+@SupportedSourceVersion(RELEASE_17)
 @SupportedAnnotationTypes("org.springframework.boot.autoconfigure.AutoConfiguration")
 @IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.AGGREGATING)
 public class AutoConfigurationProcessor extends BaseJavapoetProcessor {

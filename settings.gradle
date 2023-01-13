@@ -18,7 +18,7 @@ plugins {
 }
 
 iHubSettings {
-    includeProjects 'ihub-core'/*, 'ihub-process'*/ prefix '' subproject
-//    includeProjects 'ihub-starter' prefix 'ihub-boot-' suffix '-spring-boot-starter' onlySubproject
+    includeProjects 'ihub-core', 'ihub-process' prefix '' skippedDirs 'doc' subproject
+    includeProjects 'ihub-starter' prefix 'ihub-boot-' suffix '-spring-boot-starter' onlySubproject
 //    includeProjects 'ihub-sso' prefix '' subproject '-spring-boot-starter'
 }

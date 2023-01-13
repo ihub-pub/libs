@@ -15,12 +15,6 @@
  */
 package pub.ihub.process;
 
-import com.sun.tools.javac.api.JavacTrees;
-import com.sun.tools.javac.processing.JavacProcessingEnvironment;
-import com.sun.tools.javac.tree.TreeMaker;
-import com.sun.tools.javac.util.Context;
-import com.sun.tools.javac.util.Names;
-
 import javax.annotation.processing.ProcessingEnvironment;
 
 /**
@@ -28,19 +22,20 @@ import javax.annotation.processing.ProcessingEnvironment;
  *
  * @author henry
  */
+@SuppressWarnings("unused")
 public abstract class BaseAstProcessor extends BaseProcessor {
 
-	protected JavacTrees javacTrees;
-	protected TreeMaker treeMaker;
-	protected Names names;
+//	protected JavacTrees javacTrees;
+//	protected TreeMaker treeMaker;
+//	protected Names names;
 
-	@Override
-	public synchronized void init(ProcessingEnvironment processingEnvironment) {
-		super.init(processingEnvironment);
-		javacTrees = JavacTrees.instance(processingEnvironment);
-		Context context = ((JavacProcessingEnvironment) processingEnvironment).getContext();
-		treeMaker = TreeMaker.instance(context);
-		names = Names.instance(context);
-	}
+    @Override
+    public synchronized void init(ProcessingEnvironment processingEnvironment) {
+        super.init(processingEnvironment);
+//		javacTrees = JavacTrees.instance(processingEnvironment);
+//		Context context = ((JavacProcessingEnvironment) processingEnvironment).getContext();
+//		treeMaker = TreeMaker.instance(context);
+//		names = Names.instance(context);
+    }
 
 }
