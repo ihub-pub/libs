@@ -34,7 +34,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
 
-import static javax.lang.model.SourceVersion.RELEASE_11;
+import static javax.lang.model.SourceVersion.RELEASE_17;
 
 /**
  * 配置环境处理器
@@ -42,7 +42,7 @@ import static javax.lang.model.SourceVersion.RELEASE_11;
  * @author henry
  */
 @AutoService(Processor.class)
-@SupportedSourceVersion(RELEASE_11)
+@SupportedSourceVersion(RELEASE_17)
 @SupportedAnnotationTypes("org.springframework.boot.context.properties.ConfigurationProperties")
 @IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.AGGREGATING)
 public class ConfigEnvironmentProcessor extends BaseJavapoetProcessor {

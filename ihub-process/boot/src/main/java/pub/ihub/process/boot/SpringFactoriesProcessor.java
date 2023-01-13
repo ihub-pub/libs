@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import static javax.lang.model.SourceVersion.RELEASE_11;
+import static javax.lang.model.SourceVersion.RELEASE_17;
 import static javax.tools.StandardLocation.CLASS_OUTPUT;
 import static javax.tools.StandardLocation.SOURCE_OUTPUT;
 import static pub.ihub.process.boot.SpringFactoriesProcessor.AUTO_CONFIG_POST_PROCESSOR_ANNOTATION;
@@ -49,7 +49,7 @@ import static pub.ihub.process.boot.SpringFactoriesProcessor.AUTO_CONFIG_POST_PR
  * @author henry
  */
 @AutoService(Processor.class)
-@SupportedSourceVersion(RELEASE_11)
+@SupportedSourceVersion(RELEASE_17)
 @SupportedAnnotationTypes({AUTO_CONFIG_POST_PROCESSOR_ANNOTATION})
 @IncrementalAnnotationProcessor(IncrementalAnnotationProcessorType.AGGREGATING)
 public class SpringFactoriesProcessor extends BaseJavapoetProcessor {
