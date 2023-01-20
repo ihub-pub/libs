@@ -82,7 +82,7 @@ dependencies {
         platform('com.google.guava:guava-bom:31.1-jre'),
         platform('com.google.inject:guice-bom:5.1.0'),
         platform('org.axonframework:axon-bom:4.6.3'),
-        platform('org.springframework.boot:spring-boot-dependencies:3.0.1'),
+        platform('org.springframework.boot:spring-boot-dependencies:3.0.2'),
         platform('io.quarkus:quarkus-bom:2.16.0.Final'),
         platform('org.springdoc:springdoc-openapi:2.0.2'),
         platform('cn.dev33:sa-token-dependencies:1.34.0')
