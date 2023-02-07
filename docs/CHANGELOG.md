@@ -1,3 +1,49 @@
+## 🔖 1.1.0 (2023-02-07)
+
+
+### ✨ Features
+
+- feat(spring): 适配SpringBoot3.0  [@henry-hub](https://github.com/henry-hub) ([#313](https://github.com/ihub-pub/libs/pull/313))
+
+### ⬆️ Dependency Updates
+
+- gradle: bump pub.ihub.plugin.ihub-settings from 1.3.0-rc3 to 1.3.0-rc4  [@dependabot](https://github.com/dependabot) ([#329](https://github.com/ihub-pub/libs/pull/329))
+- gradle: bump pub.ihub.plugin.ihub-settings from 1.3.0-rc2 to 1.3.0-rc3  [@dependabot](https://github.com/dependabot) ([#328](https://github.com/ihub-pub/libs/pull/328))
+- gradle: bump pub.ihub.plugin.ihub-settings from 1.3.0-m2 to 1.3.0-rc2  [@dependabot](https://github.com/dependabot) ([#327](https://github.com/ihub-pub/libs/pull/327))
+- gradle: bump io.quarkus:quarkus-bom from 2.16.0.Final to 2.16.1.Final  [@dependabot](https://github.com/dependabot) ([#324](https://github.com/ihub-pub/libs/pull/324))
+- gradle: bump org.axonframework:axon-bom from 4.6.3 to 4.7.0  [@dependabot](https://github.com/dependabot) ([#325](https://github.com/ihub-pub/libs/pull/325))
+- gradle: bump org.mockito:mockito-bom from 5.0.0 to 5.1.1  [@dependabot](https://github.com/dependabot) ([#323](https://github.com/ihub-pub/libs/pull/323))
+- gradle: bump spring-cloud-dependencies from 2022.0.0 to 2022.0.1  [@dependabot](https://github.com/dependabot) ([#320](https://github.com/ihub-pub/libs/pull/320))
+- gradle: bump groovy-all from 4.0.7 to 4.0.8  [@dependabot](https://github.com/dependabot) ([#319](https://github.com/ihub-pub/libs/pull/319))
+- gradle: bump spring-boot-admin-dependencies from 2.7.10 to 3.0.0  [@dependabot](https://github.com/dependabot) ([#317](https://github.com/ihub-pub/libs/pull/317))
+- gradle: bump spring-boot-dependencies from 3.0.1 to 3.0.2  [@dependabot](https://github.com/dependabot) ([#318](https://github.com/ihub-pub/libs/pull/318))
+- gradle: bump fastjson2 from 2.0.22 to 2.0.23  [@dependabot](https://github.com/dependabot) ([#314](https://github.com/ihub-pub/libs/pull/314))
+- gradle: bump quarkus-bom from 2.15.3.Final to 2.16.0.Final  [@dependabot](https://github.com/dependabot) ([#316](https://github.com/ihub-pub/libs/pull/316))
+- gradle: bump mockito-bom from 4.11.0 to 5.0.0  [@dependabot](https://github.com/dependabot) ([#315](https://github.com/ihub-pub/libs/pull/315))
+- gradle: bump axon-bom from 4.6.2 to 4.6.3  [@dependabot](https://github.com/dependabot) ([#310](https://github.com/ihub-pub/libs/pull/310))
+- gradle: bump quarkus-bom from 2.15.2.Final to 2.15.3.Final  [@dependabot](https://github.com/dependabot) ([#312](https://github.com/ihub-pub/libs/pull/312))
+- gradle: bump sa-token-dependencies from 1.33.0 to 1.34.0  [@dependabot](https://github.com/dependabot) ([#311](https://github.com/ihub-pub/libs/pull/311))
+- gradle: bump spring-boot-admin-dependencies from 2.7.9 to 2.7.10  [@dependabot](https://github.com/dependabot) ([#309](https://github.com/ihub-pub/libs/pull/309))
+- gradle: bump swagger-annotations from 2.2.7 to 2.2.8  [@dependabot](https://github.com/dependabot) ([#308](https://github.com/ihub-pub/libs/pull/308))
+- gradle: bump quarkus-bom from 2.15.1.Final to 2.15.2.Final  [@dependabot](https://github.com/dependabot) ([#307](https://github.com/ihub-pub/libs/pull/307))
+- gradle: bump fastjson2 from 2.0.21 to 2.0.22  [@dependabot](https://github.com/dependabot) ([#303](https://github.com/ihub-pub/libs/pull/303))
+- gradle: bump mybatis-plus-generator from 3.5.3 to 3.5.3.1  [@dependabot](https://github.com/dependabot) ([#305](https://github.com/ihub-pub/libs/pull/305))
+- gradle: bump mybatis-plus from 3.5.3 to 3.5.3.1  [@dependabot](https://github.com/dependabot) ([#302](https://github.com/ihub-pub/libs/pull/302))
+- gradle: bump mockito-bom from 4.10.0 to 4.11.0  [@dependabot](https://github.com/dependabot) ([#301](https://github.com/ihub-pub/libs/pull/301))
+- gradle: bump mybatis-plus from 3.5.2 to 3.5.3  [@dependabot](https://github.com/dependabot) ([#296](https://github.com/ihub-pub/libs/pull/296))
+- gradle: bump fastjson2 from 2.0.20 to 2.0.21  [@dependabot](https://github.com/dependabot) ([#283](https://github.com/ihub-pub/libs/pull/283))
+- gradle: bump hutool-bom from 5.8.10 to 5.8.11  [@dependabot](https://github.com/dependabot) ([#291](https://github.com/ihub-pub/libs/pull/291))
+- gradle: bump spring-boot-dependencies from 3.0.0 to 3.0.1  [@dependabot](https://github.com/dependabot) ([#288](https://github.com/ihub-pub/libs/pull/288))
+- gradle: bump mockito-bom from 4.9.0 to 4.10.0  [@dependabot](https://github.com/dependabot) ([#287](https://github.com/ihub-pub/libs/pull/287))
+- gradle: bump spring-boot-dependencies from 2.7.6 to 3.0.0  [@dependabot](https://github.com/dependabot) ([#277](https://github.com/ihub-pub/libs/pull/277))
+- gradle: bump springdoc-openapi from 1.6.13 to 2.0.2  [@dependabot](https://github.com/dependabot) ([#284](https://github.com/ihub-pub/libs/pull/284))
+- gradle: bump spring-cloud-dependencies from 2021.0.5 to 2022.0.0  [@dependabot](https://github.com/dependabot) ([#285](https://github.com/ihub-pub/libs/pull/285))
+- gradle: bump spring-boot-admin-dependencies from 2.7.7 to 2.7.9  [@dependabot](https://github.com/dependabot) ([#282](https://github.com/ihub-pub/libs/pull/282))
+- gradle: bump pub.ihub.plugin.ihub-settings from 1.2.11 to 1.2.12  [@dependabot](https://github.com/dependabot) ([#278](https://github.com/ihub-pub/libs/pull/278))
+
+
+---
+
 ## 🔖 1.0.17 (2022-11-28)
 
 
