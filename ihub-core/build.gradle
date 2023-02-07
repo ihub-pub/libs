@@ -17,7 +17,7 @@ description = '核心组件'
 
 dependencies {
     compileOnly 'org.springframework.boot:spring-boot'
-    runtimeOnly 'cn.hutool:hutool-core'
+    api 'cn.hutool:hutool-core'
 
     testImplementation 'org.springframework.boot:spring-boot'
     testImplementation 'cn.hutool:hutool-core'
