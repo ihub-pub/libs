@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 plugins {
+    id 'java-platform'
     id 'pub.ihub.plugin'
     id 'pub.ihub.plugin.ihub-git-hooks'
     id 'pub.ihub.plugin.ihub-java' apply false
     id 'pub.ihub.plugin.ihub-verification' apply false
-    id 'pub.ihub.plugin.ihub-publish' apply false
+    id 'pub.ihub.plugin.ihub-publish'
 }
 
 subprojects {
@@ -50,11 +51,6 @@ subprojects {
     }
 }
 
-apply {
-    plugin 'java-platform'
-    plugin 'pub.ihub.plugin.ihub-publish'
-}
-
 iHubGitHooks {
     hooks = [
         'pre-commit': './gradlew build',
@@ -76,7 +72,7 @@ dependencies {
 //        platform('pub.ihub.keel:ihub-bom:main-SNAPSHOT'), TODO
         platform('org.jmolecules:jmolecules-bom:2022.2.2'),
 //        platform('org.springframework.experimental:spring-modulith-bom:0.1.0'),
-        platform('cn.hutool:hutool-bom:5.8.11'),
+        platform('cn.hutool:hutool-bom:5.8.12'),
         platform('org.mockito:mockito-bom:5.1.1'),
         platform('org.spockframework:spock-bom:2.3-groovy-4.0'),
         platform('org.springframework.statemachine:spring-statemachine-bom:3.2.0'),
