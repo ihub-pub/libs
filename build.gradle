@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 plugins {
+    id 'java-platform'
     id 'pub.ihub.plugin'
     id 'pub.ihub.plugin.ihub-git-hooks'
     id 'pub.ihub.plugin.ihub-java' apply false
     id 'pub.ihub.plugin.ihub-verification' apply false
-    id 'pub.ihub.plugin.ihub-publish' apply false
+    id 'pub.ihub.plugin.ihub-publish'
 }
 
 subprojects {
@@ -48,11 +49,6 @@ subprojects {
         }
         annotationProcessor 'org.springframework.boot:spring-boot-autoconfigure-processor'
     }
-}
-
-apply {
-    plugin 'java-platform'
-    plugin 'pub.ihub.plugin.ihub-publish'
 }
 
 iHubGitHooks {
