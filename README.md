@@ -23,12 +23,6 @@
     <a target="_blank" href="https://gitee.com/ihub-pub">
         <img src="https://img.shields.io/badge/Gitee-C71D23.svg?style=flat&logo=Gitee" alt="IHubPub"/>
     </a>
-    <a target="_blank" href="https://doc.ihub.pub/libs">
-        <img src="https://img.shields.io/badge/Docs-8CA1AF.svg?style=flat&logo=Read+the+Docs&logoColor=white" alt="Docs"/>
-    </a>
-    <a target="_blank" href="https://gitter.im/ihub-pub/libs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
-        <img src="https://img.shields.io/badge/Gitter-45af90.svg?style=flat&logo=Gitter&logoColor=white&" alt="Chat On Gitter"/>
-    </a>
     <a target="_blank" href="https://s01.oss.sonatype.org/content/repositories/snapshots/pub/ihub/lib">
         <img src="https://img.shields.io/maven-metadata/v?color=white&labelColor=E33332&label=Snapshot&logo=Testing+Library&logoColor=white&metadataUrl=https%3A%2F%2Fs01.oss.sonatype.org%2Fcontent%2Frepositories%2Fsnapshots%2Fpub%2Fihub%2Flib%2Fihub-bom%2Fmaven-metadata.xml" alt="IHub Snapshot Repository"/>
     </a>
