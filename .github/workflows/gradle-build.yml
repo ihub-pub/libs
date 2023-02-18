@@ -6,6 +6,10 @@ on:
     branches: main
   schedule:
     - cron: '0 16 * * *'
+
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
