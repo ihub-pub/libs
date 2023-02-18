@@ -24,9 +24,7 @@ jobs:
           cache: 'gradle'
 
       - name: Build with Gradle
-        uses: ihub-pub/bot@9d87d30251228a58ade3a5a6666e0167d86b255e # main
-        with:
-          run: build -x test
+        run: gradle build -x test
 
   test:
     runs-on: ubuntu-latest
@@ -45,14 +43,11 @@ jobs:
           cache: 'gradle'
 
       - name: Test with Gradle
-        uses: ihub-pub/bot@9d87d30251228a58ade3a5a6666e0167d86b255e # main
-        with:
-          run: test -DiHubTest.failFast=true
+        run: gradle test -DiHubTest.failFast=true
 
       - name: Upload Coverage Reports
         if: ${{ github.repository_owner == 'ihub-pub' }}
-        run: |
-          bash <(curl -s https://codecov.io/bash)
+        uses: codecov/codecov-action@v3
 
       - name: Upload Test Result
         if: ${{ failure() }}
