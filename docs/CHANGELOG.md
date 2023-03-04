@@ -1,3 +1,39 @@
+## 🔖 1.1.1 (2023-03-04)
+
+
+- [StepSecurity] ci: Harden GitHub Actions  [@step-security-bot](https://github.com/step-security-bot) ([#350](https://github.com/ihub-pub/libs/pull/350))
+
+### ⬆️ Dependency Updates
+
+- gradle: bump cn.hutool:hutool-bom from 5.8.12 to 5.8.13  [@dependabot](https://github.com/dependabot) ([#354](https://github.com/ihub-pub/libs/pull/354))
+- gradle: bump io.quarkus:quarkus-bom from 2.16.3.Final to 2.16.4.Final  [@dependabot](https://github.com/dependabot) ([#352](https://github.com/ihub-pub/libs/pull/352))
+- gradle: bump org.springframework.boot:spring-boot-dependencies from 3.0.3 to 3.0.4  [@dependabot](https://github.com/dependabot) ([#353](https://github.com/ihub-pub/libs/pull/353))
+- gradle: bump org.axonframework:axon-bom from 4.7.0 to 4.7.1  [@dependabot](https://github.com/dependabot) ([#351](https://github.com/ihub-pub/libs/pull/351))
+- build(deps): bump ossf/scorecard-action from 570a953ea0770f30a8aa0a778cfc4bc955bbf9c4 to 7cc371152c77bfecfa34fdfb62b1630ff3682cf1  [@dependabot](https://github.com/dependabot) ([#348](https://github.com/ihub-pub/libs/pull/348))
+- build(deps): bump github/codeql-action from 2.2.4 to 2.2.5  [@dependabot](https://github.com/dependabot) ([#349](https://github.com/ihub-pub/libs/pull/349))
+- gradle: bump org.jmolecules:jmolecules-bom from 2022.2.2 to 2022.2.3  [@dependabot](https://github.com/dependabot) ([#347](https://github.com/ihub-pub/libs/pull/347))
+- gradle: bump org.springframework.boot:spring-boot-dependencies from 3.0.2 to 3.0.3  [@dependabot](https://github.com/dependabot) ([#346](https://github.com/ihub-pub/libs/pull/346))
+- build(deps): bump ihub-pub/bot from 1.0.2 to 1.0.3  [@dependabot](https://github.com/dependabot) ([#345](https://github.com/ihub-pub/libs/pull/345))
+- build(deps): bump step-security/harden-runner from 2.1.0 to 2.2.0  [@dependabot](https://github.com/dependabot) ([#343](https://github.com/ihub-pub/libs/pull/343))
+- build(deps): bump gradle/wrapper-validation-action from 1.0.5 to 1.0.6  [@dependabot](https://github.com/dependabot) ([#344](https://github.com/ihub-pub/libs/pull/344))
+- gradle: bump com.alibaba.fastjson2:fastjson2 from 2.0.23 to 2.0.24  [@dependabot](https://github.com/dependabot) ([#338](https://github.com/ihub-pub/libs/pull/338))
+- gradle: bump pub.ihub.plugin.ihub-settings from 1.3.1-m1 to 1.3.1-m2  [@dependabot](https://github.com/dependabot) ([#340](https://github.com/ihub-pub/libs/pull/340))
+- gradle: bump io.quarkus:quarkus-bom from 2.16.2.Final to 2.16.3.Final  [@dependabot](https://github.com/dependabot) ([#335](https://github.com/ihub-pub/libs/pull/335))
+- build(gradle): 升级gradle至8.0  [@henry-hub](https://github.com/henry-hub) ([#334](https://github.com/ihub-pub/libs/pull/334))
+- gradle: bump pub.ihub.plugin.ihub-settings from 1.3.0-rc4 to 1.3.0  [@dependabot](https://github.com/dependabot) ([#333](https://github.com/ihub-pub/libs/pull/333))
+- gradle: bump cn.hutool:hutool-bom from 5.8.11 to 5.8.12  [@dependabot](https://github.com/dependabot) ([#332](https://github.com/ihub-pub/libs/pull/332))
+- gradle: bump io.quarkus:quarkus-bom from 2.16.1.Final to 2.16.2.Final  [@dependabot](https://github.com/dependabot) ([#330](https://github.com/ihub-pub/libs/pull/330))
+
+### 🧰 Maintenance
+
+- Revert "Delete gradle-wrapper.jar"  [@henry-hub](https://github.com/henry-hub) ([#341](https://github.com/ihub-pub/libs/pull/341))
+- [StepSecurity] ci: Harden GitHub Actions  [@step-security-bot](https://github.com/step-security-bot) ([#339](https://github.com/ihub-pub/libs/pull/339))
+- [StepSecurity] Apply security best practices  [@step-security-bot](https://github.com/step-security-bot) ([#337](https://github.com/ihub-pub/libs/pull/337))
+- ci(github): 工作流的Actions使用具体版本号  [@henry-hub](https://github.com/henry-hub) ([#336](https://github.com/ihub-pub/libs/pull/336))
+
+
+---
+
 ## 🔖 1.1.0 (2023-02-07)
 
 
