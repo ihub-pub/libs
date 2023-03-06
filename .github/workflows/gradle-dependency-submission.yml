@@ -4,6 +4,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   gradle-action-detection:
     runs-on: ubuntu-latest
@@ -25,6 +28,6 @@ jobs:
           cache: 'gradle'
 
       - name: Gradle Dependency Submission
-        uses: mikepenz/gradle-dependency-submission@v0.8.5
+        uses: mikepenz/gradle-dependency-submission@5aac1cd48a5099fd4375e5755bd0fdf214d974d1 # v0.8.5
         with:
           use-gradlew: false
