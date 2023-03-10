@@ -74,7 +74,7 @@ dependencies {
         platform('org.jmolecules:jmolecules-bom:2022.2.4'),
 //        platform('org.springframework.experimental:spring-modulith-bom:0.1.0'),
         platform('cn.hutool:hutool-bom:5.8.14'),
-        platform('org.mockito:mockito-bom:5.1.1'),
+        platform('org.mockito:mockito-bom:5.2.0'),
         platform('org.spockframework:spock-bom:2.3-groovy-4.0'),
         platform('org.springframework.statemachine:spring-statemachine-bom:3.2.0'),
         platform('org.springframework.cloud:spring-cloud-dependencies:2022.0.1'),
