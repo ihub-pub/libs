@@ -82,7 +82,7 @@ dependencies {
         platform('de.codecentric:spring-boot-admin-dependencies:3.0.1'),
         platform('com.google.guava:guava-bom:31.1-jre'),
         platform('com.google.inject:guice-bom:5.1.0'),
-        platform('org.axonframework:axon-bom:4.7.1'),
+        platform('org.axonframework:axon-bom:4.7.2'),
         platform('org.springframework.boot:spring-boot-dependencies:3.0.4'),
         platform('io.quarkus:quarkus-bom:2.16.4.Final'),
         platform('org.springdoc:springdoc-openapi:2.0.3'),
