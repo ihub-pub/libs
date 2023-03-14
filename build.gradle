@@ -85,7 +85,7 @@ dependencies {
         platform('org.axonframework:axon-bom:4.7.2'),
         platform('org.springframework.boot:spring-boot-dependencies:3.0.4'),
         platform('io.quarkus:quarkus-bom:2.16.4.Final'),
-        platform('org.springdoc:springdoc-openapi:2.0.3'),
+        platform('org.springdoc:springdoc-openapi:2.0.4'),
         platform('cn.dev33:sa-token-dependencies:1.34.0')
     // 配置组件版本
     constraints {
