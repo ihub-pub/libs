@@ -117,13 +117,13 @@ jobs:
           distribution: 'adopt'
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@16964e90ba004cdf0cd845b866b5df21038b7723 # v2.2.6
+        uses: github/codeql-action/init@168b99b3c22180941ae7dbdd5f5c9678ede476ba # v2.2.7
 
       - name: Autobuild
-        uses: github/codeql-action/autobuild@16964e90ba004cdf0cd845b866b5df21038b7723 # v2.2.6
+        uses: github/codeql-action/autobuild@168b99b3c22180941ae7dbdd5f5c9678ede476ba # v2.2.7
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@16964e90ba004cdf0cd845b866b5df21038b7723 # v2.2.6
+        uses: github/codeql-action/analyze@168b99b3c22180941ae7dbdd5f5c9678ede476ba # v2.2.7
 
   analysis:
     name: Scorecards analysis
@@ -159,7 +159,7 @@ jobs:
           retention-days: 5
 
       - name: "Upload to code-scanning"
-        uses: github/codeql-action/upload-sarif@16964e90ba004cdf0cd845b866b5df21038b7723 # v2.2.6
+        uses: github/codeql-action/upload-sarif@168b99b3c22180941ae7dbdd5f5c9678ede476ba # v2.2.7
         with:
           sarif_file: results.sarif
 
@@ -201,7 +201,7 @@ jobs:
       id: ossar
 
     - name: Upload OSSAR results
-      uses: github/codeql-action/upload-sarif@16964e90ba004cdf0cd845b866b5df21038b7723 # v2.2.6
+      uses: github/codeql-action/upload-sarif@168b99b3c22180941ae7dbdd5f5c9678ede476ba # v2.2.7
       with:
         sarif_file: ${{ steps.ossar.outputs.sarifFile }}
 
