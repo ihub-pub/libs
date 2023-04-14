@@ -104,7 +104,7 @@ dependencies {
             'net.ltgt.gradle.incap:incap:1.0.0',
             'net.ltgt.gradle.incap:incap-processor:1.0.0',
             'com.squareup:javapoet:1.13.0',
-            'org.mapstruct:mapstruct:1.5.3.Final',
+            'org.mapstruct:mapstruct:1.5.4.Final',
             'org.mapstruct:mapstruct-processor:1.5.4.Final',
             'me.zhyd.oauth:JustAuth:1.16.5'
     }
