@@ -90,7 +90,7 @@ jobs:
           cache: 'gradle'
 
       - name: Publish to Snapshot Repository
-        uses: ihub-pub/bot/publish@3029878bd6aeb2a15050a6d848c17443ce302afe # v1.0.3
+        uses: ihub-pub/bot/publish@3029878bd6aeb2a15050a6d848c17443ce302afe # v1.0.4
         with:
           repoUsername: ${{ secrets.REPO_USERNAME }}
           repoPassword: ${{ secrets.REPO_PASSWORD }}
