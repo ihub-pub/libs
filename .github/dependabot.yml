@@ -16,6 +16,17 @@ updates:
     commit-message:
       prefix: "build(deps)"
 
+  - package-ecosystem: "gradle" # See documentation for possible values
+    directory: "/ihub-dependencies/" # Location of package manifests
+    schedule:
+      interval: "daily"
+    assignees:
+      - "henry-hub"
+    allow:
+      - dependency-type: "production"
+    commit-message:
+      prefix: "build(deps)"
+
   - package-ecosystem: github-actions
     directory: /
     schedule:
