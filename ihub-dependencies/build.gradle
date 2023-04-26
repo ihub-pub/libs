@@ -26,7 +26,7 @@ dependencies {
         platform('de.codecentric:spring-boot-admin-dependencies:3.0.2'),
         platform('com.google.guava:guava-bom:31.1-jre'),
         platform('com.google.inject:guice-bom:5.1.0'),
-        platform('org.axonframework:axon-bom:4.7.2'),
+        platform('org.axonframework:axon-bom:4.7.3'),
         platform('org.springframework.boot:spring-boot-dependencies:3.0.6'),
         platform('io.quarkus:quarkus-bom:3.0.0.Final'),
         platform('org.springdoc:springdoc-openapi:2.1.0'),
