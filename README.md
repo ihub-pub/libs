@@ -8,8 +8,14 @@
 ---
 
 <p align="center">
+    <a target="_blank" href="https://bestpractices.coreinfrastructure.org/projects/7036">
+        <img alt="CII Best Practices Level" src="https://img.shields.io/cii/level/7036?logo=c&logoColor=white">
+    </a>
     <a target="_blank" href="https://github.com/ihub-pub/libs/actions/workflows/gradle-build.yml">
         <img src="https://img.shields.io/github/actions/workflow/status/ihub-pub/libs/gradle-build.yml?branch=main&label=Build&logo=GitHub+Actions&logoColor=white" alt="Gradle Build"/>
+    </a>
+    <a target="_blank" href="https://ihub-pub.testspace.com/spaces/219233/current/313206">
+        <img alt="Testspace tests (compact)" src="https://img.shields.io/testspace/tests/ihub-pub/ihub-pub:libs/main?compact_message&label=Tests&logo=GitHub+Actions&logoColor=white">
     </a>
     <a target="_blank" href="https://www.codefactor.io/repository/github/ihub-pub/libs">
         <img src="https://img.shields.io/codefactor/grade/github/ihub-pub/libs/main?color=white&label=Codefactor&labelColor=F44A6A&logo=CodeFactor&logoColor=white" alt="CodeFactor"/>
@@ -22,6 +28,9 @@
     </a>
     <a target="_blank" href="https://gitee.com/ihub-pub/libs">
         <img src="https://img.shields.io/badge/Gitee-C71D23.svg?style=flat&logo=Gitee" alt="IHubPub"/>
+    </a>
+    <a target="_blank" href="https://gitter.im/ihub-pub/libs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
+        <img alt="Gitter" src="https://img.shields.io/gitter/room/ihub-pub/libs?color=white&label=&labelColor=45AF90&logo=Gitter&logoColor=white">
     </a>
     <a target="_blank" href="https://javadoc.io/doc/pub.ihub.lib">
         <img alt="Java Doc" src="https://javadoc.io/badge2/pub.ihub.lib/ihub-core/javadoc.svg?color=white&labelColor=8CA1AF&label=Docs&logo=readthedocs&logoColor=white">
