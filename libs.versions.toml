@@ -27,7 +27,7 @@ mapstruct = { module = 'org.mapstruct:mapstruct' }
 mapstruct-processor = { module = 'org.mapstruct:mapstruct-processor' }
 
 # doc libs
-swagger-annotations = { module = 'io.swagger.core.v3:swagger-annotations', version = '2.2.9' }
+swagger-annotations = { module = 'io.swagger.core.v3:swagger-annotations' }
 
 # groovy libs
 groovy-core = { module = 'org.apache.groovy:groovy' }
