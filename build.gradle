@@ -15,13 +15,12 @@
  */
 plugins {
     id 'version-catalog'
-    id 'maven-publish'
     id 'pub.ihub.plugin'
     id 'pub.ihub.plugin.ihub-copyright'
     id 'pub.ihub.plugin.ihub-git-hooks'
     id 'pub.ihub.plugin.ihub-java' apply false
     id 'pub.ihub.plugin.ihub-verification' apply false
-    id 'pub.ihub.plugin.ihub-publish' apply false
+    id 'pub.ihub.plugin.ihub-publish'
 }
 
 subprojects {
@@ -63,13 +62,5 @@ iHubGitHooks {
 catalog {
     versionCatalog {
         from files('libs.versions.toml')
-    }
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from components.versionCatalog
-        }
     }
 }
