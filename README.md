@@ -54,3 +54,7 @@
 ![Alt](https://repobeats.axiom.co/api/embed/10b52c85a6a8d23a2601bd26bd16716deddbc073.svg "Repobeats analytics image")
 
 [![Contributors](https://contrib.rocks/image?repo=ihub-pub/libs)](https://github.com/ihub-pub/libs/graphs/contributors "Contributors")
+
+## ⚖️ License
+<!-- [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fihub-pub%2Flibs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fihub-pub%2Flibs?ref=badge_shield) -->
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fihub-pub%2Flibs.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fihub-pub%2Flibs?ref=badge_large)
