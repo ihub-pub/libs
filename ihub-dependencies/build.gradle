@@ -25,7 +25,7 @@ dependencies {
         platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1'),
         platform('de.codecentric:spring-boot-admin-dependencies:3.0.4'),
         platform('com.google.guava:guava-bom:31.1-jre'),
-        platform('com.google.inject:guice-bom:5.1.0'),
+        platform('com.google.inject:guice-bom:7.0.0'),
         platform('org.axonframework:axon-bom:4.7.3'),
         platform('org.springframework.boot:spring-boot-dependencies:3.0.6'),
         platform('io.quarkus:quarkus-bom:3.0.3.Final'),
