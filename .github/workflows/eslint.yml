@@ -1,0 +1,37 @@
+name: ESLint
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+
+permissions:
+  contents: read
+
+jobs:
+  ESLint:
+    if: ${{ github.repository_owner == 'ihub-pub' }}
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    name: OSSAR Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969 # v2.4.0
+        with:
+          disable-sudo: true
+          egress-policy: audit
+
+      - name: Checkout repository
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+
+      - name: Run OSSAR
+        uses: github/ossar-action@786a16a90ba92b4ae6228fe7382fb16ef5c51000 # v1
+        id: ossar
+
+      - name: Upload OSSAR results
+        uses: github/codeql-action/upload-sarif@29b1f65c5e92e24fe6b6647da1eaabe529cec70f # v2.3.3
+        with:
+          sarif_file: ${{ steps.ossar.outputs.sarifFile }}
