@@ -30,6 +30,9 @@ jobs:
           distribution: 'adopt'
           cache: 'gradle'
 
+      - name: Chmod
+        run: chmod +x ./gradlew
+
       - name: Build with Gradle
         uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629 # v2.4.2
         with:
@@ -58,10 +61,13 @@ jobs:
         with:
           domain: ${{ github.repository_owner }}
 
+      - name: Chmod
+        run: chmod +x ./gradlew
+
       - name: Test with Gradle
         uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629 # v2.4.2
         with:
-          arguments: test -DiHubTest.failFast=true --scan
+          arguments: test -DiHubTest.failFast=true
 
       - name: Upload Coverage Reports
         if: ${{ github.repository_owner == 'ihub-pub' }}
