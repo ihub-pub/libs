@@ -41,7 +41,7 @@ dependencies {
             "com.baomidou:mybatis-plus-boot-starter:${libs.versions.mybatis.plus.get()}",
             "com.baomidou:mybatis-plus-generator:${libs.versions.mybatis.plus.get()}",
             'com.athaydes:spock-reports:2.5.0-groovy-4.0',
-            'com.google.auto.service:auto-service:1.1.0',
+            'com.google.auto.service:auto-service:1.1.1',
             'com.google.testing.compile:compile-testing:0.21.0',
             'net.ltgt.gradle.incap:incap:1.0.0',
             'net.ltgt.gradle.incap:incap-processor:1.0.0',
