@@ -22,7 +22,7 @@ dependencies {
         platform('org.springframework.cloud:spring-cloud-dependencies:2022.0.3'),
         platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1'),
         platform('de.codecentric:spring-boot-admin-dependencies:3.1.0'),
-        platform('com.google.guava:guava-bom:32.0.1-jre'),
+        platform('com.google.guava:guava-bom:32.1.0-jre'),
         platform('com.google.inject:guice-bom:7.0.0'),
         platform('org.axonframework:axon-bom:4.7.4'),
         platform('org.springframework.boot:spring-boot-dependencies:3.1.1'),
