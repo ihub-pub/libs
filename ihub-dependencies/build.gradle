@@ -28,7 +28,7 @@ dependencies {
         platform('org.springframework.boot:spring-boot-dependencies:3.1.1'),
         platform('io.quarkus:quarkus-bom:3.2.0.Final'),
         platform('org.springdoc:springdoc-openapi:2.1.0'),
-        platform('cn.dev33:sa-token-dependencies:1.34.0')
+        platform('cn.dev33:sa-token-dependencies:1.35.0')
     // 配置组件版本
     constraints {
         api rootProject
