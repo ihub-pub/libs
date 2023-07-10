@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-description = '核心组件'
+description = "核心组件"
 
 dependencies {
-    compileOnly 'org.springframework.boot:spring-boot'
-    api 'cn.hutool:hutool-core'
+    compileOnly("org.springframework.boot:spring-boot")
+    api("cn.hutool:hutool-core")
 
-    testImplementation 'org.springframework.boot:spring-boot'
-    testImplementation 'cn.hutool:hutool-core'
+    testImplementation("org.springframework.boot:spring-boot")
+    testImplementation("cn.hutool:hutool-core")
 }
