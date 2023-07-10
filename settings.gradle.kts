@@ -13,21 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import pub.ihub.plugin.IHubSettingsExtension
+
 plugins {
-    id 'pub.ihub.plugin.ihub-settings' version '1.3.4-rc1'
+    id("pub.ihub.plugin.ihub-settings") version "1.3.4-rc3"
 }
 
-dependencyResolutionManagement {
-    versionCatalogs {
-        libs {
-            from files('libs.versions.toml')
-        }
-    }
-}
-
-iHubSettings {
-    includeProjects 'ihub-dependencies' prefix ''
-    includeProjects 'ihub-core', 'ihub-process' prefix '' skippedDirs 'doc' subproject
-    includeProjects 'ihub-starter' prefix 'ihub-boot-' suffix '-spring-boot-starter' onlySubproject
-//    includeProjects 'ihub-sso' prefix '' subproject '-spring-boot-starter'
+configure<IHubSettingsExtension> {
+    includeProjects("ihub-dependencies")
+    includeProjects("ihub-core", "ihub-process").skippedDirs("doc").subproject
+    includeProjects("ihub-starter").prefix("ihub-boot-").suffix("-spring-boot-starter").onlySubproject
+//    includeProjects "ihub-sso" subproject "-spring-boot-starter"
 }
