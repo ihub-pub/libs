@@ -6,7 +6,7 @@ dependencies {
     runtimeOnly 'cn.dev33:sa-token-spring-boot-starter'
 
     // 第三方登录组件
-    implementation  'me.zhyd.oauth:JustAuth'
+    implementation  libs.justauth
 
     // 前端页面静态资源
     implementation  'org.springframework.boot:spring-boot-starter-thymeleaf',
