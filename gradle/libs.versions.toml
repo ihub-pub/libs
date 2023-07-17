@@ -14,7 +14,7 @@ sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.35.0.RC' }
 guava-bom = { module = 'com.google.guava:guava-bom', version = '32.1.1-jre' }
 guice-bom = { module = 'com.google.inject:guice-bom', version = '7.0.0' }
 axon-bom = { module = 'org.axonframework:axon-bom', version = '4.8.0' }
-spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version = '3.1.1' }
+spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version = '3.1.2' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version = '2022.0.3' }
 spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version = '2021.1' }
 spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version = '3.1.1' }
