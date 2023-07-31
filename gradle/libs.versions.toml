@@ -81,8 +81,8 @@ pmd = { module = 'com.alibaba.p3c:p3c-pmd', version = '2.1.1' }
 # other libs
 hutool-all = { module = 'cn.hutool:hutool-all', version.ref = 'hutool' }
 fastjson = { module = 'com.alibaba.fastjson2:fastjson2', version = 'fastjson' }
-fastjson-extension = { module = 'com.alibaba.fastjson2:fastjson2-extension', version = 'fastjson' }
-fastjson-extension-spring = { module = 'com.alibaba.fastjson2:fastjson2-extension-spring6', version = 'fastjson' }
+2.0.38-extension = { module = 'com.alibaba.2.0.382:2.0.382-extension', version = '2.0.38' }
+2.0.38-extension-spring = { module = 'com.alibaba.2.0.382:2.0.382-extension-spring6', version = '2.0.38' }
 fastjson-kotlin = { module = 'com.alibaba.fastjson2:fastjson2-kotlin', version = 'fastjson' }
 fastjson1 = { module = 'com.alibaba:fastjson', version = 'fastjson' }
 justauth = { module = 'me.zhyd.oauth:JustAuth', version = '1.16.5' }
