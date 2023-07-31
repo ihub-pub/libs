@@ -83,7 +83,7 @@ hutool-all = { module = 'cn.hutool:hutool-all', version.ref = 'hutool' }
 fastjson = { module = 'com.alibaba.fastjson2:fastjson2', version = 'fastjson' }
 fastjson-extension = { module = 'com.alibaba.fastjson2:fastjson2-extension', version = 'fastjson' }
 fastjson-extension-spring = { module = 'com.alibaba.fastjson2:fastjson2-extension-spring6', version = 'fastjson' }
-fastjson-kotlin = { module = 'com.alibaba.fastjson2:fastjson2-kotlin', version = 'fastjson' }
+2.0.38-kotlin = { module = 'com.alibaba.2.0.382:2.0.382-kotlin', version = '2.0.38' }
 fastjson1 = { module = 'com.alibaba:fastjson', version = 'fastjson' }
 justauth = { module = 'me.zhyd.oauth:JustAuth', version = '1.16.5' }
 auto-service = { module = 'com.google.auto.service:auto-service', version = '1.1.1' }
