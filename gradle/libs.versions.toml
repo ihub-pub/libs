@@ -3,7 +3,7 @@ hutool = '5.8.21'
 mybatis-plus = '3.5.3.1'
 mapstruct = '1.5.5.Final'
 incap = '1.0.0'
-fastjson = '2.0.38'
+fastjson2 = '2.0.38'
 
 [libraries]
 # bom libs
@@ -12,7 +12,7 @@ jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.0.0
 #spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.0.0-M1' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.3-groovy-4.0' }
 sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.35.0.RC' }
-guava-bom = { module = 'com.google.guava:guava-bom', version = '32.1.1-jre' }
+guava-bom = { module = 'com.google.guava:guava-bom', version = '32.1.2-jre' }
 guice-bom = { module = 'com.google.inject:guice-bom', version = '7.0.0' }
 axon-bom = { module = 'org.axonframework:axon-bom', version = '4.8.0' }
 spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version = '3.1.3' }
@@ -80,11 +80,11 @@ pmd = { module = 'com.alibaba.p3c:p3c-pmd', version = '2.1.1' }
 
 # other libs
 hutool-all = { module = 'cn.hutool:hutool-all', version.ref = 'hutool' }
-fastjson = { module = 'com.alibaba.fastjson2:fastjson2', version = 'fastjson' }
-fastjson-extension = { module = 'com.alibaba.fastjson2:fastjson2-extension', version = 'fastjson' }
-fastjson-extension-spring = { module = 'com.alibaba.fastjson2:fastjson2-extension-spring6', version = 'fastjson' }
-fastjson-kotlin = { module = 'com.alibaba.fastjson2:fastjson2-kotlin', version = 'fastjson' }
-fastjson1 = { module = 'com.alibaba:fastjson', version = 'fastjson' }
+fastjson = { module = 'com.alibaba.fastjson2:fastjson2', version = 'fastjson2' }
+fastjson-extension = { module = 'com.alibaba.fastjson2:fastjson2-extension', version = 'fastjson2' }
+fastjson-extension-spring = { module = 'com.alibaba.fastjson2:fastjson2-extension-spring6', version = 'fastjson2' }
+fastjson-kotlin = { module = 'com.alibaba.fastjson2:fastjson2-kotlin', version = 'fastjson2' }
+fastjson1 = { module = 'com.alibaba:fastjson', version = 'fastjson2' }
 justauth = { module = 'me.zhyd.oauth:JustAuth', version = '1.16.5' }
 auto-service = { module = 'com.google.auto.service:auto-service', version = '1.1.1' }
 compile-testing = { module = 'com.google.testing.compile:compile-testing', version = '0.21.0' }
