@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2021 Henry 李恒 (henry.box@outlook.com).
+ * Copyright (c) 2021-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 plugins {
-    `version-catalog`
     id("pub.ihub.plugin")
     id("pub.ihub.plugin.ihub-copyright")
     id("pub.ihub.plugin.ihub-git-hooks")
@@ -24,23 +23,16 @@ plugins {
 }
 
 subprojects {
-    if (listOf("ihub-bom", "ihub-dependencies").contains(project.name)) {
-        return@subprojects
-    }
+    !project.pluginManager.hasPlugin("java-platform") || return@subprojects
     apply {
         plugin("pub.ihub.plugin.ihub-java")
         plugin("pub.ihub.plugin.ihub-test")
         plugin("pub.ihub.plugin.ihub-verification")
         plugin("pub.ihub.plugin.ihub-publish")
     }
+    // TODO
     iHubBom.bomVersions.clear()
     dependencies {
-        platform(project(":ihub-dependencies")).let {
-            "implementation"(it)
-            "pmd"(it)
-            "annotationProcessor"(it)
-            "testAnnotationProcessor"(it)
-        }
         if (project.name != "ihub-core") {
             "api"(project(":ihub-core"))
         }
@@ -57,10 +49,4 @@ iHubGitHooks {
         "pre-commit" to "./gradlew build",
         "commit-msg" to "./gradlew commitCheck"
     ))
-}
-
-catalog {
-    versionCatalog {
-        from(files("gradle/libs.versions.toml"))
-    }
 }
