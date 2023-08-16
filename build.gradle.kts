@@ -30,7 +30,6 @@ subprojects {
         plugin("pub.ihub.plugin.ihub-verification")
         plugin("pub.ihub.plugin.ihub-publish")
     }
-    // TODO
     iHubBom.bomVersions.clear()
     dependencies {
         if (project.name != "ihub-core") {
