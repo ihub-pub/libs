@@ -15,9 +15,9 @@ sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.35.0.RC' }
 guava-bom = { module = 'com.google.guava:guava-bom', version = '32.1.2-jre' }
 guice-bom = { module = 'com.google.inject:guice-bom', version = '7.0.0' }
 axon-bom = { module = 'org.axonframework:axon-bom', version = '4.8.1' }
-spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version = '3.1.4' }
+spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version = '2.7.10' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version = '2022.0.4' }
-spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version = '2022.0.0.0' }
+spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version = '2021.0.8' }
 spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version = '2.7.14' }
 quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.2.4.Final' }
 springdoc-openapi-dependencies = { module = 'org.springdoc:springdoc-openapi', version = '2.2.0' }
