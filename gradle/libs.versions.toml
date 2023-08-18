@@ -8,7 +8,7 @@ fastjson = '2.0.39'
 [libraries]
 # bom libs
 hutool-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool' }
-jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.0.0' }
+jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.1.0' }
 #spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.0.0-M1' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.3-groovy-4.0' }
 sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.35.0.RC' }
