@@ -77,7 +77,7 @@ jmolecules-archunit = { module = 'org.jmolecules.integrations:jmolecules-archuni
 # test libs
 junit-jupiter = { module = 'org.junit.jupiter:junit-jupiter' }
 spock-spring = { module = 'org.spockframework:spock-spring' }
-spock-reports = { module = 'com.athaydes:spock-reports', version = '2.5.0-groovy-4.0' }
+spock-reports = { module = 'com.athaydes:spock-reports', version = '2.5.1-groovy-4.0' }
 spring-boot-starter-test = { module = 'org.springframework.boot:spring-boot-starter-test' }
 # verification libs
 pmd = { module = 'com.alibaba.p3c:p3c-pmd', version = '2.1.1' }
