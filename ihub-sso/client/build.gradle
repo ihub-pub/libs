@@ -1,9 +1,0 @@
-description = 'SSO模块客户端组件'
-
-iHubJava {
-    registerFeature 'client'
-}
-
-dependencies {
-    clientImplementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-}

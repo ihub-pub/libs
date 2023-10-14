@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2023 the original author or authors.
+ * Copyright (c) 2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import pub.ihub.plugin.IHubSettingsExtension
 
-plugins {
-    id("pub.ihub.plugin.ihub-settings") version "1.5.0-rc1"
+description = "SSO模块客户端组件"
+
+iHubJava {
+    registerFeature("client")
 }
 
-configure<IHubSettingsExtension> {
-    includeProjects("ihub-core", "ihub-process").skippedDirs("doc").subproject
-    includeProjects("ihub-starter").prefix("ihub-boot-").suffix("-spring-boot-starter").onlySubproject
-    includeProjects("ihub-sso").subproject.suffix("-spring-boot-starter")
+dependencies {
+    "clientImplementation"("org.springframework.cloud:spring-cloud-starter-openfeign")
 }

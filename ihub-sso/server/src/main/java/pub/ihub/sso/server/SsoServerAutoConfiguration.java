@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2022 Henry 李恒 (henry.box@outlook.com).
+ * Copyright (c) 2022-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,6 +17,7 @@ package pub.ihub.sso.server;
 
 import cn.dev33.satoken.context.SaHolder;
 import cn.hutool.captcha.ICaptcha;
+import jakarta.servlet.http.HttpServletRequest;
 import me.zhyd.oauth.cache.AuthCacheConfig;
 import me.zhyd.oauth.cache.AuthStateCache;
 import me.zhyd.oauth.model.AuthUser;
@@ -32,7 +33,6 @@ import org.springframework.data.redis.core.ValueOperations;
 import pub.ihub.cloud.CloudAutoConfiguration;
 
 import javax.security.auth.login.FailedLoginException;
-import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
