@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2022 Henry 李恒 (henry.box@outlook.com).
+ * Copyright (c) 2022-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +16,7 @@
 package pub.ihub.sso.resource;
 
 import cn.dev33.satoken.filter.SaServletFilter;
-import cn.dev33.satoken.id.SaIdUtil;
+import cn.dev33.satoken.same.SaSameUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -39,7 +39,7 @@ public class SsoResourceAutoConfiguration {
 	@ConditionalOnMissingBean
 	public SaServletFilter getSaServletFilter() {
 		return new SaServletFilter().addInclude("/**")
-			.setAuth(obj -> SaIdUtil.checkCurrentRequestToken())
+			.setAuth(obj -> SaSameUtil.checkCurrentRequestToken())
 			.setError(e -> Result.error(e.getMessage()));
 	}
 

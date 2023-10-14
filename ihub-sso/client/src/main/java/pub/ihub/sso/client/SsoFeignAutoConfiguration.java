@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2022 Henry 李恒 (henry.box@outlook.com).
+ * Copyright (c) 2022-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,7 @@
  */
 package pub.ihub.sso.client;
 
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.id.SaIdUtil;
+import cn.dev33.satoken.same.SaSameUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
@@ -44,9 +43,9 @@ public class SsoFeignAutoConfiguration {
 	public RequestInterceptor idTokenInterceptor() {
 		return (RequestTemplate requestTemplate) -> {
 			// 传递登录状态
-			requestTemplate.header(SaManager.config.getTokenName(), StpUtil.getTokenValue());
+			requestTemplate.header(StpUtil.getTokenName(), StpUtil.getTokenValue());
 			// 内部调用隔离token
-			requestTemplate.header(SaIdUtil.ID_TOKEN, SaIdUtil.getToken());
+			requestTemplate.header(SaSameUtil.SAME_TOKEN, SaSameUtil.getToken());
 		};
 	}
 

@@ -23,7 +23,7 @@ plugins {
 }
 
 subprojects {
-    !project.pluginManager.hasPlugin("java-platform") || return@subprojects
+    !project.pluginManager.hasPlugin("java-platform") && project.name != "ihub-sso" || return@subprojects
     apply {
         plugin("pub.ihub.plugin.ihub-java")
         plugin("pub.ihub.plugin.ihub-test")
