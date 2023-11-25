@@ -27,7 +27,7 @@ dependencies {
 
     // 前端页面静态资源
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-    implementation("org.webjars:layui:2.6.8")
-    implementation("org.webjars:jquery:3.6.0")
+    implementation("org.webjars:layui:2.8.18")
+    implementation("org.webjars:jquery:3.7.1")
     implementation("org.webjars.npm:crypto-js:4.1.1")
 }
