@@ -13,7 +13,7 @@ spring-boot-admin = '3.1.8'
 # bom libs
 hutool-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool' }
 jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.1.1' }
-spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.1.0' }
+spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.1.1' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.3-groovy-4.0' }
 sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.37.0' }
 guava-bom = { module = 'com.google.guava:guava-bom', version = '33.0.0-jre' }
