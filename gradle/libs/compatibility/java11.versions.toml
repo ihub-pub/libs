@@ -1,5 +1,5 @@
 [versions]
-spring-boot = '2.7.17'
+spring-boot = '2.7.18'
 spring-cloud = '2021.0.8'
 spring-cloud-alibaba = '2021.1'
 spring-boot-admin = '2.7.10'
