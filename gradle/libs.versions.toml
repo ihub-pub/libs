@@ -1,6 +1,6 @@
 [versions]
 hutool = '5.8.24'
-mybatis-plus = '3.5.4.1'
+mybatis-plus = '3.5.5'
 mapstruct = '1.5.5.Final'
 incap = '1.0.0'
 fastjson = '2.0.44'
