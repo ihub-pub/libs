@@ -1,13 +1,16 @@
-name: Gradle Dependency Submission
+name: Gradle Dependency Graph
 on:
   schedule:
-    - cron: '0 16 * * *'
+    - cron: '0 */6 * * *'
+  push:
+    branches: main
 
 permissions:
   contents: read
 
 jobs:
   gradle-action-detection:
+    if: ${{ github.repository_owner == 'ihub-pub' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -20,14 +23,9 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - name: Set up JDK 17
-        uses: actions/setup-java@387ac29b308b003ca37ba93a6cab5eb57c8f5f93 # v4.0.0
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-          cache: 'gradle'
 
-      - name: Gradle Dependency Submission
-        uses: mikepenz/gradle-dependency-submission@03725509c6bfb27fc9c924fbe5d38a7d3c82e1b5 # v1
+      - name: Setup Gradle to generate and submit dependency graphs
+        uses: gradle/gradle-build-action@982da8e78c05368c70dac0351bb82647a9e9a5d2 # v2.11.1
         with:
-          use-gradlew: false
+          dependency-graph: generate-and-submit
+          arguments: dependencies
