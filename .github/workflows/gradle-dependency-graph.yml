@@ -24,6 +24,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
+      - name: Chmod
+        run: chmod +x ./gradlew
+
       - name: Setup Gradle to generate and submit dependency graphs
         uses: gradle/gradle-build-action@982da8e78c05368c70dac0351bb82647a9e9a5d2 # v2.11.1
         with:
