@@ -25,7 +25,7 @@ spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-de
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
 spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version.ref = 'spring-cloud-alibaba' }
 spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
-quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.6.6' }
+quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.6.7' }
 springdoc-openapi-dependencies = { module = 'org.springdoc:springdoc-openapi', version = '2.3.0' }
 
 # log libs
