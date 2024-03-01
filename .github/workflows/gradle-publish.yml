@@ -22,14 +22,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Set up JDK ${{ matrix.java_version }}
-        uses: actions/setup-java@387ac29b308b003ca37ba93a6cab5eb57c8f5f93 # v4.0.0
+        uses: actions/setup-java@9704b39bf258b59bc04b50fa2dd55e9ed76b47a8 # v4.1.0
         with:
           java-version: ${{ matrix.java_version }}
           distribution: 'adopt'
           cache: 'gradle'
 
       - name: Publish to Central Repository
-        uses: ihub-pub/bot/publish@d41bb676240a8b630767fbd1052aa37a39171f9e # v1.0.5
+        uses: ihub-pub/bot/publish@589999ea8b8b2801650a3596a7477db0399bee09 # v2.0.0
         with:
           repoUsername: ${{ secrets.REPO_USERNAME }}
           repoPassword: ${{ secrets.REPO_PASSWORD }}
