@@ -1,9 +1,11 @@
 name: ESLint
 on:
-  push:
-    branches: main
-  pull_request:
-    branches: main
+  schedule:
+    - cron: '0 18 * * *'
+#  push:
+#    branches: main
+#  pull_request:
+#    branches: main
 
 permissions:
   contents: read
