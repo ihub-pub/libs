@@ -4,10 +4,10 @@ mybatis-plus = '3.5.5'
 mapstruct = '1.5.5.Final'
 incap = '1.0.0'
 fastjson = '2.0.47'
-spring-boot = '3.2.3'
+spring-boot = '3.2.4'
 spring-cloud = '2023.0.0'
 spring-cloud-alibaba = '2022.0.0.0'
-spring-boot-admin = '3.2.2'
+spring-boot-admin = '3.2.3'
 
 [libraries]
 # bom libs
@@ -16,8 +16,8 @@ jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.1.2
 spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.1.3' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.3-groovy-4.0' }
 sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.37.0' }
-okio-bom = { module = 'com.squareup.okio:okio-bom', version = '3.8.0' }
-guava-bom = { module = 'com.google.guava:guava-bom', version = '33.0.0-jre' }
+okio-bom = { module = 'com.squareup.okio:okio-bom', version = '3.9.0' }
+guava-bom = { module = 'com.google.guava:guava-bom', version = '33.1.0-jre' }
 guice-bom = { module = 'com.google.inject:guice-bom', version = '7.0.0' }
 axon-bom = { module = 'org.axonframework:axon-bom', version = '4.9.4' }
 asm-bom = { module = 'org.ow2.asm:asm-bom', version = '9.6' }
@@ -25,8 +25,8 @@ spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-de
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
 spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version.ref = 'spring-cloud-alibaba' }
 spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
-quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.8.2' }
-springdoc-openapi-dependencies = { module = 'org.springdoc:springdoc-openapi', version = '2.3.0' }
+quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.9.0' }
+springdoc-openapi-dependencies = { module = 'org.springdoc:springdoc-openapi', version = '2.4.0' }
 
 # log libs
 commons-logging = { module = 'commons-logging:commons-logging' }
