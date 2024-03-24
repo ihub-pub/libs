@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2023 the original author or authors.
+ * Copyright (c) 2021-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,10 +35,11 @@ subprojects {
             "api"(project(":ihub-core"))
         }
         if (project.name.endsWith("-spring-boot-starter")) {
+            "implementation"("pub.ihub.integration:ihub-core")
             "implementation"("org.springframework.boot:spring-boot-autoconfigure")
-            "annotationProcessor"(project(":ihub-process:ihub-process-boot"))
+            "annotationProcessor"("pub.ihub.integration:ihub-process-plugin")
+            "annotationProcessor"("org.springframework.boot:spring-boot-autoconfigure-processor")
         }
-        "annotationProcessor"("org.springframework.boot:spring-boot-autoconfigure-processor")
     }
 }
 
