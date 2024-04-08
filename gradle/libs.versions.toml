@@ -1,6 +1,6 @@
 [versions]
 hutool = '5.8.27'
-mybatis-plus = '3.5.5'
+mybatis-plus = '3.5.6'
 mapstruct = '1.5.5.Final'
 fastjson = '2.0.48'
 spring-boot = '3.2.4'
