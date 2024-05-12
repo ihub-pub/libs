@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023 the original author or authors.
+ * Copyright (c) 2022-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 package pub.ihub.sso.client;
 
 import cn.dev33.satoken.filter.SaServletFilter;
-import cn.dev33.satoken.sso.SaSsoProcessor;
+import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
 import cn.hutool.core.builder.GenericBuilder;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -47,7 +47,7 @@ public class SsoClientAutoConfiguration {
 	@Bean
 	public Filter ssoFilter() {
 		return (ServletRequest request, ServletResponse response, FilterChain chain) -> {
-			Object object = SaSsoProcessor.instance.clientDister();
+			Object object = SaSsoClientProcessor.instance.dister();
 			if (object instanceof String) {
 				response.getWriter().write(object.toString());
 			}

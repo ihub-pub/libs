@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 the original author or authors.
+ * Copyright (c) 2023-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ dependencies {
     implementation("cn.hutool:hutool-all")
 
     // 第三方登录组件
-    implementation(libs.justauth)
+    implementation("me.zhyd.oauth:JustAuth")
 
     // 前端页面静态资源
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")

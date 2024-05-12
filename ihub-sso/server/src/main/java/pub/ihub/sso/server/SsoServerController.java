@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023 the original author or authors.
+ * Copyright (c) 2022-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  */
 package pub.ihub.sso.server;
 
-import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.sso.SaSsoProcessor;
+import cn.dev33.satoken.sso.config.SaSsoServerConfig;
+import cn.dev33.satoken.sso.processor.SaSsoServerProcessor;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ICaptcha;
@@ -64,7 +64,7 @@ public class SsoServerController {
 	 */
 	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
-		return SaSsoProcessor.instance.serverDister();
+		return SaSsoServerProcessor.instance.dister();
 	}
 
 	/**
@@ -122,17 +122,17 @@ public class SsoServerController {
 	}
 
 	@Autowired
-	private void configSso(SaSsoConfig cfg, @Autowired(required = false) List<SsoLoginTicketHandle> ticketHandles,
+	private void configSso(SaSsoServerConfig cfg, @Autowired(required = false) List<SsoLoginTicketHandle> ticketHandles,
 						   SsoUserDetailsService<?> userService) {
-		cfg.setNotLoginView(() -> new ModelAndView("login.html", new HashMap<>(4) {{
+		cfg.notLoginView = () -> new ModelAndView("login.html", new HashMap<>(4) {{
 			put("title", ssoProperties.getTitle());
 			put("copyright", ssoProperties.getCopyright());
 			put("icon", ssoProperties.getIcon());
 			put("socialAuths", ssoProperties.getAuthSource());
 			put("captchaEnabled", captchaProperties.isEnabled());
-		}}));
+		}});
 
-		cfg.setDoLoginHandle((name, pwd) -> {
+		cfg.doLoginHandle = (name, pwd) -> {
 			// 前置检查用于一些额外认证，如：验证码
 			if (ObjectUtil.isNotEmpty(ticketHandles)) {
 				try {
@@ -164,7 +164,7 @@ public class SsoServerController {
 				return Result.error("账号或者密码错误！");
 			}
 			return Result.error("登录失败！");
-		});
+		};
 	}
 
 	private AuthRequest getAuthRequest(String source) {
