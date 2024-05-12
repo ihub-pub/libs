@@ -1,6 +1,6 @@
 [versions]
 hutool-v5 = '5.8.27'
-hutool = '6.0.0-M12'
+hutool = '6.0.0.M3'
 mapstruct = '1.5.5.Final'
 spring-boot = '3.2.5'
 spring-cloud = '2023.0.1'
