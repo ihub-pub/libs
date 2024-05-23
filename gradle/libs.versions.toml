@@ -25,7 +25,7 @@ asm-bom = { module = 'org.ow2.asm:asm-bom', version = '9.7' }
 spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
 spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
-dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version = '3.2.5.4' }
+dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version = '3.2.6.0' }
 quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.11.0' }
 
 # log libs
