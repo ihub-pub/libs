@@ -8,9 +8,6 @@
 ---
 
 <p align="center">
-    <a target="_blank" href="https://bestpractices.coreinfrastructure.org/projects/7036">
-        <img alt="CII Best Practices Level" src="https://badge.ihub.pub/cii/level/7036">
-    </a>
     <a target="_blank" href="https://github.com/ihub-pub/libs/actions/workflows/gradle-build.yml">
         <img src="https://badge.ihub.pub/github/actions/workflow/status/ihub-pub/libs/gradle-build.yml?branch=main&label=Build&logo=GitHub+Actions&logoColor=white" alt="Gradle Build"/>
     </a>
@@ -29,14 +26,8 @@
     <a target="_blank" href="https://gitee.com/ihub-pub/libs">
         <img src="https://badge.ihub.pub/badge/dynamic/json?url=https%3A%2F%2Fgitee.com%2Fapi%2Fv5%2Frepos%2Fihub-pub%2Flibs&query=%24.stargazers_count&style=flat&logo=gitee&label=stars&labelColor=c71d23&color=white&cacheSeconds=5000" alt="IHubPub"/>
     </a>
-    <a target="_blank" href="https://gitter.im/ihub-pub/libs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
-        <img alt="Gitter" src="https://badge.ihub.pub/gitter/room/ihub-pub/libs?color=white&label=&labelColor=45AF90&logo=Gitter&logoColor=white">
-    </a>
     <a target="_blank" href="https://javadoc.io/doc/pub.ihub.lib">
         <img alt="Java Doc" src="https://javadoc.io/badge2/pub.ihub.lib/ihub-core/javadoc.svg?color=white&labelColor=8CA1AF&label=Docs&logo=readthedocs&logoColor=white">
-    </a>
-    <a target="_blank" href="https://s01.oss.sonatype.org/content/repositories/snapshots/pub/ihub/lib">
-        <img src="https://badge.ihub.pub/maven-metadata/v?color=white&labelColor=E33332&label=Snapshot&logo=Testing+Library&logoColor=white&metadataUrl=https%3A%2F%2Fs01.oss.sonatype.org%2Fcontent%2Frepositories%2Fsnapshots%2Fpub%2Fihub%2Flib%2Fihub-bom%2Fmaven-metadata.xml" alt="IHub Snapshot Repository"/>
     </a>
     <a target="_blank" href="https://mvnrepository.com/artifact/pub.ihub.lib">
         <img src="https://badge.ihub.pub/maven-central/v/pub.ihub.lib/ihub-bom?color=white&labelColor=C71A36&label=Maven&logo=Apache+Maven&logoColor=white" alt="Maven Central"/>
