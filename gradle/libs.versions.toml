@@ -1,5 +1,5 @@
 [versions]
-hutool-v5 = '5.8.27'
+hutool-v5 = '5.8.28'
 hutool = '6.0.0-M12'
 mapstruct = '1.5.5.Final'
 spring-boot = '3.3.0'
