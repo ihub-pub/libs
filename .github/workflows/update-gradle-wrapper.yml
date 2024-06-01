@@ -33,7 +33,7 @@ jobs:
           commit-message: "build(deps): Update gradle to ${{ steps.gradleUpdate.outputs.gradle-version }}"
           branch: "gradle_update/version_${{ steps.gradleUpdate.outputs.gradle-version }}"
           delete-branch: true
-          title: "Update gradle to ${{ steps.gradleUpdate.outputs.gradle-version }}"
+          title: "build(deps): Update gradle to ${{ steps.gradleUpdate.outputs.gradle-version }}"
           body: |
             ${{ steps.gradleUpdate.outputs.version-information }}
 
