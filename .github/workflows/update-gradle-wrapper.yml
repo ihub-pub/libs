@@ -5,6 +5,10 @@ on:
     - cron: "0 0 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   update-gradle-wrapper:
     runs-on: ubuntu-latest
@@ -26,4 +30,6 @@ jobs:
       - name: Update Gradle Wrapper
         uses: gradle-update/update-gradle-wrapper-action@v1.0.20
         with:
+          labels: dependencies, gradle
+          pr-title-template: 'build(deps): Bump Gradle Wrapper from %sourceVersion% to %targetVersion%'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
