@@ -1,4 +1,4 @@
-name: Gradle wrapper update
+name: Gradle Wrapper Update
 
 on:
   schedule:
