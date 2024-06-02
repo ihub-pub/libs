@@ -1,8 +1,7 @@
 {
   "groups": [
     {
-      "name": "ihub.cloud",
-      "description ": "服务相关配置"
+      "name": "ihub.cloud"
     }
   ],
   "properties": [
