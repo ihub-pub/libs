@@ -4,7 +4,7 @@ hutool = '6.0.0-M12'
 mapstruct = '1.5.5.Final'
 spring-boot = '3.3.0'
 spring-cloud = '2023.0.2'
-spring-boot-admin = '3.3.1'
+spring-boot-admin = '3.3.2'
 
 [libraries]
 # bom libs
