@@ -13,7 +13,7 @@ ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.1.1' }
 hutool-v5-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool-v5' }
 hutool-bom = { module = 'org.dromara.hutool:hutool-bom', version.ref = 'hutool' }
 jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.1.3' }
-mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.6' }
+mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.7' }
 spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.2.0' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.3-groovy-4.0' }
 sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.38.0' }
