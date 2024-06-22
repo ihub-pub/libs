@@ -1,8 +1,7 @@
 {
   "groups": [
     {
-      "name": "ihub.sso",
-      "description ": "SSO客户端配置属性"
+      "name": "ihub.sso"
     }
   ],
   "properties": [
