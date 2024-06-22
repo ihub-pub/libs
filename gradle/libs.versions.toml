@@ -85,7 +85,7 @@ platform = [
     'ihub-integration-bom', 'ihub-module-bom', 'hutool-bom',
     'hutool-v5-bom', 'jmolecules-bom', 'spock-bom', 'sa-token-bom', 'okio-bom', 'asm-bom', 'guava-bom', 'guice-bom',
     'mybatis-plus-bom', 'spring-modulith-bom', 'axon-bom', 'spring-boot-admin-dependencies', 'spring-cloud-dependencies',
-    'spring-boot-dependencies', 'dante-cloud-dependencies', 'quarkus-dependencies'
+    'spring-boot-dependencies', 'dante-cloud-dependencies'
 ]
 constraints = [
     'hutool-v5-all', 'hutool-all', 'pmd', 'spock-reports', 'mapstruct', 'mapstruct-processor'
