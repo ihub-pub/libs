@@ -1,6 +1,6 @@
 [versions]
 hutool-v5 = '5.8.28'
-hutool = '6.0.0-M12'
+hutool = '6.0.0-M13'
 mapstruct = '1.5.5.Final'
 spring-boot = '3.3.1'
 spring-cloud = '2023.0.2'
@@ -15,6 +15,7 @@ hutool-bom = { module = 'org.dromara.hutool:hutool-bom', version.ref = 'hutool' 
 jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.1.3' }
 mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.7' }
 spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.2.1' }
+spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.0.0-M1' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.3-groovy-4.0' }
 sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.38.0' }
 okio-bom = { module = 'com.squareup.okio:okio-bom', version = '3.9.0' }
@@ -84,8 +85,8 @@ hutool-all = { module = 'org.dromara.hutool:hutool-all', version.ref = 'hutool' 
 platform = [
     'ihub-integration-bom', 'ihub-module-bom', 'hutool-bom',
     'hutool-v5-bom', 'jmolecules-bom', 'spock-bom', 'sa-token-bom', 'okio-bom', 'asm-bom', 'guava-bom', 'guice-bom',
-    'mybatis-plus-bom', 'spring-modulith-bom', 'axon-bom', 'spring-boot-admin-dependencies', 'spring-cloud-dependencies',
-    'spring-boot-dependencies', 'dante-cloud-dependencies'
+    'mybatis-plus-bom', 'spring-modulith-bom', 'spring-ai-bom', 'axon-bom', 'spring-boot-admin-dependencies',
+    'spring-cloud-dependencies', 'spring-boot-dependencies', 'dante-cloud-dependencies'
 ]
 constraints = [
     'hutool-v5-all', 'hutool-all', 'pmd', 'spock-reports', 'mapstruct', 'mapstruct-processor'
