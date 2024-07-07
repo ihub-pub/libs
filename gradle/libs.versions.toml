@@ -1,14 +1,19 @@
 [versions]
+hutool-v5 = '5.8.29'
+hutool = '6.0.0-M14'
 mapstruct = '1.5.5.Final'
+fastjson = '2.0.50'
 spring-boot = '3.3.1'
 spring-cloud = '2023.0.2'
+spring-cloud-alibaba = '2023.0.1.0'
 spring-boot-admin = '3.3.2'
 
 [libraries]
 # bom libs
 ihub-integration-bom = { module = 'pub.ihub.integration:ihub-bom', version = '0.1.5' }
 ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.1.2' }
-hutool-bom = { module = 'org.dromara.hutool:hutool-bom', version = '6.0.0.M3' }
+hutool-v5-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool-v5' }
+hutool-bom = { module = 'org.dromara.hutool:hutool-bom', version.ref = 'hutool' }
 jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.1.3' }
 mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.7' }
 spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.2.1' }
@@ -23,8 +28,8 @@ axon-bom = { module = 'org.axonframework:axon-bom', version = '4.9.4' }
 asm-bom = { module = 'org.ow2.asm:asm-bom', version = '9.7' }
 spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
+spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version.ref = 'spring-cloud-alibaba' }
 spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
-dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version = '3.3.1.2' }
 quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.12.1' }
 
 # log libs
@@ -76,17 +81,25 @@ spring-boot-starter-test = { module = 'org.springframework.boot:spring-boot-star
 pmd = { module = 'com.alibaba.p3c:p3c-pmd', version = '2.1.1' }
 
 # other libs
-hutool-all = { module = 'cn.hutool:hutool-all', version = '5.8.29' }
+hutool-v5-all = { module = 'cn.hutool:hutool-all', version.ref = 'hutool-v5' }
+hutool-all = { module = 'org.dromara.hutool:hutool-all', version.ref = 'hutool' }
+fastjson = { module = 'com.alibaba.fastjson2:fastjson2', version.ref = 'fastjson' }
+fastjson-extension = { module = 'com.alibaba.fastjson2:fastjson2-extension', version.ref = 'fastjson' }
+fastjson-extension-spring = { module = 'com.alibaba.fastjson2:fastjson2-extension-spring6', version.ref = 'fastjson' }
+fastjson-kotlin = { module = 'com.alibaba.fastjson2:fastjson2-kotlin', version.ref = 'fastjson' }
+fastjson1 = { module = 'com.alibaba:fastjson', version.ref = 'fastjson' }
+justauth = { module = 'me.zhyd.oauth:JustAuth', version = '1.16.6' }
 
 [bundles]
 platform = [
     'ihub-integration-bom', 'ihub-module-bom', 'hutool-bom',
-    'jmolecules-bom', 'spock-bom', 'sa-token-bom', 'okio-bom', 'asm-bom', 'guava-bom', 'guice-bom',
+    'hutool-v5-bom', 'jmolecules-bom', 'spock-bom', 'sa-token-bom', 'okio-bom', 'asm-bom', 'guava-bom', 'guice-bom',
     'mybatis-plus-bom', 'spring-modulith-bom', 'spring-ai-bom', 'axon-bom', 'spring-boot-admin-dependencies',
-    'spring-cloud-dependencies', 'spring-boot-dependencies', 'dante-cloud-dependencies'
+    'spring-cloud-dependencies', 'spring-cloud-alibaba-dependencies', 'spring-boot-dependencies'
 ]
 constraints = [
-    'hutool-all', 'pmd', 'spock-reports', 'mapstruct', 'mapstruct-processor'
+    'hutool-v5-all', 'hutool-all', 'fastjson', 'fastjson-extension', 'fastjson-extension-spring', 'fastjson-kotlin', 'fastjson1',
+    'pmd', 'spock-reports', 'mapstruct', 'mapstruct-processor', 'justauth'
 ]
 groovy = [
     'groovy-core', 'groovy-datetime', 'groovy-dateutil', 'groovy-groovydoc', 'groovy-json',
