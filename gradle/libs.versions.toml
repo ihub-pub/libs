@@ -31,6 +31,7 @@ spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-d
 spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version.ref = 'spring-cloud-alibaba' }
 spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
 quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.12.1' }
+springdoc-openapi-dependencies = { module = 'org.springdoc:springdoc-openapi', version = '2.5.0' }
 
 # log libs
 commons-logging = { module = 'commons-logging:commons-logging' }
@@ -95,7 +96,7 @@ platform = [
     'ihub-integration-bom', 'ihub-module-bom', 'hutool-bom',
     'hutool-v5-bom', 'jmolecules-bom', 'spock-bom', 'sa-token-bom', 'okio-bom', 'asm-bom', 'guava-bom', 'guice-bom',
     'mybatis-plus-bom', 'spring-modulith-bom', 'spring-ai-bom', 'axon-bom', 'spring-boot-admin-dependencies',
-    'spring-cloud-dependencies', 'spring-cloud-alibaba-dependencies', 'spring-boot-dependencies'
+    'spring-cloud-dependencies', 'spring-cloud-alibaba-dependencies', 'spring-boot-dependencies', 'springdoc-openapi-dependencies'
 ]
 constraints = [
     'hutool-v5-all', 'hutool-all', 'fastjson', 'fastjson-extension', 'fastjson-extension-spring', 'fastjson-kotlin', 'fastjson1',
