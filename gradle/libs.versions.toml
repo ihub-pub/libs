@@ -5,7 +5,7 @@ mapstruct = '1.5.5.Final'
 fastjson = '2.0.51'
 spring-boot = '3.3.1'
 spring-cloud = '2023.0.3'
-spring-cloud-alibaba = '2023.0.1.0'
+spring-cloud-alibaba = '2023.0.1.2'
 spring-boot-admin = '3.3.2'
 
 [libraries]
