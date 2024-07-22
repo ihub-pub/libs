@@ -6,7 +6,7 @@ fastjson = '2.0.52'
 spring-boot = '3.3.2'
 spring-cloud = '2023.0.3'
 spring-cloud-alibaba = '2023.0.1.2'
-spring-boot-admin = '3.3.2'
+spring-boot-admin = '3.3.3'
 
 [libraries]
 # bom libs
