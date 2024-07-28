@@ -16,7 +16,7 @@
 import pub.ihub.plugin.IHubSettingsExtension
 
 plugins {
-    id("pub.ihub.plugin.ihub-settings") version "1.6.4"
+    id("pub.ihub.plugin.ihub-settings") version "1.6.5-rc2"
 }
 
 configure<IHubSettingsExtension> {
