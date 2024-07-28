@@ -84,36 +84,3 @@ jobs:
           path: |
             */build/reports/tests
           retention-days: 1
-
-  publish:
-    if: ${{ github.event_name == 'push' && github.repository_owner == 'ihub-pub' }}
-    needs: build
-    name: Publish to Snapshot Repository
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        java_version: [ 17 ]
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
-        with:
-          disable-sudo: true
-          egress-policy: audit
-
-      - name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-        with:
-          fetch-depth: 0
-      - name: Set up JDK ${{ matrix.java_version }}
-        uses: actions/setup-java@99b8673ff64fbf99d8d325f52d9a5bdedb8483e9 # v4.2.1
-        with:
-          java-version: ${{ matrix.java_version }}
-          distribution: 'adopt'
-          cache: 'gradle'
-
-      - name: Publish to Snapshot Repository
-        uses: ihub-pub/bot/publish@d120f0f34cd38f63262b1f6a41a3fb0bad69d51b # v2.0.4
-        with:
-          repoUsername: ${{ secrets.REPO_USERNAME }}
-          repoPassword: ${{ secrets.REPO_PASSWORD }}
-          useInferringVersion: true
