@@ -1,6 +1,6 @@
 [versions]
 hutool-v5 = '5.8.30'
-hutool = '6.0.0-M14'
+hutool = '6.0.0-M15'
 mapstruct = '1.5.5.Final'
 fastjson = '2.0.52'
 spring-boot = '3.3.2'
@@ -18,7 +18,7 @@ jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.1.4
 mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.7' }
 spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.2.2' }
 # spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.0.0-M1' }
-# spring-ai-bom = { module = 'group.springframework.ai:spring-ai-bom', version = '1.1.0' }
+spring-ai-bom = { module = 'io.github.pig-mesh.ai:spring-ai-bom', version = '1.2.1' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.3-groovy-4.0' }
 sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.38.0' }
 okio-bom = { module = 'com.squareup.okio:okio-bom', version = '3.9.0' }
@@ -95,7 +95,7 @@ justauth = { module = 'me.zhyd.oauth:JustAuth', version = '1.16.6' }
 platform = [
     'ihub-integration-bom', 'ihub-module-bom', 'hutool-bom',
     'hutool-v5-bom', 'jmolecules-bom', 'spock-bom', 'sa-token-bom', 'okio-bom', 'asm-bom', 'guava-bom', 'guice-bom',
-    'mybatis-plus-bom', 'spring-modulith-bom', 'axon-bom', 'spring-boot-admin-dependencies',
+    'mybatis-plus-bom', 'spring-modulith-bom', 'spring-ai-bom', 'axon-bom', 'spring-boot-admin-dependencies',
     'spring-cloud-dependencies', 'spring-cloud-alibaba-dependencies', 'spring-boot-dependencies', 'springdoc-openapi-dependencies'
 ]
 constraints = [
