@@ -22,7 +22,7 @@ spring-ai-bom = { module = 'io.github.pig-mesh.ai:spring-ai-bom', version = '1.2
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.3-groovy-4.0' }
 sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.38.0' }
 okio-bom = { module = 'com.squareup.okio:okio-bom', version = '3.9.0' }
-guava-bom = { module = 'com.google.guava:guava-bom', version = '33.2.1-jre' }
+guava-bom = { module = 'com.google.guava:guava-bom', version = '33.3.0-jre' }
 guice-bom = { module = 'com.google.inject:guice-bom', version = '7.0.0' }
 axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.0' }
 asm-bom = { module = 'org.ow2.asm:asm-bom', version = '9.7' }
