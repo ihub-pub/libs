@@ -24,7 +24,7 @@ sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.39.0' }
 okio-bom = { module = 'com.squareup.okio:okio-bom', version = '3.9.1' }
 guava-bom = { module = 'com.google.guava:guava-bom', version = '33.3.0-jre' }
 guice-bom = { module = 'com.google.inject:guice-bom', version = '7.0.0' }
-axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.0' }
+axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.1' }
 asm-bom = { module = 'org.ow2.asm:asm-bom', version = '9.7' }
 spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
