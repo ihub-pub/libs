@@ -2,11 +2,11 @@
 hutool-v5 = '5.8.32'
 hutool = '6.0.0-M17'
 mapstruct = '1.6.2'
-fastjson = '2.0.53'
+# fastjson = '2.0.53'
 spring-boot = '3.3.4'
 spring-cloud = '2023.0.3'
 # spring-cloud-alibaba = '2023.0.1.2'
-spring-boot-admin = '3.3.4'
+# spring-boot-admin = '3.3.4'
 
 [libraries]
 # bom libs
@@ -26,7 +26,7 @@ guava-bom = { module = 'com.google.guava:guava-bom', version = '33.3.1-jre' }
 guice-bom = { module = 'com.google.inject:guice-bom', version = '7.0.0' }
 axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.2' }
 asm-bom = { module = 'org.ow2.asm:asm-bom', version = '9.7.1' }
-spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
+# spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
 # spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version.ref = 'spring-cloud-alibaba' }
 spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
@@ -85,23 +85,22 @@ pmd = { module = 'com.alibaba.p3c:p3c-pmd', version = '2.1.1' }
 # other libs
 hutool-v5-all = { module = 'cn.hutool:hutool-all', version.ref = 'hutool-v5' }
 # hutool-all = { module = 'org.dromara.hutool:hutool-all', version.ref = 'hutool' }
-fastjson = { module = 'com.alibaba.fastjson2:fastjson2', version.ref = 'fastjson' }
-fastjson-extension = { module = 'com.alibaba.fastjson2:fastjson2-extension', version.ref = 'fastjson' }
-fastjson-extension-spring = { module = 'com.alibaba.fastjson2:fastjson2-extension-spring6', version.ref = 'fastjson' }
-fastjson-kotlin = { module = 'com.alibaba.fastjson2:fastjson2-kotlin', version.ref = 'fastjson' }
-fastjson1 = { module = 'com.alibaba:fastjson', version.ref = 'fastjson' }
-justauth = { module = 'me.zhyd.oauth:JustAuth', version = '1.16.6' }
+# fastjson = { module = 'com.alibaba.fastjson2:fastjson2', version.ref = 'fastjson' }
+# fastjson-extension = { module = 'com.alibaba.fastjson2:fastjson2-extension', version.ref = 'fastjson' }
+# fastjson-extension-spring = { module = 'com.alibaba.fastjson2:fastjson2-extension-spring6', version.ref = 'fastjson' }
+# fastjson-kotlin = { module = 'com.alibaba.fastjson2:fastjson2-kotlin', version.ref = 'fastjson' }
+# fastjson1 = { module = 'com.alibaba:fastjson', version.ref = 'fastjson' }
+# justauth = { module = 'me.zhyd.oauth:JustAuth', version = '1.16.6' }
 
 [bundles]
 platform = [
     'ihub-integration-bom', 'ihub-module-bom', 'hutool-bom',
     'jmolecules-bom', 'spock-bom', 'sa-token-bom', 'okio-bom', 'asm-bom', 'guava-bom', 'guice-bom',
-    'mybatis-plus-bom', 'spring-modulith-bom', 'spring-ai-bom', 'axon-bom', 'spring-boot-admin-dependencies',
+    'mybatis-plus-bom', 'spring-modulith-bom', 'spring-ai-bom', 'axon-bom',
     'spring-cloud-dependencies', 'spring-boot-dependencies', 'dante-cloud-dependencies'
 ]
 constraints = [
-    'hutool-v5-all', 'fastjson', 'fastjson-extension', 'fastjson-extension-spring', 'fastjson-kotlin', 'fastjson1',
-    'pmd', 'spock-reports', 'mapstruct', 'mapstruct-processor', 'justauth'
+    'hutool-v5-all', 'pmd', 'spock-reports', 'mapstruct', 'mapstruct-processor'
 ]
 groovy = [
     'groovy-core', 'groovy-datetime', 'groovy-dateutil', 'groovy-groovydoc', 'groovy-json',
