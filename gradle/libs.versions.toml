@@ -1,6 +1,6 @@
 [versions]
 hutool-v5 = '5.8.32'
-hutool = '6.0.0-M15'
+hutool = '6.0.0-M17'
 mapstruct = '1.6.2'
 fastjson = '2.0.53'
 spring-boot = '3.3.4'
