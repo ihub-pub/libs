@@ -30,7 +30,7 @@ asm-bom = { module = 'org.ow2.asm:asm-bom', version = '9.7.1' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
 # spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version.ref = 'spring-cloud-alibaba' }
 spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
-dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version = '3.3.4.3' }
+dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version = '3.3.5.0' }
 quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.16.0' }
 # springdoc-openapi-dependencies = { module = 'org.springdoc:springdoc-openapi', version = '2.6.0' }
 
