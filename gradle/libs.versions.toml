@@ -10,7 +10,7 @@ spring-cloud = '2023.0.3'
 
 [libraries]
 # bom libs
-ihub-integration-bom = { module = 'pub.ihub.integration:ihub-bom', version = '0.1.8' }
+ihub-integration-bom = { module = 'pub.ihub.integration:ihub-bom', version = '0.1.9' }
 ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.2.0' }
 # hutool-v5-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool-v5' }
 hutool-bom = { module = 'org.dromara.hutool:hutool-bom', version.ref = 'hutool' }
