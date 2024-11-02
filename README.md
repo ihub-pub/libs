@@ -21,7 +21,7 @@
         <img src="https://badge.ihub.pub/codecov/c/github/ihub-pub/libs?token=ZQ0WR3ZSWG&color=white&label=Codecov&labelColor=F01F7A&logo=Codecov&logoColor=white" alt="Codecov"/>
     </a>
     <a target="_blank" href="https://github.com/ihub-pub/libs">
-        <img src="https://badge.ihub.pub/github/stars/ihub-pub/libs?color=white&logo=GitHub&labelColor=181717&label=Stars" alt="IHubPub"/>
+        <img src="https://badge.ihub.pub/github/stars/ihub-pub/libs?color=white&style=flat&logo=GitHub&labelColor=181717&label=Stars" alt="IHubPub"/>
     </a>
     <a target="_blank" href="https://gitee.com/ihub-pub/libs">
         <img src="https://badge.ihub.pub/badge/dynamic/json?url=https%3A%2F%2Fgitee.com%2Fapi%2Fv5%2Frepos%2Fihub-pub%2Flibs&query=%24.stargazers_count&style=flat&logo=gitee&label=stars&labelColor=c71d23&color=white&cacheSeconds=5000" alt="IHubPub"/>
