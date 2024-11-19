@@ -71,7 +71,7 @@ jobs:
 
       - name: Upload Coverage Reports
         if: ${{ github.repository_owner == 'ihub-pub' }}
-        uses: codecov/codecov-action@5c47607acb93fed5485fdbf7232e8a31425f672a # v5.0.2
+        uses: codecov/codecov-action@05f5a9cfad807516dbbef9929c4a42df3eb78766 # v5.0.3
 
       - name: Publish Results to Testspace
         run: testspace */build/test-results/test/*.xml */build/reports/*/test/*.xml
