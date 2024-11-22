@@ -1,6 +1,6 @@
 [versions]
 mapstruct = '1.6.3'
-spring-boot = '3.3.5'
+spring-boot = '3.4.0'
 spring-cloud = '2023.0.3'
 dante-cloud = '3.3.5.1'
 
