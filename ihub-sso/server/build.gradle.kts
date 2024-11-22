@@ -20,14 +20,14 @@ dependencies {
 
     runtimeOnly("cn.dev33:sa-token-spring-boot3-starter")
 
-    implementation("cn.hutool:hutool-all")
+    implementation("cn.hutool:hutool-captcha")
 
     // 第三方登录组件
     implementation("me.zhyd.oauth:JustAuth")
 
     // 前端页面静态资源
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-    implementation("org.webjars:layui:2.9.10")
-    implementation("org.webjars:jquery:3.7.1")
-    implementation("org.webjars.npm:crypto-js:4.2.0")
+    implementation(libs.webjars.layui)
+    implementation(libs.webjars.jquery)
+    implementation(libs.webjars.crypto)
 }
