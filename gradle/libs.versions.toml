@@ -2,7 +2,7 @@
 mapstruct = '1.6.3'
 spring-boot = '3.4.0'
 spring-cloud = '2023.0.4'
-dante-cloud = '3.3.6.0'
+dante-cloud = '3.3.6.1'
 
 [libraries]
 # bom libs
