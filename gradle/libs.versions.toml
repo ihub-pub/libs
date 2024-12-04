@@ -20,7 +20,7 @@ dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', versio
 jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.2.1' }
 spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.3.0' }
 axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.3' }
-quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.17.2' }
+quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.17.3' }
 
 # log libs
 commons-logging = { module = 'commons-logging:commons-logging' }
