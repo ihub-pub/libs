@@ -19,7 +19,7 @@ dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', versio
 
 # native
 solon-bom = { module = 'org.noear:solon-parent', version = '3.0.4.1' }
-quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.17.3' }
+quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.17.4' }
 
 # ddd libs
 jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.2.1' }
