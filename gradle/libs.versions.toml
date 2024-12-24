@@ -2,7 +2,7 @@
 mapstruct = '1.6.3'
 spring-boot = '3.4.1'
 spring-cloud = '2024.0.0'
-dante-cloud = '3.4.0.1'
+dante-cloud = '3.4.1.0'
 pmd = '7.8.0'
 
 [libraries]
