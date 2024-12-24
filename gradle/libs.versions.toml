@@ -18,7 +18,7 @@ spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-depe
 dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version.ref = 'dante-cloud' }
 
 # native
-solon-bom = { module = 'org.noear:solon-parent', version = '3.0.4.1' }
+solon-bom = { module = 'org.noear:solon-parent', version = '3.0.5' }
 quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.17.5' }
 
 # ddd libs
