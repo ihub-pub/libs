@@ -15,7 +15,7 @@ therapi-javadoc = '0.15.0'
 [libraries]
 # bom libs
 ihub-integration-bom = { module = 'pub.ihub.integration:ihub-bom', version = '0.1.9' }
-ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.2.0' }
+ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.2.1' }
 #ruoyi-common-bom = { module = 'io.github.ihub-pub:ruoyi-common-bom', version = '5.X-SNAPSHOT' }
 hutool-v5-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool-v5' }
 hutool-bom = { module = 'org.dromara.hutool:hutool-bom', version.ref = 'hutool' }
