@@ -1,31 +1,46 @@
 [versions]
-mapstruct = '1.6.3'
+hutool-v5 = '5.8.35'
+hutool = '6.0.0-M19'
+mapstruct-plus = '1.4.6'
+fastjson = '2.0.53'
 spring-boot = '3.4.1'
 spring-cloud = '2024.0.0'
-dante-cloud = '3.4.1.0'
+spring-cloud-alibaba = '2023.0.3.2'
+spring-boot-admin = '3.4.1'
 pmd = '7.9.0'
+snailjob = '1.2.0'
+skywalking-toolkit = '9.3.0'
+therapi-javadoc = '0.15.0'
 
 [libraries]
 # bom libs
 ihub-integration-bom = { module = 'pub.ihub.integration:ihub-bom', version = '0.1.9' }
 ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.2.0' }
+#ruoyi-common-bom = { module = 'io.github.ihub-pub:ruoyi-common-bom', version = '5.X-SNAPSHOT' }
+hutool-v5-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool-v5' }
+hutool-bom = { module = 'org.dromara.hutool:hutool-bom', version.ref = 'hutool' }
+mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.9' }
 #spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.0.0-M4' }
 spring-ai-bom = { module = 'io.github.pig-mesh.ai:spring-ai-bom', version = '1.3.0' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.3-groovy-4.0' }
 sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.39.0' }
+anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '8.7.2-20250101' }
+spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
+spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version.ref = 'spring-cloud-alibaba' }
 spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
-dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version.ref = 'dante-cloud' }
+#dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version = '3.4.1.0' }
+springdoc-openapi-dependencies = { module = 'org.springdoc:springdoc-openapi', version = '2.7.0' }
 
 # native
-solon-bom = { module = 'org.noear:solon-parent', version = '3.0.5' }
-quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.17.5' }
+#solon-bom = { module = 'org.noear:solon-parent', version = '3.0.5' }
+#quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.17.5' }
 
 # ddd libs
 jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.2.1' }
 spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.3.1' }
-cola-bom = { module = 'com.alibaba.cola:cola-components-bom', version = '5.0.0' }
-axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.4' }
+#cola-bom = { module = 'com.alibaba.cola:cola-components-bom', version = '5.0.0' }
+#axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.4' }
 
 # log libs
 commons-logging = { module = 'commons-logging:commons-logging' }
@@ -39,11 +54,9 @@ log4j-over-slf4j = { module = 'org.slf4j:log4j-over-slf4j' }
 jcl-over-slf4j = { module = 'org.slf4j:jcl-over-slf4j' }
 
 # mapstruct libs
-mapstruct = { module = 'org.mapstruct:mapstruct', version.ref = 'mapstruct' }
-mapstruct-processor = { module = 'org.mapstruct:mapstruct-processor', version.ref = 'mapstruct' }
-
-# doc libs
-swagger-annotations = { module = 'io.swagger.core.v3:swagger-annotations' }
+mapstruct-plus-pom = { module = 'io.github.linpeilie:mapstruct-plus-pom', version.ref = 'mapstruct-plus' }
+mapstruct-plus-processor = { module = 'io.github.linpeilie:mapstruct-plus-processor', version.ref = 'mapstruct-plus' }
+lombok-mapstruct-binding = { module = 'org.projectlombok:lombok-mapstruct-binding', version = '0.2.0' }
 
 # groovy libs
 groovy-core = { module = 'org.apache.groovy:groovy' }
@@ -79,20 +92,55 @@ pmd-java = { module = 'net.sourceforge.pmd:pmd-java', version.ref = 'pmd' }
 pmd-groovy = { module = 'net.sourceforge.pmd:pmd-groovy', version.ref = 'pmd' }
 pmd-ali = { module = 'com.alibaba.p3c:p3c-pmd', version = '2.1.1' }
 
+# SnailJob libs
+snail-job-client-starter = { module = 'com.aizuda:snail-job-client-starter', version.ref = 'snailjob' }
+snail-job-client-job-core = { module = 'com.aizuda:snail-job-client-job-core', version.ref = 'snailjob' }
+snail-job-server-starter = { module = 'com.aizuda:snail-job-server-starter', version.ref = 'snailjob' }
+
+# skywalking libs
+apm-toolkit-logback = { module = 'org.apache.skywalking:apm-toolkit-logback-1.x', version.ref = 'skywalking-toolkit' }
+apm-toolkit-trace = { module = 'org.apache.skywalking:apm-toolkit-trace', version.ref = 'skywalking-toolkit' }
+
+# therapi libs
+therapi-runtime-javadoc = { module = 'com.github.therapi:therapi-runtime-javadoc', version.ref = 'therapi-javadoc' }
+therapi-runtime-javadoc-scribe = { module = 'com.github.therapi:therapi-runtime-javadoc-scribe', version.ref = 'therapi-javadoc' }
+
 # webjars libs
 webjars-layui = { module = 'org.webjars:layui', version = '2.9.18' }
 webjars-jquery = { module = 'org.webjars:jquery', version = '3.7.1' }
 webjars-crypto = { module = 'org.webjars.npm:crypto-js', version = '4.2.0' }
 
+# other libs
+hutool-v5-all = { module = 'cn.hutool:hutool-all', version.ref = 'hutool-v5' }
+hutool-all = { module = 'org.dromara.hutool:hutool-all', version.ref = 'hutool' }
+fastjson = { module = 'com.alibaba.fastjson2:fastjson2', version.ref = 'fastjson' }
+fastjson-extension = { module = 'com.alibaba.fastjson2:fastjson2-extension', version.ref = 'fastjson' }
+fastjson-extension-spring = { module = 'com.alibaba.fastjson2:fastjson2-extension-spring6', version.ref = 'fastjson' }
+fastjson-kotlin = { module = 'com.alibaba.fastjson2:fastjson2-kotlin', version.ref = 'fastjson' }
+fastjson1 = { module = 'com.alibaba:fastjson', version.ref = 'fastjson' }
+justauth = { module = 'me.zhyd.oauth:JustAuth', version = '1.16.7' }
+easyexcel = { module = 'com.alibaba:easyexcel', version = '4.0.3' }
+redisson = { module = 'org.redisson:redisson-spring-boot-starter', version = '3.41.0' }
+lock4j-redisson = { module = 'com.baomidou:lock4j-redisson-spring-boot-starter', version = '2.2.7' }
+sms4j = { module = 'org.dromara.sms4j:sms4j-spring-boot-starter', version = '3.3.3' }
+dynamic-datasource = { module = 'com.baomidou:dynamic-datasource-spring-boot3-starter', version = '4.3.1' }
+
 [bundles]
 platform = [
-    'ihub-integration-bom', 'ihub-module-bom',
-    'jmolecules-bom', 'spock-bom', 'sa-token-bom', 'spring-modulith-bom', 'spring-ai-bom',
-    'dante-cloud-dependencies'
+    'ihub-integration-bom', 'ihub-module-bom', 'hutool-bom',
+    'hutool-v5-bom', 'jmolecules-bom', 'spock-bom', 'sa-token-bom',
+    'mybatis-plus-bom', 'spring-modulith-bom', 'spring-ai-bom', 'spring-boot-admin-dependencies',
+    'spring-cloud-dependencies', 'spring-cloud-alibaba-dependencies', 'spring-boot-dependencies',
+    'springdoc-openapi-dependencies', 'mapstruct-plus-pom', 'anyline-dependency'
 ]
 constraints = [
-    'pmd-ant', 'pmd-java', 'pmd-groovy', 'pmd-ali', 'spock-reports', 'mapstruct', 'mapstruct-processor'
+    'hutool-v5-all', 'hutool-all', 'fastjson', 'fastjson-extension', 'fastjson-extension-spring', 'fastjson-kotlin', 'fastjson1',
+    'pmd-ant', 'pmd-java', 'pmd-groovy', 'pmd-ali', 'spock-reports', 'justauth', 'easyexcel', 'redisson', 'lock4j-redisson',
+    'sms4j', 'dynamic-datasource', 'mapstruct-plus-processor', 'lombok-mapstruct-binding',
+    'snail-job-client-starter', 'snail-job-server-starter', 'snail-job-client-job-core',
+    'apm-toolkit-logback', 'apm-toolkit-trace', 'therapi-runtime-javadoc', 'therapi-runtime-javadoc-scribe'
 ]
+
 groovy = [
     'groovy-core', 'groovy-datetime', 'groovy-dateutil', 'groovy-groovydoc', 'groovy-json',
     'groovy-nio', 'groovy-sql', 'groovy-templates', 'groovy-xml'
