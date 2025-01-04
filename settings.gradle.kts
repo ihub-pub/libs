@@ -16,11 +16,11 @@
 import pub.ihub.plugin.IHubSettingsExtension
 
 plugins {
-    id("pub.ihub.plugin.ihub-settings") version "1.7.3"
+    id("pub.ihub.plugin.ihub-settings") version "1.7.4"
 }
 
 configure<IHubSettingsExtension> {
     includeProjects("ihub-core").subproject
     includeProjects("ihub-starter").prefix("ihub-boot-").suffix("-spring-boot-starter").onlySubproject
-    includeProjects("ihub-sso").subproject.suffix("-spring-boot-starter")
+//    includeProjects("ihub-sso").subproject.suffix("-spring-boot-starter")
 }
