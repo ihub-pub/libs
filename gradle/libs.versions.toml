@@ -1,6 +1,7 @@
 [versions]
 hutool-v5 = '5.8.35'
 hutool = '6.0.0-M19'
+mapstruct = '1.6.3'
 mapstruct-plus = '1.4.6'
 fastjson = '2.0.53'
 spring-boot = '3.4.1'
@@ -11,6 +12,7 @@ pmd = '7.9.0'
 snailjob = '1.2.0'
 skywalking-toolkit = '9.3.0'
 therapi-javadoc = '0.15.0'
+mpe = '3.5.9-EXT812'
 
 [libraries]
 # bom libs
@@ -31,6 +33,10 @@ spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-a
 spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
 #dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version = '3.4.1.0' }
 springdoc-openapi-dependencies = { module = 'org.springdoc:springdoc-openapi', version = '2.8.0' }
+# 动态可监控线程
+dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependencies', version = '1.1.9.1' }
+# 数据翻译
+easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', version = '3.1.1' }
 
 # native
 #solon-bom = { module = 'org.noear:solon-parent', version = '3.0.5' }
@@ -41,6 +47,18 @@ jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.2.1
 spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.3.1' }
 #cola-bom = { module = 'com.alibaba.cola:cola-components-bom', version = '5.0.0' }
 #axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.4' }
+
+# Mybatis-Plus-Ext
+mpe-annotation = { module = 'org.dromara.mpe:mybatis-plus-ext-annotation', version.ref = 'mpe' }
+mpe-autotable-annotation = { module = 'org.dromara.mpe:mybatis-plus-ext-autotable-annotation', version.ref = 'mpe' }
+mpe-actable-core = { module = 'org.dromara.mpe:mybatis-plus-ext-actable-core', version.ref = 'mpe' }
+mpe-autotable-core = { module = 'org.dromara.mpe:mybatis-plus-ext-autotable-core', version.ref = 'mpe' }
+mpe-processor = { module = 'org.dromara.mpe:mybatis-plus-ext-processor', version.ref = 'mpe' }
+mpe-bind = { module = 'org.dromara.mpe:mybatis-plus-ext-bind', version.ref = 'mpe' }
+mpe-datasource = { module = 'org.dromara.mpe:mybatis-plus-ext-datasource', version.ref = 'mpe' }
+mpe-condition = { module = 'org.dromara.mpe:mybatis-plus-ext-condition', version.ref = 'mpe' }
+mpe-spring-boot-starter = { module = 'org.dromara.mpe:mybatis-plus-ext-spring-boot-starter', version.ref = 'mpe' }
+mpe-spring-boot3-starter = { module = 'org.dromara.mpe:mybatis-plus-ext-spring-boot3-starter', version.ref = 'mpe' }
 
 # log libs
 commons-logging = { module = 'commons-logging:commons-logging' }
@@ -54,6 +72,8 @@ log4j-over-slf4j = { module = 'org.slf4j:log4j-over-slf4j' }
 jcl-over-slf4j = { module = 'org.slf4j:jcl-over-slf4j' }
 
 # mapstruct libs
+mapstruct = { module = 'org.mapstruct:mapstruct', version.ref = 'mapstruct' }
+mapstruct-processor = { module = 'org.mapstruct:mapstruct-processor', version.ref = 'mapstruct' }
 mapstruct-plus-pom = { module = 'io.github.linpeilie:mapstruct-plus-pom', version.ref = 'mapstruct-plus' }
 mapstruct-plus-processor = { module = 'io.github.linpeilie:mapstruct-plus-processor', version.ref = 'mapstruct-plus' }
 lombok-mapstruct-binding = { module = 'org.projectlombok:lombok-mapstruct-binding', version = '0.2.0' }
@@ -106,9 +126,9 @@ therapi-runtime-javadoc = { module = 'com.github.therapi:therapi-runtime-javadoc
 therapi-runtime-javadoc-scribe = { module = 'com.github.therapi:therapi-runtime-javadoc-scribe', version.ref = 'therapi-javadoc' }
 
 # webjars libs
-webjars-layui = { module = 'org.webjars:layui', version = '2.9.18' }
-webjars-jquery = { module = 'org.webjars:jquery', version = '3.7.1' }
-webjars-crypto = { module = 'org.webjars.npm:crypto-js', version = '4.2.0' }
+#webjars-layui = { module = 'org.webjars:layui', version = '2.9.18' }
+#webjars-jquery = { module = 'org.webjars:jquery', version = '3.7.1' }
+#webjars-crypto = { module = 'org.webjars.npm:crypto-js', version = '4.2.0' }
 
 # other libs
 hutool-v5-all = { module = 'cn.hutool:hutool-all', version.ref = 'hutool-v5' }
@@ -131,14 +151,17 @@ platform = [
     'hutool-v5-bom', 'jmolecules-bom', 'spock-bom', 'sa-token-bom',
     'mybatis-plus-bom', 'spring-modulith-bom', 'spring-ai-bom', 'spring-boot-admin-dependencies',
     'spring-cloud-dependencies', 'spring-cloud-alibaba-dependencies', 'spring-boot-dependencies',
-    'springdoc-openapi-dependencies', 'mapstruct-plus-pom', 'anyline-dependency'
+    'springdoc-openapi-dependencies', 'mapstruct-plus-pom', 'anyline-dependency',
+    'dynamic-tp-dependencies', 'easy-trans-dependencies'
 ]
 constraints = [
     'hutool-v5-all', 'hutool-all', 'fastjson', 'fastjson-extension', 'fastjson-extension-spring', 'fastjson-kotlin', 'fastjson1',
     'pmd-ant', 'pmd-java', 'pmd-groovy', 'pmd-ali', 'spock-reports', 'justauth', 'easyexcel', 'redisson', 'lock4j-redisson',
-    'sms4j', 'dynamic-datasource', 'mapstruct-plus-processor', 'lombok-mapstruct-binding',
+    'sms4j', 'dynamic-datasource', 'mapstruct', 'mapstruct-processor', 'mapstruct-plus-processor', 'lombok-mapstruct-binding',
     'snail-job-client-starter', 'snail-job-server-starter', 'snail-job-client-job-core',
-    'apm-toolkit-logback', 'apm-toolkit-trace', 'therapi-runtime-javadoc', 'therapi-runtime-javadoc-scribe'
+    'apm-toolkit-logback', 'apm-toolkit-trace', 'therapi-runtime-javadoc', 'therapi-runtime-javadoc-scribe',
+    'mpe-annotation', 'mpe-autotable-annotation', 'mpe-actable-core', 'mpe-autotable-core', 'mpe-processor',
+    'mpe-bind', 'mpe-datasource', 'mpe-condition', 'mpe-spring-boot-starter', 'mpe-spring-boot3-starter'
 ]
 
 groovy = [
