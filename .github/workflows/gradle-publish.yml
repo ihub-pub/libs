@@ -29,7 +29,7 @@ jobs:
           cache: 'gradle'
 
       - name: Publish to Central Repository
-        uses: ihub-pub/bot/publish@bd3b88068e03c123bd0d6e2a4ff25079fbc7f20d # v3.0.1
+        uses: ihub-pub/bot/publish@a2f4e260e3449ecdbf2948a4e4ad47a2d5b626b0 # v3.0.1
         with:
           repoUsername: ${{ secrets.REPO_USERNAME }}
           repoPassword: ${{ secrets.REPO_PASSWORD }}
@@ -38,4 +38,3 @@ jobs:
           signingKeyId: ${{ secrets.SIGNING_KEY_ID }}
           signingPassword: ${{ secrets.SIGNING_PASSWORD }}
           signingSecretKey: ${{ secrets.SIGNING_SECRET_KEY }}
-          publishTask: 'publishToMavenCentralPortal'
