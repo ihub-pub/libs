@@ -1,5 +1,5 @@
 [versions]
-hutool-v5 = '5.8.35'
+hutool-v5 = '5.8.36'
 hutool = '6.0.0-M19'
 mapstruct = '1.6.3'
 mapstruct-plus = '1.4.6'
