@@ -143,7 +143,7 @@ justauth = { module = 'me.zhyd.oauth:JustAuth', version = '1.16.7' }
 easyexcel = { module = 'com.alibaba:easyexcel', version = '4.0.3' }
 redisson = { module = 'org.redisson:redisson-spring-boot-starter', version = '3.45.0' }
 lock4j-redisson = { module = 'com.baomidou:lock4j-redisson-spring-boot-starter', version = '2.2.7' }
-sms4j = { module = 'org.dromara.sms4j:sms4j-spring-boot-starter', version = '3.3.3' }
+sms4j = { module = 'org.dromara.sms4j:sms4j-spring-boot-starter', version = '3.3.4' }
 dynamic-datasource = { module = 'com.baomidou:dynamic-datasource-spring-boot3-starter', version = '4.3.1' }
 
 [bundles]
