@@ -36,7 +36,7 @@ dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependenc
 # 数据翻译
 easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', version = '3.1.1' }
 # 工作流
-warm-flow = { module = 'org.dromara.warm:warm-flow', version = '1.6.7' }
+warm-flow = { module = 'org.dromara.warm:warm-flow', version = '1.6.8' }
 
 # native
 #solon-bom = { module = 'org.noear:solon-parent', version = '3.0.5' }
