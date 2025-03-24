@@ -9,7 +9,7 @@ spring-cloud = '2024.0.1'
 spring-cloud-alibaba = '2023.0.3.2'
 spring-boot-admin = '3.4.5'
 pmd = '7.11.0'
-snailjob = '1.3.0'
+snailjob = '1.4.0'
 skywalking-toolkit = '9.4.0'
 therapi-javadoc = '0.15.0'
 mpe = '3.5.10.1-EXT830'
@@ -30,7 +30,7 @@ spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-d
 spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version.ref = 'spring-cloud-alibaba' }
 spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
 #dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version = '3.4.1.0' }
-springdoc-openapi-dependencies = { module = 'org.springdoc:springdoc-openapi', version = '2.8.5' }
+springdoc-openapi-dependencies = { module = 'org.springdoc:springdoc-openapi', version = '2.8.6' }
 # 动态可监控线程
 dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependencies', version = '1.2.0-x' }
 # 数据翻译
@@ -43,7 +43,7 @@ warm-flow = { module = 'org.dromara.warm:warm-flow', version = '1.6.8' }
 #quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.17.5' }
 
 # ddd libs
-jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.2.1' }
+jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.3.0' }
 spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.3.4' }
 #cola-bom = { module = 'com.alibaba.cola:cola-components-bom', version = '5.0.0' }
 #axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.4' }
