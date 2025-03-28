@@ -34,7 +34,7 @@ springdoc-openapi-dependencies = { module = 'org.springdoc:springdoc-openapi', v
 # 动态可监控线程
 dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependencies', version = '1.2.0-x' }
 # 数据翻译
-easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', version = '3.1.1' }
+easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', version = '3.1.2' }
 # 工作流
 warm-flow = { module = 'org.dromara.warm:warm-flow', version = '1.6.8' }
 
