@@ -21,7 +21,7 @@ updates:
     commit-message:
       prefix: "build(deps)"
     ignore:
-      - dependency-name: "org.dromara.dynamictp:*"
+      - dependency-name: "org.dromara.dynamictp:dynamic-tp-dependencies"
         version: ["1.2.0-x"]
 
   - package-ecosystem: github-actions
