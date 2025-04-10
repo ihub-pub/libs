@@ -19,7 +19,7 @@ ihub-integration-bom = { module = 'pub.ihub.integration:ihub-bom', version = '0.
 ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.2.1' }
 hutool-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool' }
 mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.11' }
-spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.0.0-M6' }
+spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.0.0-M7' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.3-groovy-4.0' }
 sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.41.0' }
 anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '8.7.2-20250404' }
