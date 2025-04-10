@@ -21,7 +21,7 @@ hutool-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool' }
 mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.11' }
 spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.0.0-M7' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.3-groovy-4.0' }
-sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.41.0' }
+sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.42.0' }
 anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '8.7.2-20250404' }
 spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
