@@ -20,6 +20,9 @@ updates:
       - dependency-type: "production"
     commit-message:
       prefix: "build(deps)"
+    ignore:
+      - dependency-name: "org.dromara.dynamictp:dynamic-tp-dependencies"
+        versions: ["1.2.0-x"]
 
   - package-ecosystem: github-actions
     directory: /
