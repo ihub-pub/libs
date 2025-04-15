@@ -12,6 +12,7 @@ snailjob = '1.4.0'
 skywalking-toolkit = '9.4.0'
 therapi-javadoc = '0.15.0'
 mpe = '3.5.11-EXT833'
+easy-query = '2.8.4'
 
 [libraries]
 # bom libs
@@ -57,6 +58,18 @@ mpe-datasource = { module = 'org.dromara.mpe:mybatis-plus-ext-datasource', versi
 mpe-condition = { module = 'org.dromara.mpe:mybatis-plus-ext-condition', version.ref = 'mpe' }
 mpe-spring-boot-starter = { module = 'org.dromara.mpe:mybatis-plus-ext-spring-boot-starter', version.ref = 'mpe' }
 mpe-spring-boot3-starter = { module = 'org.dromara.mpe:mybatis-plus-ext-spring-boot3-starter', version.ref = 'mpe' }
+
+# easy-query libs
+eq-sql-core = { module = 'com.easy-query:sql-core', version.ref = 'easy-query' }
+eq-sql-mysql = { module = 'com.easy-query:sql-mysql', version.ref = 'easy-query' }
+eq-sql-api-proxy = { module = 'com.easy-query:sql-api-proxy', version.ref = 'easy-query' }
+eq-sql-api4j = { module = 'com.easy-query:sql-api4j', version.ref = 'easy-query' }
+eq-sql-processor = { module = 'com.easy-query:sql-processor', version.ref = 'easy-query' }
+eq-sql-ksp-processor = { module = 'com.easy-query:sql-ksp-processor', version.ref = 'easy-query' }
+eq-sql-springboot-starter = { module = 'com.easy-query:sql-springboot-starter', version.ref = 'easy-query' }
+eq-sql-kt-springboot-starter = { module = 'com.easy-query:sql-kt-springboot-starter', version.ref = 'easy-query' }
+eq-sql-cache = { module = 'com.easy-query:sql-cache', version.ref = 'easy-query' }
+eq-all = { module = 'com.easy-query:easy-query-all', version.ref = 'easy-query' }
 
 # log libs
 commons-logging = { module = 'commons-logging:commons-logging' }
@@ -157,7 +170,9 @@ constraints = [
     'snail-job-client-starter', 'snail-job-server-starter', 'snail-job-client-job-core',
     'apm-toolkit-logback', 'apm-toolkit-trace', 'therapi-runtime-javadoc', 'therapi-runtime-javadoc-scribe',
     'mpe-annotation', 'mpe-autotable-annotation', 'mpe-actable-core', 'mpe-autotable-core', 'mpe-processor',
-    'mpe-bind', 'mpe-datasource', 'mpe-condition', 'mpe-spring-boot-starter', 'mpe-spring-boot3-starter'
+    'mpe-bind', 'mpe-datasource', 'mpe-condition', 'mpe-spring-boot-starter', 'mpe-spring-boot3-starter',
+    'eq-sql-core', 'eq-sql-mysql', 'eq-sql-api-proxy', 'eq-sql-api4j', 'eq-sql-processor', 'eq-sql-ksp-processor',
+    'eq-sql-springboot-starter', 'eq-sql-kt-springboot-starter', 'eq-sql-cache', 'eq-all'
 ]
 
 groovy = [
