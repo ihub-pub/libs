@@ -12,7 +12,7 @@ snailjob = '1.4.0'
 skywalking-toolkit = '9.4.0'
 therapi-javadoc = '0.15.0'
 mpe = '3.5.11-EXT833'
-easy-query = '2.8.10'
+easy-query = '2.8.14'
 
 [libraries]
 # bom libs
