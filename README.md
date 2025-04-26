@@ -34,8 +34,6 @@
     </a>
 </p>
 
----
-
 <p align="center">
     <img alt="Maven Central" src="https://badge.ihub.pub/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fihub-pub%2Flibs%2Frefs%2Fheads%2Fmain%2Fgradle%2Flibs.versions.toml&query=%24.versions.spring-boot&label=Spring+Boot">
     <img alt="Maven Central" src="https://badge.ihub.pub/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fihub-pub%2Flibs%2Frefs%2Fheads%2Fmain%2Fgradle%2Flibs.versions.toml&query=%24.versions.spring-boot-admin&label=Spring+Boot+Admin">
