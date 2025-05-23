@@ -11,8 +11,8 @@ pmd = '7.13.0'
 snailjob = '1.5.0'
 skywalking-toolkit = '9.4.0'
 therapi-javadoc = '0.15.0'
-mpe = '3.5.11-EXT833'
-easy-query = '2.8.25'
+mpe = '3.5.12-EXT840'
+easy-query = '3.0.2'
 
 [libraries]
 # bom libs
