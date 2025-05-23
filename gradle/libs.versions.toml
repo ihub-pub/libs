@@ -3,10 +3,10 @@ hutool = '5.8.38'
 mapstruct = '1.6.3'
 mapstruct-plus = '1.4.8'
 fastjson = '2.0.57'
-spring-boot = '3.4.5'
+spring-boot = '3.5.0'
 spring-cloud = '2024.0.1'
 spring-cloud-alibaba = '2023.0.3.2'
-spring-boot-admin = '3.4.6'
+spring-boot-admin = '3.4.7'
 pmd = '7.13.0'
 snailjob = '1.5.0'
 skywalking-toolkit = '9.4.0'
@@ -23,7 +23,7 @@ mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.12
 spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.0.0' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.3-groovy-4.0' }
 sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.43.0' }
-anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '8.7.2-20250518' }
+anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '8.7.2-20250520' }
 spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
 spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version.ref = 'spring-cloud-alibaba' }
@@ -150,7 +150,7 @@ fastjson-kotlin = { module = 'com.alibaba.fastjson2:fastjson2-kotlin', version.r
 fastjson1 = { module = 'com.alibaba:fastjson', version.ref = 'fastjson' }
 justauth = { module = 'me.zhyd.oauth:JustAuth', version = '1.16.7' }
 easyexcel = { module = 'com.alibaba:easyexcel', version = '4.0.3' }
-redisson = { module = 'org.redisson:redisson-spring-boot-starter', version = '3.46.0' }
+redisson = { module = 'org.redisson:redisson-spring-boot-starter', version = '3.47.0' }
 lock4j-redisson = { module = 'com.baomidou:lock4j-redisson-spring-boot-starter', version = '2.2.7' }
 sms4j = { module = 'org.dromara.sms4j:sms4j-spring-boot-starter', version = '3.3.5' }
 dynamic-datasource = { module = 'com.baomidou:dynamic-datasource-spring-boot3-starter', version = '4.3.1' }
