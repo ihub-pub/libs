@@ -17,7 +17,7 @@ easy-query = '3.0.2'
 [libraries]
 # bom libs
 ihub-integration-bom = { module = 'pub.ihub.integration:ihub-bom', version = '0.1.12' }
-ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.2.1' }
+ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.2.2' }
 hutool-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool' }
 mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.12' }
 spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.0.0' }
