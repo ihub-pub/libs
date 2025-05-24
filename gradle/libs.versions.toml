@@ -154,6 +154,7 @@ redisson = { module = 'org.redisson:redisson-spring-boot-starter', version = '3.
 lock4j-redisson = { module = 'com.baomidou:lock4j-redisson-spring-boot-starter', version = '2.2.7' }
 sms4j = { module = 'org.dromara.sms4j:sms4j-spring-boot-starter', version = '3.3.5' }
 dynamic-datasource = { module = 'com.baomidou:dynamic-datasource-spring-boot3-starter', version = '4.3.1' }
+swagger-core = { module = 'io.swagger.core.v3:swagger-core-jakarta', version = '2.2.32' }
 
 [bundles]
 platform = [
@@ -163,7 +164,7 @@ platform = [
     'mapstruct-plus-pom', 'anyline-dependency', 'dynamic-tp-dependencies', 'easy-trans-dependencies', 'warm-flow'
 ]
 constraints = [
-    'hutool-all', 'fastjson', 'fastjson-extension', 'fastjson-extension-spring', 'fastjson-kotlin', 'fastjson1',
+    'hutool-all', 'fastjson', 'fastjson-extension', 'fastjson-extension-spring', 'fastjson-kotlin', 'fastjson1', 'swagger-core',
     'pmd-ant', 'pmd-java', 'pmd-groovy', 'pmd-ali', 'spock-reports', 'justauth', 'easyexcel', 'redisson', 'lock4j-redisson',
     'sms4j', 'dynamic-datasource', 'mapstruct', 'mapstruct-processor', 'mapstruct-plus-processor', 'lombok-mapstruct-binding',
     'snail-job-client-starter', 'snail-job-server-starter', 'snail-job-client-job-core',
