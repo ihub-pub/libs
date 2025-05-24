@@ -23,13 +23,13 @@ mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.12
 spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.0.0' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.3-groovy-4.0' }
 sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.43.0' }
+springdoc-openapi-bom = { module = 'org.springdoc:springdoc-openapi-bom', version = '2.8.8' }
 anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '8.7.2-20250520' }
 spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
 spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version.ref = 'spring-cloud-alibaba' }
 spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
 #dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version = '3.4.1.0' }
-springdoc-openapi-dependencies = { module = 'org.springdoc:springdoc-openapi', version = '2.8.8' }
 # 动态可监控线程
 dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependencies', version = '1.2.1' }
 # 数据翻译
@@ -158,10 +158,9 @@ dynamic-datasource = { module = 'com.baomidou:dynamic-datasource-spring-boot3-st
 [bundles]
 platform = [
     'ihub-integration-bom', 'ihub-module-bom', 'hutool-bom', 'jmolecules-bom', 'spock-bom', 'sa-token-bom',
-    'mybatis-plus-bom', 'spring-modulith-bom', 'spring-ai-bom', 'spring-boot-admin-dependencies',
+    'springdoc-openapi-bom', 'mybatis-plus-bom', 'spring-modulith-bom', 'spring-ai-bom', 'spring-boot-admin-dependencies',
     'spring-cloud-dependencies', 'spring-cloud-alibaba-dependencies', 'spring-boot-dependencies',
-    'springdoc-openapi-dependencies', 'mapstruct-plus-pom', 'anyline-dependency',
-    'dynamic-tp-dependencies', 'easy-trans-dependencies', 'warm-flow'
+    'mapstruct-plus-pom', 'anyline-dependency', 'dynamic-tp-dependencies', 'easy-trans-dependencies', 'warm-flow'
 ]
 constraints = [
     'hutool-all', 'fastjson', 'fastjson-extension', 'fastjson-extension-spring', 'fastjson-kotlin', 'fastjson1',
