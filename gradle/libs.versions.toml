@@ -31,7 +31,7 @@ spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-a
 spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
 #dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version = '3.4.1.0' }
 # 动态可监控线程
-dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependencies', version = '1.2.2' }
+dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependencies', version = '1.2.2-x' }
 # 数据翻译
 easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', version = '3.1.2' }
 # 工作流
