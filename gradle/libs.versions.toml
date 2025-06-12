@@ -11,8 +11,10 @@ pmd = '7.14.0'
 snailjob = '1.5.0'
 skywalking-toolkit = '9.4.0'
 therapi-javadoc = '0.15.0'
-mpe = '3.5.12-EXT840'
-easy-query = '3.0.2'
+mpe = '3.5.12-EXT861'
+easy-query = '3.0.21'
+warm-flow = '1.7.3'
+easy-trans = '3.1.2'
 
 [libraries]
 # bom libs
@@ -136,6 +138,25 @@ apm-toolkit-trace = { module = 'org.apache.skywalking:apm-toolkit-trace', versio
 therapi-runtime-javadoc = { module = 'com.github.therapi:therapi-runtime-javadoc', version.ref = 'therapi-javadoc' }
 therapi-runtime-javadoc-scribe = { module = 'com.github.therapi:therapi-runtime-javadoc-scribe', version.ref = 'therapi-javadoc' }
 
+# warm flow libs
+warm-flow-m-sb = { module = 'org.dromara.warm:warm-flow-mybatis-sb-starter', version.ref = 'warm-flow' }
+warm-flow-m-sb3 = { module = 'org.dromara.warm:warm-flow-mybatis-sb3-starter', version.ref = 'warm-flow' }
+warm-flow-m-solon = { module = 'org.dromara.warm:warm-flow-mybatis-solon-starter', version.ref = 'warm-flow' }
+warm-flow-mp-sb = { module = 'org.dromara.warm:warm-flow-mybatis-plus-sb-starter', version.ref = 'warm-flow' }
+warm-flow-mp-sb3 = { module = 'org.dromara.warm:warm-flow-mybatis-plus-sb3-starter', version.ref = 'warm-flow' }
+warm-flow-mp-solon = { module = 'org.dromara.warm:warm-flow-mybatis-plus-solon-starter', version.ref = 'warm-flow' }
+warm-flow-ui-sb = { module = 'org.dromara.warm:warm-flow-plugin-ui-sb-web', version.ref = 'warm-flow' }
+warm-flow-ui-solon = { module = 'org.dromara.warm:warm-flow-plugin-ui-solon-web', version.ref = 'warm-flow' }
+
+# 数据翻译
+easy-trans-anno = { module = 'org.dromara:easy-trans-anno', version.ref = 'easy-trans' }
+easy-trans-service = { module = 'org.dromara:easy-trans-service', version.ref = 'easy-trans' }
+easy-trans-spring-boot = { module = 'org.dromara:easy-trans-spring-boot-starter', version.ref = 'easy-trans' }
+easy-trans-beetl-sql = { module = 'org.dromara:easy-trans-beetl-sql-extend', version.ref = 'easy-trans' }
+easy-trans-mybatis-plus = { module = 'org.dromara:easy-trans-mybatis-plus-extend', version.ref = 'easy-trans' }
+easy-trans-mybatis-flex = { module = 'org.dromara:easy-trans-mybatis-flex-extend', version.ref = 'easy-trans' }
+easy-trans-tk = { module = 'org.dromara:easy-trans-tk-extend', version.ref = 'easy-trans' }
+
 # webjars libs
 #webjars-layui = { module = 'org.webjars:layui', version = '2.9.18' }
 #webjars-jquery = { module = 'org.webjars:jquery', version = '3.7.1' }
@@ -161,7 +182,7 @@ platform = [
     'ihub-integration-bom', 'ihub-module-bom', 'hutool-bom', 'jmolecules-bom', 'spock-bom', 'sa-token-bom',
     'springdoc-openapi-bom', 'mybatis-plus-bom', 'spring-modulith-bom', 'spring-ai-bom', 'spring-boot-admin-dependencies',
     'spring-cloud-dependencies', 'spring-cloud-alibaba-dependencies', 'spring-boot-dependencies',
-    'mapstruct-plus-pom', 'anyline-dependency', 'dynamic-tp-dependencies', 'easy-trans-dependencies', 'warm-flow'
+    'mapstruct-plus-pom', 'dynamic-tp-dependencies', 'anyline-dependency'
 ]
 constraints = [
     'hutool-all', 'fastjson', 'fastjson-extension', 'fastjson-extension-spring', 'fastjson-kotlin', 'fastjson1', 'swagger-core',
@@ -172,7 +193,10 @@ constraints = [
     'mpe-annotation', 'mpe-autotable-annotation', 'mpe-actable-core', 'mpe-autotable-core', 'mpe-processor',
     'mpe-bind', 'mpe-datasource', 'mpe-condition', 'mpe-spring-boot-starter', 'mpe-spring-boot3-starter',
     'eq-sql-core', 'eq-sql-mysql', 'eq-sql-api-proxy', 'eq-sql-api4j', 'eq-sql-processor', 'eq-sql-ksp-processor',
-    'eq-sql-springboot-starter', 'eq-sql-kt-springboot-starter', 'eq-sql-cache', 'eq-all'
+    'eq-sql-springboot-starter', 'eq-sql-kt-springboot-starter', 'eq-sql-cache', 'eq-all',
+    'warm-flow-m-sb', 'warm-flow-m-sb3', 'warm-flow-m-solon', 'warm-flow-mp-sb', 'warm-flow-mp-sb3', 'warm-flow-mp-solon',
+    'warm-flow-ui-sb', 'warm-flow-ui-solon', 'easy-trans-anno', 'easy-trans-service', 'easy-trans-spring-boot',
+    'easy-trans-beetl-sql', 'easy-trans-mybatis-plus', 'easy-trans-mybatis-flex', 'easy-trans-tk'
 ]
 
 groovy = [
