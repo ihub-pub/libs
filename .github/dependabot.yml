@@ -22,7 +22,7 @@ updates:
       prefix: "build(deps)"
     ignore:
       - dependency-name: "org.dromara.dynamictp:dynamic-tp-dependencies"
-        versions: ["1.2.0-x"]
+        versions: ["1.2.2-x", "1.2.3-x", "1.2.4-x", "1.2.5-x", "1.2.6-x", "1.2.7-x", "1.2.8-x", "1.2.9-x"]
 
   - package-ecosystem: github-actions
     directory: /
