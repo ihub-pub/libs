@@ -41,7 +41,7 @@ dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependenc
 #quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.17.5' }
 
 # ddd libs
-jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.3.1' }
+jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.3.2' }
 spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.4.0' }
 #cola-bom = { module = 'com.alibaba.cola:cola-components-bom', version = '5.0.0' }
 #axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.4' }
