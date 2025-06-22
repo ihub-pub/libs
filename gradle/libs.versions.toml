@@ -172,6 +172,7 @@ lock4j-redisson = { module = 'com.baomidou:lock4j-redisson-spring-boot-starter',
 sms4j = { module = 'org.dromara.sms4j:sms4j-spring-boot-starter', version = '3.3.5' }
 dynamic-datasource = { module = 'com.baomidou:dynamic-datasource-spring-boot3-starter', version = '4.3.1' }
 swagger-core = { module = 'io.swagger.core.v3:swagger-core-jakarta', version = '2.2.34' }
+x-file-storage = { module = 'org.dromara.x-file-storage:x-file-storage-spring', version = '2.3.0' }
 
 [bundles]
 platform = [
@@ -184,7 +185,7 @@ constraints = [
     'hutool-all', 'fastjson', 'fastjson-extension', 'fastjson-extension-spring', 'fastjson-kotlin', 'fastjson1', 'swagger-core',
     'pmd-ant', 'pmd-java', 'pmd-groovy', 'pmd-ali', 'spock-reports', 'justauth', 'easyexcel', 'redisson', 'lock4j-redisson',
     'sms4j', 'dynamic-datasource', 'mapstruct', 'mapstruct-processor', 'mapstruct-plus-processor', 'lombok-mapstruct-binding',
-    'snail-job-client-starter', 'snail-job-server-starter', 'snail-job-client-job-core',
+    'snail-job-client-starter', 'snail-job-server-starter', 'snail-job-client-job-core', 'x-file-storage',
     'apm-toolkit-logback', 'apm-toolkit-trace', 'therapi-runtime-javadoc', 'therapi-runtime-javadoc-scribe',
     'mpe-annotation', 'mpe-autotable-annotation', 'mpe-actable-core', 'mpe-autotable-core', 'mpe-processor',
     'mpe-bind', 'mpe-datasource', 'mpe-condition', 'mpe-spring-boot-starter', 'mpe-spring-boot3-starter',
