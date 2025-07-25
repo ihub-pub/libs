@@ -41,7 +41,7 @@ dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependenc
 
 # ddd libs
 jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.3.2' }
-spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.4.1' }
+spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.4.2' }
 #cola-bom = { module = 'com.alibaba.cola:cola-components-bom', version = '5.0.0' }
 #axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.4' }
 
