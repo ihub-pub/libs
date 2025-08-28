@@ -26,7 +26,7 @@ spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.3-groovy-4.0' }
 sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.44.0' }
 springdoc-openapi-bom = { module = 'org.springdoc:springdoc-openapi-bom', version = '2.8.11' }
-anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '8.7.2-20250826' }
+anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '8.7.2-20250827' }
 spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
 spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version.ref = 'spring-cloud-alibaba' }
