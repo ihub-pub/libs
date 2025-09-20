@@ -11,9 +11,9 @@ pmd = '7.17.0'
 snailjob = '1.7.2'
 skywalking-toolkit = '9.5.0'
 therapi-javadoc = '0.15.0'
-mpe = '3.5.12-EXT874'
-easy-query = '3.0.71'
-warm-flow = '1.7.7'
+mpe = '3.5.14-EXT880'
+easy-query = '3.1.17'
+warm-flow = '1.8.1'
 easy-trans = '3.1.3'
 
 [libraries]
