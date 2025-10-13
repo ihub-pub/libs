@@ -171,7 +171,7 @@ redisson = { module = 'org.redisson:redisson-spring-boot-starter', version = '3.
 lock4j-redisson = { module = 'com.baomidou:lock4j-redisson-spring-boot-starter', version = '2.2.7' }
 sms4j = { module = 'org.dromara.sms4j:sms4j-spring-boot-starter', version = '3.3.5' }
 dynamic-datasource = { module = 'com.baomidou:dynamic-datasource-spring-boot3-starter', version = '4.3.1' }
-swagger-core = { module = 'io.swagger.core.v3:swagger-core-jakarta', version = '2.2.38' }
+swagger-core = { module = 'io.swagger.core.v3:swagger-core-jakarta', version = '2.2.39' }
 x-file-storage = { module = 'org.dromara.x-file-storage:x-file-storage-spring', version = '2.3.0' }
 
 [bundles]
