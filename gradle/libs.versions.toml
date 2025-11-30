@@ -3,11 +3,11 @@ hutool = '5.8.41'
 mapstruct = '1.6.3'
 mapstruct-plus = '1.5.0'
 fastjson = '2.0.60'
-spring-boot = '3.5.7'
-spring-cloud = '2025.0.0'
+spring-boot = '4.0.0'
+spring-cloud = '2025.1.0'
 spring-cloud-alibaba = '2025.0.0.0-preview'
 spring-boot-admin = '3.5.6'
-pmd = '7.18.0'
+pmd = '7.19.0'
 snailjob = '1.8.1'
 skywalking-toolkit = '9.5.0'
 therapi-javadoc = '0.15.0'
@@ -25,8 +25,8 @@ mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.14
 spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.1.0' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.3-groovy-4.0' }
 sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.44.0' }
-springdoc-openapi-bom = { module = 'org.springdoc:springdoc-openapi-bom', version = '2.8.14' }
-anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '8.7.3-20251022' }
+springdoc-openapi-bom = { module = 'org.springdoc:springdoc-openapi-bom', version = '3.0.0' }
+anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '8.7.3-20251120' }
 spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
 spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version.ref = 'spring-cloud-alibaba' }
@@ -40,8 +40,8 @@ dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependenc
 #quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.17.5' }
 
 # ddd libs
-jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2023.3.4' }
-spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '1.4.4' }
+jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2025.0.1' }
+spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '2.0.0' }
 #cola-bom = { module = 'com.alibaba.cola:cola-components-bom', version = '5.0.0' }
 #axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.4' }
 
@@ -171,7 +171,7 @@ redisson = { module = 'org.redisson:redisson-spring-boot-starter', version = '3.
 lock4j-redisson = { module = 'com.baomidou:lock4j-redisson-spring-boot-starter', version = '2.2.7' }
 sms4j = { module = 'org.dromara.sms4j:sms4j-spring-boot-starter', version = '3.3.5' }
 dynamic-datasource = { module = 'com.baomidou:dynamic-datasource-spring-boot3-starter', version = '4.3.1' }
-swagger-core = { module = 'io.swagger.core.v3:swagger-core-jakarta', version = '2.2.40' }
+swagger-core = { module = 'io.swagger.core.v3:swagger-core-jakarta', version = '2.2.41' }
 x-file-storage = { module = 'org.dromara.x-file-storage:x-file-storage-spring', version = '2.3.0' }
 
 [bundles]
