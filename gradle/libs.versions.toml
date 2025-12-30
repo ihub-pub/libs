@@ -167,7 +167,7 @@ fastjson-kotlin = { module = 'com.alibaba.fastjson2:fastjson2-kotlin', version.r
 fastjson1 = { module = 'com.alibaba:fastjson', version.ref = 'fastjson' }
 justauth = { module = 'me.zhyd.oauth:JustAuth', version = '1.16.7' }
 easyexcel = { module = 'com.alibaba:easyexcel', version = '4.0.3' }
-redisson = { module = 'org.redisson:redisson-spring-boot-starter', version = '4.0.0' }
+redisson = { module = 'org.redisson:redisson-spring-boot-starter', version = '4.1.0' }
 lock4j-redisson = { module = 'com.baomidou:lock4j-redisson-spring-boot-starter', version = '2.2.7' }
 sms4j = { module = 'org.dromara.sms4j:sms4j-spring-boot-starter', version = '3.3.5' }
 dynamic-datasource = { module = 'com.baomidou:dynamic-datasource-spring-boot3-starter', version = '4.5.0' }
