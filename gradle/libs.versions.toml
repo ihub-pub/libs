@@ -1,8 +1,9 @@
 [versions]
 hutool = '5.8.43'
+hutool-v7 = '7.0.0-M4'
 mapstruct = '1.6.3'
 mapstruct-plus = '1.5.0'
-fastjson = '2.0.61'
+fastjson = '2.0.60'
 spring-boot = '4.0.2'
 spring-cloud = '2025.1.1'
 spring-cloud-alibaba = '2025.1.0.0'
@@ -21,6 +22,7 @@ easy-trans = '3.1.3'
 ihub-integration-bom = { module = 'pub.ihub.integration:ihub-bom', version = '0.1.12' }
 ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.2.2' }
 hutool-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool' }
+hutool-v7-bom = { module = 'cn.hutool.v7:hutool-bom', version.ref = 'hutool-v7' }
 mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.16' }
 spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.1.2' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.4-groovy-5.0' }
@@ -160,6 +162,7 @@ easy-trans-tk = { module = 'org.dromara:easy-trans-tk-extend', version.ref = 'ea
 
 # other libs
 hutool-all = { module = 'cn.hutool:hutool-all', version.ref = 'hutool' }
+hutool-v7-all = { module = 'cn.hutool.v7:hutool-all', version.ref = 'hutool-v7' }
 fastjson = { module = 'com.alibaba.fastjson2:fastjson2', version.ref = 'fastjson' }
 fastjson-extension = { module = 'com.alibaba.fastjson2:fastjson2-extension', version.ref = 'fastjson' }
 fastjson-extension-spring = { module = 'com.alibaba.fastjson2:fastjson2-extension-spring6', version.ref = 'fastjson' }
@@ -176,13 +179,13 @@ x-file-storage = { module = 'org.dromara.x-file-storage:x-file-storage-spring', 
 
 [bundles]
 platform = [
-    'ihub-integration-bom', 'ihub-module-bom', 'hutool-bom', 'jmolecules-bom', 'spock-bom', 'sa-token-bom',
+    'ihub-integration-bom', 'ihub-module-bom', 'hutool-bom', 'hutool-v7-bom', 'jmolecules-bom', 'spock-bom', 'sa-token-bom',
     'springdoc-openapi-bom', 'mybatis-plus-bom', 'spring-modulith-bom', 'spring-ai-bom', 'spring-boot-admin-dependencies',
     'spring-cloud-dependencies', 'spring-cloud-alibaba-dependencies', 'spring-boot-dependencies',
     'mapstruct-plus-pom', 'dynamic-tp-dependencies', 'anyline-dependency'
 ]
 constraints = [
-    'hutool-all', 'fastjson', 'fastjson-extension', 'fastjson-extension-spring', 'fastjson-kotlin', 'fastjson1', 'swagger-core',
+    'hutool-all', 'hutool-v7-all', 'fastjson', 'fastjson-extension', 'fastjson-extension-spring', 'fastjson-kotlin', 'fastjson1', 'swagger-core',
     'pmd-ant', 'pmd-java', 'pmd-groovy', 'pmd-ali', 'spock-reports', 'justauth', 'easyexcel', 'redisson', 'lock4j-redisson',
     'sms4j', 'dynamic-datasource', 'mapstruct', 'mapstruct-processor', 'mapstruct-plus-processor', 'lombok-mapstruct-binding',
     'snail-job-client-starter', 'snail-job-server-starter', 'snail-job-client-job-core', 'x-file-storage',
