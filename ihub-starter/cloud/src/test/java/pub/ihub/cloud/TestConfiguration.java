@@ -13,16 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pub.ihub.test;
+package pub.ihub.cloud;
 
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
+import pub.ihub.cloud.advice.RestfulResponseBodyAdvice;
 
-/**
- * 测试自动配置
- *
- * @author henry
- */
-@AutoConfiguration
-public class IHubTestConfiguration {
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@ComponentScan("pub.ihub.cloud")
+@Import(RestfulResponseBodyAdvice.class)
+public class TestConfiguration {
 
 }

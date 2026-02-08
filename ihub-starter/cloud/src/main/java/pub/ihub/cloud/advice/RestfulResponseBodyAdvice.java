@@ -15,7 +15,6 @@
  */
 package pub.ihub.cloud.advice;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.Order;
@@ -36,7 +35,6 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
  */
 @RestControllerAdvice
 @Order(HIGHEST_PRECEDENCE)
-@ConditionalOnClass(AbstractMappingJacksonResponseBodyAdvice.class)
 @ConditionalOnProperty(value = "ihub.cloud.restful-body", matchIfMissing = true)
 public class RestfulResponseBodyAdvice extends AbstractMappingJacksonResponseBodyAdvice {
 
