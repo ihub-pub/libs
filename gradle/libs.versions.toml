@@ -2,7 +2,7 @@
 hutool = '5.8.43'
 mapstruct = '1.6.3'
 mapstruct-plus = '1.5.0'
-fastjson = '2.0.60'
+fastjson = '2.0.61'
 spring-boot = '4.0.2'
 spring-cloud = '2025.1.1'
 spring-cloud-alibaba = '2025.1.0.0'
