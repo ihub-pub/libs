@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java_version: [ 17, 21 ]
+        java_version: [ 17, 21, 25 ]
 
     steps:
       - name: Harden Runner
