@@ -13,7 +13,7 @@ snailjob = '1.9.0'
 skywalking-toolkit = '9.6.0'
 therapi-javadoc = '0.15.0'
 mpe = '3.5.16-EXT893'
-easy-query = '3.1.82'
+easy-query = '3.1.85'
 warm-flow = '1.8.4'
 
 [libraries]
