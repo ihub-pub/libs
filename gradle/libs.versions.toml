@@ -1,6 +1,6 @@
 [versions]
 hutool = '5.8.43'
-hutool-v7 = '7.0.0-M4'
+hutool-v7 = '7.0.0-M5'
 mapstruct = '1.6.3'
 mapstruct-plus = '1.5.0'
 fastjson = '2.0.61'
