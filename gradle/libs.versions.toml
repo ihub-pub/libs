@@ -1,10 +1,10 @@
 [versions]
-hutool = '5.8.43'
-hutool-v7 = '7.0.0-M4'
+hutool = '5.8.44'
+hutool-v7 = '7.0.0-M5'
 mapstruct = '1.6.3'
 mapstruct-plus = '1.5.0'
 fastjson = '2.0.61'
-spring-boot = '4.0.3'
+spring-boot = '4.0.4'
 spring-cloud = '2025.1.1'
 spring-cloud-alibaba = '2025.1.0.0'
 spring-boot-admin = '4.0.2'
