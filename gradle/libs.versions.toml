@@ -8,7 +8,7 @@ spring-boot = '4.0.5'
 spring-cloud = '2025.1.1'
 spring-cloud-alibaba = '2025.1.0.0'
 spring-boot-admin = '4.0.2'
-pmd = '7.22.0'
+pmd = '7.23.0'
 snailjob = '1.9.0'
 skywalking-toolkit = '9.6.0'
 therapi-javadoc = '0.15.0'
@@ -44,7 +44,7 @@ easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', vers
 
 # ddd libs
 jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2025.0.2' }
-spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '2.0.4' }
+spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '2.0.5' }
 #cola-bom = { module = 'com.alibaba.cola:cola-components-bom', version = '5.0.0' }
 #axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.4' }
 
@@ -166,7 +166,7 @@ redisson = { module = 'org.redisson:redisson-spring-boot-starter', version = '4.
 lock4j-redisson = { module = 'com.baomidou:lock4j-redisson-spring-boot-starter', version = '2.2.7' }
 sms4j = { module = 'org.dromara.sms4j:sms4j-spring-boot-starter', version = '3.3.5' }
 dynamic-datasource = { module = 'com.baomidou:dynamic-datasource-spring-boot3-starter', version = '4.5.0' }
-swagger-core = { module = 'io.swagger.core.v3:swagger-core-jakarta', version = '2.2.45' }
+swagger-core = { module = 'io.swagger.core.v3:swagger-core-jakarta', version = '2.2.49' }
 x-file-storage = { module = 'org.dromara.x-file-storage:x-file-storage-spring', version = '2.3.0' }
 
 [bundles]
