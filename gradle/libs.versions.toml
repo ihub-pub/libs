@@ -26,7 +26,7 @@ mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.16
 spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.1.4' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.4-groovy-5.0' }
 sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.45.0' }
-springdoc-openapi-bom = { module = 'org.springdoc:springdoc-openapi-bom', version = '3.0.2' }
+springdoc-openapi-bom = { module = 'org.springdoc:springdoc-openapi-bom', version = '3.0.3' }
 anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '8.7.3-20260319' }
 spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
