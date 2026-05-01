@@ -4,6 +4,10 @@ logs
 pom.xml
 pom.xml.asc
 lombok.config
+.history
+
+# Kotlin compiler #
+.kotlin
 
 # Gradle #
 .gradle
@@ -13,6 +17,12 @@ gradle-app.setting
 
 # Maven #
 target
+
+# Node.js #
+.temp
+.cache
+dist
+node_modules
 
 # windows #
 Thumbs.db
@@ -25,6 +35,7 @@ Thumbs.db
 .classpath
 .settings
 out
+bin
 .log
 *.class
 
@@ -37,6 +48,9 @@ classes
 
 # VS Code
 .vscode
+
+# Claude Code
+.claude
 
 # Package Files #
 *.jar
