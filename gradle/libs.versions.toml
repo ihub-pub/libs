@@ -1,53 +1,55 @@
+# =============================================================================
+# IHub Version Catalog — Capability-Driven Organization
+# 版本管理唯一真相源，按能力领域分区组织
+# 对应语义目录: gradle/ihub-catalog/domains/
+# =============================================================================
+
 [versions]
-hutool = '5.8.44'
-hutool-v7 = '7.0.0-M5'
-mapstruct = '1.6.3'
-mapstruct-plus = '1.5.0'
-fastjson = '2.0.61'
+# ── Infrastructure ──────────────────────────────────────────────────────────
 spring-boot = '4.0.6'
 spring-cloud = '2025.1.1'
 spring-cloud-alibaba = '2025.1.0.0'
 spring-boot-admin = '4.0.4'
-pmd = '7.24.0'
-snailjob = '1.10.0'
-skywalking-toolkit = '9.6.0'
-therapi-javadoc = '0.15.0'
+
+# ── Data & Persistence ──────────────────────────────────────────────────────
 mpe = '3.5.16-EXT895'
 easy-query = '3.2.5'
+
+# ── Object Mapping & Serialization ──────────────────────────────────────────
+mapstruct = '1.6.3'
+mapstruct-plus = '1.5.0'
+fastjson = '2.0.61'
+
+# ── Distributed ─────────────────────────────────────────────────────────────
+snailjob = '1.10.0'
+
+# ── Workflow ────────────────────────────────────────────────────────────────
 warm-flow = '1.8.6'
 
+# ── Observability ───────────────────────────────────────────────────────────
+skywalking-toolkit = '9.6.0'
+
+# ── Documentation ───────────────────────────────────────────────────────────
+therapi-javadoc = '0.15.0'
+
+# ── Testing & Quality ───────────────────────────────────────────────────────
+pmd = '7.24.0'
+
+# ── Utilities ───────────────────────────────────────────────────────────────
+hutool = '5.8.44'
+hutool-v7 = '7.0.0-M5'
+
 [libraries]
-# bom libs
-ihub-integration-bom = { module = 'pub.ihub.integration:ihub-bom', version = '0.1.12' }
-ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.2.2' }
-hutool-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool' }
-hutool-v7-bom = { module = 'cn.hutool.v7:hutool-bom', version.ref = 'hutool-v7' }
-mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.16' }
-spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.1.5' }
-spock-bom = { module = 'org.spockframework:spock-bom', version = '2.4-groovy-5.0' }
-sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.45.0' }
-springdoc-openapi-bom = { module = 'org.springdoc:springdoc-openapi-bom', version = '3.0.3' }
-anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '8.7.3-20260501' }
-spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
+# ── Infrastructure ──────────────────────────────────────────────────────────
+spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
 spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version.ref = 'spring-cloud-alibaba' }
-spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
-#dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version = '3.4.1.0' }
-# 动态可监控线程
-dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependencies', version = '1.2.2' }
-# 数据翻译
-easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', version = '3.1.5' }
+spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
+spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.1.5' }
 
-# native
-#solon-bom = { module = 'org.noear:solon-parent', version = '3.0.5' }
-#quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.17.5' }
-
-# ddd libs
-jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2025.0.2' }
-spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '2.0.6' }
-#cola-bom = { module = 'com.alibaba.cola:cola-components-bom', version = '5.0.0' }
-#axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.4' }
-
+# ── Data & Persistence ──────────────────────────────────────────────────────
+mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.16' }
+dynamic-datasource = { module = 'com.baomidou:dynamic-datasource-spring-boot3-starter', version = '4.5.0' }
 # Mybatis-Plus-Ext
 mpe-annotation = { module = 'org.dromara.mpe:mybatis-plus-ext-annotation', version.ref = 'mpe' }
 mpe-autotable-annotation = { module = 'org.dromara.mpe:mybatis-plus-ext-autotable-annotation', version.ref = 'mpe' }
@@ -59,8 +61,7 @@ mpe-datasource = { module = 'org.dromara.mpe:mybatis-plus-ext-datasource', versi
 mpe-condition = { module = 'org.dromara.mpe:mybatis-plus-ext-condition', version.ref = 'mpe' }
 mpe-spring-boot-starter = { module = 'org.dromara.mpe:mybatis-plus-ext-spring-boot-starter', version.ref = 'mpe' }
 mpe-spring-boot3-starter = { module = 'org.dromara.mpe:mybatis-plus-ext-spring-boot3-starter', version.ref = 'mpe' }
-
-# easy-query libs
+# Easy-Query
 eq-sql-core = { module = 'com.easy-query:sql-core', version.ref = 'easy-query' }
 eq-sql-mysql = { module = 'com.easy-query:sql-mysql', version.ref = 'easy-query' }
 eq-sql-api-proxy = { module = 'com.easy-query:sql-api-proxy', version.ref = 'easy-query' }
@@ -72,36 +73,9 @@ eq-sql-kt-springboot-starter = { module = 'com.easy-query:sql-kt-springboot-star
 eq-sql-cache = { module = 'com.easy-query:sql-cache', version.ref = 'easy-query' }
 eq-all = { module = 'com.easy-query:easy-query-all', version.ref = 'easy-query' }
 
-# log libs
-commons-logging = { module = 'commons-logging:commons-logging' }
-log4j = { module = 'log4j:log4j' }
-slf4j-api = { module = 'org.slf4j:slf4j-api' }
-log4j-core = { module = 'org.apache.logging.log4j:log4j-core' }
-slf4j-jcl = { module = 'org.slf4j:slf4j-jcl' }
-slf4j-log4j12 = { module = 'org.slf4j:slf4j-log4j12' }
-jul-to-slf4j = { module = 'org.slf4j:jul-to-slf4j' }
-log4j-over-slf4j = { module = 'org.slf4j:log4j-over-slf4j' }
-jcl-over-slf4j = { module = 'org.slf4j:jcl-over-slf4j' }
-
-# mapstruct libs
-mapstruct = { module = 'org.mapstruct:mapstruct', version.ref = 'mapstruct' }
-mapstruct-processor = { module = 'org.mapstruct:mapstruct-processor', version.ref = 'mapstruct' }
-mapstruct-plus-pom = { module = 'io.github.linpeilie:mapstruct-plus-pom', version.ref = 'mapstruct-plus' }
-mapstruct-plus-processor = { module = 'io.github.linpeilie:mapstruct-plus-processor', version.ref = 'mapstruct-plus' }
-lombok-mapstruct-binding = { module = 'org.projectlombok:lombok-mapstruct-binding', version = '0.2.0' }
-
-# groovy libs
-groovy-core = { module = 'org.apache.groovy:groovy' }
-groovy-datetime = { module = 'org.apache.groovy:groovy-datetime' }
-groovy-dateutil = { module = 'org.apache.groovy:groovy-dateutil' }
-groovy-groovydoc = { module = 'org.apache.groovy:groovy-groovydoc' }
-groovy-json = { module = 'org.apache.groovy:groovy-json' }
-groovy-nio = { module = 'org.apache.groovy:groovy-nio' }
-groovy-sql = { module = 'org.apache.groovy:groovy-sql' }
-groovy-templates = { module = 'org.apache.groovy:groovy-templates' }
-groovy-xml = { module = 'org.apache.groovy:groovy-xml' }
-
-# jmolecules libs
+# ── DDD & Architecture ──────────────────────────────────────────────────────
+jmolecules-bom = { module = 'org.jmolecules:jmolecules-bom', version = '2025.0.2' }
+spring-modulith-bom = { module = 'org.springframework.modulith:spring-modulith-bom', version = '2.0.6' }
 jmolecules-ddd = { module = 'org.jmolecules:jmolecules-ddd' }
 jmolecules-events = { module = 'org.jmolecules:jmolecules-events' }
 jmolecules-cqrs = { module = 'org.jmolecules:jmolecules-cqrs-architecture' }
@@ -112,32 +86,34 @@ jmolecules-jpa = { module = 'org.jmolecules.integrations:jmolecules-jpa' }
 jmolecules-jackson = { module = 'org.jmolecules.integrations:jmolecules-jackson' }
 jmolecules-archunit = { module = 'org.jmolecules.integrations:jmolecules-archunit' }
 
-# test libs
-junit-jupiter = { module = 'org.junit.jupiter:junit-jupiter' }
-spock-spring = { module = 'org.spockframework:spock-spring' }
-spock-reports = { module = 'com.athaydes:spock-reports', version = '2.6.0-groovy-5.0' }
-spring-boot-starter-test = { module = 'org.springframework.boot:spring-boot-starter-test' }
+# ── Object Mapping & Serialization ──────────────────────────────────────────
+mapstruct = { module = 'org.mapstruct:mapstruct', version.ref = 'mapstruct' }
+mapstruct-processor = { module = 'org.mapstruct:mapstruct-processor', version.ref = 'mapstruct' }
+mapstruct-plus-pom = { module = 'io.github.linpeilie:mapstruct-plus-pom', version.ref = 'mapstruct-plus' }
+mapstruct-plus-processor = { module = 'io.github.linpeilie:mapstruct-plus-processor', version.ref = 'mapstruct-plus' }
+lombok-mapstruct-binding = { module = 'org.projectlombok:lombok-mapstruct-binding', version = '0.2.0' }
+fastjson = { module = 'com.alibaba.fastjson2:fastjson2', version.ref = 'fastjson' }
+fastjson-extension = { module = 'com.alibaba.fastjson2:fastjson2-extension', version.ref = 'fastjson' }
+fastjson-extension-spring = { module = 'com.alibaba.fastjson2:fastjson2-extension-spring6', version.ref = 'fastjson' }
+fastjson-kotlin = { module = 'com.alibaba.fastjson2:fastjson2-kotlin', version.ref = 'fastjson' }
+fastjson1 = { module = 'com.alibaba:fastjson', version.ref = 'fastjson' }
+easyexcel = { module = 'com.alibaba:easyexcel', version = '4.0.3' }
 
-# verification libs
-pmd-ant = { module = 'net.sourceforge.pmd:pmd-ant', version.ref = 'pmd' }
-pmd-java = { module = 'net.sourceforge.pmd:pmd-java', version.ref = 'pmd' }
-pmd-groovy = { module = 'net.sourceforge.pmd:pmd-groovy', version.ref = 'pmd' }
-pmd-ali = { module = 'com.alibaba.p3c:p3c-pmd', version = '2.1.1' }
+# ── Security & Auth ─────────────────────────────────────────────────────────
+sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.45.0' }
+justauth = { module = 'me.zhyd.oauth:JustAuth', version = '1.16.7' }
 
-# SnailJob libs
+# ── Distributed ─────────────────────────────────────────────────────────────
+dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependencies', version = '1.2.2' }
+easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', version = '3.1.5' }
+redisson = { module = 'org.redisson:redisson-spring-boot-starter', version = '4.3.1' }
+lock4j-redisson = { module = 'com.baomidou:lock4j-redisson-spring-boot-starter', version = '2.2.7' }
+# SnailJob
 snail-job-client-starter = { module = 'com.aizuda:snail-job-client-starter', version.ref = 'snailjob' }
 snail-job-client-job-core = { module = 'com.aizuda:snail-job-client-job-core', version.ref = 'snailjob' }
 snail-job-server-starter = { module = 'com.aizuda:snail-job-server-starter', version.ref = 'snailjob' }
 
-# skywalking libs
-apm-toolkit-logback = { module = 'org.apache.skywalking:apm-toolkit-logback-1.x', version.ref = 'skywalking-toolkit' }
-apm-toolkit-trace = { module = 'org.apache.skywalking:apm-toolkit-trace', version.ref = 'skywalking-toolkit' }
-
-# therapi libs
-therapi-runtime-javadoc = { module = 'com.github.therapi:therapi-runtime-javadoc', version.ref = 'therapi-javadoc' }
-therapi-runtime-javadoc-scribe = { module = 'com.github.therapi:therapi-runtime-javadoc-scribe', version.ref = 'therapi-javadoc' }
-
-# warm flow libs
+# ── Workflow ────────────────────────────────────────────────────────────────
 warm-flow-m-sb = { module = 'org.dromara.warm:warm-flow-mybatis-sb-starter', version.ref = 'warm-flow' }
 warm-flow-m-sb3 = { module = 'org.dromara.warm:warm-flow-mybatis-sb3-starter', version.ref = 'warm-flow' }
 warm-flow-m-solon = { module = 'org.dromara.warm:warm-flow-mybatis-solon-starter', version.ref = 'warm-flow' }
@@ -147,29 +123,146 @@ warm-flow-mp-solon = { module = 'org.dromara.warm:warm-flow-mybatis-plus-solon-s
 warm-flow-ui-sb = { module = 'org.dromara.warm:warm-flow-plugin-ui-sb-web', version.ref = 'warm-flow' }
 warm-flow-ui-solon = { module = 'org.dromara.warm:warm-flow-plugin-ui-solon-web', version.ref = 'warm-flow' }
 
-# webjars libs
+# ── Observability ───────────────────────────────────────────────────────────
+apm-toolkit-logback = { module = 'org.apache.skywalking:apm-toolkit-logback-1.x', version.ref = 'skywalking-toolkit' }
+apm-toolkit-trace = { module = 'org.apache.skywalking:apm-toolkit-trace', version.ref = 'skywalking-toolkit' }
+
+# ── Documentation ───────────────────────────────────────────────────────────
+springdoc-openapi-bom = { module = 'org.springdoc:springdoc-openapi-bom', version = '3.0.3' }
+swagger-core = { module = 'io.swagger.core.v3:swagger-core-jakarta', version = '2.2.49' }
+therapi-runtime-javadoc = { module = 'com.github.therapi:therapi-runtime-javadoc', version.ref = 'therapi-javadoc' }
+therapi-runtime-javadoc-scribe = { module = 'com.github.therapi:therapi-runtime-javadoc-scribe', version.ref = 'therapi-javadoc' }
+
+# ── Testing & Quality ───────────────────────────────────────────────────────
+spock-bom = { module = 'org.spockframework:spock-bom', version = '2.4-groovy-5.0' }
+junit-jupiter = { module = 'org.junit.jupiter:junit-jupiter' }
+spock-spring = { module = 'org.spockframework:spock-spring' }
+spock-reports = { module = 'com.athaydes:spock-reports', version = '2.6.0-groovy-5.0' }
+spring-boot-starter-test = { module = 'org.springframework.boot:spring-boot-starter-test' }
+pmd-ant = { module = 'net.sourceforge.pmd:pmd-ant', version.ref = 'pmd' }
+pmd-java = { module = 'net.sourceforge.pmd:pmd-java', version.ref = 'pmd' }
+pmd-groovy = { module = 'net.sourceforge.pmd:pmd-groovy', version.ref = 'pmd' }
+pmd-ali = { module = 'com.alibaba.p3c:p3c-pmd', version = '2.1.1' }
+
+# ── Logging ─────────────────────────────────────────────────────────────────
+commons-logging = { module = 'commons-logging:commons-logging' }
+log4j = { module = 'log4j:log4j' }
+slf4j-api = { module = 'org.slf4j:slf4j-api' }
+log4j-core = { module = 'org.apache.logging.log4j:log4j-core' }
+slf4j-jcl = { module = 'org.slf4j:slf4j-jcl' }
+slf4j-log4j12 = { module = 'org.slf4j:slf4j-log4j12' }
+jul-to-slf4j = { module = 'org.slf4j:jul-to-slf4j' }
+log4j-over-slf4j = { module = 'org.slf4j:log4j-over-slf4j' }
+jcl-over-slf4j = { module = 'org.slf4j:jcl-over-slf4j' }
+
+# ── Utilities ───────────────────────────────────────────────────────────────
+hutool-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool' }
+hutool-v7-bom = { module = 'cn.hutool.v7:hutool-bom', version.ref = 'hutool-v7' }
+hutool-all = { module = 'cn.hutool:hutool-all', version.ref = 'hutool' }
+hutool-v7-all = { module = 'cn.hutool.v7:hutool-all', version.ref = 'hutool-v7' }
+sms4j = { module = 'org.dromara.sms4j:sms4j-spring-boot-starter', version = '3.3.5' }
+x-file-storage = { module = 'org.dromara.x-file-storage:x-file-storage-spring', version = '2.3.0' }
+anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '8.7.3-20260501' }
+
+# ── Language Support ────────────────────────────────────────────────────────
+groovy-core = { module = 'org.apache.groovy:groovy' }
+groovy-datetime = { module = 'org.apache.groovy:groovy-datetime' }
+groovy-dateutil = { module = 'org.apache.groovy:groovy-dateutil' }
+groovy-groovydoc = { module = 'org.apache.groovy:groovy-groovydoc' }
+groovy-json = { module = 'org.apache.groovy:groovy-json' }
+groovy-nio = { module = 'org.apache.groovy:groovy-nio' }
+groovy-sql = { module = 'org.apache.groovy:groovy-sql' }
+groovy-templates = { module = 'org.apache.groovy:groovy-templates' }
+groovy-xml = { module = 'org.apache.groovy:groovy-xml' }
+
+# ── IHub BOM ────────────────────────────────────────────────────────────────
+ihub-integration-bom = { module = 'pub.ihub.integration:ihub-bom', version = '0.1.12' }
+ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.2.2' }
+
+# ── Commented Out / Future ──────────────────────────────────────────────────
+#dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version = '3.4.1.0' }
+#solon-bom = { module = 'org.noear:solon-parent', version = '3.0.5' }
+#quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.17.5' }
+#cola-bom = { module = 'com.alibaba.cola:cola-components-bom', version = '5.0.0' }
+#axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.4' }
 #webjars-layui = { module = 'org.webjars:layui', version = '2.9.18' }
 #webjars-jquery = { module = 'org.webjars:jquery', version = '3.7.1' }
 #webjars-crypto = { module = 'org.webjars.npm:crypto-js', version = '4.2.0' }
 
-# other libs
-hutool-all = { module = 'cn.hutool:hutool-all', version.ref = 'hutool' }
-hutool-v7-all = { module = 'cn.hutool.v7:hutool-all', version.ref = 'hutool-v7' }
-fastjson = { module = 'com.alibaba.fastjson2:fastjson2', version.ref = 'fastjson' }
-fastjson-extension = { module = 'com.alibaba.fastjson2:fastjson2-extension', version.ref = 'fastjson' }
-fastjson-extension-spring = { module = 'com.alibaba.fastjson2:fastjson2-extension-spring6', version.ref = 'fastjson' }
-fastjson-kotlin = { module = 'com.alibaba.fastjson2:fastjson2-kotlin', version.ref = 'fastjson' }
-fastjson1 = { module = 'com.alibaba:fastjson', version.ref = 'fastjson' }
-justauth = { module = 'me.zhyd.oauth:JustAuth', version = '1.16.7' }
-easyexcel = { module = 'com.alibaba:easyexcel', version = '4.0.3' }
-redisson = { module = 'org.redisson:redisson-spring-boot-starter', version = '4.3.1' }
-lock4j-redisson = { module = 'com.baomidou:lock4j-redisson-spring-boot-starter', version = '2.2.7' }
-sms4j = { module = 'org.dromara.sms4j:sms4j-spring-boot-starter', version = '3.3.5' }
-dynamic-datasource = { module = 'com.baomidou:dynamic-datasource-spring-boot3-starter', version = '4.5.0' }
-swagger-core = { module = 'io.swagger.core.v3:swagger-core-jakarta', version = '2.2.49' }
-x-file-storage = { module = 'org.dromara.x-file-storage:x-file-storage-spring', version = '2.3.0' }
-
 [bundles]
+# ── Domain Bundles ──────────────────────────────────────────────────────────
+## Infrastructure
+infra-platform = [
+    'spring-boot-dependencies', 'spring-cloud-dependencies', 'spring-cloud-alibaba-dependencies',
+    'spring-boot-admin-dependencies', 'spring-ai-bom'
+]
+
+## Data & Persistence
+data-orm = ['mybatis-plus-bom', 'eq-all', 'dynamic-datasource']
+data-mpe = [
+    'mpe-annotation', 'mpe-autotable-annotation', 'mpe-actable-core', 'mpe-autotable-core',
+    'mpe-processor', 'mpe-bind', 'mpe-datasource', 'mpe-condition',
+    'mpe-spring-boot-starter', 'mpe-spring-boot3-starter'
+]
+data-easyquery = [
+    'eq-sql-core', 'eq-sql-mysql', 'eq-sql-api-proxy', 'eq-sql-api4j', 'eq-sql-processor',
+    'eq-sql-ksp-processor', 'eq-sql-springboot-starter', 'eq-sql-kt-springboot-starter',
+    'eq-sql-cache', 'eq-all'
+]
+
+## DDD & Architecture
+ddd-jmolecules = ['jmolecules-bom', 'jmolecules-ddd', 'jmolecules-events']
+ddd-spring-modulith = ['spring-modulith-bom']
+
+## Object Mapping & Serialization
+mapping-bean = ['mapstruct', 'mapstruct-processor', 'mapstruct-plus-pom', 'mapstruct-plus-processor', 'lombok-mapstruct-binding']
+mapping-json = ['fastjson', 'fastjson-extension', 'fastjson-extension-spring', 'fastjson-kotlin', 'fastjson1']
+mapping-excel = ['easyexcel']
+
+## Security & Auth
+security-auth = ['sa-token-bom', 'justauth']
+
+## Distributed
+distributed-lock = ['redisson', 'lock4j-redisson']
+distributed-scheduler = ['snail-job-client-starter', 'snail-job-client-job-core', 'snail-job-server-starter']
+distributed-infra = ['dynamic-tp-dependencies', 'easy-trans-dependencies']
+
+## Workflow
+workflow-engine = [
+    'warm-flow-m-sb', 'warm-flow-m-sb3', 'warm-flow-m-solon',
+    'warm-flow-mp-sb', 'warm-flow-mp-sb3', 'warm-flow-mp-solon',
+    'warm-flow-ui-sb', 'warm-flow-ui-solon'
+]
+
+## Observability
+observability-tracing = ['apm-toolkit-logback', 'apm-toolkit-trace']
+
+## Documentation
+documentation-api = ['springdoc-openapi-bom', 'swagger-core']
+documentation-javadoc = ['therapi-runtime-javadoc', 'therapi-runtime-javadoc-scribe']
+
+## Testing & Quality
+testing-framework = ['spock-bom', 'junit-jupiter', 'spock-spring', 'spock-reports', 'spring-boot-starter-test']
+testing-static-analysis = ['pmd-ant', 'pmd-java', 'pmd-groovy', 'pmd-ali']
+
+## Logging
+logging-slf4j = ['slf4j-api', 'jul-to-slf4j', 'log4j-over-slf4j', 'jcl-over-slf4j']
+logging-log4j = ['log4j', 'log4j-core', 'commons-logging', 'slf4j-jcl', 'slf4j-log4j12']
+
+## Utilities
+utilities-core = ['hutool-bom', 'hutool-all', 'hutool-v7-bom', 'hutool-v7-all']
+utilities-extra = ['sms4j', 'x-file-storage', 'anyline-dependency']
+
+## Language Support
+language-groovy = [
+    'groovy-core', 'groovy-datetime', 'groovy-dateutil', 'groovy-groovydoc', 'groovy-json',
+    'groovy-nio', 'groovy-sql', 'groovy-templates', 'groovy-xml'
+]
+
+## IHub
+ihub-boms = ['ihub-integration-bom', 'ihub-module-bom']
+
+# ── Legacy Bundles (保留向后兼容) ────────────────────────────────────────────
 platform = [
     'ihub-integration-bom', 'ihub-module-bom', 'hutool-bom', 'hutool-v7-bom', 'jmolecules-bom', 'spock-bom', 'sa-token-bom',
     'springdoc-openapi-bom', 'mybatis-plus-bom', 'spring-modulith-bom', 'spring-ai-bom', 'spring-boot-admin-dependencies',
@@ -189,7 +282,6 @@ constraints = [
     'warm-flow-m-sb', 'warm-flow-m-sb3', 'warm-flow-m-solon', 'warm-flow-mp-sb', 'warm-flow-mp-sb3', 'warm-flow-mp-solon',
     'warm-flow-ui-sb', 'warm-flow-ui-solon'
 ]
-
 groovy = [
     'groovy-core', 'groovy-datetime', 'groovy-dateutil', 'groovy-groovydoc', 'groovy-json',
     'groovy-nio', 'groovy-sql', 'groovy-templates', 'groovy-xml'

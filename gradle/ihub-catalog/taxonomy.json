@@ -1,0 +1,124 @@
+{
+  "catalog_version": "1.0.0",
+  "generated": "2026-05-03",
+  "description": "IHub 能力目录分类体系定义 —— 领域层级、旅程映射、组件类型定义",
+  "domains": {
+    "infrastructure": {
+      "name": "基础设施",
+      "name_en": "Infrastructure",
+      "description": "Spring 生态平台 BOM、日志框架、容器支持等起项目所需的基础设施",
+      "subdomains": ["platform", "logging", "container"],
+      "stages": ["init"]
+    },
+    "data": {
+      "name": "数据与持久化",
+      "name_en": "Data & Persistence",
+      "description": "ORM 框架、数据源管理、SQL 工具等写业务的核心数据层组件",
+      "subdomains": ["orm", "datasource", "sql-tool"],
+      "stages": ["code"]
+    },
+    "ddd": {
+      "name": "领域驱动设计",
+      "name_en": "Domain-Driven Design",
+      "description": "DDD 框架、架构约束、模块化等支撑领域建模的组件",
+      "subdomains": ["architecture", "modularity", "events"],
+      "stages": ["ideate", "code", "qa"]
+    },
+    "mapping": {
+      "name": "对象映射与序列化",
+      "name_en": "Object Mapping & Serialization",
+      "description": "对象映射、序列化、数据格式转换等数据转换层组件",
+      "subdomains": ["bean-mapping", "serialization", "format"],
+      "stages": ["code"]
+    },
+    "security": {
+      "name": "安全与认证",
+      "name_en": "Security & Authentication",
+      "description": "认证、授权、SSO、第三方登录等安全相关组件",
+      "subdomains": ["auth", "oauth", "sso"],
+      "stages": ["adapt", "qa"]
+    },
+    "distributed": {
+      "name": "分布式能力",
+      "name_en": "Distributed Capabilities",
+      "description": "分布式锁、分布式调度、动态线程池、数据翻译等分布式系统组件",
+      "subdomains": ["lock", "scheduler", "thread-pool", "data-trans"],
+      "stages": ["adapt"]
+    },
+    "workflow": {
+      "name": "工作流",
+      "name_en": "Workflow",
+      "description": "工作流引擎、业务流程编排组件",
+      "subdomains": ["engine", "ui"],
+      "stages": ["code"]
+    },
+    "observability": {
+      "name": "可观测性",
+      "name_en": "Observability",
+      "description": "链路追踪、应用监控、日志采集等生产环境可观测性组件",
+      "subdomains": ["tracing", "metrics", "logging"],
+      "stages": ["ops", "migrate"]
+    },
+    "documentation": {
+      "name": "文档与 API",
+      "name_en": "Documentation & API",
+      "description": "API 文档生成、运行时 Javadoc 等文档相关组件",
+      "subdomains": ["api-doc", "javadoc"],
+      "stages": ["adapt", "qa"]
+    },
+    "testing": {
+      "name": "测试与质量",
+      "name_en": "Testing & Quality",
+      "description": "单元测试、集成测试、静态分析等质量保障组件",
+      "subdomains": ["unit-test", "static-analysis", "coverage"],
+      "stages": ["qa"]
+    },
+    "messaging": {
+      "name": "消息与事件",
+      "name_en": "Messaging & Events",
+      "description": "消息队列、事件总线、流处理等异步通信组件",
+      "subdomains": ["queue", "event-bus", "stream"],
+      "stages": ["adapt"]
+    },
+    "utilities": {
+      "name": "通用工具",
+      "name_en": "Utilities",
+      "description": "通用工具集、文件存储、SMS 通知等跨阶段辅助组件",
+      "subdomains": ["general", "storage", "notification"],
+      "stages": ["code"]
+    },
+    "meta": {
+      "name": "元目录",
+      "name_en": "Meta Catalog",
+      "description": "引导 LLM/AI 理解 IHub 组件体系的元信息",
+      "subdomains": ["guide"],
+      "stages": ["ideate", "init", "code", "llm", "adapt", "qa", "ops", "migrate"]
+    }
+  },
+  "stages": {
+    "ideate": { "name": "想清楚", "name_en": "Ideate", "order": 1, "description": "需求分析与架构设计阶段" },
+    "init": { "name": "起项目", "name_en": "Initialize", "order": 2, "description": "项目初始化、框架搭建阶段" },
+    "code": { "name": "写业务", "name_en": "Code", "order": 3, "description": "核心业务逻辑开发阶段" },
+    "llm": { "name": "接AI", "name_en": "AI Integration", "order": 4, "description": "AI/LLM 能力集成阶段" },
+    "adapt": { "name": "接外部", "name_en": "Adapt", "order": 5, "description": "外部系统对接与集成阶段" },
+    "qa": { "name": "上质量", "name_en": "Quality Assurance", "order": 6, "description": "测试、代码审查、质量保障阶段" },
+    "ops": { "name": "上线", "name_en": "Operations", "order": 7, "description": "部署、监控、运维阶段" },
+    "migrate": { "name": "演进", "name_en": "Migrate", "order": 8, "description": "版本升级、架构演进、持续优化阶段" }
+  },
+  "component_types": {
+    "ihub-component": { "name": "IHub 自研组件", "description": "IHub 自身的 starter / 封装组件，提供开箱即用的集成能力" },
+    "third-party-reference": { "name": "第三方推荐", "description": "IHub 推荐集成的成熟三方库，经过验证可与 IHub 生态良好协作" },
+    "platform-bom": { "name": "平台 BOM", "description": "管理一组依赖版本的 BOM 物料清单，统一版本控制" }
+  },
+  "ihub_layers": {
+    "L2": { "name": "IHub 能力板块", "description": "libs 仓库中的组件，提供可复用的技术能力" },
+    "L3": { "name": "IHub 集成方案", "description": "modules/integrations 仓库中的组件，提供场景化集成方案" }
+  },
+  "component_statuses": {
+    "stable": "生产就绪，推荐使用",
+    "experimental": "实验性功能，API 可能变化",
+    "deprecated": "已弃用，将在未来版本移除",
+    "legacy": "遗留组件，仅维护不新增功能",
+    "planned": "规划中，尚未实现"
+  }
+}
