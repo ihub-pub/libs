@@ -13,7 +13,7 @@
     "alternatives": ["ddd-modularity-spring-modulith"],
     "maven": { "group": "org.jmolecules", "artifact": "jmolecules-bom" },
     "version_ref": null,
-    "gradle_ref": "jmolecules-bom",
+    "gradle_ref": ["jmolecules-bom", "jmolecules-ddd", "jmolecules-events", "jmolecules-cqrs", "jmolecules-layered", "jmolecules-onion", "jmolecules-spring", "jmolecules-jpa", "jmolecules-jackson", "jmolecules-archunit"],
     "dependencies": [],
     "starter_available": false,
     "tags": ["ddd", "architecture", "jpa", "archunit", "cqrs", "bom"],

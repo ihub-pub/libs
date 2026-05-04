@@ -3,9 +3,15 @@
 Verify catalog entries are consistent with libs.versions.toml.
 - Every version_ref must exist in [versions]
 - Every gradle_ref must exist in [libraries] or [bundles]
+- Every stage value must be a valid taxonomy stage id
+- Every id must be unique across all domain files
 Usage: python3 check-consistency.py path/to/libs.versions.toml
 """
 import json, os, re, sys
+
+VALID_STAGES = {'ideate', 'init', 'code', 'llm', 'adapt', 'qa', 'ops', 'migrate'}
+VALID_STATUSES = {'stable', 'experimental', 'deprecated', 'legacy'}
+VALID_TYPES = {'ihub-component', 'third-party-reference', 'platform-bom'}
 
 CATALOG_DIR = os.path.dirname(os.path.abspath(__file__))
 DOMAINS_DIR = os.path.join(CATALOG_DIR, 'domains')
@@ -63,6 +69,7 @@ def main():
 
     versions, libraries, bundles = parse_toml_keys(toml_path)
     errors = []
+    seen_ids = {}
 
     for fname in sorted(os.listdir(DOMAINS_DIR)):
         if not fname.endswith('.json'):
@@ -73,6 +80,12 @@ def main():
 
         for entry in entries:
             eid = entry.get('id', '?')
+
+            # Check id uniqueness
+            if eid in seen_ids:
+                errors.append(f'{eid}: duplicate id (also in {seen_ids[eid]})')
+            else:
+                seen_ids[eid] = fname
 
             # Check version_ref
             vref = entry.get('version_ref')
@@ -86,6 +99,11 @@ def main():
                 for ref in refs:
                     if ref and ref not in libraries and ref not in bundles:
                         errors.append(f'{eid}: gradle_ref "{ref}" not found in [libraries] or [bundles]')
+
+            # Check stage values
+            for s in entry.get('stage') or []:
+                if s not in VALID_STAGES:
+                    errors.append(f'{eid}: invalid stage "{s}" (valid: {sorted(VALID_STAGES)})')
 
             # Check dependency references (strings or dicts with component_id)
             for dep in entry.get('dependencies', []):

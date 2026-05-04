@@ -7,17 +7,30 @@
     "description": "基于配置中心的动态线程池框架，支持运行时调整线程池参数、报警通知，无需重启服务。",
     "use_case": "生产环境线程池参数调优、异步任务隔离、线程池监控与告警、快速响应突发流量变化。",
     "ai_context": "## DynamicTp 集成模式\n\n### 引入 BOM\n```kotlin\ndependencies {\n    implementation(platform(libs.dynamic.tp.dependencies))\n    implementation(\"org.dromara.dynamictp:dynamic-tp-spring-boot-starter-nacos\") // 或其他配置中心\n}\n```\n\n### 支持的配置中心\n- Nacos、Apollo、Zookeeper、Etcd、Consul、Spring Cloud Config\n\n### 配置示例（Nacos）\n```yaml\nspring:\n  dynamic:\n    tp:\n      executors:\n        - thread-pool-name: orderExecutor\n          core-pool-size: 10\n          maximum-pool-size: 50\n          queue-capacity: 1000\n          queue-type: VARIABLE_LINKED_BLOCKING_QUEUE\n          notify:\n            - type: CAPACITY  # 队列容量报警\n              threshold: 80\n```\n\n### 常见使用场景\n- 电商秒杀：运行时调大核心线程数应对流量峰值\n- 异步任务：不同业务使用独立线程池，互不影响\n- 问题排查：实时观察线程池指标，无需重启\n\n### 版本说明\n- 版本号硬编码在 `[libraries]` 中（`version = '1.2.2'`），无独立 version key。",
-    "alternatives": ["thread-pool-executor-manual", "resilience4j-bulkhead"],
+    "alternatives": [
+      "thread-pool-executor-manual",
+      "resilience4j-bulkhead"
+    ],
     "maven": {
       "groupId": "org.dromara.dynamictp",
       "artifactId": "dynamic-tp-dependencies",
       "version_ref": null
     },
-    "gradle_ref": ["dynamic-tp-dependencies"],
+    "gradle_ref": [
+      "dynamic-tp-dependencies"
+    ],
     "dependencies": [],
-    "tags": ["thread-pool", "dynamic-config", "monitoring", "distributed"],
+    "tags": [
+      "thread-pool",
+      "dynamic-config",
+      "monitoring",
+      "distributed"
+    ],
     "status": "stable",
-    "stage": ["connect-external", "go-live"],
+    "stage": [
+      "adapt",
+      "ops"
+    ],
     "related_plugins": [],
     "doc_url": "https://dynamictp.cn/",
     "ihub_layer": "L2-libs"
@@ -30,17 +43,30 @@
     "description": "字段翻译框架，通过注解自动将 id 字段翻译为对应的名称（如 userId→userName），支持本地、远程、字典等多种翻译方式。",
     "use_case": "列表接口返回数据时自动关联查询翻译字段、枚举/字典码翻译为显示名称、跨服务字段关联展示。",
     "ai_context": "## EasyTrans 集成模式\n\n### 引入 BOM\n```kotlin\ndependencies {\n    implementation(platform(libs.easy.trans.dependencies))\n    implementation(\"org.dromara:easy-trans-spring-boot-starter\")\n    // 如果使用 MyBatis-Plus：\n    implementation(\"org.dromara:easy-trans-mybatis-plus-plugin\")\n}\n```\n\n### 核心注解\n```java\n@Data\npublic class UserVO {\n    private Long deptId;\n    \n    @Trans(type = TransType.SIMPLE, target = SysDept.class, fields = \"deptName\")\n    private String deptName; // 自动从 SysDept 表查询并填充\n    \n    @Trans(type = TransType.DICTIONARY, key = \"user_status\")\n    private String statusName; // 字典翻译\n}\n```\n\n### 翻译类型\n- `SIMPLE`：本地数据库查询翻译\n- `RPC`：远程服务调用翻译（跨微服务）\n- `DICTIONARY`：字典/枚举翻译\n- `AUTO_TRANS_VO`：自动翻译整个 VO\n\n### 版本说明\n- 版本号硬编码（`version = '3.1.5'`），无独立 version key。",
-    "alternatives": ["manual-join-query", "mybatis-plus-join"],
+    "alternatives": [
+      "manual-join-query",
+      "mybatis-plus-join"
+    ],
     "maven": {
       "groupId": "org.dromara",
       "artifactId": "easy-trans-dependencies",
       "version_ref": null
     },
-    "gradle_ref": ["easy-trans-dependencies"],
+    "gradle_ref": [
+      "easy-trans-dependencies"
+    ],
     "dependencies": [],
-    "tags": ["data-translation", "field-mapping", "dictionary", "annotation"],
+    "tags": [
+      "data-translation",
+      "field-mapping",
+      "dictionary",
+      "annotation"
+    ],
     "status": "stable",
-    "stage": ["write-business", "connect-external"],
+    "stage": [
+      "code",
+      "adapt"
+    ],
     "related_plugins": [],
     "doc_url": "https://easy-trans.gitee.io/",
     "ihub_layer": "L2-libs"
@@ -53,17 +79,31 @@
     "description": "基于 Redis 的 Java 分布式锁、分布式集合、分布式对象客户端，提供 Spring Boot Starter 开箱即用。",
     "use_case": "分布式锁防止并发重复操作、分布式限流、Redis 发布订阅、分布式集合（Map/Set/Queue）。",
     "ai_context": "## Redisson 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.redisson)         // Spring Boot Starter\n    implementation(libs.lock4j.redisson)  // 可选：注解式分布式锁\n}\n```\n\n### application.yml 配置\n```yaml\nspring:\n  data:\n    redis:\n      host: localhost\n      port: 6379\n# Redisson 自动读取 spring.data.redis 配置\n```\n\n### 使用分布式锁\n```java\n@Service\npublic class OrderService {\n    @Autowired\n    private RedissonClient redissonClient;\n    \n    public void createOrder(String orderId) {\n        RLock lock = redissonClient.getLock(\"order:\" + orderId);\n        try {\n            lock.lock(30, TimeUnit.SECONDS);\n            // 业务逻辑\n        } finally {\n            lock.unlock();\n        }\n    }\n}\n```\n\n### 注解式分布式锁（Lock4j）\n```java\n@Lock4j(keys = \"#orderId\", expire = 30000)\npublic void createOrder(String orderId) {\n    // 业务逻辑，自动加锁解锁\n}\n```\n\n### 注意事项\n- 分布式锁必须设置超时时间，防止死锁。\n- `lock4j-redisson` 提供注解式 AOP 方案，但复杂场景（如条件释放）仍需手动编码。\n- Redisson 版本和 Spring Boot 版本有兼容要求，通过固定版本号管理。",
-    "alternatives": ["spring-integration-redis", "jedis-lock"],
+    "alternatives": [
+      "spring-integration-redis",
+      "jedis-lock"
+    ],
     "maven": {
       "groupId": "org.redisson",
       "artifactId": "redisson-spring-boot-starter",
       "version_ref": null
     },
-    "gradle_ref": ["redisson", "lock4j-redisson"],
+    "gradle_ref": [
+      "redisson",
+      "lock4j-redisson"
+    ],
     "dependencies": [],
-    "tags": ["redis", "distributed-lock", "cache", "pub-sub"],
+    "tags": [
+      "redis",
+      "distributed-lock",
+      "cache",
+      "pub-sub"
+    ],
     "status": "stable",
-    "stage": ["connect-external", "write-business"],
+    "stage": [
+      "adapt",
+      "code"
+    ],
     "related_plugins": [],
     "doc_url": "https://redisson.org/docs/",
     "ihub_layer": "L2-libs"
@@ -76,17 +116,35 @@
     "description": "灵活、可靠、高性能的分布式任务重试与调度框架，支持任务编排、失败重试、DAG 工作流。",
     "use_case": "定时任务调度、失败重试、长耗时任务拆分、任务依赖编排（DAG）、任务执行监控。",
     "ai_context": "## SnailJob 集成模式\n\n### 部署架构\nSnailJob 分为 Server（调度中心）和 Client（业务接入）：\n- **Server**：独立部署或嵌入 Spring Boot 项目\n- **Client**：业务项目接入 SDK\n\n### Client 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.snail.job.client.starter)   // 客户端核心\n    implementation(libs.snail.job.client.job.core)  // Job 执行核心\n}\n```\n\n### Server 依赖配置（独立部署时）\n```kotlin\ndependencies {\n    implementation(libs.snail.job.server.starter)\n}\n```\n\n### 任务定义\n```java\n@Component\n@SneakyJob(scene = \"orderRetryScene\") // 重试场景\npublic class OrderRetryJob implements ExecutorJob {\n    @Override\n    public ExecuteResult doJobExecute(JobArgs jobArgs) {\n        // 执行逻辑\n        return ExecuteResult.success();\n    }\n}\n```\n\n### 版本管理\n- 版本号通过 `version.ref = 'snailjob'` 统一管理，三个库共享同一版本。\n\n### 选型对比\n- SnailJob vs XXL-Job：SnailJob 更现代，支持 DAG 工作流和失败重试语义。\n- SnailJob vs PowerJob：功能类似，SnailJob 国产社区活跃度更高。",
-    "alternatives": ["xxl-job", "powerjob", "quartz", "spring-batch"],
+    "alternatives": [
+      "xxl-job",
+      "powerjob",
+      "quartz",
+      "spring-batch"
+    ],
     "maven": {
       "groupId": "com.aizuda",
       "artifactId": "snail-job-client-starter",
       "version_ref": "snailjob"
     },
-    "gradle_ref": ["snail-job-client-starter", "snail-job-client-job-core", "snail-job-server-starter"],
+    "gradle_ref": [
+      "snail-job-client-starter",
+      "snail-job-client-job-core",
+      "snail-job-server-starter"
+    ],
     "dependencies": [],
-    "tags": ["scheduler", "distributed-task", "retry", "dag", "workflow"],
+    "tags": [
+      "scheduler",
+      "distributed-task",
+      "retry",
+      "dag",
+      "workflow"
+    ],
     "status": "stable",
-    "stage": ["connect-external", "go-live"],
+    "stage": [
+      "adapt",
+      "ops"
+    ],
     "related_plugins": [],
     "doc_url": "https://snailjob.opensnail.com/",
     "ihub_layer": "L2-libs"

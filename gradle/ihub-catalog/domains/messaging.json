@@ -7,13 +7,28 @@
     "description": "【占位条目】IHub libs 当前通过 Spring Boot BOM 间接管理消息队列依赖（RocketMQ、Kafka、RabbitMQ 等），独立 messaging domain 条目将在 P2 阶段按需添加。",
     "use_case": "分布式消息传递、事件驱动架构、异步解耦、削峰填谷。当前建议直接使用 Spring Boot BOM 中的消息队列 Starter。",
     "ai_context": "## Messaging 领域现状\n\n### 当前推荐路径\nIHub libs 的 `infrastructure` 领域已通过 BOM 覆盖以下消息队列：\n\n```kotlin\n// Spring Boot BOM 已包含：\ndependencies {\n    implementation(platform(libs.spring.boot.dependencies))\n    // 然后直接使用（无需指定版本）：\n    implementation(\"org.springframework.boot:spring-boot-starter-amqp\")       // RabbitMQ\n    implementation(\"org.springframework.boot:spring-boot-starter-activemq\")   // ActiveMQ\n    implementation(\"org.springframework.kafka:spring-kafka\")                   // Kafka\n}\n\n// Spring Cloud Alibaba BOM 已包含：\ndependencies {\n    implementation(platform(libs.spring.cloud.alibaba.dependencies))\n    implementation(\"com.alibaba.cloud:spring-cloud-starter-stream-rocketmq\")  // RocketMQ\n}\n```\n\n### 规划中的 messaging 条目（P2）\n- RocketMQ BOM（独立版本管理）\n- Kafka BOM\n- Pulsar（Spring Boot 4.x 新增支持）\n\n### AI 建议\n当开发者询问消息队列选型时：\n- **RocketMQ**：阿里云生态、强顺序性要求、事务消息\n- **Kafka**：高吞吐日志流处理、大数据场景\n- **RabbitMQ**：灵活路由、低延迟、AMQP 协议\n- **Pulsar**：多租户、地理复制、云原生",
-    "alternatives": ["rocketmq", "kafka", "rabbitmq", "pulsar"],
+    "alternatives": [
+      "rocketmq",
+      "kafka",
+      "rabbitmq",
+      "pulsar"
+    ],
     "maven": null,
     "gradle_ref": [],
-    "dependencies": ["infrastructure"],
-    "tags": ["messaging", "event-driven", "mq", "async", "planned"],
+    "dependencies": [
+      "infrastructure"
+    ],
+    "tags": [
+      "messaging",
+      "event-driven",
+      "mq",
+      "async",
+      "planned"
+    ],
     "status": "experimental",
-    "stage": ["connect-external"],
+    "stage": [
+      "adapt"
+    ],
     "related_plugins": [],
     "doc_url": "https://spring.io/projects/spring-amqp",
     "ihub_layer": "L2-libs"

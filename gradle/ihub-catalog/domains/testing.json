@@ -7,18 +7,36 @@
     "description": "基于 Groovy 的 BDD 测试框架，通过语义化的 `given/when/then` 结构提升测试可读性，内置数据驱动测试（@Unroll）和强大的 Mock 支持。",
     "use_case": "业务逻辑单元测试、数据驱动测试（多组参数）、Spring Boot 集成测试、替代 JUnit + Mockito 组合。",
     "ai_context": "## Spock Framework 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(platform(libs.spock.bom))  // BOM 管理版本\n    testImplementation(libs.spock.spring)     // Spring 集成\n    testImplementation(libs.spring.boot.starter.test) // Spring Boot 测试基础\n    testImplementation(libs.spock.reports)   // 可选：HTML 测试报告\n}\n```\n\n### 典型 Spock 测试\n```groovy\n@SpringBootTest\nclass UserServiceSpec extends Specification {\n    \n    @Autowired\n    UserService userService\n    \n    def \"创建用户时应该返回用户ID\"() {\n        given: \"一个用户请求\"\n        def request = new CreateUserRequest(name: \"张三\", email: \"zhang@example.com\")\n        \n        when: \"调用创建用户接口\"\n        def result = userService.createUser(request)\n        \n        then: \"返回非空ID\"\n        result.id != null\n        result.name == \"张三\"\n    }\n    \n    @Unroll\n    def \"验证年龄 #age 是否合法：期望 #expected\"() {\n        expect:\n        userService.isValidAge(age) == expected\n        \n        where:\n        age | expected\n        -1  | false\n        0   | false\n        18  | true\n        120 | true\n        200 | false\n    }\n}\n```\n\n### 与 IHub 插件集成\n- `ihub-groovy` 和 `ihub-test` 插件自动配置 Spock 依赖和测试任务。\n- IHub plugins 自身的测试套件全部使用 Spock。\n\n### 版本说明\n- `spock-bom` 版本号硬编码（`version = '2.4-groovy-5.0'`），无独立 version key。\n- 版本格式 `2.4-groovy-5.0` 中 `groovy-5.0` 表示对应的 Groovy 版本，需与项目 Groovy 版本匹配。",
-    "alternatives": ["junit5", "testng"],
+    "alternatives": [
+      "junit5",
+      "testng"
+    ],
     "maven": {
       "groupId": "org.spockframework",
       "artifactId": "spock-bom",
       "version_ref": null
     },
-    "gradle_ref": ["spock-bom", "spock-spring", "spock-reports"],
+    "gradle_ref": [
+      "spock-bom",
+      "spock-spring",
+      "spock-reports"
+    ],
     "dependencies": [],
-    "tags": ["testing", "bdd", "groovy", "mock", "data-driven"],
+    "tags": [
+      "testing",
+      "bdd",
+      "groovy",
+      "mock",
+      "data-driven"
+    ],
     "status": "stable",
-    "stage": ["quality"],
-    "related_plugins": ["ihub-groovy", "ihub-test"],
+    "stage": [
+      "qa"
+    ],
+    "related_plugins": [
+      "ihub-groovy",
+      "ihub-test"
+    ],
     "doc_url": "https://spockframework.org/spock/docs/",
     "ihub_layer": "L2-libs"
   },
@@ -30,18 +48,33 @@
     "description": "Java 生态标准测试框架，Spring Boot 默认集成，支持参数化测试、扩展模型和并行测试。",
     "use_case": "标准 Java 单元测试、与 Spring Boot Test 集成、Mockito Mock 测试，不需要 Groovy 的场景。",
     "ai_context": "## JUnit 5 集成模式\n\n### Spring Boot 项目（推荐通过 starter）\n```kotlin\ndependencies {\n    testImplementation(libs.spring.boot.starter.test) // 包含 JUnit 5 + Mockito\n    // 或单独使用：\n    testImplementation(libs.junit.jupiter)\n}\n```\n\n### Spring Boot Test 包含内容\n- JUnit 5 (Jupiter)\n- Mockito\n- AssertJ\n- JsonPath\n- Spring Test\n\n### 典型测试\n```java\n@SpringBootTest\nclass UserServiceTest {\n    @Autowired\n    private UserService userService;\n    \n    @MockBean\n    private UserRepository userRepository;\n    \n    @Test\n    @DisplayName(\"创建用户成功\")\n    void createUserSuccess() {\n        when(userRepository.save(any())).thenReturn(new User(1L, \"张三\"));\n        User result = userService.createUser(\"张三\");\n        assertThat(result.getId()).isNotNull();\n    }\n    \n    @ParameterizedTest\n    @ValueSource(ints = {-1, 0, 200})\n    void invalidAgeTest(int age) {\n        assertFalse(userService.isValidAge(age));\n    }\n}\n```\n\n### 注意事项\n- Spring Boot 通过 BOM 管理 JUnit 版本，通常无需手动指定版本。\n- `libs.junit.jupiter` 别名无 version，依赖 Spring Boot BOM 或平台 BOM 提供版本。",
-    "alternatives": ["spock-framework", "testng"],
+    "alternatives": [
+      "spock-framework",
+      "testng"
+    ],
     "maven": {
       "groupId": "org.junit.jupiter",
       "artifactId": "junit-jupiter",
       "version_ref": null
     },
-    "gradle_ref": ["junit-jupiter", "spring-boot-starter-test"],
+    "gradle_ref": [
+      "junit-jupiter",
+      "spring-boot-starter-test"
+    ],
     "dependencies": [],
-    "tags": ["testing", "junit", "unit-test", "integration-test"],
+    "tags": [
+      "testing",
+      "junit",
+      "unit-test",
+      "integration-test"
+    ],
     "status": "stable",
-    "stage": ["quality"],
-    "related_plugins": ["ihub-test"],
+    "stage": [
+      "qa"
+    ],
+    "related_plugins": [
+      "ihub-test"
+    ],
     "doc_url": "https://junit.org/junit5/docs/current/user-guide/",
     "ihub_layer": "L2-libs"
   },
@@ -53,18 +86,37 @@
     "description": "静态源码分析工具，检测代码缺陷、命名规范、复杂度等问题；`p3c-pmd` 集成阿里巴巴 Java 规范检查。",
     "use_case": "CI/CD 流水线中的代码质量门禁、强制执行团队代码规范、检测潜在 Bug（空指针、资源泄漏等）。",
     "ai_context": "## PMD 集成模式\n\n### IHub 插件集成（推荐）\n`ihub-quality` 插件自动配置 PMD，无需手动设置。\n\n### 手动依赖配置（Gradle PMD 插件）\n```kotlin\nplugins {\n    pmd\n}\n\ndependencies {\n    // PMD 版本由 ihub libs 管理\n    pmd(libs.pmd.ant)\n    pmd(libs.pmd.java)\n    pmd(libs.pmd.groovy)  // Groovy 项目\n    pmd(libs.pmd.ali)     // 阿里 P3C 规范\n}\n\npmd {\n    toolVersion = libs.versions.pmd.get()\n    ruleSetFiles = files(\"config/pmd/ruleset.xml\")\n    isConsoleOutput = true\n}\n```\n\n### P3C 阿里规范\n`p3c-pmd` 包含了阿里巴巴《Java 开发手册》中的 PMD 规则集：\n- 命名规范检查\n- 异常处理规范\n- 集合使用规范\n- 并发编程规范\n\n### 版本管理\n- `pmd-ant`、`pmd-java`、`pmd-groovy` 共享 `version.ref = 'pmd'`。\n- `pmd-ali`（p3c）版本独立硬编码。\n\n### CI 集成建议\n```yaml\n# GitHub Actions\n- name: Run PMD\n  run: ./gradlew pmdMain pmdTest\n```",
-    "alternatives": ["checkstyle", "spotbugs", "sonarqube"],
+    "alternatives": [
+      "checkstyle",
+      "spotbugs",
+      "sonarqube"
+    ],
     "maven": {
       "groupId": "net.sourceforge.pmd",
       "artifactId": "pmd-java",
       "version_ref": "pmd"
     },
-    "gradle_ref": ["pmd-ant", "pmd-java", "pmd-groovy", "pmd-ali"],
+    "gradle_ref": [
+      "pmd-ant",
+      "pmd-java",
+      "pmd-groovy",
+      "pmd-ali"
+    ],
     "dependencies": [],
-    "tags": ["static-analysis", "code-quality", "pmd", "p3c", "ci"],
+    "tags": [
+      "static-analysis",
+      "code-quality",
+      "pmd",
+      "p3c",
+      "ci"
+    ],
     "status": "stable",
-    "stage": ["quality"],
-    "related_plugins": ["ihub-quality"],
+    "stage": [
+      "qa"
+    ],
+    "related_plugins": [
+      "ihub-quality"
+    ],
     "doc_url": "https://pmd.github.io/",
     "ihub_layer": "L2-libs"
   }

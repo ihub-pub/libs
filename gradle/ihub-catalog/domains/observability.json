@@ -7,17 +7,33 @@
     "description": "Apache SkyWalking 的应用端工具包，提供与 SkyWalking Agent 协同工作的 Trace API 和 Logback 日志增强，无需修改 SkyWalking Agent 即可在日志中注入 TraceId。",
     "use_case": "在日志中自动附加分布式 TraceId、手动创建 Span 标记关键业务操作、通过 SkyWalking UI 追踪跨服务调用链路。",
     "ai_context": "## SkyWalking Toolkit 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.apm.toolkit.logback)  // Logback 日志增强（TraceId 注入）\n    implementation(libs.apm.toolkit.trace)    // Trace API（手动 Span）\n}\n```\n\n### Logback 配置（注入 TraceId）\n```xml\n<!-- logback-spring.xml -->\n<appender name=\"STDOUT\" class=\"ch.qos.logback.core.ConsoleAppender\">\n    <encoder class=\"ch.qos.logback.core.encoder.LayoutWrappingEncoder\">\n        <layout class=\"org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout\">\n            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%tid] [%thread] %-5level %logger{36} - %msg%n</Pattern>\n        </layout>\n    </encoder>\n</appender>\n```\n\n### 手动 Trace（标记关键业务）\n```java\nimport org.apache.skywalking.apm.toolkit.trace.ActiveSpan;\nimport org.apache.skywalking.apm.toolkit.trace.Trace;\n\n@Service\npublic class PaymentService {\n    @Trace(operationName = \"payment-process\")\n    public void processPayment(Order order) {\n        ActiveSpan.tag(\"order.id\", order.getId());\n        ActiveSpan.tag(\"amount\", order.getAmount().toString());\n        // 业务逻辑\n    }\n}\n```\n\n### 部署要求\n- **必须**配合 SkyWalking Java Agent（`-javaagent:skywalking-agent.jar`）使用。\n- 纯 toolkit 依赖不会自动收集链路数据，Agent 才是数据采集核心。\n- 版本需与 SkyWalking OAP Server 版本匹配，通过 `version.ref = 'skywalking-toolkit'` 统一管理。\n\n### 替代方案选型\n- 已用 Spring Cloud Sleuth/Micrometer Tracing：使用 Zipkin/Jaeger 接收端。\n- 企业级需求：SkyWalking 支持更丰富的指标分析和 Service Mesh 集成。",
-    "alternatives": ["micrometer-tracing", "opentelemetry", "zipkin-brave"],
+    "alternatives": [
+      "micrometer-tracing",
+      "opentelemetry",
+      "zipkin-brave"
+    ],
     "maven": {
       "groupId": "org.apache.skywalking",
       "artifactId": "apm-toolkit-logback-1.x",
       "version_ref": "skywalking-toolkit"
     },
-    "gradle_ref": ["apm-toolkit-logback", "apm-toolkit-trace"],
+    "gradle_ref": [
+      "apm-toolkit-logback",
+      "apm-toolkit-trace"
+    ],
     "dependencies": [],
-    "tags": ["observability", "tracing", "distributed-tracing", "apm", "logging"],
+    "tags": [
+      "observability",
+      "tracing",
+      "distributed-tracing",
+      "apm",
+      "logging"
+    ],
     "status": "stable",
-    "stage": ["go-live", "evolve"],
+    "stage": [
+      "ops",
+      "migrate"
+    ],
     "related_plugins": [],
     "doc_url": "https://skywalking.apache.org/docs/",
     "ihub_layer": "L2-libs"

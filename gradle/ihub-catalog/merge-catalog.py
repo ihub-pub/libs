@@ -58,6 +58,7 @@ def build_catalog():
         'catalog_version': taxonomy['catalog_version'],
         'generated': taxonomy['generated'],
         'taxonomy': taxonomy,
+        'components': all_entries,
         'domains': domains,
         'domain_index': domain_index,
         'stage_index': stage_index,

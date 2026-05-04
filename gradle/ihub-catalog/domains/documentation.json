@@ -7,18 +7,34 @@
     "description": "自动从 Spring MVC/WebFlux 注解生成 OpenAPI 3.x 规范文档，内置 Swagger UI，替代已停维的 Springfox。",
     "use_case": "REST API 文档自动生成、Swagger UI 在线调试接口、生成 OpenAPI spec 供前端/AI 使用。",
     "ai_context": "## SpringDoc OpenAPI 集成模式\n\n### 引入 BOM + Starter\n```kotlin\ndependencies {\n    implementation(platform(libs.springdoc.openapi.bom))\n    implementation(\"org.springdoc:springdoc-openapi-starter-webmvc-ui\") // Servlet 项目\n    // implementation(\"org.springdoc:springdoc-openapi-starter-webflux-ui\") // Reactive 项目\n}\n```\n\n### Spring Boot Auto-Configuration\nSpring Boot 3.x 只需添加依赖，Swagger UI 默认在 `/swagger-ui.html` 可访问。\n\n### 常用配置\n```yaml\nspringdoc:\n  api-docs:\n    path: /v3/api-docs\n  swagger-ui:\n    path: /swagger-ui.html\n    tags-sorter: alpha\n  # 生产环境建议关闭：\n  # api-docs.enabled: false\n```\n\n### 注解说明\n```java\n@Tag(name = \"用户管理\", description = \"用户相关接口\")\n@RestController\npublic class UserController {\n    \n    @Operation(summary = \"获取用户详情\", description = \"根据 ID 查询用户\")\n    @ApiResponse(responseCode = \"200\", description = \"成功\")\n    @Parameter(name = \"id\", description = \"用户ID\", required = true)\n    @GetMapping(\"/users/{id}\")\n    public UserDTO getUser(@PathVariable Long id) { ... }\n}\n```\n\n### 与 AI 工具结合\n- OpenAPI spec（`/v3/api-docs`）可直接被 LLM/MCP 工具读取，了解 API 结构。\n- IHub 的 `ihub-meta` 插件未来将集成 API spec 输出。\n\n### 版本说明\n- 版本号硬编码（`version = '3.0.3'`），无独立 version key。\n- SpringDoc 3.x 支持 Spring Boot 3.x；旧项目用 SpringDoc 1.x（`springdoc-openapi-ui`）。",
-    "alternatives": ["springfox-swagger2", "knife4j"],
+    "alternatives": [
+      "springfox-swagger2",
+      "knife4j"
+    ],
     "maven": {
       "groupId": "org.springdoc",
       "artifactId": "springdoc-openapi-bom",
       "version_ref": null
     },
-    "gradle_ref": ["springdoc-openapi-bom", "swagger-core"],
+    "gradle_ref": [
+      "springdoc-openapi-bom",
+      "swagger-core"
+    ],
     "dependencies": [],
-    "tags": ["api-docs", "openapi", "swagger", "rest"],
+    "tags": [
+      "api-docs",
+      "openapi",
+      "swagger",
+      "rest"
+    ],
     "status": "stable",
-    "stage": ["connect-external", "quality"],
-    "related_plugins": ["ihub-java"],
+    "stage": [
+      "adapt",
+      "qa"
+    ],
+    "related_plugins": [
+      "ihub-java"
+    ],
     "doc_url": "https://springdoc.org/",
     "ihub_layer": "L2-libs"
   },
@@ -30,18 +46,35 @@
     "description": "将 Javadoc 注释打包进 class 文件，使运行时可通过反射读取 Javadoc 内容；配合 SpringDoc 可自动从 Javadoc 生成 API 描述。",
     "use_case": "不想写双份注释（Javadoc + @Operation/@Schema）、希望 API 文档内容直接来自代码注释。",
     "ai_context": "## Therapi Runtime Javadoc 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.therapi.runtime.javadoc)        // 运行时读取\n    annotationProcessor(libs.therapi.runtime.javadoc.scribe) // 编译期处理\n}\n```\n\n### 配合 SpringDoc 使用\n配合 `springdoc-openapi-starter-webmvc-ui` 时，SpringDoc 会自动从 Javadoc 中提取接口说明：\n```java\n/**\n * 获取用户详情\n * @param id 用户ID\n * @return 用户信息\n */\n@GetMapping(\"/users/{id}\")\npublic UserDTO getUser(@PathVariable Long id) { ... }\n// 无需 @Operation(summary = \"...\") 注解！\n```\n\n### 与 IHub 插件集成\n- `ihub-java` 插件的 `defaultDependencies = doc` 自动添加 `therapi-runtime-javadoc-scribe` 到 `annotationProcessor`。\n- 还包含 `swagger-core-jakarta` 和 `ihub-bytebuddy-plugin`（用于运行时文档增强）。\n\n### 版本管理\n- `therapi-runtime-javadoc` 和 `therapi-runtime-javadoc-scribe` 共享 `version.ref = 'therapi-javadoc'`。\n\n### 注意事项\n- 需要在编译时保留 Javadoc（不要 `-nodoc` 编译选项）。\n- 生成的 class 文件体积会略微增大（包含了 Javadoc 文本）。",
-    "alternatives": ["manual-swagger-annotations"],
+    "alternatives": [
+      "manual-swagger-annotations"
+    ],
     "maven": {
       "groupId": "com.github.therapi",
       "artifactId": "therapi-runtime-javadoc",
       "version_ref": "therapi-javadoc"
     },
-    "gradle_ref": ["therapi-runtime-javadoc", "therapi-runtime-javadoc-scribe"],
-    "dependencies": ["springdoc-openapi"],
-    "tags": ["javadoc", "api-docs", "annotation-processor", "documentation"],
+    "gradle_ref": [
+      "therapi-runtime-javadoc",
+      "therapi-runtime-javadoc-scribe"
+    ],
+    "dependencies": [
+      "springdoc-openapi"
+    ],
+    "tags": [
+      "javadoc",
+      "api-docs",
+      "annotation-processor",
+      "documentation"
+    ],
     "status": "stable",
-    "stage": ["connect-external", "quality"],
-    "related_plugins": ["ihub-java"],
+    "stage": [
+      "adapt",
+      "qa"
+    ],
+    "related_plugins": [
+      "ihub-java"
+    ],
     "doc_url": "https://github.com/dnault/therapi-runtime-javadoc",
     "ihub_layer": "L2-libs"
   }

@@ -40,7 +40,7 @@
     "alternatives": [],
     "maven": { "group": "org.dromara.mpe", "artifact": "mybatis-plus-ext-annotation" },
     "version_ref": "mpe",
-    "gradle_ref": "mpe-annotation",
+    "gradle_ref": ["mpe-annotation", "mpe-autotable-annotation", "mpe-autotable-core", "mpe-actable-core", "mpe-bind", "mpe-condition", "mpe-datasource", "mpe-processor", "mpe-spring-boot-starter", "mpe-spring-boot3-starter"],
     "dependencies": [
       { "component_id": "data-orm-mybatis-plus", "required": true, "scope": "implementation", "reason": "MyBatis-Plus-Ext 是 MyBatis-Plus 的扩展" }
     ],
@@ -69,7 +69,7 @@
     "alternatives": ["data-orm-mybatis-plus"],
     "maven": { "group": "com.easy-query", "artifact": "sql-core" },
     "version_ref": "easy-query",
-    "gradle_ref": "eq-sql-core",
+    "gradle_ref": ["eq-sql-core", "eq-sql-springboot-starter", "eq-sql-api4j", "eq-sql-api-proxy", "eq-sql-cache", "eq-sql-mysql", "eq-sql-processor", "eq-sql-ksp-processor", "eq-sql-kt-springboot-starter", "eq-all"],
     "dependencies": [],
     "starter_available": true,
     "tags": ["orm", "sql", "dsl", "lambda", "type-safe"],
