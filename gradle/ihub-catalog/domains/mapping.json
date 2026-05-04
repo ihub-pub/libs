@@ -1,1 +1,94 @@
-[]
+[
+  {
+    "id": "mapstruct",
+    "name": "MapStruct",
+    "domain": "mapping",
+    "type": "third-party-reference",
+    "description": "基于注解处理器的 Java Bean 映射框架，编译期生成类型安全的映射代码，零运行时开销。",
+    "use_case": "DTO↔Entity 转换、多层架构对象映射、避免手写 getter/setter 样板代码。",
+    "ai_context": "## MapStruct 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.mapstruct)                    // 运行时注解\n    annotationProcessor(libs.mapstruct.processor)     // 编译期代码生成\n    // 与 Lombok 同时使用时必须加：\n    annotationProcessor(libs.lombok.mapstruct.binding) // 绑定处理顺序\n}\n```\n\n### 典型 Mapper 定义\n```java\n@Mapper(componentModel = \"spring\") // 生成 Spring Bean\npublic interface UserMapper {\n    UserDTO toDTO(User user);\n    User toEntity(UserDTO dto);\n    List<UserDTO> toDTOList(List<User> users);\n}\n```\n\n### 与 IHub 插件集成\n- `ihub-java` 插件的 `defaultDependencies = mapstruct` 可一键添加 mapstruct + processor + lombok-binding。\n- 使用 IHub 插件时无需手动管理 annotationProcessor 顺序。\n\n### 常见陷阱\n- Lombok 与 MapStruct 同时使用时，**必须**将 `lombok-mapstruct-binding` 加入 annotationProcessor，否则 Lombok 生成的方法对 MapStruct 不可见。\n- `componentModel = \"spring\"` 是 Spring 项目的标准配置；不加则生成静态工厂方法。\n- 复杂映射（枚举转换、嵌套对象）需配合 `@Mapping` 注解显式声明。",
+    "alternatives": ["mapstruct-plus", "modelmapper", "dozer"],
+    "maven": {
+      "groupId": "org.mapstruct",
+      "artifactId": "mapstruct",
+      "version_ref": "mapstruct"
+    },
+    "gradle_ref": ["mapstruct", "mapstruct-processor"],
+    "dependencies": [],
+    "tags": ["mapping", "code-generation", "annotation-processor", "dto"],
+    "status": "stable",
+    "stage": ["write-business"],
+    "related_plugins": ["ihub-java"],
+    "doc_url": "https://mapstruct.org/documentation/stable/reference/html/",
+    "ihub_layer": "L2-libs"
+  },
+  {
+    "id": "mapstruct-plus",
+    "name": "MapStruct Plus",
+    "domain": "mapping",
+    "type": "third-party-reference",
+    "description": "MapStruct 的增强封装，提供更简洁的注解（@AutoMapper）和自动双向映射，减少 Mapper 接口样板代码。",
+    "use_case": "希望比原生 MapStruct 更少配置的项目；大量 POJO 需要双向映射的场景。",
+    "ai_context": "## MapStruct Plus 集成模式\n\n### Spring Boot Starter\n```kotlin\ndependencies {\n    implementation(\"io.github.linpeilie:mapstruct-plus-spring-boot-starter\")\n    annotationProcessor(libs.mapstruct.plus.processor)\n    annotationProcessor(libs.lombok.mapstruct.binding)\n}\n```\n\n### 核心注解\n```java\n@AutoMapper(target = UserDTO.class, reverseConvertGenerate = true)\npublic class User {\n    private String name;\n    // 自动生成 User→UserDTO 和 UserDTO→User 双向 Mapper\n}\n```\n\n### 与 IHub 插件集成\n- `ihub-java` 插件的 `defaultDependencies = mapstruct` 包含了 `mapstruct-plus-spring-boot-starter` 和 `mapstruct-plus-processor`。\n\n### 注意事项\n- MapStruct Plus 底层仍是 MapStruct，生成的代码与 MapStruct 兼容。\n- BOM 通过 `mapstruct-plus-pom` 引入，统一版本管理。",
+    "alternatives": ["mapstruct"],
+    "maven": {
+      "groupId": "io.github.linpeilie",
+      "artifactId": "mapstruct-plus-pom",
+      "version_ref": "mapstruct-plus"
+    },
+    "gradle_ref": ["mapstruct-plus-pom", "mapstruct-plus-processor", "lombok-mapstruct-binding"],
+    "dependencies": ["mapstruct"],
+    "tags": ["mapping", "code-generation", "annotation-processor", "dto", "spring-boot-starter"],
+    "status": "stable",
+    "stage": ["write-business"],
+    "related_plugins": ["ihub-java"],
+    "doc_url": "https://mapstruct.plus/guide/",
+    "ihub_layer": "L2-libs"
+  },
+  {
+    "id": "fastjson2",
+    "name": "Fastjson2",
+    "domain": "mapping",
+    "type": "third-party-reference",
+    "description": "阿里巴巴开源的高性能 JSON 序列化/反序列化库，Fastjson 的全新一代实现，性能和安全性大幅提升。",
+    "use_case": "高吞吐量 JSON 处理、替换 Jackson 作为 Spring MVC 消息转换器、与旧 Fastjson 1.x 代码兼容迁移。",
+    "ai_context": "## Fastjson2 集成模式\n\n### Spring 项目推荐依赖\n```kotlin\ndependencies {\n    implementation(libs.fastjson)                    // 核心库\n    implementation(libs.fastjson.extension)          // 扩展（支持更多类型）\n    implementation(libs.fastjson.extension.spring)   // Spring6 MVC 集成\n}\n```\n\n### Spring MVC 消息转换器配置\n```java\n@Configuration\npublic class WebConfig implements WebMvcConfigurer {\n    @Override\n    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {\n        converters.add(0, new FastjsonHttpMessageConverter());\n    }\n}\n```\n\n### 与 Fastjson 1.x 兼容\n```kotlin\n// 如果有旧代码使用 com.alibaba.fastjson 包名：\ndependencies {\n    implementation(libs.fastjson1) // 兼容层，底层使用 Fastjson2 实现\n}\n```\n\n### 版本说明\n- `fastjson` 和 `fastjson-extension-spring` 使用相同的 `version.ref = 'fastjson'`，版本统一管理。\n- Spring Boot 4.x 项目使用 `fastjson2-extension-spring6`。\n\n### 常见陷阱\n- Fastjson 2.x API 与 1.x 不完全兼容，直接升级需要 Review 代码。\n- 与 Spring Boot 自带的 Jackson 混用时需注意序列化行为差异（日期格式、null 处理等）。",
+    "alternatives": ["jackson", "gson"],
+    "maven": {
+      "groupId": "com.alibaba.fastjson2",
+      "artifactId": "fastjson2",
+      "version_ref": "fastjson"
+    },
+    "gradle_ref": ["fastjson", "fastjson-extension", "fastjson-extension-spring", "fastjson-kotlin", "fastjson1"],
+    "dependencies": [],
+    "tags": ["json", "serialization", "deserialization", "performance"],
+    "status": "stable",
+    "stage": ["write-business", "connect-external"],
+    "related_plugins": [],
+    "doc_url": "https://alibaba.github.io/fastjson2/",
+    "ihub_layer": "L2-libs"
+  },
+  {
+    "id": "easyexcel",
+    "name": "EasyExcel",
+    "domain": "mapping",
+    "type": "third-party-reference",
+    "description": "阿里巴巴开源的高性能 Excel 读写库，基于 SAX 模式解析，内存占用极低，支持百万行数据读写。",
+    "use_case": "Excel 数据导入导出、报表生成、大数据量 Excel 处理（避免 OOM）。",
+    "ai_context": "## EasyExcel 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.easyexcel)\n}\n```\n\n### 读取 Excel\n```java\n@Data\npublic class UserData {\n    @ExcelProperty(\"姓名\")\n    private String name;\n    @ExcelProperty(\"年龄\")\n    private Integer age;\n}\n\n// 读取文件\nEasyExcel.read(fileName, UserData.class, new UserDataListener()).sheet().doRead();\n```\n\n### 写出 Excel\n```java\nList<UserData> data = fetchData();\nEasyExcel.write(fileName, UserData.class).sheet(\"用户\").doWrite(data);\n```\n\n### Spring MVC 下载接口\n```java\n@GetMapping(\"/export\")\npublic void export(HttpServletResponse response) throws IOException {\n    response.setContentType(\"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\");\n    response.setHeader(\"Content-Disposition\", \"attachment;filename=users.xlsx\");\n    EasyExcel.write(response.getOutputStream(), UserData.class).sheet().doWrite(data);\n}\n```\n\n### 注意事项\n- 版本号硬编码（未在 `[versions]` 中定义 version key），通过 `easyexcel` gradle 别名直接引用。\n- 读取大文件时使用 `ReadListener` 分批处理，避免一次性加载全部数据到内存。",
+    "alternatives": ["apache-poi", "hutool-poi"],
+    "maven": {
+      "groupId": "com.alibaba",
+      "artifactId": "easyexcel",
+      "version_ref": null
+    },
+    "gradle_ref": ["easyexcel"],
+    "dependencies": [],
+    "tags": ["excel", "import-export", "file-processing", "report"],
+    "status": "stable",
+    "stage": ["write-business", "connect-external"],
+    "related_plugins": [],
+    "doc_url": "https://easyexcel.opensource.alibaba.com/",
+    "ihub_layer": "L2-libs"
+  }
+]

@@ -79,15 +79,17 @@ def main():
             if vref and vref not in versions:
                 errors.append(f'{eid}: version_ref "{vref}" not found in [versions]')
 
-            # Check gradle_ref
+            # Check gradle_ref (can be a string or a list of strings)
             gref = entry.get('gradle_ref')
-            if gref and gref not in libraries and gref not in bundles:
-                errors.append(f'{eid}: gradle_ref "{gref}" not found in [libraries] or [bundles]')
+            if gref:
+                refs = gref if isinstance(gref, list) else [gref]
+                for ref in refs:
+                    if ref and ref not in libraries and ref not in bundles:
+                        errors.append(f'{eid}: gradle_ref "{ref}" not found in [libraries] or [bundles]')
 
-            # Check dependency references
+            # Check dependency references (strings or dicts with component_id)
             for dep in entry.get('dependencies', []):
-                dep_id = dep.get('component_id', '?')
-                # We'll just warn, not error, for cross-domain deps that may not be loaded yet
+                # deps can be strings (domain names) or dicts with component_id
                 pass  # Cross-domain validation would need full catalog merge
 
     if errors:

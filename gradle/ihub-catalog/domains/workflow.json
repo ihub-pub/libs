@@ -1,1 +1,29 @@
-[]
+[
+  {
+    "id": "warm-flow",
+    "name": "Warm-Flow（轻量工作流引擎）",
+    "domain": "workflow",
+    "type": "third-party-reference",
+    "description": "国产轻量级工作流引擎，支持 MyBatis-Plus、JPA 等多种 ORM，提供审批流程、条件分支、网关等核心特性，开箱即用。",
+    "use_case": "OA 审批流程、业务单据流转、多级审批、条件路由、退回/撤销操作。不适合需要复杂 BPMN 建模的场景。",
+    "ai_context": "## Warm-Flow 集成模式\n\n### 技术选型矩阵\n| ORM | Spring Boot 2.x | Spring Boot 3.x | Solon |\n|-----|----------------|----------------|-------|\n| MyBatis | warm-flow-m-sb | warm-flow-m-sb3 | warm-flow-m-solon |\n| MyBatis-Plus | warm-flow-mp-sb | warm-flow-mp-sb3 | warm-flow-mp-solon |\n\n### Spring Boot 3 + MyBatis-Plus 典型配置\n```kotlin\ndependencies {\n    implementation(libs.warm.flow.mp.sb3)  // 核心引擎\n    implementation(libs.warm.flow.ui.sb)   // 可选：UI 组件\n}\n```\n\n### 快速入门\n```java\n@Service\npublic class ApprovalService {\n    @Autowired\n    private FlowEngine flowEngine;\n    \n    // 启动审批流\n    public void startFlow(String flowCode, String businessId) {\n        flowEngine.start(flowCode, businessId, new HashMap<>());\n    }\n    \n    // 审批通过\n    public void approve(Long taskId, String opinion) {\n        flowEngine.pass(taskId, opinion, new HashMap<>());\n    }\n    \n    // 退回\n    public void reject(Long taskId, String targetNode) {\n        flowEngine.rollback(taskId, targetNode);\n    }\n}\n```\n\n### 核心概念\n- **流程定义**：XML 或代码定义审批节点和流转规则\n- **流程实例**：一次流程的执行记录\n- **任务节点**：流程中的审批节点（支持会签、或签）\n- **网关**：条件分支路由\n\n### 版本管理\n- 所有 warm-flow 模块共享 `version.ref = 'warm-flow'`，统一版本升级。\n\n### 与 Activiti/Flowable 对比\n- Warm-Flow 学习成本更低，不需要理解完整 BPMN 规范。\n- 适合中小项目的审批流，不适合复杂跨系统流程编排。\n- Activiti/Flowable 功能更全，社区生态更大。",
+    "alternatives": ["activiti", "flowable", "camunda"],
+    "maven": {
+      "groupId": "org.dromara.warm",
+      "artifactId": "warm-flow-mybatis-plus-sb3-starter",
+      "version_ref": "warm-flow"
+    },
+    "gradle_ref": [
+      "warm-flow-m-sb", "warm-flow-m-sb3", "warm-flow-m-solon",
+      "warm-flow-mp-sb", "warm-flow-mp-sb3", "warm-flow-mp-solon",
+      "warm-flow-ui-sb", "warm-flow-ui-solon"
+    ],
+    "dependencies": ["data"],
+    "tags": ["workflow", "approval", "bpm", "state-machine", "lightweight"],
+    "status": "stable",
+    "stage": ["write-business"],
+    "related_plugins": [],
+    "doc_url": "https://warm-flow.dromara.org/",
+    "ihub_layer": "L2-libs"
+  }
+]
