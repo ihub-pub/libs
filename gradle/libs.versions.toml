@@ -13,18 +13,18 @@ spring-boot-admin = '4.0.4'
 
 # ── Data & Persistence ──────────────────────────────────────────────────────
 mpe = '3.5.16-EXT895'
-easy-query = '3.2.5'
+easy-query = '3.2.6'
 
 # ── Object Mapping & Serialization ──────────────────────────────────────────
 mapstruct = '1.6.3'
 mapstruct-plus = '1.5.0'
-fastjson = '2.0.61'
+fastjson = '2.0.62'
 
 # ── Distributed ─────────────────────────────────────────────────────────────
-snailjob = '1.10.0'
+snailjob = '2.0.0'
 
 # ── Workflow ────────────────────────────────────────────────────────────────
-warm-flow = '1.8.6'
+warm-flow = '1.8.7'
 
 # ── Observability ───────────────────────────────────────────────────────────
 skywalking-toolkit = '9.6.0'
@@ -45,7 +45,7 @@ spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-depe
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
 spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version.ref = 'spring-cloud-alibaba' }
 spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
-spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.1.5' }
+spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '1.1.6' }
 
 # ── Data & Persistence ──────────────────────────────────────────────────────
 mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.16' }
@@ -106,7 +106,7 @@ justauth = { module = 'me.zhyd.oauth:JustAuth', version = '1.16.7' }
 # ── Distributed ─────────────────────────────────────────────────────────────
 dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependencies', version = '1.2.2' }
 easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', version = '3.1.5' }
-redisson = { module = 'org.redisson:redisson-spring-boot-starter', version = '4.3.1' }
+redisson = { module = 'org.redisson:redisson-spring-boot-starter', version = '4.4.0' }
 lock4j-redisson = { module = 'com.baomidou:lock4j-redisson-spring-boot-starter', version = '2.2.7' }
 # SnailJob
 snail-job-client-starter = { module = 'com.aizuda:snail-job-client-starter', version.ref = 'snailjob' }
@@ -114,6 +114,7 @@ snail-job-client-job-core = { module = 'com.aizuda:snail-job-client-job-core', v
 snail-job-server-starter = { module = 'com.aizuda:snail-job-server-starter', version.ref = 'snailjob' }
 
 # ── Workflow ────────────────────────────────────────────────────────────────
+warm-flow = { module = 'org.dromara.warm:warm-flow', version.ref = 'warm-flow' }
 warm-flow-m-sb = { module = 'org.dromara.warm:warm-flow-mybatis-sb-starter', version.ref = 'warm-flow' }
 warm-flow-m-sb3 = { module = 'org.dromara.warm:warm-flow-mybatis-sb3-starter', version.ref = 'warm-flow' }
 warm-flow-m-solon = { module = 'org.dromara.warm:warm-flow-mybatis-solon-starter', version.ref = 'warm-flow' }
@@ -129,7 +130,7 @@ apm-toolkit-trace = { module = 'org.apache.skywalking:apm-toolkit-trace', versio
 
 # ── Documentation ───────────────────────────────────────────────────────────
 springdoc-openapi-bom = { module = 'org.springdoc:springdoc-openapi-bom', version = '3.0.3' }
-swagger-core = { module = 'io.swagger.core.v3:swagger-core-jakarta', version = '2.2.49' }
+swagger-core = { module = 'io.swagger.core.v3:swagger-core-jakarta', version = '2.2.50' }
 therapi-runtime-javadoc = { module = 'com.github.therapi:therapi-runtime-javadoc', version.ref = 'therapi-javadoc' }
 therapi-runtime-javadoc-scribe = { module = 'com.github.therapi:therapi-runtime-javadoc-scribe', version.ref = 'therapi-javadoc' }
 
@@ -162,7 +163,7 @@ hutool-all = { module = 'cn.hutool:hutool-all', version.ref = 'hutool' }
 hutool-v7-all = { module = 'cn.hutool.v7:hutool-all', version.ref = 'hutool-v7' }
 sms4j = { module = 'org.dromara.sms4j:sms4j-spring-boot-starter', version = '3.3.5' }
 x-file-storage = { module = 'org.dromara.x-file-storage:x-file-storage-spring', version = '2.3.0' }
-anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '8.7.3-20260501' }
+anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '8.7.5-20260507' }
 
 # ── Language Support ────────────────────────────────────────────────────────
 groovy-core = { module = 'org.apache.groovy:groovy' }
@@ -185,6 +186,8 @@ ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.2.2' }
 #quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.17.5' }
 #cola-bom = { module = 'com.alibaba.cola:cola-components-bom', version = '5.0.0' }
 #axon-bom = { module = 'org.axonframework:axon-bom', version = '4.10.4' }
+
+# ── Webjars ─────────────────────────────────────────────────────────────────
 #webjars-layui = { module = 'org.webjars:layui', version = '2.9.18' }
 #webjars-jquery = { module = 'org.webjars:jquery', version = '3.7.1' }
 #webjars-crypto = { module = 'org.webjars.npm:crypto-js', version = '4.2.0' }
@@ -267,7 +270,7 @@ platform = [
     'ihub-integration-bom', 'ihub-module-bom', 'hutool-bom', 'hutool-v7-bom', 'jmolecules-bom', 'spock-bom', 'sa-token-bom',
     'springdoc-openapi-bom', 'mybatis-plus-bom', 'spring-modulith-bom', 'spring-ai-bom', 'spring-boot-admin-dependencies',
     'spring-cloud-dependencies', 'spring-cloud-alibaba-dependencies', 'spring-boot-dependencies',
-    'mapstruct-plus-pom', 'dynamic-tp-dependencies', 'anyline-dependency', 'easy-trans-dependencies'
+    'mapstruct-plus-pom', 'dynamic-tp-dependencies', 'anyline-dependency', 'easy-trans-dependencies', 'warm-flow'
 ]
 constraints = [
     'hutool-all', 'hutool-v7-all', 'fastjson', 'fastjson-extension', 'fastjson-extension-spring', 'fastjson-kotlin', 'fastjson1', 'swagger-core',
@@ -278,9 +281,7 @@ constraints = [
     'mpe-annotation', 'mpe-autotable-annotation', 'mpe-actable-core', 'mpe-autotable-core', 'mpe-processor',
     'mpe-bind', 'mpe-datasource', 'mpe-condition', 'mpe-spring-boot-starter', 'mpe-spring-boot3-starter',
     'eq-sql-core', 'eq-sql-mysql', 'eq-sql-api-proxy', 'eq-sql-api4j', 'eq-sql-processor', 'eq-sql-ksp-processor',
-    'eq-sql-springboot-starter', 'eq-sql-kt-springboot-starter', 'eq-sql-cache', 'eq-all',
-    'warm-flow-m-sb', 'warm-flow-m-sb3', 'warm-flow-m-solon', 'warm-flow-mp-sb', 'warm-flow-mp-sb3', 'warm-flow-mp-solon',
-    'warm-flow-ui-sb', 'warm-flow-ui-solon'
+    'eq-sql-springboot-starter', 'eq-sql-kt-springboot-starter', 'eq-sql-cache', 'eq-all'
 ]
 groovy = [
     'groovy-core', 'groovy-datetime', 'groovy-dateutil', 'groovy-groovydoc', 'groovy-json',
