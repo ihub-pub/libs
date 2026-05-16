@@ -23,9 +23,6 @@ fastjson = '2.0.62'
 # ── Distributed ─────────────────────────────────────────────────────────────
 snailjob = '2.0.0'
 
-# ── Workflow ────────────────────────────────────────────────────────────────
-warm-flow = '1.8.7'
-
 # ── Observability ───────────────────────────────────────────────────────────
 skywalking-toolkit = '9.6.0'
 
@@ -114,15 +111,15 @@ snail-job-client-job-core = { module = 'com.aizuda:snail-job-client-job-core', v
 snail-job-server-starter = { module = 'com.aizuda:snail-job-server-starter', version.ref = 'snailjob' }
 
 # ── Workflow ────────────────────────────────────────────────────────────────
-warm-flow = { module = 'org.dromara.warm:warm-flow', version.ref = 'warm-flow' }
-warm-flow-m-sb = { module = 'org.dromara.warm:warm-flow-mybatis-sb-starter', version.ref = 'warm-flow' }
-warm-flow-m-sb3 = { module = 'org.dromara.warm:warm-flow-mybatis-sb3-starter', version.ref = 'warm-flow' }
-warm-flow-m-solon = { module = 'org.dromara.warm:warm-flow-mybatis-solon-starter', version.ref = 'warm-flow' }
-warm-flow-mp-sb = { module = 'org.dromara.warm:warm-flow-mybatis-plus-sb-starter', version.ref = 'warm-flow' }
-warm-flow-mp-sb3 = { module = 'org.dromara.warm:warm-flow-mybatis-plus-sb3-starter', version.ref = 'warm-flow' }
-warm-flow-mp-solon = { module = 'org.dromara.warm:warm-flow-mybatis-plus-solon-starter', version.ref = 'warm-flow' }
-warm-flow-ui-sb = { module = 'org.dromara.warm:warm-flow-plugin-ui-sb-web', version.ref = 'warm-flow' }
-warm-flow-ui-solon = { module = 'org.dromara.warm:warm-flow-plugin-ui-solon-web', version.ref = 'warm-flow' }
+warm-flow = { module = 'org.dromara.warm:warm-flow', version = '1.8.7' }
+warm-flow-m-sb = { module = 'org.dromara.warm:warm-flow-mybatis-sb-starter' }
+warm-flow-m-sb3 = { module = 'org.dromara.warm:warm-flow-mybatis-sb3-starter' }
+warm-flow-m-solon = { module = 'org.dromara.warm:warm-flow-mybatis-solon-starter' }
+warm-flow-mp-sb = { module = 'org.dromara.warm:warm-flow-mybatis-plus-sb-starter' }
+warm-flow-mp-sb3 = { module = 'org.dromara.warm:warm-flow-mybatis-plus-sb3-starter' }
+warm-flow-mp-solon = { module = 'org.dromara.warm:warm-flow-mybatis-plus-solon-starter' }
+warm-flow-ui-sb = { module = 'org.dromara.warm:warm-flow-plugin-ui-sb-web' }
+warm-flow-ui-solon = { module = 'org.dromara.warm:warm-flow-plugin-ui-solon-web' }
 
 # ── Observability ───────────────────────────────────────────────────────────
 apm-toolkit-logback = { module = 'org.apache.skywalking:apm-toolkit-logback-1.x', version.ref = 'skywalking-toolkit' }
@@ -181,7 +178,6 @@ ihub-integration-bom = { module = 'pub.ihub.integration:ihub-bom', version = '0.
 ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.2.2' }
 
 # ── Commented Out / Future ──────────────────────────────────────────────────
-#dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version = '3.4.1.0' }
 #solon-bom = { module = 'org.noear:solon-parent', version = '3.0.5' }
 #quarkus-dependencies = { module = 'io.quarkus:quarkus-bom', version = '3.17.5' }
 #cola-bom = { module = 'com.alibaba.cola:cola-components-bom', version = '5.0.0' }
