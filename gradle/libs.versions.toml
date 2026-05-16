@@ -3,7 +3,7 @@ hutool = '5.8.44'
 hutool-v7 = '7.0.0-M5'
 mapstruct = '1.6.3'
 mapstruct-plus = '1.5.0'
-fastjson = '2.0.61'
+fastjson = '2.0.62'
 spring-boot = '4.0.6'
 spring-cloud = '2025.1.1'
 spring-cloud-alibaba = '2025.1.0.0'
@@ -13,8 +13,7 @@ snailjob = '2.0.0'
 skywalking-toolkit = '9.6.0'
 therapi-javadoc = '0.15.0'
 mpe = '3.5.16-EXT895'
-easy-query = '3.2.5'
-warm-flow = '1.8.6'
+easy-query = '3.2.6'
 
 [libraries]
 # bom libs
@@ -37,6 +36,8 @@ spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-depe
 dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependencies', version = '1.2.2' }
 # 数据翻译
 easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', version = '3.1.5' }
+# warm flow
+warm-flow = { module = 'org.dromara.warm:warm-flow', version = '1.8.7' }
 
 # native
 #solon-bom = { module = 'org.noear:solon-parent', version = '3.0.5' }
@@ -137,16 +138,6 @@ apm-toolkit-trace = { module = 'org.apache.skywalking:apm-toolkit-trace', versio
 therapi-runtime-javadoc = { module = 'com.github.therapi:therapi-runtime-javadoc', version.ref = 'therapi-javadoc' }
 therapi-runtime-javadoc-scribe = { module = 'com.github.therapi:therapi-runtime-javadoc-scribe', version.ref = 'therapi-javadoc' }
 
-# warm flow libs
-warm-flow-m-sb = { module = 'org.dromara.warm:warm-flow-mybatis-sb-starter', version.ref = 'warm-flow' }
-warm-flow-m-sb3 = { module = 'org.dromara.warm:warm-flow-mybatis-sb3-starter', version.ref = 'warm-flow' }
-warm-flow-m-solon = { module = 'org.dromara.warm:warm-flow-mybatis-solon-starter', version.ref = 'warm-flow' }
-warm-flow-mp-sb = { module = 'org.dromara.warm:warm-flow-mybatis-plus-sb-starter', version.ref = 'warm-flow' }
-warm-flow-mp-sb3 = { module = 'org.dromara.warm:warm-flow-mybatis-plus-sb3-starter', version.ref = 'warm-flow' }
-warm-flow-mp-solon = { module = 'org.dromara.warm:warm-flow-mybatis-plus-solon-starter', version.ref = 'warm-flow' }
-warm-flow-ui-sb = { module = 'org.dromara.warm:warm-flow-plugin-ui-sb-web', version.ref = 'warm-flow' }
-warm-flow-ui-solon = { module = 'org.dromara.warm:warm-flow-plugin-ui-solon-web', version.ref = 'warm-flow' }
-
 # webjars libs
 #webjars-layui = { module = 'org.webjars:layui', version = '2.9.18' }
 #webjars-jquery = { module = 'org.webjars:jquery', version = '3.7.1' }
@@ -174,7 +165,7 @@ platform = [
     'ihub-integration-bom', 'ihub-module-bom', 'hutool-bom', 'hutool-v7-bom', 'jmolecules-bom', 'spock-bom', 'sa-token-bom',
     'springdoc-openapi-bom', 'mybatis-plus-bom', 'spring-modulith-bom', 'spring-ai-bom', 'spring-boot-admin-dependencies',
     'spring-cloud-dependencies', 'spring-cloud-alibaba-dependencies', 'spring-boot-dependencies',
-    'mapstruct-plus-pom', 'dynamic-tp-dependencies', 'anyline-dependency', 'easy-trans-dependencies'
+    'mapstruct-plus-pom', 'dynamic-tp-dependencies', 'anyline-dependency', 'easy-trans-dependencies', 'warm-flow'
 ]
 constraints = [
     'hutool-all', 'hutool-v7-all', 'fastjson', 'fastjson-extension', 'fastjson-extension-spring', 'fastjson-kotlin', 'fastjson1', 'swagger-core',
@@ -185,9 +176,7 @@ constraints = [
     'mpe-annotation', 'mpe-autotable-annotation', 'mpe-actable-core', 'mpe-autotable-core', 'mpe-processor',
     'mpe-bind', 'mpe-datasource', 'mpe-condition', 'mpe-spring-boot-starter', 'mpe-spring-boot3-starter',
     'eq-sql-core', 'eq-sql-mysql', 'eq-sql-api-proxy', 'eq-sql-api4j', 'eq-sql-processor', 'eq-sql-ksp-processor',
-    'eq-sql-springboot-starter', 'eq-sql-kt-springboot-starter', 'eq-sql-cache', 'eq-all',
-    'warm-flow-m-sb', 'warm-flow-m-sb3', 'warm-flow-m-solon', 'warm-flow-mp-sb', 'warm-flow-mp-sb3', 'warm-flow-mp-solon',
-    'warm-flow-ui-sb', 'warm-flow-ui-solon'
+    'eq-sql-springboot-starter', 'eq-sql-kt-springboot-starter', 'eq-sql-cache', 'eq-all'
 ]
 
 groovy = [
