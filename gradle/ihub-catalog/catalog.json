@@ -1,0 +1,4103 @@
+{
+  "catalog_version": "1.0.0",
+  "generated": "2026-05-03",
+  "taxonomy": {
+    "catalog_version": "1.0.0",
+    "generated": "2026-05-03",
+    "description": "IHub 能力目录分类体系定义 —— 领域层级、旅程映射、组件类型定义",
+    "domains": {
+      "infrastructure": {
+        "name": "基础设施",
+        "name_en": "Infrastructure",
+        "description": "Spring 生态平台 BOM、日志框架、容器支持等起项目所需的基础设施",
+        "subdomains": [
+          "platform",
+          "logging",
+          "container"
+        ],
+        "stages": [
+          "init"
+        ]
+      },
+      "data": {
+        "name": "数据与持久化",
+        "name_en": "Data & Persistence",
+        "description": "ORM 框架、数据源管理、SQL 工具等写业务的核心数据层组件",
+        "subdomains": [
+          "orm",
+          "datasource",
+          "sql-tool"
+        ],
+        "stages": [
+          "code"
+        ]
+      },
+      "ddd": {
+        "name": "领域驱动设计",
+        "name_en": "Domain-Driven Design",
+        "description": "DDD 框架、架构约束、模块化等支撑领域建模的组件",
+        "subdomains": [
+          "architecture",
+          "modularity",
+          "events"
+        ],
+        "stages": [
+          "ideate",
+          "code",
+          "qa"
+        ]
+      },
+      "mapping": {
+        "name": "对象映射与序列化",
+        "name_en": "Object Mapping & Serialization",
+        "description": "对象映射、序列化、数据格式转换等数据转换层组件",
+        "subdomains": [
+          "bean-mapping",
+          "serialization",
+          "format"
+        ],
+        "stages": [
+          "code"
+        ]
+      },
+      "security": {
+        "name": "安全与认证",
+        "name_en": "Security & Authentication",
+        "description": "认证、授权、SSO、第三方登录等安全相关组件",
+        "subdomains": [
+          "auth",
+          "oauth",
+          "sso"
+        ],
+        "stages": [
+          "adapt",
+          "qa"
+        ]
+      },
+      "distributed": {
+        "name": "分布式能力",
+        "name_en": "Distributed Capabilities",
+        "description": "分布式锁、分布式调度、动态线程池、数据翻译等分布式系统组件",
+        "subdomains": [
+          "lock",
+          "scheduler",
+          "thread-pool",
+          "data-trans"
+        ],
+        "stages": [
+          "adapt"
+        ]
+      },
+      "workflow": {
+        "name": "工作流",
+        "name_en": "Workflow",
+        "description": "工作流引擎、业务流程编排组件",
+        "subdomains": [
+          "engine",
+          "ui"
+        ],
+        "stages": [
+          "code"
+        ]
+      },
+      "observability": {
+        "name": "可观测性",
+        "name_en": "Observability",
+        "description": "链路追踪、应用监控、日志采集等生产环境可观测性组件",
+        "subdomains": [
+          "tracing",
+          "metrics",
+          "logging"
+        ],
+        "stages": [
+          "ops",
+          "migrate"
+        ]
+      },
+      "documentation": {
+        "name": "文档与 API",
+        "name_en": "Documentation & API",
+        "description": "API 文档生成、运行时 Javadoc 等文档相关组件",
+        "subdomains": [
+          "api-doc",
+          "javadoc"
+        ],
+        "stages": [
+          "adapt",
+          "qa"
+        ]
+      },
+      "testing": {
+        "name": "测试与质量",
+        "name_en": "Testing & Quality",
+        "description": "单元测试、集成测试、静态分析等质量保障组件",
+        "subdomains": [
+          "unit-test",
+          "static-analysis",
+          "coverage"
+        ],
+        "stages": [
+          "qa"
+        ]
+      },
+      "messaging": {
+        "name": "消息与事件",
+        "name_en": "Messaging & Events",
+        "description": "消息队列、事件总线、流处理等异步通信组件",
+        "subdomains": [
+          "queue",
+          "event-bus",
+          "stream"
+        ],
+        "stages": [
+          "adapt"
+        ]
+      },
+      "utilities": {
+        "name": "通用工具",
+        "name_en": "Utilities",
+        "description": "通用工具集、文件存储、SMS 通知等跨阶段辅助组件",
+        "subdomains": [
+          "general",
+          "storage",
+          "notification"
+        ],
+        "stages": [
+          "code"
+        ]
+      },
+      "meta": {
+        "name": "元目录",
+        "name_en": "Meta Catalog",
+        "description": "引导 LLM/AI 理解 IHub 组件体系的元信息",
+        "subdomains": [
+          "guide"
+        ],
+        "stages": [
+          "ideate",
+          "init",
+          "code",
+          "llm",
+          "adapt",
+          "qa",
+          "ops",
+          "migrate"
+        ]
+      },
+      "migration": {
+        "name": "迁移工具",
+        "name_en": "Migration Tools",
+        "description": "旧系统分析与现代化迁移工具：OpenRewrite Recipe、依赖升级、API 迁移",
+        "subdomains": [
+          "analyze",
+          "rewrite",
+          "agent"
+        ]
+      }
+    },
+    "stages": {
+      "ideate": {
+        "name": "想清楚",
+        "name_en": "Ideate",
+        "order": 1,
+        "description": "需求分析与架构设计阶段"
+      },
+      "init": {
+        "name": "起项目",
+        "name_en": "Initialize",
+        "order": 2,
+        "description": "项目初始化、框架搭建阶段"
+      },
+      "code": {
+        "name": "写业务",
+        "name_en": "Code",
+        "order": 3,
+        "description": "核心业务逻辑开发阶段"
+      },
+      "llm": {
+        "name": "接AI",
+        "name_en": "AI Integration",
+        "order": 4,
+        "description": "AI/LLM 能力集成阶段"
+      },
+      "adapt": {
+        "name": "接外部",
+        "name_en": "Adapt",
+        "order": 5,
+        "description": "外部系统对接与集成阶段"
+      },
+      "qa": {
+        "name": "上质量",
+        "name_en": "Quality Assurance",
+        "order": 6,
+        "description": "测试、代码审查、质量保障阶段"
+      },
+      "ops": {
+        "name": "上线",
+        "name_en": "Operations",
+        "order": 7,
+        "description": "部署、监控、运维阶段"
+      },
+      "migrate": {
+        "name": "演进",
+        "name_en": "Migrate",
+        "order": 8,
+        "description": "版本升级、架构演进、持续优化阶段"
+      }
+    },
+    "component_types": {
+      "ihub-component": {
+        "name": "IHub 自研组件",
+        "description": "IHub 自身的 starter / 封装组件，提供开箱即用的集成能力"
+      },
+      "third-party-reference": {
+        "name": "第三方推荐",
+        "description": "IHub 推荐集成的成熟三方库，经过验证可与 IHub 生态良好协作"
+      },
+      "platform-bom": {
+        "name": "平台 BOM",
+        "description": "管理一组依赖版本的 BOM 物料清单，统一版本控制"
+      }
+    },
+    "ihub_layers": {
+      "L2": {
+        "name": "IHub 能力板块",
+        "description": "libs 仓库中的组件，提供可复用的技术能力"
+      },
+      "L3": {
+        "name": "IHub 集成方案",
+        "description": "modules/integrations 仓库中的组件，提供场景化集成方案"
+      }
+    },
+    "component_statuses": {
+      "stable": "生产就绪，推荐使用",
+      "experimental": "实验性功能，API 可能变化",
+      "deprecated": "已弃用，将在未来版本移除",
+      "legacy": "遗留组件，仅维护不新增功能",
+      "planned": "规划中，尚未实现"
+    }
+  },
+  "components": [
+    {
+      "id": "data-orm-mybatis-plus",
+      "name": "MyBatis-Plus",
+      "name_en": "MyBatis-Plus",
+      "domain": "data",
+      "subdomain": "orm",
+      "stage": [
+        "code"
+      ],
+      "type": "platform-bom",
+      "description": "MyBatis 增强工具包，提供通用 CRUD、分页、条件构造器等开箱即用的 ORM 能力",
+      "use_case": "首选 ORM 方案。数据层开发时的默认选择，通过 BOM 统一管理 MyBatis-Plus 族版本",
+      "ai_context": "## 集成模式\n通过 BOM 引入版本管理。使用 mybatis-plus-boot-starter 自动配置集成。\n\n## 配置要点\n- mybatis-plus.mapper-locations: Mapper XML 文件位置\n- mybatis-plus.type-aliases-package: 实体类别名包\n- mybatis-plus.global-config.db-config.id-type: 主键策略\n- 分页插件需显式配置 MybatisPlusInterceptor\n\n## 约束与限制\n- 基于 MyBatis，SQL 能力完整但需要理解 MyBatis 体系\n- 复杂多表查询建议使用 MyBatis XML 而非注解\n- 自动生成代码需谨慎审查\n\n## 常见陷阱\n- 忘记配置分页插件导致分页失效\n- 逻辑删除字段未配置 @TableLogic\n- 乐观锁字段未配置 @Version\n- 实体类与数据库字段类型不匹配（特别是日期类型）",
+      "alternatives": [
+        "data-orm-easy-query"
+      ],
+      "maven": {
+        "group": "com.baomidou",
+        "artifact": "mybatis-plus-bom"
+      },
+      "version_ref": null,
+      "gradle_ref": "mybatis-plus-bom",
+      "dependencies": [],
+      "starter_available": true,
+      "tags": [
+        "orm",
+        "mybatis",
+        "mybatis-plus",
+        "crud",
+        "bom"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-boot"
+      ],
+      "doc_url": "https://baomidou.com",
+      "source_url": null,
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "data-orm-mybatis-plus-ext",
+      "name": "MyBatis-Plus-Ext",
+      "name_en": "MyBatis-Plus Extensions",
+      "domain": "data",
+      "subdomain": "orm",
+      "stage": [
+        "code"
+      ],
+      "type": "third-party-reference",
+      "description": "MyBatis-Plus 扩展包，提供自动建表、数据绑定、多数据源注解等高级功能",
+      "use_case": "在 MyBatis-Plus 基础上需要自动建表（Actable）、关联数据自动绑定（Bind）、动态条件注解时使用",
+      "ai_context": "## 集成模式\n在 mybatis-plus-bom 基础上叠加。各模块按需引入：\n- mpe-annotation: 基础注解\n- mpe-autotable-*: 自动建表\n- mpe-bind: 关联数据绑定\n- mpe-datasource: 多数据源注解\n- mpe-condition: 动态条件注解\n- mpe-spring-boot3-starter: Spring Boot 3.x 自动配置\n\n## 配置要点\n- 自动建表功能需在开发环境谨慎使用\n- 数据绑定可能产生 N+1 查询\n- 多数据源与 dynamic-datasource 配合使用\n\n## 约束与限制\n- 必须与 MyBatis-Plus 配合使用\n- 自动建表不建议在生产环境启用\n- Bind 注解会产生额外 SQL 查询\n\n## 常见陷阱\n- 生产环境忘记关闭自动建表导致数据库结构意外变更\n- Bind 注解导致 N+1 查询问题\n- 多数据源配置混淆",
+      "alternatives": [],
+      "maven": {
+        "group": "org.dromara.mpe",
+        "artifact": "mybatis-plus-ext-annotation"
+      },
+      "version_ref": "mpe",
+      "gradle_ref": [
+        "mpe-annotation",
+        "mpe-autotable-annotation",
+        "mpe-autotable-core",
+        "mpe-actable-core",
+        "mpe-bind",
+        "mpe-condition",
+        "mpe-datasource",
+        "mpe-processor",
+        "mpe-spring-boot-starter",
+        "mpe-spring-boot3-starter"
+      ],
+      "dependencies": [
+        {
+          "component_id": "data-orm-mybatis-plus",
+          "required": true,
+          "scope": "implementation",
+          "reason": "MyBatis-Plus-Ext 是 MyBatis-Plus 的扩展"
+        }
+      ],
+      "starter_available": true,
+      "tags": [
+        "orm",
+        "mybatis-plus",
+        "extension",
+        "auto-table",
+        "data-bind"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-boot"
+      ],
+      "doc_url": "https://mybatis-plus-ext.duanshu.com",
+      "source_url": null,
+      "ihub_layer": "L3"
+    },
+    {
+      "id": "data-orm-easy-query",
+      "name": "Easy-Query",
+      "name_en": "Easy-Query",
+      "domain": "data",
+      "subdomain": "orm",
+      "stage": [
+        "code"
+      ],
+      "type": "third-party-reference",
+      "description": "强类型 SQL DSL 框架，提供编译期安全的 SQL 构建、自动建表、多表查询等能力",
+      "use_case": "MyBatis-Plus 的替代方案。需要强类型安全、编译期 SQL 校验、Lambda 风格查询时选择。适合喜欢 JPA 风格但需要 SQL 控制力的场景",
+      "ai_context": "## 集成模式\n通过 BOM 引入，使用 eq-sql-springboot-starter 自动配置。支持 Java 和 Kotlin。\n\n## 配置要点\n- easy-query.enable: 是否启用\n- easy-query.default-track: 是否默认追踪实体变更\n- easy-query.logic-delete-strategy: 逻辑删除策略\n- 支持 MySQL、PostgreSQL、SQL Server 等主流数据库\n\n## 约束与限制\n- 与 MyBatis-Plus 互斥，不要同时使用两种 ORM\n- 部分复杂 SQL（如递归 CTE）可能不如 MyBatis XML 直观\n- 团队需要学习 DSL 风格查询语法\n\n## 常见陷阱\n- 同时引入 MyBatis-Plus 和 Easy-Query 导致配置冲突\n- 未配置 dialect 导致 SQL 生成错误\n- 实体追踪（tracking）开启后忘记调用 saveChanges 导致数据丢失",
+      "alternatives": [
+        "data-orm-mybatis-plus"
+      ],
+      "maven": {
+        "group": "com.easy-query",
+        "artifact": "sql-core"
+      },
+      "version_ref": "easy-query",
+      "gradle_ref": [
+        "eq-sql-core",
+        "eq-sql-springboot-starter",
+        "eq-sql-api4j",
+        "eq-sql-api-proxy",
+        "eq-sql-cache",
+        "eq-sql-mysql",
+        "eq-sql-processor",
+        "eq-sql-ksp-processor",
+        "eq-sql-kt-springboot-starter",
+        "eq-all"
+      ],
+      "dependencies": [],
+      "starter_available": true,
+      "tags": [
+        "orm",
+        "sql",
+        "dsl",
+        "lambda",
+        "type-safe"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-boot"
+      ],
+      "doc_url": "https://easy-query.com",
+      "source_url": null,
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "data-datasource-dynamic",
+      "name": "Dynamic-Datasource",
+      "name_en": "Dynamic Datasource",
+      "domain": "data",
+      "subdomain": "datasource",
+      "stage": [
+        "code",
+        "adapt"
+      ],
+      "type": "third-party-reference",
+      "description": "动态数据源切换框架，支持运行时多数据源切换、读写分离、负载均衡",
+      "use_case": "需要多数据源管理（主从分离、多租户分库、读写分离）时使用。通过 @DS 注解实现数据源切换",
+      "ai_context": "## 集成模式\n通过 starter 自动配置。使用 @DS 注解标记类或方法的数据源。\n\n## 配置要点\n- spring.datasource.dynamic.primary: 默认数据源\n- spring.datasource.dynamic.datasource.<name>: 配置多个数据源\n- @DS(\"slave\")：方法级数据源切换\n- 支持 seata 分布式事务集成\n\n## 约束与限制\n- 不支持嵌套数据源切换（内层 @DS 会被外层覆盖）\n- 事务内切换数据源需要特殊处理\n- 多数据源的事务管理需要额外配置\n\n## 常见陷阱\n- 事务内 @DS 切换不生效\n- 忘记配置 primary 导致默认数据源未定义\n- 多数据源的 DDL 初始化脚本路径混淆",
+      "alternatives": [],
+      "maven": {
+        "group": "com.baomidou",
+        "artifact": "dynamic-datasource-spring-boot3-starter"
+      },
+      "version_ref": null,
+      "gradle_ref": "dynamic-datasource",
+      "dependencies": [],
+      "starter_available": true,
+      "tags": [
+        "datasource",
+        "dynamic",
+        "read-write-split",
+        "multi-tenant"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-boot"
+      ],
+      "doc_url": "https://dynamic-datasource.com",
+      "source_url": null,
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "ddd-architecture-jmolecules",
+      "name": "jMolecules",
+      "name_en": "jMolecules",
+      "domain": "ddd",
+      "subdomain": "architecture",
+      "stage": [
+        "ideate",
+        "code",
+        "qa"
+      ],
+      "type": "platform-bom",
+      "description": "DDD 架构约束框架，通过注解声明领域概念（Entity、ValueObject、AggregateRoot 等）并自动生成架构验证规则",
+      "use_case": "实施领域驱动设计时使用。通过注解标记领域概念，配合 ArchUnit 规则自动验证架构约束，防止架构腐化",
+      "ai_context": "## 集成模式\n通过 BOM 引入版本管理。核心模块：\n- jmolecules-ddd: DDD 基础注解（@Entity, @ValueObject, @AggregateRoot, @Repository）\n- jmolecules-events: 领域事件支持\n- jmolecules-cqrs-architecture: CQRS 架构约束\n- jmolecules-layered-architecture: 分层架构约束\n- jmolecules-onion-architecture: 洋葱架构约束\n\n集成模块：\n- jmolecules-spring: Spring 自动配置\n- jmolecules-jpa: JPA 映射支持\n- jmolecules-jackson: Jackson 序列化支持\n- jmolecules-archunit: ArchUnit 规则自动生成\n\n## 配置要点\n- 架构约束通过 ArchUnit 测试验证\n- 需要显式引入对应的 architecture 模块来启用特定架构风格\n- Spring 集成模块提供自动配置\n\n## 约束与限制\n- 注解本身不提供运行时行为，需要配合集成模块\n- ArchUnit 规则在测试阶段验证，不阻止编译\n- 团队需要理解 DDD 概念才能正确使用注解\n\n## 常见陷阱\n- 混淆 @Entity（jMolecules DDD 概念）与 @Entity（JPA）\n- 忘记添加架构约束模块导致没有强制检查\n- 在错误的分层中使用领域概念（如 Service 层直接操作 Entity）",
+      "alternatives": [
+        "ddd-modularity-spring-modulith"
+      ],
+      "maven": {
+        "group": "org.jmolecules",
+        "artifact": "jmolecules-bom"
+      },
+      "version_ref": null,
+      "gradle_ref": [
+        "jmolecules-bom",
+        "jmolecules-ddd",
+        "jmolecules-events",
+        "jmolecules-cqrs",
+        "jmolecules-layered",
+        "jmolecules-onion",
+        "jmolecules-spring",
+        "jmolecules-jpa",
+        "jmolecules-jackson",
+        "jmolecules-archunit"
+      ],
+      "dependencies": [],
+      "starter_available": false,
+      "tags": [
+        "ddd",
+        "architecture",
+        "jpa",
+        "archunit",
+        "cqrs",
+        "bom"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-boot"
+      ],
+      "doc_url": "https://github.com/xmolecules/jmolecules",
+      "source_url": null,
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "ddd-modularity-spring-modulith",
+      "name": "Spring Modulith",
+      "name_en": "Spring Modulith",
+      "domain": "ddd",
+      "subdomain": "modularity",
+      "stage": [
+        "ideate",
+        "code",
+        "qa"
+      ],
+      "type": "platform-bom",
+      "description": "Spring 官方模块化工具包，提供模块定义、模块间依赖验证、模块集成测试、事件发布与文档化能力",
+      "use_case": "构建模块化单体应用时使用。通过 Spring Modulith 定义模块边界，验证模块依赖，生成模块文档。可与 jMolecules 配合使用",
+      "ai_context": "## 集成模式\n通过 BOM 引入，使用 @ApplicationModuleListener 处理模块间事件，ArchUnit 规则验证模块边界。\n\n## 配置要点\n- @ApplicationModuleListener: 跨模块事件监听\n- spring.modulith.events.externalization.enabled: 是否启用事件外化\n- ModuleTestExecution: 模块集成测试运行器\n- Documenter: 生成模块关系图\n\n## 约束与限制\n- 仅适用于 Spring Boot 3.x+/4.x\n- 模块通信通过事件机制，不适合高频同步调用\n- 模块测试需要特殊的测试运行器\n\n## 常见陷阱\n- 模块间直接注入 Service（应该通过事件通信）\n- 忘记配置 ArchUnit 规则导致模块边界不被强制\n- 将 @ApplicationModuleListener 方法写在错误的事务边界中",
+      "alternatives": [
+        "ddd-architecture-jmolecules"
+      ],
+      "maven": {
+        "group": "org.springframework.modulith",
+        "artifact": "spring-modulith-bom"
+      },
+      "version_ref": null,
+      "gradle_ref": "spring-modulith-bom",
+      "dependencies": [
+        {
+          "component_id": "infra-platform-spring-boot",
+          "required": true,
+          "scope": "implementation",
+          "reason": "Spring Modulith 是 Spring 生态的子项目"
+        }
+      ],
+      "starter_available": false,
+      "tags": [
+        "spring",
+        "modulith",
+        "modularity",
+        "ddd",
+        "archunit",
+        "bom"
+      ],
+      "status": "stable",
+      "since_version": "1.0.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-boot"
+      ],
+      "doc_url": "https://docs.spring.io/spring-modulith/",
+      "source_url": null,
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "dynamic-tp",
+      "name": "DynamicTp（动态线程池）",
+      "domain": "distributed",
+      "type": "third-party-reference",
+      "description": "基于配置中心的动态线程池框架，支持运行时调整线程池参数、报警通知，无需重启服务。",
+      "use_case": "生产环境线程池参数调优、异步任务隔离、线程池监控与告警、快速响应突发流量变化。",
+      "ai_context": "## DynamicTp 集成模式\n\n### 引入 BOM\n```kotlin\ndependencies {\n    implementation(platform(libs.dynamic.tp.dependencies))\n    implementation(\"org.dromara.dynamictp:dynamic-tp-spring-boot-starter-nacos\") // 或其他配置中心\n}\n```\n\n### 支持的配置中心\n- Nacos、Apollo、Zookeeper、Etcd、Consul、Spring Cloud Config\n\n### 配置示例（Nacos）\n```yaml\nspring:\n  dynamic:\n    tp:\n      executors:\n        - thread-pool-name: orderExecutor\n          core-pool-size: 10\n          maximum-pool-size: 50\n          queue-capacity: 1000\n          queue-type: VARIABLE_LINKED_BLOCKING_QUEUE\n          notify:\n            - type: CAPACITY  # 队列容量报警\n              threshold: 80\n```\n\n### 常见使用场景\n- 电商秒杀：运行时调大核心线程数应对流量峰值\n- 异步任务：不同业务使用独立线程池，互不影响\n- 问题排查：实时观察线程池指标，无需重启\n\n### 版本说明\n- 版本号硬编码在 `[libraries]` 中（`version = '1.2.2'`），无独立 version key。",
+      "alternatives": [
+        "thread-pool-executor-manual",
+        "resilience4j-bulkhead"
+      ],
+      "maven": {
+        "groupId": "org.dromara.dynamictp",
+        "artifactId": "dynamic-tp-dependencies",
+        "version_ref": null
+      },
+      "gradle_ref": [
+        "dynamic-tp-dependencies"
+      ],
+      "dependencies": [],
+      "tags": [
+        "thread-pool",
+        "dynamic-config",
+        "monitoring",
+        "distributed"
+      ],
+      "status": "stable",
+      "stage": [
+        "adapt",
+        "ops"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://dynamictp.cn/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "easy-trans",
+      "name": "EasyTrans（数据翻译）",
+      "domain": "distributed",
+      "type": "third-party-reference",
+      "description": "字段翻译框架，通过注解自动将 id 字段翻译为对应的名称（如 userId→userName），支持本地、远程、字典等多种翻译方式。",
+      "use_case": "列表接口返回数据时自动关联查询翻译字段、枚举/字典码翻译为显示名称、跨服务字段关联展示。",
+      "ai_context": "## EasyTrans 集成模式\n\n### 引入 BOM\n```kotlin\ndependencies {\n    implementation(platform(libs.easy.trans.dependencies))\n    implementation(\"org.dromara:easy-trans-spring-boot-starter\")\n    // 如果使用 MyBatis-Plus：\n    implementation(\"org.dromara:easy-trans-mybatis-plus-plugin\")\n}\n```\n\n### 核心注解\n```java\n@Data\npublic class UserVO {\n    private Long deptId;\n    \n    @Trans(type = TransType.SIMPLE, target = SysDept.class, fields = \"deptName\")\n    private String deptName; // 自动从 SysDept 表查询并填充\n    \n    @Trans(type = TransType.DICTIONARY, key = \"user_status\")\n    private String statusName; // 字典翻译\n}\n```\n\n### 翻译类型\n- `SIMPLE`：本地数据库查询翻译\n- `RPC`：远程服务调用翻译（跨微服务）\n- `DICTIONARY`：字典/枚举翻译\n- `AUTO_TRANS_VO`：自动翻译整个 VO\n\n### 版本说明\n- 版本号硬编码（`version = '3.1.5'`），无独立 version key。",
+      "alternatives": [
+        "manual-join-query",
+        "mybatis-plus-join"
+      ],
+      "maven": {
+        "groupId": "org.dromara",
+        "artifactId": "easy-trans-dependencies",
+        "version_ref": null
+      },
+      "gradle_ref": [
+        "easy-trans-dependencies"
+      ],
+      "dependencies": [],
+      "tags": [
+        "data-translation",
+        "field-mapping",
+        "dictionary",
+        "annotation"
+      ],
+      "status": "stable",
+      "stage": [
+        "code",
+        "adapt"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://easy-trans.gitee.io/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "redisson",
+      "name": "Redisson（分布式锁/Redis 客户端）",
+      "domain": "distributed",
+      "type": "third-party-reference",
+      "description": "基于 Redis 的 Java 分布式锁、分布式集合、分布式对象客户端，提供 Spring Boot Starter 开箱即用。",
+      "use_case": "分布式锁防止并发重复操作、分布式限流、Redis 发布订阅、分布式集合（Map/Set/Queue）。",
+      "ai_context": "## Redisson 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.redisson)         // Spring Boot Starter\n    implementation(libs.lock4j.redisson)  // 可选：注解式分布式锁\n}\n```\n\n### application.yml 配置\n```yaml\nspring:\n  data:\n    redis:\n      host: localhost\n      port: 6379\n# Redisson 自动读取 spring.data.redis 配置\n```\n\n### 使用分布式锁\n```java\n@Service\npublic class OrderService {\n    @Autowired\n    private RedissonClient redissonClient;\n    \n    public void createOrder(String orderId) {\n        RLock lock = redissonClient.getLock(\"order:\" + orderId);\n        try {\n            lock.lock(30, TimeUnit.SECONDS);\n            // 业务逻辑\n        } finally {\n            lock.unlock();\n        }\n    }\n}\n```\n\n### 注解式分布式锁（Lock4j）\n```java\n@Lock4j(keys = \"#orderId\", expire = 30000)\npublic void createOrder(String orderId) {\n    // 业务逻辑，自动加锁解锁\n}\n```\n\n### 注意事项\n- 分布式锁必须设置超时时间，防止死锁。\n- `lock4j-redisson` 提供注解式 AOP 方案，但复杂场景（如条件释放）仍需手动编码。\n- Redisson 版本和 Spring Boot 版本有兼容要求，通过固定版本号管理。",
+      "alternatives": [
+        "spring-integration-redis",
+        "jedis-lock"
+      ],
+      "maven": {
+        "groupId": "org.redisson",
+        "artifactId": "redisson-spring-boot-starter",
+        "version_ref": null
+      },
+      "gradle_ref": [
+        "redisson",
+        "lock4j-redisson"
+      ],
+      "dependencies": [],
+      "tags": [
+        "redis",
+        "distributed-lock",
+        "cache",
+        "pub-sub"
+      ],
+      "status": "stable",
+      "stage": [
+        "adapt",
+        "code"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://redisson.org/docs/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "snail-job",
+      "name": "SnailJob（分布式任务调度）",
+      "domain": "distributed",
+      "type": "third-party-reference",
+      "description": "灵活、可靠、高性能的分布式任务重试与调度框架，支持任务编排、失败重试、DAG 工作流。",
+      "use_case": "定时任务调度、失败重试、长耗时任务拆分、任务依赖编排（DAG）、任务执行监控。",
+      "ai_context": "## SnailJob 集成模式\n\n### 部署架构\nSnailJob 分为 Server（调度中心）和 Client（业务接入）：\n- **Server**：独立部署或嵌入 Spring Boot 项目\n- **Client**：业务项目接入 SDK\n\n### Client 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.snail.job.client.starter)   // 客户端核心\n    implementation(libs.snail.job.client.job.core)  // Job 执行核心\n}\n```\n\n### Server 依赖配置（独立部署时）\n```kotlin\ndependencies {\n    implementation(libs.snail.job.server.starter)\n}\n```\n\n### 任务定义\n```java\n@Component\n@SneakyJob(scene = \"orderRetryScene\") // 重试场景\npublic class OrderRetryJob implements ExecutorJob {\n    @Override\n    public ExecuteResult doJobExecute(JobArgs jobArgs) {\n        // 执行逻辑\n        return ExecuteResult.success();\n    }\n}\n```\n\n### 版本管理\n- 版本号通过 `version.ref = 'snailjob'` 统一管理，三个库共享同一版本。\n\n### 选型对比\n- SnailJob vs XXL-Job：SnailJob 更现代，支持 DAG 工作流和失败重试语义。\n- SnailJob vs PowerJob：功能类似，SnailJob 国产社区活跃度更高。",
+      "alternatives": [
+        "xxl-job",
+        "powerjob",
+        "quartz",
+        "spring-batch"
+      ],
+      "maven": {
+        "groupId": "com.aizuda",
+        "artifactId": "snail-job-client-starter",
+        "version_ref": "snailjob"
+      },
+      "gradle_ref": [
+        "snail-job-client-starter",
+        "snail-job-client-job-core",
+        "snail-job-server-starter"
+      ],
+      "dependencies": [],
+      "tags": [
+        "scheduler",
+        "distributed-task",
+        "retry",
+        "dag",
+        "workflow"
+      ],
+      "status": "stable",
+      "stage": [
+        "adapt",
+        "ops"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://snailjob.opensnail.com/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "springdoc-openapi",
+      "name": "SpringDoc OpenAPI",
+      "domain": "documentation",
+      "type": "third-party-reference",
+      "description": "自动从 Spring MVC/WebFlux 注解生成 OpenAPI 3.x 规范文档，内置 Swagger UI，替代已停维的 Springfox。",
+      "use_case": "REST API 文档自动生成、Swagger UI 在线调试接口、生成 OpenAPI spec 供前端/AI 使用。",
+      "ai_context": "## SpringDoc OpenAPI 集成模式\n\n### 引入 BOM + Starter\n```kotlin\ndependencies {\n    implementation(platform(libs.springdoc.openapi.bom))\n    implementation(\"org.springdoc:springdoc-openapi-starter-webmvc-ui\") // Servlet 项目\n    // implementation(\"org.springdoc:springdoc-openapi-starter-webflux-ui\") // Reactive 项目\n}\n```\n\n### Spring Boot Auto-Configuration\nSpring Boot 3.x 只需添加依赖，Swagger UI 默认在 `/swagger-ui.html` 可访问。\n\n### 常用配置\n```yaml\nspringdoc:\n  api-docs:\n    path: /v3/api-docs\n  swagger-ui:\n    path: /swagger-ui.html\n    tags-sorter: alpha\n  # 生产环境建议关闭：\n  # api-docs.enabled: false\n```\n\n### 注解说明\n```java\n@Tag(name = \"用户管理\", description = \"用户相关接口\")\n@RestController\npublic class UserController {\n    \n    @Operation(summary = \"获取用户详情\", description = \"根据 ID 查询用户\")\n    @ApiResponse(responseCode = \"200\", description = \"成功\")\n    @Parameter(name = \"id\", description = \"用户ID\", required = true)\n    @GetMapping(\"/users/{id}\")\n    public UserDTO getUser(@PathVariable Long id) { ... }\n}\n```\n\n### 与 AI 工具结合\n- OpenAPI spec（`/v3/api-docs`）可直接被 LLM/MCP 工具读取，了解 API 结构。\n- IHub 的 `ihub-meta` 插件未来将集成 API spec 输出。\n\n### 版本说明\n- 版本号硬编码（`version = '3.0.3'`），无独立 version key。\n- SpringDoc 3.x 支持 Spring Boot 3.x；旧项目用 SpringDoc 1.x（`springdoc-openapi-ui`）。",
+      "alternatives": [
+        "springfox-swagger2",
+        "knife4j"
+      ],
+      "maven": {
+        "groupId": "org.springdoc",
+        "artifactId": "springdoc-openapi-bom",
+        "version_ref": null
+      },
+      "gradle_ref": [
+        "springdoc-openapi-bom",
+        "swagger-core"
+      ],
+      "dependencies": [],
+      "tags": [
+        "api-docs",
+        "openapi",
+        "swagger",
+        "rest"
+      ],
+      "status": "stable",
+      "stage": [
+        "adapt",
+        "qa"
+      ],
+      "related_plugins": [
+        "ihub-java"
+      ],
+      "doc_url": "https://springdoc.org/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "therapi-runtime-javadoc",
+      "name": "Therapi Runtime Javadoc",
+      "domain": "documentation",
+      "type": "third-party-reference",
+      "description": "将 Javadoc 注释打包进 class 文件，使运行时可通过反射读取 Javadoc 内容；配合 SpringDoc 可自动从 Javadoc 生成 API 描述。",
+      "use_case": "不想写双份注释（Javadoc + @Operation/@Schema）、希望 API 文档内容直接来自代码注释。",
+      "ai_context": "## Therapi Runtime Javadoc 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.therapi.runtime.javadoc)        // 运行时读取\n    annotationProcessor(libs.therapi.runtime.javadoc.scribe) // 编译期处理\n}\n```\n\n### 配合 SpringDoc 使用\n配合 `springdoc-openapi-starter-webmvc-ui` 时，SpringDoc 会自动从 Javadoc 中提取接口说明：\n```java\n/**\n * 获取用户详情\n * @param id 用户ID\n * @return 用户信息\n */\n@GetMapping(\"/users/{id}\")\npublic UserDTO getUser(@PathVariable Long id) { ... }\n// 无需 @Operation(summary = \"...\") 注解！\n```\n\n### 与 IHub 插件集成\n- `ihub-java` 插件的 `defaultDependencies = doc` 自动添加 `therapi-runtime-javadoc-scribe` 到 `annotationProcessor`。\n- 还包含 `swagger-core-jakarta` 和 `ihub-bytebuddy-plugin`（用于运行时文档增强）。\n\n### 版本管理\n- `therapi-runtime-javadoc` 和 `therapi-runtime-javadoc-scribe` 共享 `version.ref = 'therapi-javadoc'`。\n\n### 注意事项\n- 需要在编译时保留 Javadoc（不要 `-nodoc` 编译选项）。\n- 生成的 class 文件体积会略微增大（包含了 Javadoc 文本）。",
+      "alternatives": [
+        "manual-swagger-annotations"
+      ],
+      "maven": {
+        "groupId": "com.github.therapi",
+        "artifactId": "therapi-runtime-javadoc",
+        "version_ref": "therapi-javadoc"
+      },
+      "gradle_ref": [
+        "therapi-runtime-javadoc",
+        "therapi-runtime-javadoc-scribe"
+      ],
+      "dependencies": [
+        "springdoc-openapi"
+      ],
+      "tags": [
+        "javadoc",
+        "api-docs",
+        "annotation-processor",
+        "documentation"
+      ],
+      "status": "stable",
+      "stage": [
+        "adapt",
+        "qa"
+      ],
+      "related_plugins": [
+        "ihub-java"
+      ],
+      "doc_url": "https://github.com/dnault/therapi-runtime-javadoc",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "infra-platform-spring-boot",
+      "name": "Spring Boot",
+      "name_en": "Spring Boot",
+      "domain": "infrastructure",
+      "subdomain": "platform",
+      "stage": [
+        "init",
+        "code"
+      ],
+      "type": "platform-bom",
+      "description": "Spring Boot 依赖管理 BOM，统一管理 Spring 生态组件的版本",
+      "use_case": "所有基于 Spring Boot 的项目必须引入，作为版本管理基础。无需单独指定每个 Spring 模块的版本号",
+      "ai_context": "## 集成模式\n作为 BOM 引入，统一管理 Spring 框架族版本。通过 spring-boot-starter-* 引入具体能力。\n\n## 配置要点\n- 版本由 libs.versions.toml 统一管理\n- 通过 spring-boot-starter-* 引入具体能力\n- 本项目使用 Spring Boot 4.x，基于 Jakarta EE\n\n## 约束与限制\n- Spring Boot 4.x 需要 JDK 17+\n- 与 Spring Cloud BOM 配合使用\n- 从 Spring Boot 3.x 迁移需注意 javax → jakarta 包名变更\n\n## 常见陷阱\n- 不要同时在项目中显式声明 Spring 模块版本号\n- 自定义 starter 的版本号应通过 version_ref 引用，不要硬编码",
+      "alternatives": [],
+      "maven": {
+        "group": "org.springframework.boot",
+        "artifact": "spring-boot-dependencies"
+      },
+      "version_ref": "spring-boot",
+      "gradle_ref": "spring-boot-dependencies",
+      "dependencies": [],
+      "starter_available": false,
+      "tags": [
+        "spring",
+        "boot",
+        "framework",
+        "bom"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-boot"
+      ],
+      "doc_url": "https://spring.io/projects/spring-boot",
+      "source_url": null,
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "infra-platform-spring-cloud",
+      "name": "Spring Cloud",
+      "name_en": "Spring Cloud",
+      "domain": "infrastructure",
+      "subdomain": "platform",
+      "stage": [
+        "init",
+        "adapt"
+      ],
+      "type": "platform-bom",
+      "description": "Spring Cloud 依赖管理 BOM，统一管理微服务治理相关组件版本",
+      "use_case": "构建微服务架构时需要，提供服务发现、配置中心、负载均衡等能力。与 Spring Boot BOM 配合使用",
+      "ai_context": "## 集成模式\n与 spring-boot-dependencies 同时引入，管理 Spring Cloud 组件族版本。\n\n## 配置要点\n- 版本与 Spring Boot 版本有对应关系，不可随意升级\n- Spring Cloud 2025.x 对应 Spring Boot 4.x\n\n## 约束与限制\n- Spring Cloud 版本必须与 Spring Boot 主版本兼容\n- 部分组件（如 spring-cloud-starter-bootstrap）在新版本中已默认禁用\n\n## 常见陷阱\n- 混淆 Spring Cloud 版本号（用年份命名）与 Spring Boot 语义版本号\n- 忘记同时引入 spring-cloud-dependencies 和 spring-boot-dependencies",
+      "alternatives": [],
+      "maven": {
+        "group": "org.springframework.cloud",
+        "artifact": "spring-cloud-dependencies"
+      },
+      "version_ref": "spring-cloud",
+      "gradle_ref": "spring-cloud-dependencies",
+      "dependencies": [
+        {
+          "component_id": "infra-platform-spring-boot",
+          "required": true,
+          "scope": "implementation",
+          "reason": "Spring Cloud 基于 Spring Boot 运行"
+        }
+      ],
+      "starter_available": false,
+      "tags": [
+        "spring",
+        "cloud",
+        "microservices",
+        "bom"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-boot"
+      ],
+      "doc_url": "https://spring.io/projects/spring-cloud",
+      "source_url": null,
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "infra-platform-spring-cloud-alibaba",
+      "name": "Spring Cloud Alibaba",
+      "name_en": "Spring Cloud Alibaba",
+      "domain": "infrastructure",
+      "subdomain": "platform",
+      "stage": [
+        "init",
+        "adapt"
+      ],
+      "type": "platform-bom",
+      "description": "Spring Cloud Alibaba 依赖管理 BOM，集成 Nacos、Sentinel、Seata 等阿里中间件",
+      "use_case": "需要使用阿里云中间件生态（Nacos 注册中心/配置中心、Sentinel 流量控制、Seata 分布式事务）时引入",
+      "ai_context": "## 集成模式\n在 Spring Cloud 基础上叠加，提供阿里云中间件的版本管理。\n\n## 配置要点\n- 版本 2025.x 对应 Spring Cloud 2025.x 和 Spring Boot 4.x\n- Nacos Server 版本需与客户端版本匹配\n\n## 约束与限制\n- 需要部署 Nacos Server（或使用阿里云托管版）\n- Sentinel 控制台为可选组件\n- Seata 需要独立的事务协调器\n\n## 常见陷阱\n- Nacos 客户端版本与 Server 版本不匹配导致注册失败\n- 混淆 spring-cloud-alibaba 版本号与各个组件自身的版本号",
+      "alternatives": [],
+      "maven": {
+        "group": "com.alibaba.cloud",
+        "artifact": "spring-cloud-alibaba-dependencies"
+      },
+      "version_ref": "spring-cloud-alibaba",
+      "gradle_ref": "spring-cloud-alibaba-dependencies",
+      "dependencies": [
+        {
+          "component_id": "infra-platform-spring-boot",
+          "required": true,
+          "scope": "implementation",
+          "reason": "基于 Spring Boot 生态"
+        },
+        {
+          "component_id": "infra-platform-spring-cloud",
+          "required": true,
+          "scope": "implementation",
+          "reason": "Spring Cloud Alibaba 是 Spring Cloud 的子项目"
+        }
+      ],
+      "starter_available": false,
+      "tags": [
+        "spring",
+        "cloud",
+        "alibaba",
+        "nacos",
+        "sentinel",
+        "bom"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-boot"
+      ],
+      "doc_url": "https://sca.aliyun.com",
+      "source_url": null,
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "infra-platform-spring-boot-admin",
+      "name": "Spring Boot Admin",
+      "name_en": "Spring Boot Admin",
+      "domain": "infrastructure",
+      "subdomain": "platform",
+      "stage": [
+        "ops"
+      ],
+      "type": "platform-bom",
+      "description": "Spring Boot 应用监控管理平台，提供运行时状态查看、日志管理、指标监控等能力",
+      "use_case": "需要可视化监控 Spring Boot 应用运行状态、查看日志、管理 Beans 时使用。通常部署为独立监控服务",
+      "ai_context": "## 集成模式\n分为 server 端（监控面板）和 client 端（被监控应用）。通过 starter 自动配置集成。\n\n## 配置要点\n- Client 端需配置 spring.boot.admin.client.url 指向 Server\n- Server 端需引入 spring-boot-admin-starter-server\n- 支持通过 Eureka/Nacos 等服务发现自动注册\n\n## 约束与限制\n- 需要独立部署 Server 实例\n- Client 应用需要暴露 actuator 端点\n- 生产环境需配置安全认证\n\n## 常见陷阱\n- 忘记暴露 actuator 端点导致无监控数据\n- Server 与 Client 版本不匹配\n- 防火墙未放行监控端口",
+      "alternatives": [],
+      "maven": {
+        "group": "de.codecentric",
+        "artifact": "spring-boot-admin-dependencies"
+      },
+      "version_ref": "spring-boot-admin",
+      "gradle_ref": "spring-boot-admin-dependencies",
+      "dependencies": [
+        {
+          "component_id": "infra-platform-spring-boot",
+          "required": true,
+          "scope": "implementation",
+          "reason": "基于 Spring Boot Actuator"
+        }
+      ],
+      "starter_available": false,
+      "tags": [
+        "spring",
+        "boot",
+        "admin",
+        "monitoring",
+        "bom"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-boot"
+      ],
+      "doc_url": "https://docs.spring-boot-admin.com",
+      "source_url": null,
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "infra-platform-spring-ai",
+      "name": "Spring AI",
+      "name_en": "Spring AI",
+      "domain": "infrastructure",
+      "subdomain": "platform",
+      "stage": [
+        "llm"
+      ],
+      "type": "platform-bom",
+      "description": "Spring AI 依赖管理 BOM，统一管理 AI/LLM 集成相关组件版本",
+      "use_case": "需要在 Spring Boot 项目中集成 AI 能力（LLM 调用、向量存储、RAG）时引入",
+      "ai_context": "## 集成模式\n通过 Spring Boot starter 模式集成。引入 spring-ai-bom 管理版本。\n\n## 配置要点\n- 通过 spring.ai.openai.* 或 spring.ai.ollama.* 配置模型接入\n- 支持 OpenAI、Ollama、Azure OpenAI 等多种后端\n- 向量存储支持 Chroma、PGVector、Redis 等\n\n## 约束与限制\n- 需要 Spring Boot 3.x+/4.x\n- 部分功能（如 Function Calling）需要特定模型支持\n- API 在 1.x 阶段持续演进\n\n## 常见陷阱\n- 混淆 spring-ai 版本号与 OpenAI SDK 版本号\n- 向量存储依赖需要额外引入对应的 starter\n- 生产环境需关注 LLM API 调用的成本和限流",
+      "alternatives": [],
+      "maven": {
+        "group": "org.springframework.ai",
+        "artifact": "spring-ai-bom"
+      },
+      "version_ref": null,
+      "gradle_ref": "spring-ai-bom",
+      "dependencies": [
+        {
+          "component_id": "infra-platform-spring-boot",
+          "required": true,
+          "scope": "implementation",
+          "reason": "Spring AI 基于 Spring Boot 生态"
+        }
+      ],
+      "starter_available": false,
+      "tags": [
+        "spring",
+        "ai",
+        "llm",
+        "rag",
+        "bom"
+      ],
+      "status": "stable",
+      "since_version": "1.0.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-boot"
+      ],
+      "doc_url": "https://spring.io/projects/spring-ai",
+      "source_url": null,
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "infra-logging-slf4j",
+      "name": "SLF4J 日志门面",
+      "name_en": "SLF4J Logging Facade",
+      "domain": "infrastructure",
+      "subdomain": "logging",
+      "stage": [
+        "init",
+        "code",
+        "ops"
+      ],
+      "type": "third-party-reference",
+      "description": "Java 日志门面框架，提供统一的日志 API，底层可适配 Logback、Log4j2 等实现",
+      "use_case": "所有 Java 项目的基础日志依赖。通过 SLF4J API 编写日志代码，运行时绑定具体实现",
+      "ai_context": "## 集成模式\nSLF4J API 作为编译依赖，运行时提供具体实现（通常为 Logback）。通过桥接器将其他日志框架重定向到 SLF4J。\n\n## 配置要点\n- slf4j-api：核心 API，编译依赖\n- jul-to-slf4j：将 java.util.logging 桥接到 SLF4J\n- log4j-over-slf4j：将 Log4j 调用重定向到 SLF4J\n- jcl-over-slf4j：将 Commons Logging 调用重定向到 SLF4J\n- 运行时提供 logback-classic 或 log4j-slf4j2-impl\n\n## 约束与限制\n- 不能同时存在多个 SLF4J 实现（如 logback 和 log4j-slf4j2-impl）\n- 桥接器和实现不能形成循环（如同时使用 log4j-over-slf4j 和 slf4j-log4j12）\n\n## 常见陷阱\n- 传递依赖引入多个日志实现导致冲突\n- 忘记添加桥接器导致部分日志丢失\n- 混淆 slf4j-log4j12（SLF4J→Log4j 1.x）和 log4j-over-slf4j（Log4j→SLF4J）",
+      "alternatives": [],
+      "maven": {
+        "group": "org.slf4j",
+        "artifact": "slf4j-api"
+      },
+      "version_ref": null,
+      "gradle_ref": [
+        "slf4j-api",
+        "jcl-over-slf4j",
+        "jul-to-slf4j",
+        "log4j-over-slf4j",
+        "slf4j-jcl",
+        "slf4j-log4j12"
+      ],
+      "dependencies": [],
+      "starter_available": false,
+      "tags": [
+        "logging",
+        "slf4j",
+        "logback",
+        "log4j"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-java"
+      ],
+      "doc_url": "https://www.slf4j.org",
+      "source_url": null,
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "infra-logging-log4j2",
+      "name": "Log4j2 日志实现",
+      "name_en": "Log4j2 Logging Implementation",
+      "domain": "infrastructure",
+      "subdomain": "logging",
+      "stage": [
+        "init",
+        "code",
+        "ops"
+      ],
+      "type": "third-party-reference",
+      "description": "Apache Log4j2 高性能日志实现，可作为 SLF4J 的底层实现",
+      "use_case": "需要高性能异步日志、灵活的日志路由配置时使用。作为 Logback 的替代方案",
+      "ai_context": "## 集成模式\n通过 slf4j-api 编写日志代码，运行时使用 log4j-core 和 log4j-slf4j2-impl 绑定。\n\n## 配置要点\n- log4j-core：核心日志实现\n- log4j-slf4j2-impl：SLF4J 到 Log4j2 的桥接\n- 配置文件：log4j2.xml / log4j2.json / log4j2.yaml\n\n## 约束与限制\n- 不能与 Logback 同时存在\n- Log4j2 需要 Java 8+ \n- 2.x 版本与 1.x 完全不兼容\n\n## 常见陷阱\n- 同时引入 logback 和 log4j-slf4j2-impl 导致 SLF4J 绑定冲突\n- 忘记排除 Spring Boot 默认的 logback 依赖",
+      "alternatives": [],
+      "maven": {
+        "group": "org.apache.logging.log4j",
+        "artifact": "log4j-core"
+      },
+      "version_ref": null,
+      "gradle_ref": [
+        "log4j-core",
+        "log4j",
+        "commons-logging"
+      ],
+      "dependencies": [
+        {
+          "component_id": "infra-logging-slf4j",
+          "required": true,
+          "scope": "implementation",
+          "reason": "通过 SLF4J API 编写日志代码"
+        }
+      ],
+      "starter_available": false,
+      "tags": [
+        "logging",
+        "log4j2",
+        "async"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-java"
+      ],
+      "doc_url": "https://logging.apache.org/log4j/2.x/",
+      "source_url": null,
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "infra-lang-groovy",
+      "name": "Apache Groovy",
+      "name_en": "Apache Groovy",
+      "domain": "infrastructure",
+      "subdomain": "language",
+      "stage": [
+        "init",
+        "code",
+        "qa"
+      ],
+      "type": "third-party-reference",
+      "description": "JVM 动态语言，提供简洁语法、闭包、元编程能力，与 Java 100% 互操作",
+      "use_case": "IHub 插件开发语言。Spock 测试框架的运行基础。需要 Groovy DSL 配置或脚本处理时使用",
+      "ai_context": "## 集成模式\n通过 ihub-groovy 插件配置 Groovy 源代码集。各模块按需引入：\n- groovy-core: 核心运行时\n- groovy-json: JSON 处理\n- groovy-xml: XML 处理\n- groovy-sql: SQL 工具\n- groovy-nio: NIO 文件操作\n- groovy-datetime: 日期时间扩展\n- groovy-templates: 模板引擎\n- groovy-groovydoc: 文档工具\n\n## 配置要点\n- Groovy 4.x 支持 Java 模块系统\n- 通过 @CompileStatic 启用静态编译\n- 与 Spock 测试框架无缝集成\n\n## 约束与限制\n- 动态特性会绕过编译期类型检查\n- 反射调用性能低于 Java\n- Groovy 5.x 要求 JDK 11+\n\n## 常见陷阱\n- 忘记添加 @CompileStatic 导致性能问题\n- GString 字符串拼接与 Java String 类型不兼容\n- == 语义在 Groovy 中是 equals() 而非引用比较",
+      "alternatives": [
+        "kotlin"
+      ],
+      "maven": {
+        "group": "org.apache.groovy",
+        "artifact": "groovy"
+      },
+      "version_ref": null,
+      "gradle_ref": [
+        "groovy-core",
+        "groovy-json",
+        "groovy-xml",
+        "groovy-sql",
+        "groovy-nio",
+        "groovy-datetime",
+        "groovy-templates",
+        "groovy-groovydoc",
+        "groovy-dateutil"
+      ],
+      "dependencies": [],
+      "starter_available": false,
+      "tags": [
+        "groovy",
+        "jvm",
+        "dynamic",
+        "scripting"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-groovy"
+      ],
+      "doc_url": "https://groovy-lang.org",
+      "source_url": null,
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "infra-bom-ihub-integration",
+      "name": "IHub 集成 BOM",
+      "name_en": "IHub Integration BOM",
+      "domain": "infrastructure",
+      "subdomain": "platform",
+      "stage": [
+        "init",
+        "code"
+      ],
+      "type": "platform-bom",
+      "description": "IHub 集成层 BOM，统一管理 IHub 生态中跨模块集成组件的版本",
+      "use_case": "使用 IHub 集成组件时引入，统一管理集成层组件版本，避免版本冲突",
+      "ai_context": "## 集成模式\n作为 BOM 引入，统一管理 ihub-integration-* 系列组件版本。\n\n## 配置要点\n- 通过 dependencyManagement 平台方式引入\n- 与 ihub-module-bom 配合使用\n\n## 约束与限制\n- 必须与对应版本的 IHub 框架配合使用\n\n## 常见陷阱\n- 与 ihub-module-bom 版本不一致导致兼容性问题",
+      "alternatives": [],
+      "maven": {
+        "group": "pub.ihub.integration",
+        "artifact": "ihub-integration-bom"
+      },
+      "version_ref": null,
+      "gradle_ref": "ihub-integration-bom",
+      "dependencies": [],
+      "starter_available": false,
+      "tags": [
+        "ihub",
+        "bom",
+        "integration"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-boot"
+      ],
+      "doc_url": "https://doc.ihub.pub",
+      "source_url": null,
+      "ihub_layer": "L3"
+    },
+    {
+      "id": "infra-bom-ihub-module",
+      "name": "IHub 模块 BOM",
+      "name_en": "IHub Module BOM",
+      "domain": "infrastructure",
+      "subdomain": "platform",
+      "stage": [
+        "init",
+        "code"
+      ],
+      "type": "platform-bom",
+      "description": "IHub 核心模块 BOM，统一管理 IHub 框架核心模块（ihub-core、ihub-starter 等）的版本",
+      "use_case": "使用 IHub 核心模块时引入，无需单独管理 ihub-* 各模块的版本号",
+      "ai_context": "## 集成模式\n作为 BOM 引入。包含 ihub-core、ihub-starter 等核心模块的版本管理。\n\n## 配置要点\n- 通过 dependencyManagement 或 platform() 引入\n- 版本由 IHub 统一发布管理\n\n## 约束与限制\n- 不要混合不同版本的 ihub-module-bom 和 ihub-integration-bom\n\n## 常见陷阱\n- 忽略 BOM 导入顺序，BOM 声明顺序影响版本优先级",
+      "alternatives": [],
+      "maven": {
+        "group": "pub.ihub.module",
+        "artifact": "ihub-module-bom"
+      },
+      "version_ref": null,
+      "gradle_ref": "ihub-module-bom",
+      "dependencies": [],
+      "starter_available": false,
+      "tags": [
+        "ihub",
+        "bom",
+        "module"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-boot"
+      ],
+      "doc_url": "https://doc.ihub.pub",
+      "source_url": null,
+      "ihub_layer": "L3"
+    },
+    {
+      "id": "mapstruct",
+      "name": "MapStruct",
+      "domain": "mapping",
+      "type": "third-party-reference",
+      "description": "基于注解处理器的 Java Bean 映射框架，编译期生成类型安全的映射代码，零运行时开销。",
+      "use_case": "DTO↔Entity 转换、多层架构对象映射、避免手写 getter/setter 样板代码。",
+      "ai_context": "## MapStruct 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.mapstruct)                    // 运行时注解\n    annotationProcessor(libs.mapstruct.processor)     // 编译期代码生成\n    // 与 Lombok 同时使用时必须加：\n    annotationProcessor(libs.lombok.mapstruct.binding) // 绑定处理顺序\n}\n```\n\n### 典型 Mapper 定义\n```java\n@Mapper(componentModel = \"spring\") // 生成 Spring Bean\npublic interface UserMapper {\n    UserDTO toDTO(User user);\n    User toEntity(UserDTO dto);\n    List<UserDTO> toDTOList(List<User> users);\n}\n```\n\n### 与 IHub 插件集成\n- `ihub-java` 插件的 `defaultDependencies = mapstruct` 可一键添加 mapstruct + processor + lombok-binding。\n- 使用 IHub 插件时无需手动管理 annotationProcessor 顺序。\n\n### 常见陷阱\n- Lombok 与 MapStruct 同时使用时，**必须**将 `lombok-mapstruct-binding` 加入 annotationProcessor，否则 Lombok 生成的方法对 MapStruct 不可见。\n- `componentModel = \"spring\"` 是 Spring 项目的标准配置；不加则生成静态工厂方法。\n- 复杂映射（枚举转换、嵌套对象）需配合 `@Mapping` 注解显式声明。",
+      "alternatives": [
+        "mapstruct-plus",
+        "modelmapper",
+        "dozer"
+      ],
+      "maven": {
+        "groupId": "org.mapstruct",
+        "artifactId": "mapstruct",
+        "version_ref": "mapstruct"
+      },
+      "gradle_ref": [
+        "mapstruct",
+        "mapstruct-processor"
+      ],
+      "dependencies": [],
+      "tags": [
+        "mapping",
+        "code-generation",
+        "annotation-processor",
+        "dto"
+      ],
+      "status": "stable",
+      "stage": [
+        "code"
+      ],
+      "related_plugins": [
+        "ihub-java"
+      ],
+      "doc_url": "https://mapstruct.org/documentation/stable/reference/html/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "mapstruct-plus",
+      "name": "MapStruct Plus",
+      "domain": "mapping",
+      "type": "third-party-reference",
+      "description": "MapStruct 的增强封装，提供更简洁的注解（@AutoMapper）和自动双向映射，减少 Mapper 接口样板代码。",
+      "use_case": "希望比原生 MapStruct 更少配置的项目；大量 POJO 需要双向映射的场景。",
+      "ai_context": "## MapStruct Plus 集成模式\n\n### Spring Boot Starter\n```kotlin\ndependencies {\n    implementation(\"io.github.linpeilie:mapstruct-plus-spring-boot-starter\")\n    annotationProcessor(libs.mapstruct.plus.processor)\n    annotationProcessor(libs.lombok.mapstruct.binding)\n}\n```\n\n### 核心注解\n```java\n@AutoMapper(target = UserDTO.class, reverseConvertGenerate = true)\npublic class User {\n    private String name;\n    // 自动生成 User→UserDTO 和 UserDTO→User 双向 Mapper\n}\n```\n\n### 与 IHub 插件集成\n- `ihub-java` 插件的 `defaultDependencies = mapstruct` 包含了 `mapstruct-plus-spring-boot-starter` 和 `mapstruct-plus-processor`。\n\n### 注意事项\n- MapStruct Plus 底层仍是 MapStruct，生成的代码与 MapStruct 兼容。\n- BOM 通过 `mapstruct-plus-pom` 引入，统一版本管理。",
+      "alternatives": [
+        "mapstruct"
+      ],
+      "maven": {
+        "groupId": "io.github.linpeilie",
+        "artifactId": "mapstruct-plus-pom",
+        "version_ref": "mapstruct-plus"
+      },
+      "gradle_ref": [
+        "mapstruct-plus-pom",
+        "mapstruct-plus-processor",
+        "lombok-mapstruct-binding"
+      ],
+      "dependencies": [
+        "mapstruct"
+      ],
+      "tags": [
+        "mapping",
+        "code-generation",
+        "annotation-processor",
+        "dto",
+        "spring-boot-starter"
+      ],
+      "status": "stable",
+      "stage": [
+        "code"
+      ],
+      "related_plugins": [
+        "ihub-java"
+      ],
+      "doc_url": "https://mapstruct.plus/guide/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "fastjson2",
+      "name": "Fastjson2",
+      "domain": "mapping",
+      "type": "third-party-reference",
+      "description": "阿里巴巴开源的高性能 JSON 序列化/反序列化库，Fastjson 的全新一代实现，性能和安全性大幅提升。",
+      "use_case": "高吞吐量 JSON 处理、替换 Jackson 作为 Spring MVC 消息转换器、与旧 Fastjson 1.x 代码兼容迁移。",
+      "ai_context": "## Fastjson2 集成模式\n\n### Spring 项目推荐依赖\n```kotlin\ndependencies {\n    implementation(libs.fastjson)                    // 核心库\n    implementation(libs.fastjson.extension)          // 扩展（支持更多类型）\n    implementation(libs.fastjson.extension.spring)   // Spring6 MVC 集成\n}\n```\n\n### Spring MVC 消息转换器配置\n```java\n@Configuration\npublic class WebConfig implements WebMvcConfigurer {\n    @Override\n    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {\n        converters.add(0, new FastjsonHttpMessageConverter());\n    }\n}\n```\n\n### 与 Fastjson 1.x 兼容\n```kotlin\n// 如果有旧代码使用 com.alibaba.fastjson 包名：\ndependencies {\n    implementation(libs.fastjson1) // 兼容层，底层使用 Fastjson2 实现\n}\n```\n\n### 版本说明\n- `fastjson` 和 `fastjson-extension-spring` 使用相同的 `version.ref = 'fastjson'`，版本统一管理。\n- Spring Boot 4.x 项目使用 `fastjson2-extension-spring6`。\n\n### 常见陷阱\n- Fastjson 2.x API 与 1.x 不完全兼容，直接升级需要 Review 代码。\n- 与 Spring Boot 自带的 Jackson 混用时需注意序列化行为差异（日期格式、null 处理等）。",
+      "alternatives": [
+        "jackson",
+        "gson"
+      ],
+      "maven": {
+        "groupId": "com.alibaba.fastjson2",
+        "artifactId": "fastjson2",
+        "version_ref": "fastjson"
+      },
+      "gradle_ref": [
+        "fastjson",
+        "fastjson-extension",
+        "fastjson-extension-spring",
+        "fastjson-kotlin",
+        "fastjson1"
+      ],
+      "dependencies": [],
+      "tags": [
+        "json",
+        "serialization",
+        "deserialization",
+        "performance"
+      ],
+      "status": "stable",
+      "stage": [
+        "code",
+        "adapt"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://alibaba.github.io/fastjson2/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "easyexcel",
+      "name": "EasyExcel",
+      "domain": "mapping",
+      "type": "third-party-reference",
+      "description": "阿里巴巴开源的高性能 Excel 读写库，基于 SAX 模式解析，内存占用极低，支持百万行数据读写。",
+      "use_case": "Excel 数据导入导出、报表生成、大数据量 Excel 处理（避免 OOM）。",
+      "ai_context": "## EasyExcel 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.easyexcel)\n}\n```\n\n### 读取 Excel\n```java\n@Data\npublic class UserData {\n    @ExcelProperty(\"姓名\")\n    private String name;\n    @ExcelProperty(\"年龄\")\n    private Integer age;\n}\n\n// 读取文件\nEasyExcel.read(fileName, UserData.class, new UserDataListener()).sheet().doRead();\n```\n\n### 写出 Excel\n```java\nList<UserData> data = fetchData();\nEasyExcel.write(fileName, UserData.class).sheet(\"用户\").doWrite(data);\n```\n\n### Spring MVC 下载接口\n```java\n@GetMapping(\"/export\")\npublic void export(HttpServletResponse response) throws IOException {\n    response.setContentType(\"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\");\n    response.setHeader(\"Content-Disposition\", \"attachment;filename=users.xlsx\");\n    EasyExcel.write(response.getOutputStream(), UserData.class).sheet().doWrite(data);\n}\n```\n\n### 注意事项\n- 版本号硬编码（未在 `[versions]` 中定义 version key），通过 `easyexcel` gradle 别名直接引用。\n- 读取大文件时使用 `ReadListener` 分批处理，避免一次性加载全部数据到内存。",
+      "alternatives": [
+        "apache-poi",
+        "hutool-poi"
+      ],
+      "maven": {
+        "groupId": "com.alibaba",
+        "artifactId": "easyexcel",
+        "version_ref": null
+      },
+      "gradle_ref": [
+        "easyexcel"
+      ],
+      "dependencies": [],
+      "tags": [
+        "excel",
+        "import-export",
+        "file-processing",
+        "report"
+      ],
+      "status": "stable",
+      "stage": [
+        "code",
+        "adapt"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://easyexcel.opensource.alibaba.com/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "messaging-placeholder",
+      "name": "消息队列（规划中）",
+      "domain": "messaging",
+      "type": "third-party-reference",
+      "description": "【占位条目】IHub libs 当前通过 Spring Boot BOM 间接管理消息队列依赖（RocketMQ、Kafka、RabbitMQ 等），独立 messaging domain 条目将在 P2 阶段按需添加。",
+      "use_case": "分布式消息传递、事件驱动架构、异步解耦、削峰填谷。当前建议直接使用 Spring Boot BOM 中的消息队列 Starter。",
+      "ai_context": "## Messaging 领域现状\n\n### 当前推荐路径\nIHub libs 的 `infrastructure` 领域已通过 BOM 覆盖以下消息队列：\n\n```kotlin\n// Spring Boot BOM 已包含：\ndependencies {\n    implementation(platform(libs.spring.boot.dependencies))\n    // 然后直接使用（无需指定版本）：\n    implementation(\"org.springframework.boot:spring-boot-starter-amqp\")       // RabbitMQ\n    implementation(\"org.springframework.boot:spring-boot-starter-activemq\")   // ActiveMQ\n    implementation(\"org.springframework.kafka:spring-kafka\")                   // Kafka\n}\n\n// Spring Cloud Alibaba BOM 已包含：\ndependencies {\n    implementation(platform(libs.spring.cloud.alibaba.dependencies))\n    implementation(\"com.alibaba.cloud:spring-cloud-starter-stream-rocketmq\")  // RocketMQ\n}\n```\n\n### 规划中的 messaging 条目（P2）\n- RocketMQ BOM（独立版本管理）\n- Kafka BOM\n- Pulsar（Spring Boot 4.x 新增支持）\n\n### AI 建议\n当开发者询问消息队列选型时：\n- **RocketMQ**：阿里云生态、强顺序性要求、事务消息\n- **Kafka**：高吞吐日志流处理、大数据场景\n- **RabbitMQ**：灵活路由、低延迟、AMQP 协议\n- **Pulsar**：多租户、地理复制、云原生",
+      "alternatives": [
+        "rocketmq",
+        "kafka",
+        "rabbitmq",
+        "pulsar"
+      ],
+      "maven": null,
+      "gradle_ref": [],
+      "dependencies": [
+        "infrastructure"
+      ],
+      "tags": [
+        "messaging",
+        "event-driven",
+        "mq",
+        "async",
+        "planned"
+      ],
+      "status": "experimental",
+      "stage": [
+        "adapt"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://spring.io/projects/spring-amqp",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "meta-guide-ihub-catalog",
+      "name": "IHub 能力目录使用指南",
+      "name_en": "IHub Capability Catalog Guide",
+      "domain": "meta",
+      "subdomain": "guide",
+      "stage": [
+        "ideate",
+        "init",
+        "code",
+        "llm",
+        "adapt",
+        "qa",
+        "ops",
+        "migrate"
+      ],
+      "type": "ihub-component",
+      "description": "引导 LLM/AI 工具理解 IHub 组件生态体系、选型策略和最佳实践的元条目",
+      "use_case": "当 LLM 需要理解 IHub 项目依赖、推荐组件或生成代码时，应首先阅读本条目的 ai_context",
+      "ai_context": "## IHub 组件生态概述\n\nIHub 是一个基于 Spring Boot 的 Java 后端开发生态体系，按三层架构组织：\n- **L1 枢纽**：ihub 仓库，项目入口与战略文档\n- **L2 能力板块**：libs 仓库（能力目录）、plugins 仓库（Gradle 插件集）\n- **L3 集成方案**：modules 仓库（可选模块）、integrations 仓库（场景化集成）\n\n## 如何使用本目录\n\n1. **根据开发者当前阶段过滤**：用 `stage` 字段匹配开发者所处的 8 阶旅程阶段\n2. **根据技术领域筛选**：用 `domain` 字段找到所需能力领域\n3. **理解组件关系**：\n   - `dependencies` 字段列出该组件的语义依赖\n   - `alternatives` 字段列出互斥或可替代的组件\n   - `ihub_layer` 字段标出组件在 L2/L3 层次的位置\n4. **版本管理**：本目录不包含版本号，所有版本通过 `version_ref` 引用 `libs.versions.toml` 的 `[versions]` 块\n\n## 组件选型原则\n\n1. **优先 IHub 自研组件**（type = `ihub-component`）：开箱即用，与 IHub 生态深度集成\n2. **推荐第三方参考组件**（type = `third-party-reference`）：经过验证的成熟方案\n3. **统一版本管理**：通过 BOM（type = `platform-bom`）管理版本，避免版本冲突\n4. **status 字段含义**：\n   - `stable`：生产就绪，首选\n   - `experimental`：可以尝试，API 可能变化\n   - `deprecated`：避免新项目使用\n   - `legacy`：存量维护，不推荐新功能\n\n## 领域速查\n\n| 领域 | 用途 | 典型场景 |\n|------|------|----------|\n| infrastructure | Spring 平台、日志、容器 | 项目初始化 |\n| data | ORM、数据源、SQL | 数据层开发 |\n| ddd | 领域驱动设计 | 复杂业务建模 |\n| mapping | 对象映射、序列化 | DTO/VO 转换 |\n| security | 认证、授权、SSO | 权限系统 |\n| distributed | 分布式锁、调度 | 分布式部署 |\n| workflow | 工作流引擎 | 审批流程 |\n| observability | 链路追踪、监控 | 生产运维 |\n| documentation | API 文档 | 接口文档 |\n| testing | 测试框架 | 质量保障 |\n| messaging | 消息队列 | 异步通信 |\n| utilities | 通用工具集 | 辅助开发 |\n\n## 与 Gradle Version Catalog 的关系\n\n- `libs.versions.toml` 的 `[versions]` 是**版本号唯一真相源**\n- 本目录通过 `version_ref` 引用 toml 中的版本键名\n- `gradle_ref` 是 toml `[libraries]` 中的别名，可在 Gradle 构建中直接使用\n- 版本变更只需修改 toml，目录无需同步更新\n\n## 与 ihub-meta 插件集成\n\n`ihub-meta` 插件生成 `project-meta.json` 时，会：\n1. 扫描项目依赖的 GAV 坐标\n2. 通过 `maven` 字段匹配本目录条目\n3. 将 `ai_context`、`use_case` 等语义信息注入输出\n4. 使 LLM 能通过 `project-meta.json` 理解任意 IHub 项目的组件构成",
+      "alternatives": [],
+      "maven": {
+        "group": "pub.ihub.libs",
+        "artifact": "ihub-catalog"
+      },
+      "version_ref": null,
+      "gradle_ref": null,
+      "dependencies": [],
+      "starter_available": false,
+      "tags": [
+        "meta",
+        "catalog",
+        "guide",
+        "llm",
+        "ai"
+      ],
+      "status": "stable",
+      "since_version": "1.0.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-meta"
+      ],
+      "doc_url": null,
+      "source_url": "https://github.com/ihub-pub/libs/gradle/ihub-catalog/",
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "migration-core-ihub-migrate",
+      "name": "IHub Migrate Core",
+      "name_en": "IHub Migrate Core",
+      "domain": "migration",
+      "subdomain": "analyze",
+      "stage": [
+        "migrate"
+      ],
+      "type": "ihub-component",
+      "description": "旧系统迁移分析引擎：扫描项目依赖与代码模式，输出 AI 可读的迁移分析报告",
+      "use_case": "存量 Java 项目现代化升级的起点。扫描项目，识别需要迁移的依赖版本、废弃 API 调用、配置变更等，输出结构化报告，可配合 OpenRewrite 自动修复或由 AI 工具辅助处理",
+      "ai_context": "## 集成模式\n作为 Gradle/Maven 插件或独立 CLI 工具运行。核心接口：\n- `MigrationAnalyzer`：汇总多条规则，生成 `AnalysisReport`\n- `MigrationRule`：单条规则接口，可自定义扩展\n- `ProjectContext`：项目上下文（依赖图、Java 版本、构建工具）\n\n## 典型工作流\n1. 构建 `ProjectContext`（扫描 pom.xml / build.gradle）\n2. 选择适用规则（如 spring-boot-2-to-3、javax-to-jakarta）\n3. 运行 `MigrationAnalyzer.analyze(ctx)` 获取 `AnalysisReport`\n4. 将报告传给 AI 工具或生成 OpenRewrite Recipe\n\n## 输出格式\n- JSON（供 MCP Server 返回给 AI）\n- Markdown（供开发者阅读）\n\n## 约束与限制\n- P2 阶段：规则库尚在建设中，优先覆盖 Spring Boot 2→3 迁移\n- 静态分析为主，不执行代码变更（变更由 OpenRewrite 完成）\n\n## 与其他模块协同\n- 与 `libs/catalog.json` 集成：将分析发现的旧依赖匹配到 catalog 中的推荐替代方案\n- 与 `agents/mcp-server` 集成：通过 MCP 工具 `analyzeProject` 暴露给 AI",
+      "alternatives": [],
+      "maven": {
+        "group": "pub.ihub.integration",
+        "artifact": "ihub-migrate-core"
+      },
+      "version_ref": null,
+      "gradle_ref": null,
+      "dependencies": [],
+      "starter_available": false,
+      "tags": [
+        "migration",
+        "analyze",
+        "openrewrite",
+        "legacy",
+        "modernization"
+      ],
+      "status": "experimental",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [],
+      "doc_url": "https://github.com/ihub-pub/integrations",
+      "source_url": "https://github.com/ihub-pub/integrations/tree/main/ihub-migrate-core",
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "migration-agent-java-agent",
+      "name": "IHub Java Agent（运行时增强）",
+      "name_en": "IHub Java Agent",
+      "domain": "migration",
+      "subdomain": "agent",
+      "stage": [
+        "adapt",
+        "ops"
+      ],
+      "type": "ihub-component",
+      "description": "基于 ByteBuddy 的 Java Agent，运行时字节码增强，支持链路追踪、AOP 拦截等能力，无需修改源码",
+      "use_case": "无法修改源码的旧系统观测与增强：通过 Java Agent 注入链路追踪、日志采集、方法拦截等能力。作为迁移过渡期的临时兼容层，或作为持续运行的可观测性增强",
+      "ai_context": "## 集成模式\n作为 JVM 启动参数加载：`-javaagent:ihub-agent.jar`\n\n## 模块构成\n- `ihub-agent-core`：Agent 基础设施（Instrumentation API 封装）\n- `ihub-agent-trace-plugin`：链路追踪增强（基于 OpenTelemetry）\n- `ihub-bytebuddy-core`：ByteBuddy DSL 封装\n- `ihub-bytebuddy-plugin`：IHub 特定增强插件（如 Controller 文档生成）\n\n## 配置要点\n- Agent 通过插件化机制加载增强插件\n- 支持按类名/方法名过滤增强范围\n- 链路追踪插件兼容 OpenTelemetry Collector\n\n## 约束与限制\n- 需要 JVM 8+（建议 Java 17+）\n- 字节码增强有运行时开销，生产环境需评估影响\n- 不支持 GraalVM Native Image\n\n## 常见陷阱\n- 与其他 Agent（如 Arthas）同时使用可能冲突\n- 增强范围过大会影响启动性能",
+      "alternatives": [],
+      "maven": {
+        "group": "pub.ihub.integration",
+        "artifact": "ihub-agent-core"
+      },
+      "version_ref": null,
+      "gradle_ref": null,
+      "dependencies": [],
+      "starter_available": false,
+      "tags": [
+        "java-agent",
+        "bytebuddy",
+        "aop",
+        "trace",
+        "runtime"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [],
+      "doc_url": "https://github.com/ihub-pub/integrations",
+      "source_url": "https://github.com/ihub-pub/integrations/tree/main/ihub-agent-core",
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "skywalking-toolkit",
+      "name": "SkyWalking APM Toolkit",
+      "domain": "observability",
+      "type": "third-party-reference",
+      "description": "Apache SkyWalking 的应用端工具包，提供与 SkyWalking Agent 协同工作的 Trace API 和 Logback 日志增强，无需修改 SkyWalking Agent 即可在日志中注入 TraceId。",
+      "use_case": "在日志中自动附加分布式 TraceId、手动创建 Span 标记关键业务操作、通过 SkyWalking UI 追踪跨服务调用链路。",
+      "ai_context": "## SkyWalking Toolkit 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.apm.toolkit.logback)  // Logback 日志增强（TraceId 注入）\n    implementation(libs.apm.toolkit.trace)    // Trace API（手动 Span）\n}\n```\n\n### Logback 配置（注入 TraceId）\n```xml\n<!-- logback-spring.xml -->\n<appender name=\"STDOUT\" class=\"ch.qos.logback.core.ConsoleAppender\">\n    <encoder class=\"ch.qos.logback.core.encoder.LayoutWrappingEncoder\">\n        <layout class=\"org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout\">\n            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%tid] [%thread] %-5level %logger{36} - %msg%n</Pattern>\n        </layout>\n    </encoder>\n</appender>\n```\n\n### 手动 Trace（标记关键业务）\n```java\nimport org.apache.skywalking.apm.toolkit.trace.ActiveSpan;\nimport org.apache.skywalking.apm.toolkit.trace.Trace;\n\n@Service\npublic class PaymentService {\n    @Trace(operationName = \"payment-process\")\n    public void processPayment(Order order) {\n        ActiveSpan.tag(\"order.id\", order.getId());\n        ActiveSpan.tag(\"amount\", order.getAmount().toString());\n        // 业务逻辑\n    }\n}\n```\n\n### 部署要求\n- **必须**配合 SkyWalking Java Agent（`-javaagent:skywalking-agent.jar`）使用。\n- 纯 toolkit 依赖不会自动收集链路数据，Agent 才是数据采集核心。\n- 版本需与 SkyWalking OAP Server 版本匹配，通过 `version.ref = 'skywalking-toolkit'` 统一管理。\n\n### 替代方案选型\n- 已用 Spring Cloud Sleuth/Micrometer Tracing：使用 Zipkin/Jaeger 接收端。\n- 企业级需求：SkyWalking 支持更丰富的指标分析和 Service Mesh 集成。",
+      "alternatives": [
+        "micrometer-tracing",
+        "opentelemetry",
+        "zipkin-brave"
+      ],
+      "maven": {
+        "groupId": "org.apache.skywalking",
+        "artifactId": "apm-toolkit-logback-1.x",
+        "version_ref": "skywalking-toolkit"
+      },
+      "gradle_ref": [
+        "apm-toolkit-logback",
+        "apm-toolkit-trace"
+      ],
+      "dependencies": [],
+      "tags": [
+        "observability",
+        "tracing",
+        "distributed-tracing",
+        "apm",
+        "logging"
+      ],
+      "status": "stable",
+      "stage": [
+        "ops",
+        "migrate"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://skywalking.apache.org/docs/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "security-auth-sa-token",
+      "name": "Sa-Token 权限认证",
+      "name_en": "Sa-Token Authentication",
+      "domain": "security",
+      "subdomain": "auth",
+      "stage": [
+        "adapt",
+        "qa"
+      ],
+      "type": "platform-bom",
+      "description": "轻量级 Java 权限认证框架，支持登录认证、权限验证、Session 会话、单点登录、OAuth2 等完整认证能力",
+      "use_case": "需要轻量级认证方案替代 Spring Security 时首选。快速实现登录、角色权限、多端会话管理、单点登录、OAuth2 第三方登录",
+      "ai_context": "## 集成模式\n通过 BOM 引入，sa-token-spring-boot3-starter 自动配置集成。核心接口：StpInterface（权限加载）、SaTokenConfig（配置）。\n\n## 配置要点\n- sa-token.token-name: token 名称（默认 satoken）\n- sa-token.timeout: token 有效期（秒，默认 30 天）\n- sa-token.activity-timeout: 临时 token 有效期\n- sa-token.is-concurrent: 是否允许同一账号并发登录\n- sa-token.is-share: 多端是否共享同一 token\n- sa-token.token-style: token 风格（uuid/simple-uuid/random-32/random-64/tik）\n\n## 约束与限制\n- 默认基于内存存储，生产环境必须配置 Redis（sa-token-redis-jackson）\n- Spring Boot 3.x/4.x 需要使用 sa-token-spring-boot3-starter\n- 与 Spring Security 互斥，不要同时使用\n- 前后端分离场景需配置 is-read-body=false\n\n## 常见陷阱\n- 忘记注入 SaTokenConfig 导致自定义配置不生效\n- Redis 序列化方案选择：Jackson 方案与 JDK 序列化不兼容\n- 前后端分离场景忘记关闭 Cookie 模式（is-read-cookie=false）\n- 权限码未加载导致所有请求被拒绝（StpInterface 实现问题）",
+      "alternatives": [],
+      "maven": {
+        "group": "cn.dev33",
+        "artifact": "sa-token-bom"
+      },
+      "version_ref": null,
+      "gradle_ref": "sa-token-bom",
+      "dependencies": [],
+      "starter_available": true,
+      "tags": [
+        "auth",
+        "jwt",
+        "session",
+        "rbac",
+        "oauth2",
+        "sso",
+        "bom"
+      ],
+      "status": "stable",
+      "since_version": "1.0.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-boot"
+      ],
+      "doc_url": "https://sa-token.cc",
+      "source_url": null,
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "security-oauth-justauth",
+      "name": "JustAuth 第三方登录",
+      "name_en": "JustAuth OAuth Integration",
+      "domain": "security",
+      "subdomain": "oauth",
+      "stage": [
+        "adapt"
+      ],
+      "type": "third-party-reference",
+      "description": "第三方 OAuth 登录集成库，支持 GitHub、微信、QQ、微博、钉钉、百度等国内外数十个平台的 OAuth 授权登录",
+      "use_case": "需要快速接入第三方平台 OAuth 登录（如微信开放平台、企业微信、钉钉、GitHub 等）时使用。通常与 Sa-Token 配合实现完整认证体系",
+      "ai_context": "## 集成模式\n与 Sa-Token 配合使用。JustAuth 负责第三方平台 OAuth 流程，Sa-Token 负责登录后的会话管理。\n\n## 配置要点\n- 每个平台需配置 clientId、clientSecret、redirectUri\n- 各平台的 redirectUri 格式不同，需查阅 JustAuth 文档\n- 支持自定义 AuthConfig 和 AuthRequest\n\n## 约束与限制\n- 各平台的 appId/appSecret 需要提前申请\n- 微博等平台的审核周期较长\n- 部分平台（如微信公众号）的授权流程不同于标准 OAuth2\n- 需关注各平台的 API 变更和废弃\n\n## 常见陷阱\n- 回调地址与平台配置不一致导致授权失败\n- 混淆不同平台的 AuthSource 枚举值\n- 未处理 token 过期后的刷新逻辑\n- 微信开放平台与微信公众平台的配置混淆",
+      "alternatives": [],
+      "maven": {
+        "group": "me.zhyd.oauth",
+        "artifact": "JustAuth"
+      },
+      "version_ref": null,
+      "gradle_ref": "justauth",
+      "dependencies": [
+        {
+          "component_id": "security-auth-sa-token",
+          "required": false,
+          "scope": "implementation",
+          "reason": "推荐与 Sa-Token 配合管理登录会话"
+        }
+      ],
+      "starter_available": false,
+      "tags": [
+        "oauth",
+        "auth",
+        "third-party-login",
+        "wechat",
+        "github",
+        "dingtalk"
+      ],
+      "status": "stable",
+      "since_version": "0.1.0",
+      "deprecated_since": null,
+      "migration_guide": null,
+      "related_plugins": [
+        "pub.ihub.plugin.ihub-boot"
+      ],
+      "doc_url": "https://justauth.wiki",
+      "source_url": null,
+      "ihub_layer": "L2"
+    },
+    {
+      "id": "spock-framework",
+      "name": "Spock Framework",
+      "domain": "testing",
+      "type": "third-party-reference",
+      "description": "基于 Groovy 的 BDD 测试框架，通过语义化的 `given/when/then` 结构提升测试可读性，内置数据驱动测试（@Unroll）和强大的 Mock 支持。",
+      "use_case": "业务逻辑单元测试、数据驱动测试（多组参数）、Spring Boot 集成测试、替代 JUnit + Mockito 组合。",
+      "ai_context": "## Spock Framework 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(platform(libs.spock.bom))  // BOM 管理版本\n    testImplementation(libs.spock.spring)     // Spring 集成\n    testImplementation(libs.spring.boot.starter.test) // Spring Boot 测试基础\n    testImplementation(libs.spock.reports)   // 可选：HTML 测试报告\n}\n```\n\n### 典型 Spock 测试\n```groovy\n@SpringBootTest\nclass UserServiceSpec extends Specification {\n    \n    @Autowired\n    UserService userService\n    \n    def \"创建用户时应该返回用户ID\"() {\n        given: \"一个用户请求\"\n        def request = new CreateUserRequest(name: \"张三\", email: \"zhang@example.com\")\n        \n        when: \"调用创建用户接口\"\n        def result = userService.createUser(request)\n        \n        then: \"返回非空ID\"\n        result.id != null\n        result.name == \"张三\"\n    }\n    \n    @Unroll\n    def \"验证年龄 #age 是否合法：期望 #expected\"() {\n        expect:\n        userService.isValidAge(age) == expected\n        \n        where:\n        age | expected\n        -1  | false\n        0   | false\n        18  | true\n        120 | true\n        200 | false\n    }\n}\n```\n\n### 与 IHub 插件集成\n- `ihub-groovy` 和 `ihub-test` 插件自动配置 Spock 依赖和测试任务。\n- IHub plugins 自身的测试套件全部使用 Spock。\n\n### 版本说明\n- `spock-bom` 版本号硬编码（`version = '2.4-groovy-5.0'`），无独立 version key。\n- 版本格式 `2.4-groovy-5.0` 中 `groovy-5.0` 表示对应的 Groovy 版本，需与项目 Groovy 版本匹配。",
+      "alternatives": [
+        "junit5",
+        "testng"
+      ],
+      "maven": {
+        "groupId": "org.spockframework",
+        "artifactId": "spock-bom",
+        "version_ref": null
+      },
+      "gradle_ref": [
+        "spock-bom",
+        "spock-spring",
+        "spock-reports"
+      ],
+      "dependencies": [],
+      "tags": [
+        "testing",
+        "bdd",
+        "groovy",
+        "mock",
+        "data-driven"
+      ],
+      "status": "stable",
+      "stage": [
+        "qa"
+      ],
+      "related_plugins": [
+        "ihub-groovy",
+        "ihub-test"
+      ],
+      "doc_url": "https://spockframework.org/spock/docs/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "junit5",
+      "name": "JUnit 5 (Jupiter)",
+      "domain": "testing",
+      "type": "third-party-reference",
+      "description": "Java 生态标准测试框架，Spring Boot 默认集成，支持参数化测试、扩展模型和并行测试。",
+      "use_case": "标准 Java 单元测试、与 Spring Boot Test 集成、Mockito Mock 测试，不需要 Groovy 的场景。",
+      "ai_context": "## JUnit 5 集成模式\n\n### Spring Boot 项目（推荐通过 starter）\n```kotlin\ndependencies {\n    testImplementation(libs.spring.boot.starter.test) // 包含 JUnit 5 + Mockito\n    // 或单独使用：\n    testImplementation(libs.junit.jupiter)\n}\n```\n\n### Spring Boot Test 包含内容\n- JUnit 5 (Jupiter)\n- Mockito\n- AssertJ\n- JsonPath\n- Spring Test\n\n### 典型测试\n```java\n@SpringBootTest\nclass UserServiceTest {\n    @Autowired\n    private UserService userService;\n    \n    @MockBean\n    private UserRepository userRepository;\n    \n    @Test\n    @DisplayName(\"创建用户成功\")\n    void createUserSuccess() {\n        when(userRepository.save(any())).thenReturn(new User(1L, \"张三\"));\n        User result = userService.createUser(\"张三\");\n        assertThat(result.getId()).isNotNull();\n    }\n    \n    @ParameterizedTest\n    @ValueSource(ints = {-1, 0, 200})\n    void invalidAgeTest(int age) {\n        assertFalse(userService.isValidAge(age));\n    }\n}\n```\n\n### 注意事项\n- Spring Boot 通过 BOM 管理 JUnit 版本，通常无需手动指定版本。\n- `libs.junit.jupiter` 别名无 version，依赖 Spring Boot BOM 或平台 BOM 提供版本。",
+      "alternatives": [
+        "spock-framework",
+        "testng"
+      ],
+      "maven": {
+        "groupId": "org.junit.jupiter",
+        "artifactId": "junit-jupiter",
+        "version_ref": null
+      },
+      "gradle_ref": [
+        "junit-jupiter",
+        "spring-boot-starter-test"
+      ],
+      "dependencies": [],
+      "tags": [
+        "testing",
+        "junit",
+        "unit-test",
+        "integration-test"
+      ],
+      "status": "stable",
+      "stage": [
+        "qa"
+      ],
+      "related_plugins": [
+        "ihub-test"
+      ],
+      "doc_url": "https://junit.org/junit5/docs/current/user-guide/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "pmd-static-analysis",
+      "name": "PMD 静态代码分析",
+      "domain": "testing",
+      "type": "third-party-reference",
+      "description": "静态源码分析工具，检测代码缺陷、命名规范、复杂度等问题；`p3c-pmd` 集成阿里巴巴 Java 规范检查。",
+      "use_case": "CI/CD 流水线中的代码质量门禁、强制执行团队代码规范、检测潜在 Bug（空指针、资源泄漏等）。",
+      "ai_context": "## PMD 集成模式\n\n### IHub 插件集成（推荐）\n`ihub-quality` 插件自动配置 PMD，无需手动设置。\n\n### 手动依赖配置（Gradle PMD 插件）\n```kotlin\nplugins {\n    pmd\n}\n\ndependencies {\n    // PMD 版本由 ihub libs 管理\n    pmd(libs.pmd.ant)\n    pmd(libs.pmd.java)\n    pmd(libs.pmd.groovy)  // Groovy 项目\n    pmd(libs.pmd.ali)     // 阿里 P3C 规范\n}\n\npmd {\n    toolVersion = libs.versions.pmd.get()\n    ruleSetFiles = files(\"config/pmd/ruleset.xml\")\n    isConsoleOutput = true\n}\n```\n\n### P3C 阿里规范\n`p3c-pmd` 包含了阿里巴巴《Java 开发手册》中的 PMD 规则集：\n- 命名规范检查\n- 异常处理规范\n- 集合使用规范\n- 并发编程规范\n\n### 版本管理\n- `pmd-ant`、`pmd-java`、`pmd-groovy` 共享 `version.ref = 'pmd'`。\n- `pmd-ali`（p3c）版本独立硬编码。\n\n### CI 集成建议\n```yaml\n# GitHub Actions\n- name: Run PMD\n  run: ./gradlew pmdMain pmdTest\n```",
+      "alternatives": [
+        "checkstyle",
+        "spotbugs",
+        "sonarqube"
+      ],
+      "maven": {
+        "groupId": "net.sourceforge.pmd",
+        "artifactId": "pmd-java",
+        "version_ref": "pmd"
+      },
+      "gradle_ref": [
+        "pmd-ant",
+        "pmd-java",
+        "pmd-groovy",
+        "pmd-ali"
+      ],
+      "dependencies": [],
+      "tags": [
+        "static-analysis",
+        "code-quality",
+        "pmd",
+        "p3c",
+        "ci"
+      ],
+      "status": "stable",
+      "stage": [
+        "qa"
+      ],
+      "related_plugins": [
+        "ihub-quality"
+      ],
+      "doc_url": "https://pmd.github.io/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "hutool",
+      "name": "Hutool（Java 工具库）",
+      "domain": "utilities",
+      "type": "third-party-reference",
+      "description": "国内最流行的 Java 工具库，覆盖字符串、日期、加密、HTTP、缓存等 200+ 工具类，减少第三方依赖。",
+      "use_case": "日常编码工具方法（字符串处理、日期计算、加密解密、文件操作）、快速原型开发、减少 Apache Commons 等多个工具库的碎片化引入。",
+      "ai_context": "## Hutool 集成模式\n\n### 依赖选择策略\n```kotlin\n// 方案1：全量引入（适合原型/小项目）\ndependencies {\n    implementation(libs.hutool.all)     // Hutool 5.x\n    // 或 Hutool 7.x（更现代，部分 API 变化）：\n    implementation(libs.hutool.v7.all)\n}\n\n// 方案2：BOM + 按需引入（生产推荐，减小包体积）\ndependencies {\n    implementation(platform(libs.hutool.bom))        // 5.x BOM\n    implementation(\"cn.hutool:hutool-core\")           // 核心工具\n    implementation(\"cn.hutool:hutool-crypto\")         // 加密\n    implementation(\"cn.hutool:hutool-http\")           // HTTP 客户端\n    implementation(\"cn.hutool:hutool-extra\")          // 额外工具（模板等）\n}\n```\n\n### 常用工具类速查\n```java\n// 字符串\nStrUtil.isBlank(str);           // 判空（含空白字符）\nStrUtil.format(\"hello {}\", name); // 模板格式化\n\n// 日期时间\nDateUtil.now();                 // 当前时间\nDateUtil.format(date, \"yyyy-MM-dd\"); // 格式化\nDateUtil.between(start, end, DateUnit.DAY); // 日期差\n\n// 加密\nSecureUtil.md5(str);            // MD5\nSecureUtil.sha256(str);         // SHA-256\nAES aes = SecureUtil.aes(key);  // AES 对称加密\n\n// HTTP\nString result = HttpUtil.get(url); // GET 请求\nHttpUtil.post(url, paramMap);       // POST 请求\n\n// 集合\nCollUtil.isEmpty(list);         // 集合判空\nCollUtil.newArrayList(a, b, c); // 快速创建列表\n```\n\n### 5.x vs 7.x 选择建议\n- **5.x**：稳定版，API 向后兼容，适合现有项目\n- **7.x**：新版本，部分包名和 API 有变化，适合新项目\n- IHub libs 同时提供两者 BOM，通过不同 gradle 别名区分\n\n### 版本管理\n- 5.x：`version.ref = 'hutool'`（`hutool-bom`, `hutool-all`）\n- 7.x：`version.ref = 'hutool-v7'`（`hutool-v7-bom`, `hutool-v7-all`）",
+      "alternatives": [
+        "apache-commons",
+        "guava",
+        "vavr"
+      ],
+      "maven": {
+        "groupId": "cn.hutool",
+        "artifactId": "hutool-bom",
+        "version_ref": "hutool"
+      },
+      "gradle_ref": [
+        "hutool-bom",
+        "hutool-all",
+        "hutool-v7-bom",
+        "hutool-v7-all"
+      ],
+      "dependencies": [],
+      "tags": [
+        "utilities",
+        "toolkit",
+        "string",
+        "date",
+        "crypto",
+        "http"
+      ],
+      "status": "stable",
+      "stage": [
+        "code",
+        "ideate",
+        "init"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://hutool.cn/docs/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "sms4j",
+      "name": "SMS4J（短信聚合）",
+      "domain": "utilities",
+      "type": "third-party-reference",
+      "description": "短信聚合框架，统一接口对接阿里云、腾讯云、华为云、七牛云等主流短信服务商，一套代码多服务商切换。",
+      "use_case": "验证码短信发送、营销短信、短信服务商迁移（避免业务代码改动）、多服务商负载均衡/降级。",
+      "ai_context": "## SMS4J 集成模式\n\n### Spring Boot Starter\n```kotlin\ndependencies {\n    implementation(libs.sms4j) // sms4j-spring-boot-starter\n}\n```\n\n### 配置示例（阿里云）\n```yaml\nsms:\n  blends:\n    ali:\n      access-key-id: your-access-key-id\n      access-key-secret: your-access-key-secret\n      signature-name: 你的签名\n      template-id: SMS_123456789\n```\n\n### 发送短信\n```java\n@Autowired\nprivate SmsBlend smsBlend;\n\n// 发送验证码\nSmsResponse response = smsBlend.sendMessage(\"13800138000\", \"123456\");\n\n// 使用模板变量\nLinkedHashMap<String, String> params = new LinkedHashMap<>();\nparams.put(\"code\", \"123456\");\nsmsBlend.sendMessage(\"13800138000\", \"SMS_123456\", params);\n```\n\n### 版本说明\n- 版本号硬编码（`version = '3.3.5'`），无独立 version key。\n- `sms4j-spring-boot-starter` 已包含所有主流服务商 SDK。",
+      "alternatives": [
+        "aliyun-sms-sdk",
+        "tencent-sms-sdk"
+      ],
+      "maven": {
+        "groupId": "org.dromara.sms4j",
+        "artifactId": "sms4j-spring-boot-starter",
+        "version_ref": null
+      },
+      "gradle_ref": [
+        "sms4j"
+      ],
+      "dependencies": [],
+      "tags": [
+        "sms",
+        "notification",
+        "cloud-service",
+        "multi-vendor"
+      ],
+      "status": "stable",
+      "stage": [
+        "adapt"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://wind.kim/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "x-file-storage",
+      "name": "X File Storage（文件存储聚合）",
+      "domain": "utilities",
+      "type": "third-party-reference",
+      "description": "文件存储聚合框架，统一接口对接本地存储、阿里云 OSS、腾讯云 COS、MinIO 等 30+ 存储平台，支持切片上传、缩略图。",
+      "use_case": "图片/文件上传下载、多云存储适配、本地开发环境与生产云存储无缝切换。",
+      "ai_context": "## X File Storage 集成模式\n\n### Spring Boot Starter\n```kotlin\ndependencies {\n    implementation(libs.x.file.storage)\n    // 根据使用的存储平台额外引入 SDK：\n    implementation(\"com.aliyun.oss:aliyun-sdk-oss\")   // 阿里云 OSS\n    implementation(\"io.minio:minio\")                  // MinIO\n}\n```\n\n### 配置（阿里云 OSS）\n```yaml\nspring:\n  file-storage:\n    default-platform: aliyun-oss-1\n    aliyun-oss:\n      - platform: aliyun-oss-1\n        enable-storage: true\n        access-key: your-access-key\n        secret-key: your-secret-key\n        end-point: https://oss-cn-hangzhou.aliyuncs.com\n        bucket-name: your-bucket\n```\n\n### 文件上传\n```java\n@Autowired\nprivate FileStorageService fileStorageService;\n\n// 上传并返回 URL\nFileInfo fileInfo = fileStorageService.of(file)\n    .setPath(\"avatars/\")\n    .setObjectId(userId.toString())\n    .upload();\nString url = fileInfo.getUrl();\n\n// 上传图片并生成缩略图\nFileInfo fileInfo = fileStorageService.of(file)\n    .thumbnail(th -> th.size(200, 200))\n    .upload();\n```\n\n### 版本说明\n- 版本号硬编码（`version = '2.3.0'`），无独立 version key。",
+      "alternatives": [
+        "aliyun-oss-sdk",
+        "minio-sdk"
+      ],
+      "maven": {
+        "groupId": "org.dromara.x-file-storage",
+        "artifactId": "x-file-storage-spring",
+        "version_ref": null
+      },
+      "gradle_ref": [
+        "x-file-storage"
+      ],
+      "dependencies": [],
+      "tags": [
+        "file-storage",
+        "oss",
+        "minio",
+        "upload",
+        "cloud-storage"
+      ],
+      "status": "stable",
+      "stage": [
+        "adapt",
+        "code"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://x-file-storage.xuyanwu.cn/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "anyline",
+      "name": "AnyLine（动态数据处理）",
+      "domain": "utilities",
+      "type": "third-party-reference",
+      "description": "面向运行时动态数据操作的框架，支持动态 SQL 生成、多数据源切换、低代码数据查询，无需预定义 Entity 类。",
+      "use_case": "报表系统（动态列）、低代码平台数据层、多数据库适配、无实体类的动态数据 CRUD。",
+      "ai_context": "## AnyLine 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.anyline.dependency)\n    implementation(\"org.anyline:anyline-data-jdbc-mysql\") // 按数据库选择\n}\n```\n\n### 核心概念\n- **不需要** Entity 类，直接操作表结构\n- **动态 SQL**：通过 Condition 对象组装查询条件\n- **运行时 Schema 探测**：可查询表结构信息\n\n### 典型用法\n```java\n@Autowired\nprivate AnylineService anylineService;\n\n// 动态查询（无需 Entity）\nDataSet users = anylineService.querys(\"SYS_USER\",\n    new DefaultCondition()\n        .and(\"STATUS\", 1)\n        .and(\"AGE\", Compare.GREAT, 18)\n);\n\n// 读取表结构（低代码场景）\nList<Column> columns = anylineService.metadata().columns(\"SYS_USER\");\n```\n\n### 版本说明\n- 版本号硬编码（`version = '8.7.3-20260501'`），无独立 version key。\n- 版本号含日期后缀，表示快照/里程碑版本。\n\n### 适用场景判断\n- ✅ 需要动态列、动态表的报表/低代码\n- ✅ 多数据库适配（不改业务代码切换 MySQL/Oracle/PG）\n- ❌ 标准 CRUD 业务（用 MyBatis-Plus 或 Easy-Query 更合适）",
+      "alternatives": [
+        "mybatis-plus",
+        "jooq",
+        "querydsl"
+      ],
+      "maven": {
+        "groupId": "org.anyline",
+        "artifactId": "anyline-dependency",
+        "version_ref": null
+      },
+      "gradle_ref": [
+        "anyline-dependency"
+      ],
+      "dependencies": [],
+      "tags": [
+        "dynamic-sql",
+        "no-entity",
+        "low-code",
+        "report",
+        "multi-database"
+      ],
+      "status": "stable",
+      "stage": [
+        "code"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://www.anyline.org/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "warm-flow",
+      "name": "Warm-Flow（轻量工作流引擎）",
+      "domain": "workflow",
+      "type": "third-party-reference",
+      "description": "国产轻量级工作流引擎，支持 MyBatis-Plus、JPA 等多种 ORM，提供审批流程、条件分支、网关等核心特性，开箱即用。",
+      "use_case": "OA 审批流程、业务单据流转、多级审批、条件路由、退回/撤销操作。不适合需要复杂 BPMN 建模的场景。",
+      "ai_context": "## Warm-Flow 集成模式\n\n### 技术选型矩阵\n| ORM | Spring Boot 2.x | Spring Boot 3.x | Solon |\n|-----|----------------|----------------|-------|\n| MyBatis | warm-flow-m-sb | warm-flow-m-sb3 | warm-flow-m-solon |\n| MyBatis-Plus | warm-flow-mp-sb | warm-flow-mp-sb3 | warm-flow-mp-solon |\n\n### Spring Boot 3 + MyBatis-Plus 典型配置\n```kotlin\ndependencies {\n    implementation(libs.warm.flow.mp.sb3)  // 核心引擎\n    implementation(libs.warm.flow.ui.sb)   // 可选：UI 组件\n}\n```\n\n### 快速入门\n```java\n@Service\npublic class ApprovalService {\n    @Autowired\n    private FlowEngine flowEngine;\n    \n    // 启动审批流\n    public void startFlow(String flowCode, String businessId) {\n        flowEngine.start(flowCode, businessId, new HashMap<>());\n    }\n    \n    // 审批通过\n    public void approve(Long taskId, String opinion) {\n        flowEngine.pass(taskId, opinion, new HashMap<>());\n    }\n    \n    // 退回\n    public void reject(Long taskId, String targetNode) {\n        flowEngine.rollback(taskId, targetNode);\n    }\n}\n```\n\n### 核心概念\n- **流程定义**：XML 或代码定义审批节点和流转规则\n- **流程实例**：一次流程的执行记录\n- **任务节点**：流程中的审批节点（支持会签、或签）\n- **网关**：条件分支路由\n\n### 版本管理\n- 所有 warm-flow 模块共享 `version.ref = 'warm-flow'`，统一版本升级。\n\n### 与 Activiti/Flowable 对比\n- Warm-Flow 学习成本更低，不需要理解完整 BPMN 规范。\n- 适合中小项目的审批流，不适合复杂跨系统流程编排。\n- Activiti/Flowable 功能更全，社区生态更大。",
+      "alternatives": [
+        "activiti",
+        "flowable",
+        "camunda"
+      ],
+      "maven": {
+        "groupId": "org.dromara.warm",
+        "artifactId": "warm-flow-mybatis-plus-sb3-starter",
+        "version_ref": "warm-flow"
+      },
+      "gradle_ref": [
+        "warm-flow-m-sb",
+        "warm-flow-m-sb3",
+        "warm-flow-m-solon",
+        "warm-flow-mp-sb",
+        "warm-flow-mp-sb3",
+        "warm-flow-mp-solon",
+        "warm-flow-ui-sb",
+        "warm-flow-ui-solon"
+      ],
+      "dependencies": [
+        "data"
+      ],
+      "tags": [
+        "workflow",
+        "approval",
+        "bpm",
+        "state-machine",
+        "lightweight"
+      ],
+      "status": "stable",
+      "stage": [
+        "code"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://warm-flow.dromara.org/",
+      "ihub_layer": "L2-libs"
+    }
+  ],
+  "domains": {
+    "data": [
+      {
+        "id": "data-orm-mybatis-plus",
+        "name": "MyBatis-Plus",
+        "name_en": "MyBatis-Plus",
+        "domain": "data",
+        "subdomain": "orm",
+        "stage": [
+          "code"
+        ],
+        "type": "platform-bom",
+        "description": "MyBatis 增强工具包，提供通用 CRUD、分页、条件构造器等开箱即用的 ORM 能力",
+        "use_case": "首选 ORM 方案。数据层开发时的默认选择，通过 BOM 统一管理 MyBatis-Plus 族版本",
+        "ai_context": "## 集成模式\n通过 BOM 引入版本管理。使用 mybatis-plus-boot-starter 自动配置集成。\n\n## 配置要点\n- mybatis-plus.mapper-locations: Mapper XML 文件位置\n- mybatis-plus.type-aliases-package: 实体类别名包\n- mybatis-plus.global-config.db-config.id-type: 主键策略\n- 分页插件需显式配置 MybatisPlusInterceptor\n\n## 约束与限制\n- 基于 MyBatis，SQL 能力完整但需要理解 MyBatis 体系\n- 复杂多表查询建议使用 MyBatis XML 而非注解\n- 自动生成代码需谨慎审查\n\n## 常见陷阱\n- 忘记配置分页插件导致分页失效\n- 逻辑删除字段未配置 @TableLogic\n- 乐观锁字段未配置 @Version\n- 实体类与数据库字段类型不匹配（特别是日期类型）",
+        "alternatives": [
+          "data-orm-easy-query"
+        ],
+        "maven": {
+          "group": "com.baomidou",
+          "artifact": "mybatis-plus-bom"
+        },
+        "version_ref": null,
+        "gradle_ref": "mybatis-plus-bom",
+        "dependencies": [],
+        "starter_available": true,
+        "tags": [
+          "orm",
+          "mybatis",
+          "mybatis-plus",
+          "crud",
+          "bom"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-boot"
+        ],
+        "doc_url": "https://baomidou.com",
+        "source_url": null,
+        "ihub_layer": "L2"
+      },
+      {
+        "id": "data-orm-mybatis-plus-ext",
+        "name": "MyBatis-Plus-Ext",
+        "name_en": "MyBatis-Plus Extensions",
+        "domain": "data",
+        "subdomain": "orm",
+        "stage": [
+          "code"
+        ],
+        "type": "third-party-reference",
+        "description": "MyBatis-Plus 扩展包，提供自动建表、数据绑定、多数据源注解等高级功能",
+        "use_case": "在 MyBatis-Plus 基础上需要自动建表（Actable）、关联数据自动绑定（Bind）、动态条件注解时使用",
+        "ai_context": "## 集成模式\n在 mybatis-plus-bom 基础上叠加。各模块按需引入：\n- mpe-annotation: 基础注解\n- mpe-autotable-*: 自动建表\n- mpe-bind: 关联数据绑定\n- mpe-datasource: 多数据源注解\n- mpe-condition: 动态条件注解\n- mpe-spring-boot3-starter: Spring Boot 3.x 自动配置\n\n## 配置要点\n- 自动建表功能需在开发环境谨慎使用\n- 数据绑定可能产生 N+1 查询\n- 多数据源与 dynamic-datasource 配合使用\n\n## 约束与限制\n- 必须与 MyBatis-Plus 配合使用\n- 自动建表不建议在生产环境启用\n- Bind 注解会产生额外 SQL 查询\n\n## 常见陷阱\n- 生产环境忘记关闭自动建表导致数据库结构意外变更\n- Bind 注解导致 N+1 查询问题\n- 多数据源配置混淆",
+        "alternatives": [],
+        "maven": {
+          "group": "org.dromara.mpe",
+          "artifact": "mybatis-plus-ext-annotation"
+        },
+        "version_ref": "mpe",
+        "gradle_ref": [
+          "mpe-annotation",
+          "mpe-autotable-annotation",
+          "mpe-autotable-core",
+          "mpe-actable-core",
+          "mpe-bind",
+          "mpe-condition",
+          "mpe-datasource",
+          "mpe-processor",
+          "mpe-spring-boot-starter",
+          "mpe-spring-boot3-starter"
+        ],
+        "dependencies": [
+          {
+            "component_id": "data-orm-mybatis-plus",
+            "required": true,
+            "scope": "implementation",
+            "reason": "MyBatis-Plus-Ext 是 MyBatis-Plus 的扩展"
+          }
+        ],
+        "starter_available": true,
+        "tags": [
+          "orm",
+          "mybatis-plus",
+          "extension",
+          "auto-table",
+          "data-bind"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-boot"
+        ],
+        "doc_url": "https://mybatis-plus-ext.duanshu.com",
+        "source_url": null,
+        "ihub_layer": "L3"
+      },
+      {
+        "id": "data-orm-easy-query",
+        "name": "Easy-Query",
+        "name_en": "Easy-Query",
+        "domain": "data",
+        "subdomain": "orm",
+        "stage": [
+          "code"
+        ],
+        "type": "third-party-reference",
+        "description": "强类型 SQL DSL 框架，提供编译期安全的 SQL 构建、自动建表、多表查询等能力",
+        "use_case": "MyBatis-Plus 的替代方案。需要强类型安全、编译期 SQL 校验、Lambda 风格查询时选择。适合喜欢 JPA 风格但需要 SQL 控制力的场景",
+        "ai_context": "## 集成模式\n通过 BOM 引入，使用 eq-sql-springboot-starter 自动配置。支持 Java 和 Kotlin。\n\n## 配置要点\n- easy-query.enable: 是否启用\n- easy-query.default-track: 是否默认追踪实体变更\n- easy-query.logic-delete-strategy: 逻辑删除策略\n- 支持 MySQL、PostgreSQL、SQL Server 等主流数据库\n\n## 约束与限制\n- 与 MyBatis-Plus 互斥，不要同时使用两种 ORM\n- 部分复杂 SQL（如递归 CTE）可能不如 MyBatis XML 直观\n- 团队需要学习 DSL 风格查询语法\n\n## 常见陷阱\n- 同时引入 MyBatis-Plus 和 Easy-Query 导致配置冲突\n- 未配置 dialect 导致 SQL 生成错误\n- 实体追踪（tracking）开启后忘记调用 saveChanges 导致数据丢失",
+        "alternatives": [
+          "data-orm-mybatis-plus"
+        ],
+        "maven": {
+          "group": "com.easy-query",
+          "artifact": "sql-core"
+        },
+        "version_ref": "easy-query",
+        "gradle_ref": [
+          "eq-sql-core",
+          "eq-sql-springboot-starter",
+          "eq-sql-api4j",
+          "eq-sql-api-proxy",
+          "eq-sql-cache",
+          "eq-sql-mysql",
+          "eq-sql-processor",
+          "eq-sql-ksp-processor",
+          "eq-sql-kt-springboot-starter",
+          "eq-all"
+        ],
+        "dependencies": [],
+        "starter_available": true,
+        "tags": [
+          "orm",
+          "sql",
+          "dsl",
+          "lambda",
+          "type-safe"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-boot"
+        ],
+        "doc_url": "https://easy-query.com",
+        "source_url": null,
+        "ihub_layer": "L2"
+      },
+      {
+        "id": "data-datasource-dynamic",
+        "name": "Dynamic-Datasource",
+        "name_en": "Dynamic Datasource",
+        "domain": "data",
+        "subdomain": "datasource",
+        "stage": [
+          "code",
+          "adapt"
+        ],
+        "type": "third-party-reference",
+        "description": "动态数据源切换框架，支持运行时多数据源切换、读写分离、负载均衡",
+        "use_case": "需要多数据源管理（主从分离、多租户分库、读写分离）时使用。通过 @DS 注解实现数据源切换",
+        "ai_context": "## 集成模式\n通过 starter 自动配置。使用 @DS 注解标记类或方法的数据源。\n\n## 配置要点\n- spring.datasource.dynamic.primary: 默认数据源\n- spring.datasource.dynamic.datasource.<name>: 配置多个数据源\n- @DS(\"slave\")：方法级数据源切换\n- 支持 seata 分布式事务集成\n\n## 约束与限制\n- 不支持嵌套数据源切换（内层 @DS 会被外层覆盖）\n- 事务内切换数据源需要特殊处理\n- 多数据源的事务管理需要额外配置\n\n## 常见陷阱\n- 事务内 @DS 切换不生效\n- 忘记配置 primary 导致默认数据源未定义\n- 多数据源的 DDL 初始化脚本路径混淆",
+        "alternatives": [],
+        "maven": {
+          "group": "com.baomidou",
+          "artifact": "dynamic-datasource-spring-boot3-starter"
+        },
+        "version_ref": null,
+        "gradle_ref": "dynamic-datasource",
+        "dependencies": [],
+        "starter_available": true,
+        "tags": [
+          "datasource",
+          "dynamic",
+          "read-write-split",
+          "multi-tenant"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-boot"
+        ],
+        "doc_url": "https://dynamic-datasource.com",
+        "source_url": null,
+        "ihub_layer": "L2"
+      }
+    ],
+    "ddd": [
+      {
+        "id": "ddd-architecture-jmolecules",
+        "name": "jMolecules",
+        "name_en": "jMolecules",
+        "domain": "ddd",
+        "subdomain": "architecture",
+        "stage": [
+          "ideate",
+          "code",
+          "qa"
+        ],
+        "type": "platform-bom",
+        "description": "DDD 架构约束框架，通过注解声明领域概念（Entity、ValueObject、AggregateRoot 等）并自动生成架构验证规则",
+        "use_case": "实施领域驱动设计时使用。通过注解标记领域概念，配合 ArchUnit 规则自动验证架构约束，防止架构腐化",
+        "ai_context": "## 集成模式\n通过 BOM 引入版本管理。核心模块：\n- jmolecules-ddd: DDD 基础注解（@Entity, @ValueObject, @AggregateRoot, @Repository）\n- jmolecules-events: 领域事件支持\n- jmolecules-cqrs-architecture: CQRS 架构约束\n- jmolecules-layered-architecture: 分层架构约束\n- jmolecules-onion-architecture: 洋葱架构约束\n\n集成模块：\n- jmolecules-spring: Spring 自动配置\n- jmolecules-jpa: JPA 映射支持\n- jmolecules-jackson: Jackson 序列化支持\n- jmolecules-archunit: ArchUnit 规则自动生成\n\n## 配置要点\n- 架构约束通过 ArchUnit 测试验证\n- 需要显式引入对应的 architecture 模块来启用特定架构风格\n- Spring 集成模块提供自动配置\n\n## 约束与限制\n- 注解本身不提供运行时行为，需要配合集成模块\n- ArchUnit 规则在测试阶段验证，不阻止编译\n- 团队需要理解 DDD 概念才能正确使用注解\n\n## 常见陷阱\n- 混淆 @Entity（jMolecules DDD 概念）与 @Entity（JPA）\n- 忘记添加架构约束模块导致没有强制检查\n- 在错误的分层中使用领域概念（如 Service 层直接操作 Entity）",
+        "alternatives": [
+          "ddd-modularity-spring-modulith"
+        ],
+        "maven": {
+          "group": "org.jmolecules",
+          "artifact": "jmolecules-bom"
+        },
+        "version_ref": null,
+        "gradle_ref": [
+          "jmolecules-bom",
+          "jmolecules-ddd",
+          "jmolecules-events",
+          "jmolecules-cqrs",
+          "jmolecules-layered",
+          "jmolecules-onion",
+          "jmolecules-spring",
+          "jmolecules-jpa",
+          "jmolecules-jackson",
+          "jmolecules-archunit"
+        ],
+        "dependencies": [],
+        "starter_available": false,
+        "tags": [
+          "ddd",
+          "architecture",
+          "jpa",
+          "archunit",
+          "cqrs",
+          "bom"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-boot"
+        ],
+        "doc_url": "https://github.com/xmolecules/jmolecules",
+        "source_url": null,
+        "ihub_layer": "L2"
+      },
+      {
+        "id": "ddd-modularity-spring-modulith",
+        "name": "Spring Modulith",
+        "name_en": "Spring Modulith",
+        "domain": "ddd",
+        "subdomain": "modularity",
+        "stage": [
+          "ideate",
+          "code",
+          "qa"
+        ],
+        "type": "platform-bom",
+        "description": "Spring 官方模块化工具包，提供模块定义、模块间依赖验证、模块集成测试、事件发布与文档化能力",
+        "use_case": "构建模块化单体应用时使用。通过 Spring Modulith 定义模块边界，验证模块依赖，生成模块文档。可与 jMolecules 配合使用",
+        "ai_context": "## 集成模式\n通过 BOM 引入，使用 @ApplicationModuleListener 处理模块间事件，ArchUnit 规则验证模块边界。\n\n## 配置要点\n- @ApplicationModuleListener: 跨模块事件监听\n- spring.modulith.events.externalization.enabled: 是否启用事件外化\n- ModuleTestExecution: 模块集成测试运行器\n- Documenter: 生成模块关系图\n\n## 约束与限制\n- 仅适用于 Spring Boot 3.x+/4.x\n- 模块通信通过事件机制，不适合高频同步调用\n- 模块测试需要特殊的测试运行器\n\n## 常见陷阱\n- 模块间直接注入 Service（应该通过事件通信）\n- 忘记配置 ArchUnit 规则导致模块边界不被强制\n- 将 @ApplicationModuleListener 方法写在错误的事务边界中",
+        "alternatives": [
+          "ddd-architecture-jmolecules"
+        ],
+        "maven": {
+          "group": "org.springframework.modulith",
+          "artifact": "spring-modulith-bom"
+        },
+        "version_ref": null,
+        "gradle_ref": "spring-modulith-bom",
+        "dependencies": [
+          {
+            "component_id": "infra-platform-spring-boot",
+            "required": true,
+            "scope": "implementation",
+            "reason": "Spring Modulith 是 Spring 生态的子项目"
+          }
+        ],
+        "starter_available": false,
+        "tags": [
+          "spring",
+          "modulith",
+          "modularity",
+          "ddd",
+          "archunit",
+          "bom"
+        ],
+        "status": "stable",
+        "since_version": "1.0.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-boot"
+        ],
+        "doc_url": "https://docs.spring.io/spring-modulith/",
+        "source_url": null,
+        "ihub_layer": "L2"
+      }
+    ],
+    "distributed": [
+      {
+        "id": "dynamic-tp",
+        "name": "DynamicTp（动态线程池）",
+        "domain": "distributed",
+        "type": "third-party-reference",
+        "description": "基于配置中心的动态线程池框架，支持运行时调整线程池参数、报警通知，无需重启服务。",
+        "use_case": "生产环境线程池参数调优、异步任务隔离、线程池监控与告警、快速响应突发流量变化。",
+        "ai_context": "## DynamicTp 集成模式\n\n### 引入 BOM\n```kotlin\ndependencies {\n    implementation(platform(libs.dynamic.tp.dependencies))\n    implementation(\"org.dromara.dynamictp:dynamic-tp-spring-boot-starter-nacos\") // 或其他配置中心\n}\n```\n\n### 支持的配置中心\n- Nacos、Apollo、Zookeeper、Etcd、Consul、Spring Cloud Config\n\n### 配置示例（Nacos）\n```yaml\nspring:\n  dynamic:\n    tp:\n      executors:\n        - thread-pool-name: orderExecutor\n          core-pool-size: 10\n          maximum-pool-size: 50\n          queue-capacity: 1000\n          queue-type: VARIABLE_LINKED_BLOCKING_QUEUE\n          notify:\n            - type: CAPACITY  # 队列容量报警\n              threshold: 80\n```\n\n### 常见使用场景\n- 电商秒杀：运行时调大核心线程数应对流量峰值\n- 异步任务：不同业务使用独立线程池，互不影响\n- 问题排查：实时观察线程池指标，无需重启\n\n### 版本说明\n- 版本号硬编码在 `[libraries]` 中（`version = '1.2.2'`），无独立 version key。",
+        "alternatives": [
+          "thread-pool-executor-manual",
+          "resilience4j-bulkhead"
+        ],
+        "maven": {
+          "groupId": "org.dromara.dynamictp",
+          "artifactId": "dynamic-tp-dependencies",
+          "version_ref": null
+        },
+        "gradle_ref": [
+          "dynamic-tp-dependencies"
+        ],
+        "dependencies": [],
+        "tags": [
+          "thread-pool",
+          "dynamic-config",
+          "monitoring",
+          "distributed"
+        ],
+        "status": "stable",
+        "stage": [
+          "adapt",
+          "ops"
+        ],
+        "related_plugins": [],
+        "doc_url": "https://dynamictp.cn/",
+        "ihub_layer": "L2-libs"
+      },
+      {
+        "id": "easy-trans",
+        "name": "EasyTrans（数据翻译）",
+        "domain": "distributed",
+        "type": "third-party-reference",
+        "description": "字段翻译框架，通过注解自动将 id 字段翻译为对应的名称（如 userId→userName），支持本地、远程、字典等多种翻译方式。",
+        "use_case": "列表接口返回数据时自动关联查询翻译字段、枚举/字典码翻译为显示名称、跨服务字段关联展示。",
+        "ai_context": "## EasyTrans 集成模式\n\n### 引入 BOM\n```kotlin\ndependencies {\n    implementation(platform(libs.easy.trans.dependencies))\n    implementation(\"org.dromara:easy-trans-spring-boot-starter\")\n    // 如果使用 MyBatis-Plus：\n    implementation(\"org.dromara:easy-trans-mybatis-plus-plugin\")\n}\n```\n\n### 核心注解\n```java\n@Data\npublic class UserVO {\n    private Long deptId;\n    \n    @Trans(type = TransType.SIMPLE, target = SysDept.class, fields = \"deptName\")\n    private String deptName; // 自动从 SysDept 表查询并填充\n    \n    @Trans(type = TransType.DICTIONARY, key = \"user_status\")\n    private String statusName; // 字典翻译\n}\n```\n\n### 翻译类型\n- `SIMPLE`：本地数据库查询翻译\n- `RPC`：远程服务调用翻译（跨微服务）\n- `DICTIONARY`：字典/枚举翻译\n- `AUTO_TRANS_VO`：自动翻译整个 VO\n\n### 版本说明\n- 版本号硬编码（`version = '3.1.5'`），无独立 version key。",
+        "alternatives": [
+          "manual-join-query",
+          "mybatis-plus-join"
+        ],
+        "maven": {
+          "groupId": "org.dromara",
+          "artifactId": "easy-trans-dependencies",
+          "version_ref": null
+        },
+        "gradle_ref": [
+          "easy-trans-dependencies"
+        ],
+        "dependencies": [],
+        "tags": [
+          "data-translation",
+          "field-mapping",
+          "dictionary",
+          "annotation"
+        ],
+        "status": "stable",
+        "stage": [
+          "code",
+          "adapt"
+        ],
+        "related_plugins": [],
+        "doc_url": "https://easy-trans.gitee.io/",
+        "ihub_layer": "L2-libs"
+      },
+      {
+        "id": "redisson",
+        "name": "Redisson（分布式锁/Redis 客户端）",
+        "domain": "distributed",
+        "type": "third-party-reference",
+        "description": "基于 Redis 的 Java 分布式锁、分布式集合、分布式对象客户端，提供 Spring Boot Starter 开箱即用。",
+        "use_case": "分布式锁防止并发重复操作、分布式限流、Redis 发布订阅、分布式集合（Map/Set/Queue）。",
+        "ai_context": "## Redisson 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.redisson)         // Spring Boot Starter\n    implementation(libs.lock4j.redisson)  // 可选：注解式分布式锁\n}\n```\n\n### application.yml 配置\n```yaml\nspring:\n  data:\n    redis:\n      host: localhost\n      port: 6379\n# Redisson 自动读取 spring.data.redis 配置\n```\n\n### 使用分布式锁\n```java\n@Service\npublic class OrderService {\n    @Autowired\n    private RedissonClient redissonClient;\n    \n    public void createOrder(String orderId) {\n        RLock lock = redissonClient.getLock(\"order:\" + orderId);\n        try {\n            lock.lock(30, TimeUnit.SECONDS);\n            // 业务逻辑\n        } finally {\n            lock.unlock();\n        }\n    }\n}\n```\n\n### 注解式分布式锁（Lock4j）\n```java\n@Lock4j(keys = \"#orderId\", expire = 30000)\npublic void createOrder(String orderId) {\n    // 业务逻辑，自动加锁解锁\n}\n```\n\n### 注意事项\n- 分布式锁必须设置超时时间，防止死锁。\n- `lock4j-redisson` 提供注解式 AOP 方案，但复杂场景（如条件释放）仍需手动编码。\n- Redisson 版本和 Spring Boot 版本有兼容要求，通过固定版本号管理。",
+        "alternatives": [
+          "spring-integration-redis",
+          "jedis-lock"
+        ],
+        "maven": {
+          "groupId": "org.redisson",
+          "artifactId": "redisson-spring-boot-starter",
+          "version_ref": null
+        },
+        "gradle_ref": [
+          "redisson",
+          "lock4j-redisson"
+        ],
+        "dependencies": [],
+        "tags": [
+          "redis",
+          "distributed-lock",
+          "cache",
+          "pub-sub"
+        ],
+        "status": "stable",
+        "stage": [
+          "adapt",
+          "code"
+        ],
+        "related_plugins": [],
+        "doc_url": "https://redisson.org/docs/",
+        "ihub_layer": "L2-libs"
+      },
+      {
+        "id": "snail-job",
+        "name": "SnailJob（分布式任务调度）",
+        "domain": "distributed",
+        "type": "third-party-reference",
+        "description": "灵活、可靠、高性能的分布式任务重试与调度框架，支持任务编排、失败重试、DAG 工作流。",
+        "use_case": "定时任务调度、失败重试、长耗时任务拆分、任务依赖编排（DAG）、任务执行监控。",
+        "ai_context": "## SnailJob 集成模式\n\n### 部署架构\nSnailJob 分为 Server（调度中心）和 Client（业务接入）：\n- **Server**：独立部署或嵌入 Spring Boot 项目\n- **Client**：业务项目接入 SDK\n\n### Client 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.snail.job.client.starter)   // 客户端核心\n    implementation(libs.snail.job.client.job.core)  // Job 执行核心\n}\n```\n\n### Server 依赖配置（独立部署时）\n```kotlin\ndependencies {\n    implementation(libs.snail.job.server.starter)\n}\n```\n\n### 任务定义\n```java\n@Component\n@SneakyJob(scene = \"orderRetryScene\") // 重试场景\npublic class OrderRetryJob implements ExecutorJob {\n    @Override\n    public ExecuteResult doJobExecute(JobArgs jobArgs) {\n        // 执行逻辑\n        return ExecuteResult.success();\n    }\n}\n```\n\n### 版本管理\n- 版本号通过 `version.ref = 'snailjob'` 统一管理，三个库共享同一版本。\n\n### 选型对比\n- SnailJob vs XXL-Job：SnailJob 更现代，支持 DAG 工作流和失败重试语义。\n- SnailJob vs PowerJob：功能类似，SnailJob 国产社区活跃度更高。",
+        "alternatives": [
+          "xxl-job",
+          "powerjob",
+          "quartz",
+          "spring-batch"
+        ],
+        "maven": {
+          "groupId": "com.aizuda",
+          "artifactId": "snail-job-client-starter",
+          "version_ref": "snailjob"
+        },
+        "gradle_ref": [
+          "snail-job-client-starter",
+          "snail-job-client-job-core",
+          "snail-job-server-starter"
+        ],
+        "dependencies": [],
+        "tags": [
+          "scheduler",
+          "distributed-task",
+          "retry",
+          "dag",
+          "workflow"
+        ],
+        "status": "stable",
+        "stage": [
+          "adapt",
+          "ops"
+        ],
+        "related_plugins": [],
+        "doc_url": "https://snailjob.opensnail.com/",
+        "ihub_layer": "L2-libs"
+      }
+    ],
+    "documentation": [
+      {
+        "id": "springdoc-openapi",
+        "name": "SpringDoc OpenAPI",
+        "domain": "documentation",
+        "type": "third-party-reference",
+        "description": "自动从 Spring MVC/WebFlux 注解生成 OpenAPI 3.x 规范文档，内置 Swagger UI，替代已停维的 Springfox。",
+        "use_case": "REST API 文档自动生成、Swagger UI 在线调试接口、生成 OpenAPI spec 供前端/AI 使用。",
+        "ai_context": "## SpringDoc OpenAPI 集成模式\n\n### 引入 BOM + Starter\n```kotlin\ndependencies {\n    implementation(platform(libs.springdoc.openapi.bom))\n    implementation(\"org.springdoc:springdoc-openapi-starter-webmvc-ui\") // Servlet 项目\n    // implementation(\"org.springdoc:springdoc-openapi-starter-webflux-ui\") // Reactive 项目\n}\n```\n\n### Spring Boot Auto-Configuration\nSpring Boot 3.x 只需添加依赖，Swagger UI 默认在 `/swagger-ui.html` 可访问。\n\n### 常用配置\n```yaml\nspringdoc:\n  api-docs:\n    path: /v3/api-docs\n  swagger-ui:\n    path: /swagger-ui.html\n    tags-sorter: alpha\n  # 生产环境建议关闭：\n  # api-docs.enabled: false\n```\n\n### 注解说明\n```java\n@Tag(name = \"用户管理\", description = \"用户相关接口\")\n@RestController\npublic class UserController {\n    \n    @Operation(summary = \"获取用户详情\", description = \"根据 ID 查询用户\")\n    @ApiResponse(responseCode = \"200\", description = \"成功\")\n    @Parameter(name = \"id\", description = \"用户ID\", required = true)\n    @GetMapping(\"/users/{id}\")\n    public UserDTO getUser(@PathVariable Long id) { ... }\n}\n```\n\n### 与 AI 工具结合\n- OpenAPI spec（`/v3/api-docs`）可直接被 LLM/MCP 工具读取，了解 API 结构。\n- IHub 的 `ihub-meta` 插件未来将集成 API spec 输出。\n\n### 版本说明\n- 版本号硬编码（`version = '3.0.3'`），无独立 version key。\n- SpringDoc 3.x 支持 Spring Boot 3.x；旧项目用 SpringDoc 1.x（`springdoc-openapi-ui`）。",
+        "alternatives": [
+          "springfox-swagger2",
+          "knife4j"
+        ],
+        "maven": {
+          "groupId": "org.springdoc",
+          "artifactId": "springdoc-openapi-bom",
+          "version_ref": null
+        },
+        "gradle_ref": [
+          "springdoc-openapi-bom",
+          "swagger-core"
+        ],
+        "dependencies": [],
+        "tags": [
+          "api-docs",
+          "openapi",
+          "swagger",
+          "rest"
+        ],
+        "status": "stable",
+        "stage": [
+          "adapt",
+          "qa"
+        ],
+        "related_plugins": [
+          "ihub-java"
+        ],
+        "doc_url": "https://springdoc.org/",
+        "ihub_layer": "L2-libs"
+      },
+      {
+        "id": "therapi-runtime-javadoc",
+        "name": "Therapi Runtime Javadoc",
+        "domain": "documentation",
+        "type": "third-party-reference",
+        "description": "将 Javadoc 注释打包进 class 文件，使运行时可通过反射读取 Javadoc 内容；配合 SpringDoc 可自动从 Javadoc 生成 API 描述。",
+        "use_case": "不想写双份注释（Javadoc + @Operation/@Schema）、希望 API 文档内容直接来自代码注释。",
+        "ai_context": "## Therapi Runtime Javadoc 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.therapi.runtime.javadoc)        // 运行时读取\n    annotationProcessor(libs.therapi.runtime.javadoc.scribe) // 编译期处理\n}\n```\n\n### 配合 SpringDoc 使用\n配合 `springdoc-openapi-starter-webmvc-ui` 时，SpringDoc 会自动从 Javadoc 中提取接口说明：\n```java\n/**\n * 获取用户详情\n * @param id 用户ID\n * @return 用户信息\n */\n@GetMapping(\"/users/{id}\")\npublic UserDTO getUser(@PathVariable Long id) { ... }\n// 无需 @Operation(summary = \"...\") 注解！\n```\n\n### 与 IHub 插件集成\n- `ihub-java` 插件的 `defaultDependencies = doc` 自动添加 `therapi-runtime-javadoc-scribe` 到 `annotationProcessor`。\n- 还包含 `swagger-core-jakarta` 和 `ihub-bytebuddy-plugin`（用于运行时文档增强）。\n\n### 版本管理\n- `therapi-runtime-javadoc` 和 `therapi-runtime-javadoc-scribe` 共享 `version.ref = 'therapi-javadoc'`。\n\n### 注意事项\n- 需要在编译时保留 Javadoc（不要 `-nodoc` 编译选项）。\n- 生成的 class 文件体积会略微增大（包含了 Javadoc 文本）。",
+        "alternatives": [
+          "manual-swagger-annotations"
+        ],
+        "maven": {
+          "groupId": "com.github.therapi",
+          "artifactId": "therapi-runtime-javadoc",
+          "version_ref": "therapi-javadoc"
+        },
+        "gradle_ref": [
+          "therapi-runtime-javadoc",
+          "therapi-runtime-javadoc-scribe"
+        ],
+        "dependencies": [
+          "springdoc-openapi"
+        ],
+        "tags": [
+          "javadoc",
+          "api-docs",
+          "annotation-processor",
+          "documentation"
+        ],
+        "status": "stable",
+        "stage": [
+          "adapt",
+          "qa"
+        ],
+        "related_plugins": [
+          "ihub-java"
+        ],
+        "doc_url": "https://github.com/dnault/therapi-runtime-javadoc",
+        "ihub_layer": "L2-libs"
+      }
+    ],
+    "infrastructure": [
+      {
+        "id": "infra-platform-spring-boot",
+        "name": "Spring Boot",
+        "name_en": "Spring Boot",
+        "domain": "infrastructure",
+        "subdomain": "platform",
+        "stage": [
+          "init",
+          "code"
+        ],
+        "type": "platform-bom",
+        "description": "Spring Boot 依赖管理 BOM，统一管理 Spring 生态组件的版本",
+        "use_case": "所有基于 Spring Boot 的项目必须引入，作为版本管理基础。无需单独指定每个 Spring 模块的版本号",
+        "ai_context": "## 集成模式\n作为 BOM 引入，统一管理 Spring 框架族版本。通过 spring-boot-starter-* 引入具体能力。\n\n## 配置要点\n- 版本由 libs.versions.toml 统一管理\n- 通过 spring-boot-starter-* 引入具体能力\n- 本项目使用 Spring Boot 4.x，基于 Jakarta EE\n\n## 约束与限制\n- Spring Boot 4.x 需要 JDK 17+\n- 与 Spring Cloud BOM 配合使用\n- 从 Spring Boot 3.x 迁移需注意 javax → jakarta 包名变更\n\n## 常见陷阱\n- 不要同时在项目中显式声明 Spring 模块版本号\n- 自定义 starter 的版本号应通过 version_ref 引用，不要硬编码",
+        "alternatives": [],
+        "maven": {
+          "group": "org.springframework.boot",
+          "artifact": "spring-boot-dependencies"
+        },
+        "version_ref": "spring-boot",
+        "gradle_ref": "spring-boot-dependencies",
+        "dependencies": [],
+        "starter_available": false,
+        "tags": [
+          "spring",
+          "boot",
+          "framework",
+          "bom"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-boot"
+        ],
+        "doc_url": "https://spring.io/projects/spring-boot",
+        "source_url": null,
+        "ihub_layer": "L2"
+      },
+      {
+        "id": "infra-platform-spring-cloud",
+        "name": "Spring Cloud",
+        "name_en": "Spring Cloud",
+        "domain": "infrastructure",
+        "subdomain": "platform",
+        "stage": [
+          "init",
+          "adapt"
+        ],
+        "type": "platform-bom",
+        "description": "Spring Cloud 依赖管理 BOM，统一管理微服务治理相关组件版本",
+        "use_case": "构建微服务架构时需要，提供服务发现、配置中心、负载均衡等能力。与 Spring Boot BOM 配合使用",
+        "ai_context": "## 集成模式\n与 spring-boot-dependencies 同时引入，管理 Spring Cloud 组件族版本。\n\n## 配置要点\n- 版本与 Spring Boot 版本有对应关系，不可随意升级\n- Spring Cloud 2025.x 对应 Spring Boot 4.x\n\n## 约束与限制\n- Spring Cloud 版本必须与 Spring Boot 主版本兼容\n- 部分组件（如 spring-cloud-starter-bootstrap）在新版本中已默认禁用\n\n## 常见陷阱\n- 混淆 Spring Cloud 版本号（用年份命名）与 Spring Boot 语义版本号\n- 忘记同时引入 spring-cloud-dependencies 和 spring-boot-dependencies",
+        "alternatives": [],
+        "maven": {
+          "group": "org.springframework.cloud",
+          "artifact": "spring-cloud-dependencies"
+        },
+        "version_ref": "spring-cloud",
+        "gradle_ref": "spring-cloud-dependencies",
+        "dependencies": [
+          {
+            "component_id": "infra-platform-spring-boot",
+            "required": true,
+            "scope": "implementation",
+            "reason": "Spring Cloud 基于 Spring Boot 运行"
+          }
+        ],
+        "starter_available": false,
+        "tags": [
+          "spring",
+          "cloud",
+          "microservices",
+          "bom"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-boot"
+        ],
+        "doc_url": "https://spring.io/projects/spring-cloud",
+        "source_url": null,
+        "ihub_layer": "L2"
+      },
+      {
+        "id": "infra-platform-spring-cloud-alibaba",
+        "name": "Spring Cloud Alibaba",
+        "name_en": "Spring Cloud Alibaba",
+        "domain": "infrastructure",
+        "subdomain": "platform",
+        "stage": [
+          "init",
+          "adapt"
+        ],
+        "type": "platform-bom",
+        "description": "Spring Cloud Alibaba 依赖管理 BOM，集成 Nacos、Sentinel、Seata 等阿里中间件",
+        "use_case": "需要使用阿里云中间件生态（Nacos 注册中心/配置中心、Sentinel 流量控制、Seata 分布式事务）时引入",
+        "ai_context": "## 集成模式\n在 Spring Cloud 基础上叠加，提供阿里云中间件的版本管理。\n\n## 配置要点\n- 版本 2025.x 对应 Spring Cloud 2025.x 和 Spring Boot 4.x\n- Nacos Server 版本需与客户端版本匹配\n\n## 约束与限制\n- 需要部署 Nacos Server（或使用阿里云托管版）\n- Sentinel 控制台为可选组件\n- Seata 需要独立的事务协调器\n\n## 常见陷阱\n- Nacos 客户端版本与 Server 版本不匹配导致注册失败\n- 混淆 spring-cloud-alibaba 版本号与各个组件自身的版本号",
+        "alternatives": [],
+        "maven": {
+          "group": "com.alibaba.cloud",
+          "artifact": "spring-cloud-alibaba-dependencies"
+        },
+        "version_ref": "spring-cloud-alibaba",
+        "gradle_ref": "spring-cloud-alibaba-dependencies",
+        "dependencies": [
+          {
+            "component_id": "infra-platform-spring-boot",
+            "required": true,
+            "scope": "implementation",
+            "reason": "基于 Spring Boot 生态"
+          },
+          {
+            "component_id": "infra-platform-spring-cloud",
+            "required": true,
+            "scope": "implementation",
+            "reason": "Spring Cloud Alibaba 是 Spring Cloud 的子项目"
+          }
+        ],
+        "starter_available": false,
+        "tags": [
+          "spring",
+          "cloud",
+          "alibaba",
+          "nacos",
+          "sentinel",
+          "bom"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-boot"
+        ],
+        "doc_url": "https://sca.aliyun.com",
+        "source_url": null,
+        "ihub_layer": "L2"
+      },
+      {
+        "id": "infra-platform-spring-boot-admin",
+        "name": "Spring Boot Admin",
+        "name_en": "Spring Boot Admin",
+        "domain": "infrastructure",
+        "subdomain": "platform",
+        "stage": [
+          "ops"
+        ],
+        "type": "platform-bom",
+        "description": "Spring Boot 应用监控管理平台，提供运行时状态查看、日志管理、指标监控等能力",
+        "use_case": "需要可视化监控 Spring Boot 应用运行状态、查看日志、管理 Beans 时使用。通常部署为独立监控服务",
+        "ai_context": "## 集成模式\n分为 server 端（监控面板）和 client 端（被监控应用）。通过 starter 自动配置集成。\n\n## 配置要点\n- Client 端需配置 spring.boot.admin.client.url 指向 Server\n- Server 端需引入 spring-boot-admin-starter-server\n- 支持通过 Eureka/Nacos 等服务发现自动注册\n\n## 约束与限制\n- 需要独立部署 Server 实例\n- Client 应用需要暴露 actuator 端点\n- 生产环境需配置安全认证\n\n## 常见陷阱\n- 忘记暴露 actuator 端点导致无监控数据\n- Server 与 Client 版本不匹配\n- 防火墙未放行监控端口",
+        "alternatives": [],
+        "maven": {
+          "group": "de.codecentric",
+          "artifact": "spring-boot-admin-dependencies"
+        },
+        "version_ref": "spring-boot-admin",
+        "gradle_ref": "spring-boot-admin-dependencies",
+        "dependencies": [
+          {
+            "component_id": "infra-platform-spring-boot",
+            "required": true,
+            "scope": "implementation",
+            "reason": "基于 Spring Boot Actuator"
+          }
+        ],
+        "starter_available": false,
+        "tags": [
+          "spring",
+          "boot",
+          "admin",
+          "monitoring",
+          "bom"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-boot"
+        ],
+        "doc_url": "https://docs.spring-boot-admin.com",
+        "source_url": null,
+        "ihub_layer": "L2"
+      },
+      {
+        "id": "infra-platform-spring-ai",
+        "name": "Spring AI",
+        "name_en": "Spring AI",
+        "domain": "infrastructure",
+        "subdomain": "platform",
+        "stage": [
+          "llm"
+        ],
+        "type": "platform-bom",
+        "description": "Spring AI 依赖管理 BOM，统一管理 AI/LLM 集成相关组件版本",
+        "use_case": "需要在 Spring Boot 项目中集成 AI 能力（LLM 调用、向量存储、RAG）时引入",
+        "ai_context": "## 集成模式\n通过 Spring Boot starter 模式集成。引入 spring-ai-bom 管理版本。\n\n## 配置要点\n- 通过 spring.ai.openai.* 或 spring.ai.ollama.* 配置模型接入\n- 支持 OpenAI、Ollama、Azure OpenAI 等多种后端\n- 向量存储支持 Chroma、PGVector、Redis 等\n\n## 约束与限制\n- 需要 Spring Boot 3.x+/4.x\n- 部分功能（如 Function Calling）需要特定模型支持\n- API 在 1.x 阶段持续演进\n\n## 常见陷阱\n- 混淆 spring-ai 版本号与 OpenAI SDK 版本号\n- 向量存储依赖需要额外引入对应的 starter\n- 生产环境需关注 LLM API 调用的成本和限流",
+        "alternatives": [],
+        "maven": {
+          "group": "org.springframework.ai",
+          "artifact": "spring-ai-bom"
+        },
+        "version_ref": null,
+        "gradle_ref": "spring-ai-bom",
+        "dependencies": [
+          {
+            "component_id": "infra-platform-spring-boot",
+            "required": true,
+            "scope": "implementation",
+            "reason": "Spring AI 基于 Spring Boot 生态"
+          }
+        ],
+        "starter_available": false,
+        "tags": [
+          "spring",
+          "ai",
+          "llm",
+          "rag",
+          "bom"
+        ],
+        "status": "stable",
+        "since_version": "1.0.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-boot"
+        ],
+        "doc_url": "https://spring.io/projects/spring-ai",
+        "source_url": null,
+        "ihub_layer": "L2"
+      },
+      {
+        "id": "infra-logging-slf4j",
+        "name": "SLF4J 日志门面",
+        "name_en": "SLF4J Logging Facade",
+        "domain": "infrastructure",
+        "subdomain": "logging",
+        "stage": [
+          "init",
+          "code",
+          "ops"
+        ],
+        "type": "third-party-reference",
+        "description": "Java 日志门面框架，提供统一的日志 API，底层可适配 Logback、Log4j2 等实现",
+        "use_case": "所有 Java 项目的基础日志依赖。通过 SLF4J API 编写日志代码，运行时绑定具体实现",
+        "ai_context": "## 集成模式\nSLF4J API 作为编译依赖，运行时提供具体实现（通常为 Logback）。通过桥接器将其他日志框架重定向到 SLF4J。\n\n## 配置要点\n- slf4j-api：核心 API，编译依赖\n- jul-to-slf4j：将 java.util.logging 桥接到 SLF4J\n- log4j-over-slf4j：将 Log4j 调用重定向到 SLF4J\n- jcl-over-slf4j：将 Commons Logging 调用重定向到 SLF4J\n- 运行时提供 logback-classic 或 log4j-slf4j2-impl\n\n## 约束与限制\n- 不能同时存在多个 SLF4J 实现（如 logback 和 log4j-slf4j2-impl）\n- 桥接器和实现不能形成循环（如同时使用 log4j-over-slf4j 和 slf4j-log4j12）\n\n## 常见陷阱\n- 传递依赖引入多个日志实现导致冲突\n- 忘记添加桥接器导致部分日志丢失\n- 混淆 slf4j-log4j12（SLF4J→Log4j 1.x）和 log4j-over-slf4j（Log4j→SLF4J）",
+        "alternatives": [],
+        "maven": {
+          "group": "org.slf4j",
+          "artifact": "slf4j-api"
+        },
+        "version_ref": null,
+        "gradle_ref": [
+          "slf4j-api",
+          "jcl-over-slf4j",
+          "jul-to-slf4j",
+          "log4j-over-slf4j",
+          "slf4j-jcl",
+          "slf4j-log4j12"
+        ],
+        "dependencies": [],
+        "starter_available": false,
+        "tags": [
+          "logging",
+          "slf4j",
+          "logback",
+          "log4j"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-java"
+        ],
+        "doc_url": "https://www.slf4j.org",
+        "source_url": null,
+        "ihub_layer": "L2"
+      },
+      {
+        "id": "infra-logging-log4j2",
+        "name": "Log4j2 日志实现",
+        "name_en": "Log4j2 Logging Implementation",
+        "domain": "infrastructure",
+        "subdomain": "logging",
+        "stage": [
+          "init",
+          "code",
+          "ops"
+        ],
+        "type": "third-party-reference",
+        "description": "Apache Log4j2 高性能日志实现，可作为 SLF4J 的底层实现",
+        "use_case": "需要高性能异步日志、灵活的日志路由配置时使用。作为 Logback 的替代方案",
+        "ai_context": "## 集成模式\n通过 slf4j-api 编写日志代码，运行时使用 log4j-core 和 log4j-slf4j2-impl 绑定。\n\n## 配置要点\n- log4j-core：核心日志实现\n- log4j-slf4j2-impl：SLF4J 到 Log4j2 的桥接\n- 配置文件：log4j2.xml / log4j2.json / log4j2.yaml\n\n## 约束与限制\n- 不能与 Logback 同时存在\n- Log4j2 需要 Java 8+ \n- 2.x 版本与 1.x 完全不兼容\n\n## 常见陷阱\n- 同时引入 logback 和 log4j-slf4j2-impl 导致 SLF4J 绑定冲突\n- 忘记排除 Spring Boot 默认的 logback 依赖",
+        "alternatives": [],
+        "maven": {
+          "group": "org.apache.logging.log4j",
+          "artifact": "log4j-core"
+        },
+        "version_ref": null,
+        "gradle_ref": [
+          "log4j-core",
+          "log4j",
+          "commons-logging"
+        ],
+        "dependencies": [
+          {
+            "component_id": "infra-logging-slf4j",
+            "required": true,
+            "scope": "implementation",
+            "reason": "通过 SLF4J API 编写日志代码"
+          }
+        ],
+        "starter_available": false,
+        "tags": [
+          "logging",
+          "log4j2",
+          "async"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-java"
+        ],
+        "doc_url": "https://logging.apache.org/log4j/2.x/",
+        "source_url": null,
+        "ihub_layer": "L2"
+      },
+      {
+        "id": "infra-lang-groovy",
+        "name": "Apache Groovy",
+        "name_en": "Apache Groovy",
+        "domain": "infrastructure",
+        "subdomain": "language",
+        "stage": [
+          "init",
+          "code",
+          "qa"
+        ],
+        "type": "third-party-reference",
+        "description": "JVM 动态语言，提供简洁语法、闭包、元编程能力，与 Java 100% 互操作",
+        "use_case": "IHub 插件开发语言。Spock 测试框架的运行基础。需要 Groovy DSL 配置或脚本处理时使用",
+        "ai_context": "## 集成模式\n通过 ihub-groovy 插件配置 Groovy 源代码集。各模块按需引入：\n- groovy-core: 核心运行时\n- groovy-json: JSON 处理\n- groovy-xml: XML 处理\n- groovy-sql: SQL 工具\n- groovy-nio: NIO 文件操作\n- groovy-datetime: 日期时间扩展\n- groovy-templates: 模板引擎\n- groovy-groovydoc: 文档工具\n\n## 配置要点\n- Groovy 4.x 支持 Java 模块系统\n- 通过 @CompileStatic 启用静态编译\n- 与 Spock 测试框架无缝集成\n\n## 约束与限制\n- 动态特性会绕过编译期类型检查\n- 反射调用性能低于 Java\n- Groovy 5.x 要求 JDK 11+\n\n## 常见陷阱\n- 忘记添加 @CompileStatic 导致性能问题\n- GString 字符串拼接与 Java String 类型不兼容\n- == 语义在 Groovy 中是 equals() 而非引用比较",
+        "alternatives": [
+          "kotlin"
+        ],
+        "maven": {
+          "group": "org.apache.groovy",
+          "artifact": "groovy"
+        },
+        "version_ref": null,
+        "gradle_ref": [
+          "groovy-core",
+          "groovy-json",
+          "groovy-xml",
+          "groovy-sql",
+          "groovy-nio",
+          "groovy-datetime",
+          "groovy-templates",
+          "groovy-groovydoc",
+          "groovy-dateutil"
+        ],
+        "dependencies": [],
+        "starter_available": false,
+        "tags": [
+          "groovy",
+          "jvm",
+          "dynamic",
+          "scripting"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-groovy"
+        ],
+        "doc_url": "https://groovy-lang.org",
+        "source_url": null,
+        "ihub_layer": "L2"
+      },
+      {
+        "id": "infra-bom-ihub-integration",
+        "name": "IHub 集成 BOM",
+        "name_en": "IHub Integration BOM",
+        "domain": "infrastructure",
+        "subdomain": "platform",
+        "stage": [
+          "init",
+          "code"
+        ],
+        "type": "platform-bom",
+        "description": "IHub 集成层 BOM，统一管理 IHub 生态中跨模块集成组件的版本",
+        "use_case": "使用 IHub 集成组件时引入，统一管理集成层组件版本，避免版本冲突",
+        "ai_context": "## 集成模式\n作为 BOM 引入，统一管理 ihub-integration-* 系列组件版本。\n\n## 配置要点\n- 通过 dependencyManagement 平台方式引入\n- 与 ihub-module-bom 配合使用\n\n## 约束与限制\n- 必须与对应版本的 IHub 框架配合使用\n\n## 常见陷阱\n- 与 ihub-module-bom 版本不一致导致兼容性问题",
+        "alternatives": [],
+        "maven": {
+          "group": "pub.ihub.integration",
+          "artifact": "ihub-integration-bom"
+        },
+        "version_ref": null,
+        "gradle_ref": "ihub-integration-bom",
+        "dependencies": [],
+        "starter_available": false,
+        "tags": [
+          "ihub",
+          "bom",
+          "integration"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-boot"
+        ],
+        "doc_url": "https://doc.ihub.pub",
+        "source_url": null,
+        "ihub_layer": "L3"
+      },
+      {
+        "id": "infra-bom-ihub-module",
+        "name": "IHub 模块 BOM",
+        "name_en": "IHub Module BOM",
+        "domain": "infrastructure",
+        "subdomain": "platform",
+        "stage": [
+          "init",
+          "code"
+        ],
+        "type": "platform-bom",
+        "description": "IHub 核心模块 BOM，统一管理 IHub 框架核心模块（ihub-core、ihub-starter 等）的版本",
+        "use_case": "使用 IHub 核心模块时引入，无需单独管理 ihub-* 各模块的版本号",
+        "ai_context": "## 集成模式\n作为 BOM 引入。包含 ihub-core、ihub-starter 等核心模块的版本管理。\n\n## 配置要点\n- 通过 dependencyManagement 或 platform() 引入\n- 版本由 IHub 统一发布管理\n\n## 约束与限制\n- 不要混合不同版本的 ihub-module-bom 和 ihub-integration-bom\n\n## 常见陷阱\n- 忽略 BOM 导入顺序，BOM 声明顺序影响版本优先级",
+        "alternatives": [],
+        "maven": {
+          "group": "pub.ihub.module",
+          "artifact": "ihub-module-bom"
+        },
+        "version_ref": null,
+        "gradle_ref": "ihub-module-bom",
+        "dependencies": [],
+        "starter_available": false,
+        "tags": [
+          "ihub",
+          "bom",
+          "module"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-boot"
+        ],
+        "doc_url": "https://doc.ihub.pub",
+        "source_url": null,
+        "ihub_layer": "L3"
+      }
+    ],
+    "mapping": [
+      {
+        "id": "mapstruct",
+        "name": "MapStruct",
+        "domain": "mapping",
+        "type": "third-party-reference",
+        "description": "基于注解处理器的 Java Bean 映射框架，编译期生成类型安全的映射代码，零运行时开销。",
+        "use_case": "DTO↔Entity 转换、多层架构对象映射、避免手写 getter/setter 样板代码。",
+        "ai_context": "## MapStruct 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.mapstruct)                    // 运行时注解\n    annotationProcessor(libs.mapstruct.processor)     // 编译期代码生成\n    // 与 Lombok 同时使用时必须加：\n    annotationProcessor(libs.lombok.mapstruct.binding) // 绑定处理顺序\n}\n```\n\n### 典型 Mapper 定义\n```java\n@Mapper(componentModel = \"spring\") // 生成 Spring Bean\npublic interface UserMapper {\n    UserDTO toDTO(User user);\n    User toEntity(UserDTO dto);\n    List<UserDTO> toDTOList(List<User> users);\n}\n```\n\n### 与 IHub 插件集成\n- `ihub-java` 插件的 `defaultDependencies = mapstruct` 可一键添加 mapstruct + processor + lombok-binding。\n- 使用 IHub 插件时无需手动管理 annotationProcessor 顺序。\n\n### 常见陷阱\n- Lombok 与 MapStruct 同时使用时，**必须**将 `lombok-mapstruct-binding` 加入 annotationProcessor，否则 Lombok 生成的方法对 MapStruct 不可见。\n- `componentModel = \"spring\"` 是 Spring 项目的标准配置；不加则生成静态工厂方法。\n- 复杂映射（枚举转换、嵌套对象）需配合 `@Mapping` 注解显式声明。",
+        "alternatives": [
+          "mapstruct-plus",
+          "modelmapper",
+          "dozer"
+        ],
+        "maven": {
+          "groupId": "org.mapstruct",
+          "artifactId": "mapstruct",
+          "version_ref": "mapstruct"
+        },
+        "gradle_ref": [
+          "mapstruct",
+          "mapstruct-processor"
+        ],
+        "dependencies": [],
+        "tags": [
+          "mapping",
+          "code-generation",
+          "annotation-processor",
+          "dto"
+        ],
+        "status": "stable",
+        "stage": [
+          "code"
+        ],
+        "related_plugins": [
+          "ihub-java"
+        ],
+        "doc_url": "https://mapstruct.org/documentation/stable/reference/html/",
+        "ihub_layer": "L2-libs"
+      },
+      {
+        "id": "mapstruct-plus",
+        "name": "MapStruct Plus",
+        "domain": "mapping",
+        "type": "third-party-reference",
+        "description": "MapStruct 的增强封装，提供更简洁的注解（@AutoMapper）和自动双向映射，减少 Mapper 接口样板代码。",
+        "use_case": "希望比原生 MapStruct 更少配置的项目；大量 POJO 需要双向映射的场景。",
+        "ai_context": "## MapStruct Plus 集成模式\n\n### Spring Boot Starter\n```kotlin\ndependencies {\n    implementation(\"io.github.linpeilie:mapstruct-plus-spring-boot-starter\")\n    annotationProcessor(libs.mapstruct.plus.processor)\n    annotationProcessor(libs.lombok.mapstruct.binding)\n}\n```\n\n### 核心注解\n```java\n@AutoMapper(target = UserDTO.class, reverseConvertGenerate = true)\npublic class User {\n    private String name;\n    // 自动生成 User→UserDTO 和 UserDTO→User 双向 Mapper\n}\n```\n\n### 与 IHub 插件集成\n- `ihub-java` 插件的 `defaultDependencies = mapstruct` 包含了 `mapstruct-plus-spring-boot-starter` 和 `mapstruct-plus-processor`。\n\n### 注意事项\n- MapStruct Plus 底层仍是 MapStruct，生成的代码与 MapStruct 兼容。\n- BOM 通过 `mapstruct-plus-pom` 引入，统一版本管理。",
+        "alternatives": [
+          "mapstruct"
+        ],
+        "maven": {
+          "groupId": "io.github.linpeilie",
+          "artifactId": "mapstruct-plus-pom",
+          "version_ref": "mapstruct-plus"
+        },
+        "gradle_ref": [
+          "mapstruct-plus-pom",
+          "mapstruct-plus-processor",
+          "lombok-mapstruct-binding"
+        ],
+        "dependencies": [
+          "mapstruct"
+        ],
+        "tags": [
+          "mapping",
+          "code-generation",
+          "annotation-processor",
+          "dto",
+          "spring-boot-starter"
+        ],
+        "status": "stable",
+        "stage": [
+          "code"
+        ],
+        "related_plugins": [
+          "ihub-java"
+        ],
+        "doc_url": "https://mapstruct.plus/guide/",
+        "ihub_layer": "L2-libs"
+      },
+      {
+        "id": "fastjson2",
+        "name": "Fastjson2",
+        "domain": "mapping",
+        "type": "third-party-reference",
+        "description": "阿里巴巴开源的高性能 JSON 序列化/反序列化库，Fastjson 的全新一代实现，性能和安全性大幅提升。",
+        "use_case": "高吞吐量 JSON 处理、替换 Jackson 作为 Spring MVC 消息转换器、与旧 Fastjson 1.x 代码兼容迁移。",
+        "ai_context": "## Fastjson2 集成模式\n\n### Spring 项目推荐依赖\n```kotlin\ndependencies {\n    implementation(libs.fastjson)                    // 核心库\n    implementation(libs.fastjson.extension)          // 扩展（支持更多类型）\n    implementation(libs.fastjson.extension.spring)   // Spring6 MVC 集成\n}\n```\n\n### Spring MVC 消息转换器配置\n```java\n@Configuration\npublic class WebConfig implements WebMvcConfigurer {\n    @Override\n    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {\n        converters.add(0, new FastjsonHttpMessageConverter());\n    }\n}\n```\n\n### 与 Fastjson 1.x 兼容\n```kotlin\n// 如果有旧代码使用 com.alibaba.fastjson 包名：\ndependencies {\n    implementation(libs.fastjson1) // 兼容层，底层使用 Fastjson2 实现\n}\n```\n\n### 版本说明\n- `fastjson` 和 `fastjson-extension-spring` 使用相同的 `version.ref = 'fastjson'`，版本统一管理。\n- Spring Boot 4.x 项目使用 `fastjson2-extension-spring6`。\n\n### 常见陷阱\n- Fastjson 2.x API 与 1.x 不完全兼容，直接升级需要 Review 代码。\n- 与 Spring Boot 自带的 Jackson 混用时需注意序列化行为差异（日期格式、null 处理等）。",
+        "alternatives": [
+          "jackson",
+          "gson"
+        ],
+        "maven": {
+          "groupId": "com.alibaba.fastjson2",
+          "artifactId": "fastjson2",
+          "version_ref": "fastjson"
+        },
+        "gradle_ref": [
+          "fastjson",
+          "fastjson-extension",
+          "fastjson-extension-spring",
+          "fastjson-kotlin",
+          "fastjson1"
+        ],
+        "dependencies": [],
+        "tags": [
+          "json",
+          "serialization",
+          "deserialization",
+          "performance"
+        ],
+        "status": "stable",
+        "stage": [
+          "code",
+          "adapt"
+        ],
+        "related_plugins": [],
+        "doc_url": "https://alibaba.github.io/fastjson2/",
+        "ihub_layer": "L2-libs"
+      },
+      {
+        "id": "easyexcel",
+        "name": "EasyExcel",
+        "domain": "mapping",
+        "type": "third-party-reference",
+        "description": "阿里巴巴开源的高性能 Excel 读写库，基于 SAX 模式解析，内存占用极低，支持百万行数据读写。",
+        "use_case": "Excel 数据导入导出、报表生成、大数据量 Excel 处理（避免 OOM）。",
+        "ai_context": "## EasyExcel 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.easyexcel)\n}\n```\n\n### 读取 Excel\n```java\n@Data\npublic class UserData {\n    @ExcelProperty(\"姓名\")\n    private String name;\n    @ExcelProperty(\"年龄\")\n    private Integer age;\n}\n\n// 读取文件\nEasyExcel.read(fileName, UserData.class, new UserDataListener()).sheet().doRead();\n```\n\n### 写出 Excel\n```java\nList<UserData> data = fetchData();\nEasyExcel.write(fileName, UserData.class).sheet(\"用户\").doWrite(data);\n```\n\n### Spring MVC 下载接口\n```java\n@GetMapping(\"/export\")\npublic void export(HttpServletResponse response) throws IOException {\n    response.setContentType(\"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\");\n    response.setHeader(\"Content-Disposition\", \"attachment;filename=users.xlsx\");\n    EasyExcel.write(response.getOutputStream(), UserData.class).sheet().doWrite(data);\n}\n```\n\n### 注意事项\n- 版本号硬编码（未在 `[versions]` 中定义 version key），通过 `easyexcel` gradle 别名直接引用。\n- 读取大文件时使用 `ReadListener` 分批处理，避免一次性加载全部数据到内存。",
+        "alternatives": [
+          "apache-poi",
+          "hutool-poi"
+        ],
+        "maven": {
+          "groupId": "com.alibaba",
+          "artifactId": "easyexcel",
+          "version_ref": null
+        },
+        "gradle_ref": [
+          "easyexcel"
+        ],
+        "dependencies": [],
+        "tags": [
+          "excel",
+          "import-export",
+          "file-processing",
+          "report"
+        ],
+        "status": "stable",
+        "stage": [
+          "code",
+          "adapt"
+        ],
+        "related_plugins": [],
+        "doc_url": "https://easyexcel.opensource.alibaba.com/",
+        "ihub_layer": "L2-libs"
+      }
+    ],
+    "messaging": [
+      {
+        "id": "messaging-placeholder",
+        "name": "消息队列（规划中）",
+        "domain": "messaging",
+        "type": "third-party-reference",
+        "description": "【占位条目】IHub libs 当前通过 Spring Boot BOM 间接管理消息队列依赖（RocketMQ、Kafka、RabbitMQ 等），独立 messaging domain 条目将在 P2 阶段按需添加。",
+        "use_case": "分布式消息传递、事件驱动架构、异步解耦、削峰填谷。当前建议直接使用 Spring Boot BOM 中的消息队列 Starter。",
+        "ai_context": "## Messaging 领域现状\n\n### 当前推荐路径\nIHub libs 的 `infrastructure` 领域已通过 BOM 覆盖以下消息队列：\n\n```kotlin\n// Spring Boot BOM 已包含：\ndependencies {\n    implementation(platform(libs.spring.boot.dependencies))\n    // 然后直接使用（无需指定版本）：\n    implementation(\"org.springframework.boot:spring-boot-starter-amqp\")       // RabbitMQ\n    implementation(\"org.springframework.boot:spring-boot-starter-activemq\")   // ActiveMQ\n    implementation(\"org.springframework.kafka:spring-kafka\")                   // Kafka\n}\n\n// Spring Cloud Alibaba BOM 已包含：\ndependencies {\n    implementation(platform(libs.spring.cloud.alibaba.dependencies))\n    implementation(\"com.alibaba.cloud:spring-cloud-starter-stream-rocketmq\")  // RocketMQ\n}\n```\n\n### 规划中的 messaging 条目（P2）\n- RocketMQ BOM（独立版本管理）\n- Kafka BOM\n- Pulsar（Spring Boot 4.x 新增支持）\n\n### AI 建议\n当开发者询问消息队列选型时：\n- **RocketMQ**：阿里云生态、强顺序性要求、事务消息\n- **Kafka**：高吞吐日志流处理、大数据场景\n- **RabbitMQ**：灵活路由、低延迟、AMQP 协议\n- **Pulsar**：多租户、地理复制、云原生",
+        "alternatives": [
+          "rocketmq",
+          "kafka",
+          "rabbitmq",
+          "pulsar"
+        ],
+        "maven": null,
+        "gradle_ref": [],
+        "dependencies": [
+          "infrastructure"
+        ],
+        "tags": [
+          "messaging",
+          "event-driven",
+          "mq",
+          "async",
+          "planned"
+        ],
+        "status": "experimental",
+        "stage": [
+          "adapt"
+        ],
+        "related_plugins": [],
+        "doc_url": "https://spring.io/projects/spring-amqp",
+        "ihub_layer": "L2-libs"
+      }
+    ],
+    "meta": [
+      {
+        "id": "meta-guide-ihub-catalog",
+        "name": "IHub 能力目录使用指南",
+        "name_en": "IHub Capability Catalog Guide",
+        "domain": "meta",
+        "subdomain": "guide",
+        "stage": [
+          "ideate",
+          "init",
+          "code",
+          "llm",
+          "adapt",
+          "qa",
+          "ops",
+          "migrate"
+        ],
+        "type": "ihub-component",
+        "description": "引导 LLM/AI 工具理解 IHub 组件生态体系、选型策略和最佳实践的元条目",
+        "use_case": "当 LLM 需要理解 IHub 项目依赖、推荐组件或生成代码时，应首先阅读本条目的 ai_context",
+        "ai_context": "## IHub 组件生态概述\n\nIHub 是一个基于 Spring Boot 的 Java 后端开发生态体系，按三层架构组织：\n- **L1 枢纽**：ihub 仓库，项目入口与战略文档\n- **L2 能力板块**：libs 仓库（能力目录）、plugins 仓库（Gradle 插件集）\n- **L3 集成方案**：modules 仓库（可选模块）、integrations 仓库（场景化集成）\n\n## 如何使用本目录\n\n1. **根据开发者当前阶段过滤**：用 `stage` 字段匹配开发者所处的 8 阶旅程阶段\n2. **根据技术领域筛选**：用 `domain` 字段找到所需能力领域\n3. **理解组件关系**：\n   - `dependencies` 字段列出该组件的语义依赖\n   - `alternatives` 字段列出互斥或可替代的组件\n   - `ihub_layer` 字段标出组件在 L2/L3 层次的位置\n4. **版本管理**：本目录不包含版本号，所有版本通过 `version_ref` 引用 `libs.versions.toml` 的 `[versions]` 块\n\n## 组件选型原则\n\n1. **优先 IHub 自研组件**（type = `ihub-component`）：开箱即用，与 IHub 生态深度集成\n2. **推荐第三方参考组件**（type = `third-party-reference`）：经过验证的成熟方案\n3. **统一版本管理**：通过 BOM（type = `platform-bom`）管理版本，避免版本冲突\n4. **status 字段含义**：\n   - `stable`：生产就绪，首选\n   - `experimental`：可以尝试，API 可能变化\n   - `deprecated`：避免新项目使用\n   - `legacy`：存量维护，不推荐新功能\n\n## 领域速查\n\n| 领域 | 用途 | 典型场景 |\n|------|------|----------|\n| infrastructure | Spring 平台、日志、容器 | 项目初始化 |\n| data | ORM、数据源、SQL | 数据层开发 |\n| ddd | 领域驱动设计 | 复杂业务建模 |\n| mapping | 对象映射、序列化 | DTO/VO 转换 |\n| security | 认证、授权、SSO | 权限系统 |\n| distributed | 分布式锁、调度 | 分布式部署 |\n| workflow | 工作流引擎 | 审批流程 |\n| observability | 链路追踪、监控 | 生产运维 |\n| documentation | API 文档 | 接口文档 |\n| testing | 测试框架 | 质量保障 |\n| messaging | 消息队列 | 异步通信 |\n| utilities | 通用工具集 | 辅助开发 |\n\n## 与 Gradle Version Catalog 的关系\n\n- `libs.versions.toml` 的 `[versions]` 是**版本号唯一真相源**\n- 本目录通过 `version_ref` 引用 toml 中的版本键名\n- `gradle_ref` 是 toml `[libraries]` 中的别名，可在 Gradle 构建中直接使用\n- 版本变更只需修改 toml，目录无需同步更新\n\n## 与 ihub-meta 插件集成\n\n`ihub-meta` 插件生成 `project-meta.json` 时，会：\n1. 扫描项目依赖的 GAV 坐标\n2. 通过 `maven` 字段匹配本目录条目\n3. 将 `ai_context`、`use_case` 等语义信息注入输出\n4. 使 LLM 能通过 `project-meta.json` 理解任意 IHub 项目的组件构成",
+        "alternatives": [],
+        "maven": {
+          "group": "pub.ihub.libs",
+          "artifact": "ihub-catalog"
+        },
+        "version_ref": null,
+        "gradle_ref": null,
+        "dependencies": [],
+        "starter_available": false,
+        "tags": [
+          "meta",
+          "catalog",
+          "guide",
+          "llm",
+          "ai"
+        ],
+        "status": "stable",
+        "since_version": "1.0.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-meta"
+        ],
+        "doc_url": null,
+        "source_url": "https://github.com/ihub-pub/libs/gradle/ihub-catalog/",
+        "ihub_layer": "L2"
+      }
+    ],
+    "migration": [
+      {
+        "id": "migration-core-ihub-migrate",
+        "name": "IHub Migrate Core",
+        "name_en": "IHub Migrate Core",
+        "domain": "migration",
+        "subdomain": "analyze",
+        "stage": [
+          "migrate"
+        ],
+        "type": "ihub-component",
+        "description": "旧系统迁移分析引擎：扫描项目依赖与代码模式，输出 AI 可读的迁移分析报告",
+        "use_case": "存量 Java 项目现代化升级的起点。扫描项目，识别需要迁移的依赖版本、废弃 API 调用、配置变更等，输出结构化报告，可配合 OpenRewrite 自动修复或由 AI 工具辅助处理",
+        "ai_context": "## 集成模式\n作为 Gradle/Maven 插件或独立 CLI 工具运行。核心接口：\n- `MigrationAnalyzer`：汇总多条规则，生成 `AnalysisReport`\n- `MigrationRule`：单条规则接口，可自定义扩展\n- `ProjectContext`：项目上下文（依赖图、Java 版本、构建工具）\n\n## 典型工作流\n1. 构建 `ProjectContext`（扫描 pom.xml / build.gradle）\n2. 选择适用规则（如 spring-boot-2-to-3、javax-to-jakarta）\n3. 运行 `MigrationAnalyzer.analyze(ctx)` 获取 `AnalysisReport`\n4. 将报告传给 AI 工具或生成 OpenRewrite Recipe\n\n## 输出格式\n- JSON（供 MCP Server 返回给 AI）\n- Markdown（供开发者阅读）\n\n## 约束与限制\n- P2 阶段：规则库尚在建设中，优先覆盖 Spring Boot 2→3 迁移\n- 静态分析为主，不执行代码变更（变更由 OpenRewrite 完成）\n\n## 与其他模块协同\n- 与 `libs/catalog.json` 集成：将分析发现的旧依赖匹配到 catalog 中的推荐替代方案\n- 与 `agents/mcp-server` 集成：通过 MCP 工具 `analyzeProject` 暴露给 AI",
+        "alternatives": [],
+        "maven": {
+          "group": "pub.ihub.integration",
+          "artifact": "ihub-migrate-core"
+        },
+        "version_ref": null,
+        "gradle_ref": null,
+        "dependencies": [],
+        "starter_available": false,
+        "tags": [
+          "migration",
+          "analyze",
+          "openrewrite",
+          "legacy",
+          "modernization"
+        ],
+        "status": "experimental",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [],
+        "doc_url": "https://github.com/ihub-pub/integrations",
+        "source_url": "https://github.com/ihub-pub/integrations/tree/main/ihub-migrate-core",
+        "ihub_layer": "L2"
+      },
+      {
+        "id": "migration-agent-java-agent",
+        "name": "IHub Java Agent（运行时增强）",
+        "name_en": "IHub Java Agent",
+        "domain": "migration",
+        "subdomain": "agent",
+        "stage": [
+          "adapt",
+          "ops"
+        ],
+        "type": "ihub-component",
+        "description": "基于 ByteBuddy 的 Java Agent，运行时字节码增强，支持链路追踪、AOP 拦截等能力，无需修改源码",
+        "use_case": "无法修改源码的旧系统观测与增强：通过 Java Agent 注入链路追踪、日志采集、方法拦截等能力。作为迁移过渡期的临时兼容层，或作为持续运行的可观测性增强",
+        "ai_context": "## 集成模式\n作为 JVM 启动参数加载：`-javaagent:ihub-agent.jar`\n\n## 模块构成\n- `ihub-agent-core`：Agent 基础设施（Instrumentation API 封装）\n- `ihub-agent-trace-plugin`：链路追踪增强（基于 OpenTelemetry）\n- `ihub-bytebuddy-core`：ByteBuddy DSL 封装\n- `ihub-bytebuddy-plugin`：IHub 特定增强插件（如 Controller 文档生成）\n\n## 配置要点\n- Agent 通过插件化机制加载增强插件\n- 支持按类名/方法名过滤增强范围\n- 链路追踪插件兼容 OpenTelemetry Collector\n\n## 约束与限制\n- 需要 JVM 8+（建议 Java 17+）\n- 字节码增强有运行时开销，生产环境需评估影响\n- 不支持 GraalVM Native Image\n\n## 常见陷阱\n- 与其他 Agent（如 Arthas）同时使用可能冲突\n- 增强范围过大会影响启动性能",
+        "alternatives": [],
+        "maven": {
+          "group": "pub.ihub.integration",
+          "artifact": "ihub-agent-core"
+        },
+        "version_ref": null,
+        "gradle_ref": null,
+        "dependencies": [],
+        "starter_available": false,
+        "tags": [
+          "java-agent",
+          "bytebuddy",
+          "aop",
+          "trace",
+          "runtime"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [],
+        "doc_url": "https://github.com/ihub-pub/integrations",
+        "source_url": "https://github.com/ihub-pub/integrations/tree/main/ihub-agent-core",
+        "ihub_layer": "L2"
+      }
+    ],
+    "observability": [
+      {
+        "id": "skywalking-toolkit",
+        "name": "SkyWalking APM Toolkit",
+        "domain": "observability",
+        "type": "third-party-reference",
+        "description": "Apache SkyWalking 的应用端工具包，提供与 SkyWalking Agent 协同工作的 Trace API 和 Logback 日志增强，无需修改 SkyWalking Agent 即可在日志中注入 TraceId。",
+        "use_case": "在日志中自动附加分布式 TraceId、手动创建 Span 标记关键业务操作、通过 SkyWalking UI 追踪跨服务调用链路。",
+        "ai_context": "## SkyWalking Toolkit 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.apm.toolkit.logback)  // Logback 日志增强（TraceId 注入）\n    implementation(libs.apm.toolkit.trace)    // Trace API（手动 Span）\n}\n```\n\n### Logback 配置（注入 TraceId）\n```xml\n<!-- logback-spring.xml -->\n<appender name=\"STDOUT\" class=\"ch.qos.logback.core.ConsoleAppender\">\n    <encoder class=\"ch.qos.logback.core.encoder.LayoutWrappingEncoder\">\n        <layout class=\"org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout\">\n            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%tid] [%thread] %-5level %logger{36} - %msg%n</Pattern>\n        </layout>\n    </encoder>\n</appender>\n```\n\n### 手动 Trace（标记关键业务）\n```java\nimport org.apache.skywalking.apm.toolkit.trace.ActiveSpan;\nimport org.apache.skywalking.apm.toolkit.trace.Trace;\n\n@Service\npublic class PaymentService {\n    @Trace(operationName = \"payment-process\")\n    public void processPayment(Order order) {\n        ActiveSpan.tag(\"order.id\", order.getId());\n        ActiveSpan.tag(\"amount\", order.getAmount().toString());\n        // 业务逻辑\n    }\n}\n```\n\n### 部署要求\n- **必须**配合 SkyWalking Java Agent（`-javaagent:skywalking-agent.jar`）使用。\n- 纯 toolkit 依赖不会自动收集链路数据，Agent 才是数据采集核心。\n- 版本需与 SkyWalking OAP Server 版本匹配，通过 `version.ref = 'skywalking-toolkit'` 统一管理。\n\n### 替代方案选型\n- 已用 Spring Cloud Sleuth/Micrometer Tracing：使用 Zipkin/Jaeger 接收端。\n- 企业级需求：SkyWalking 支持更丰富的指标分析和 Service Mesh 集成。",
+        "alternatives": [
+          "micrometer-tracing",
+          "opentelemetry",
+          "zipkin-brave"
+        ],
+        "maven": {
+          "groupId": "org.apache.skywalking",
+          "artifactId": "apm-toolkit-logback-1.x",
+          "version_ref": "skywalking-toolkit"
+        },
+        "gradle_ref": [
+          "apm-toolkit-logback",
+          "apm-toolkit-trace"
+        ],
+        "dependencies": [],
+        "tags": [
+          "observability",
+          "tracing",
+          "distributed-tracing",
+          "apm",
+          "logging"
+        ],
+        "status": "stable",
+        "stage": [
+          "ops",
+          "migrate"
+        ],
+        "related_plugins": [],
+        "doc_url": "https://skywalking.apache.org/docs/",
+        "ihub_layer": "L2-libs"
+      }
+    ],
+    "security": [
+      {
+        "id": "security-auth-sa-token",
+        "name": "Sa-Token 权限认证",
+        "name_en": "Sa-Token Authentication",
+        "domain": "security",
+        "subdomain": "auth",
+        "stage": [
+          "adapt",
+          "qa"
+        ],
+        "type": "platform-bom",
+        "description": "轻量级 Java 权限认证框架，支持登录认证、权限验证、Session 会话、单点登录、OAuth2 等完整认证能力",
+        "use_case": "需要轻量级认证方案替代 Spring Security 时首选。快速实现登录、角色权限、多端会话管理、单点登录、OAuth2 第三方登录",
+        "ai_context": "## 集成模式\n通过 BOM 引入，sa-token-spring-boot3-starter 自动配置集成。核心接口：StpInterface（权限加载）、SaTokenConfig（配置）。\n\n## 配置要点\n- sa-token.token-name: token 名称（默认 satoken）\n- sa-token.timeout: token 有效期（秒，默认 30 天）\n- sa-token.activity-timeout: 临时 token 有效期\n- sa-token.is-concurrent: 是否允许同一账号并发登录\n- sa-token.is-share: 多端是否共享同一 token\n- sa-token.token-style: token 风格（uuid/simple-uuid/random-32/random-64/tik）\n\n## 约束与限制\n- 默认基于内存存储，生产环境必须配置 Redis（sa-token-redis-jackson）\n- Spring Boot 3.x/4.x 需要使用 sa-token-spring-boot3-starter\n- 与 Spring Security 互斥，不要同时使用\n- 前后端分离场景需配置 is-read-body=false\n\n## 常见陷阱\n- 忘记注入 SaTokenConfig 导致自定义配置不生效\n- Redis 序列化方案选择：Jackson 方案与 JDK 序列化不兼容\n- 前后端分离场景忘记关闭 Cookie 模式（is-read-cookie=false）\n- 权限码未加载导致所有请求被拒绝（StpInterface 实现问题）",
+        "alternatives": [],
+        "maven": {
+          "group": "cn.dev33",
+          "artifact": "sa-token-bom"
+        },
+        "version_ref": null,
+        "gradle_ref": "sa-token-bom",
+        "dependencies": [],
+        "starter_available": true,
+        "tags": [
+          "auth",
+          "jwt",
+          "session",
+          "rbac",
+          "oauth2",
+          "sso",
+          "bom"
+        ],
+        "status": "stable",
+        "since_version": "1.0.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-boot"
+        ],
+        "doc_url": "https://sa-token.cc",
+        "source_url": null,
+        "ihub_layer": "L2"
+      },
+      {
+        "id": "security-oauth-justauth",
+        "name": "JustAuth 第三方登录",
+        "name_en": "JustAuth OAuth Integration",
+        "domain": "security",
+        "subdomain": "oauth",
+        "stage": [
+          "adapt"
+        ],
+        "type": "third-party-reference",
+        "description": "第三方 OAuth 登录集成库，支持 GitHub、微信、QQ、微博、钉钉、百度等国内外数十个平台的 OAuth 授权登录",
+        "use_case": "需要快速接入第三方平台 OAuth 登录（如微信开放平台、企业微信、钉钉、GitHub 等）时使用。通常与 Sa-Token 配合实现完整认证体系",
+        "ai_context": "## 集成模式\n与 Sa-Token 配合使用。JustAuth 负责第三方平台 OAuth 流程，Sa-Token 负责登录后的会话管理。\n\n## 配置要点\n- 每个平台需配置 clientId、clientSecret、redirectUri\n- 各平台的 redirectUri 格式不同，需查阅 JustAuth 文档\n- 支持自定义 AuthConfig 和 AuthRequest\n\n## 约束与限制\n- 各平台的 appId/appSecret 需要提前申请\n- 微博等平台的审核周期较长\n- 部分平台（如微信公众号）的授权流程不同于标准 OAuth2\n- 需关注各平台的 API 变更和废弃\n\n## 常见陷阱\n- 回调地址与平台配置不一致导致授权失败\n- 混淆不同平台的 AuthSource 枚举值\n- 未处理 token 过期后的刷新逻辑\n- 微信开放平台与微信公众平台的配置混淆",
+        "alternatives": [],
+        "maven": {
+          "group": "me.zhyd.oauth",
+          "artifact": "JustAuth"
+        },
+        "version_ref": null,
+        "gradle_ref": "justauth",
+        "dependencies": [
+          {
+            "component_id": "security-auth-sa-token",
+            "required": false,
+            "scope": "implementation",
+            "reason": "推荐与 Sa-Token 配合管理登录会话"
+          }
+        ],
+        "starter_available": false,
+        "tags": [
+          "oauth",
+          "auth",
+          "third-party-login",
+          "wechat",
+          "github",
+          "dingtalk"
+        ],
+        "status": "stable",
+        "since_version": "0.1.0",
+        "deprecated_since": null,
+        "migration_guide": null,
+        "related_plugins": [
+          "pub.ihub.plugin.ihub-boot"
+        ],
+        "doc_url": "https://justauth.wiki",
+        "source_url": null,
+        "ihub_layer": "L2"
+      }
+    ],
+    "testing": [
+      {
+        "id": "spock-framework",
+        "name": "Spock Framework",
+        "domain": "testing",
+        "type": "third-party-reference",
+        "description": "基于 Groovy 的 BDD 测试框架，通过语义化的 `given/when/then` 结构提升测试可读性，内置数据驱动测试（@Unroll）和强大的 Mock 支持。",
+        "use_case": "业务逻辑单元测试、数据驱动测试（多组参数）、Spring Boot 集成测试、替代 JUnit + Mockito 组合。",
+        "ai_context": "## Spock Framework 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(platform(libs.spock.bom))  // BOM 管理版本\n    testImplementation(libs.spock.spring)     // Spring 集成\n    testImplementation(libs.spring.boot.starter.test) // Spring Boot 测试基础\n    testImplementation(libs.spock.reports)   // 可选：HTML 测试报告\n}\n```\n\n### 典型 Spock 测试\n```groovy\n@SpringBootTest\nclass UserServiceSpec extends Specification {\n    \n    @Autowired\n    UserService userService\n    \n    def \"创建用户时应该返回用户ID\"() {\n        given: \"一个用户请求\"\n        def request = new CreateUserRequest(name: \"张三\", email: \"zhang@example.com\")\n        \n        when: \"调用创建用户接口\"\n        def result = userService.createUser(request)\n        \n        then: \"返回非空ID\"\n        result.id != null\n        result.name == \"张三\"\n    }\n    \n    @Unroll\n    def \"验证年龄 #age 是否合法：期望 #expected\"() {\n        expect:\n        userService.isValidAge(age) == expected\n        \n        where:\n        age | expected\n        -1  | false\n        0   | false\n        18  | true\n        120 | true\n        200 | false\n    }\n}\n```\n\n### 与 IHub 插件集成\n- `ihub-groovy` 和 `ihub-test` 插件自动配置 Spock 依赖和测试任务。\n- IHub plugins 自身的测试套件全部使用 Spock。\n\n### 版本说明\n- `spock-bom` 版本号硬编码（`version = '2.4-groovy-5.0'`），无独立 version key。\n- 版本格式 `2.4-groovy-5.0` 中 `groovy-5.0` 表示对应的 Groovy 版本，需与项目 Groovy 版本匹配。",
+        "alternatives": [
+          "junit5",
+          "testng"
+        ],
+        "maven": {
+          "groupId": "org.spockframework",
+          "artifactId": "spock-bom",
+          "version_ref": null
+        },
+        "gradle_ref": [
+          "spock-bom",
+          "spock-spring",
+          "spock-reports"
+        ],
+        "dependencies": [],
+        "tags": [
+          "testing",
+          "bdd",
+          "groovy",
+          "mock",
+          "data-driven"
+        ],
+        "status": "stable",
+        "stage": [
+          "qa"
+        ],
+        "related_plugins": [
+          "ihub-groovy",
+          "ihub-test"
+        ],
+        "doc_url": "https://spockframework.org/spock/docs/",
+        "ihub_layer": "L2-libs"
+      },
+      {
+        "id": "junit5",
+        "name": "JUnit 5 (Jupiter)",
+        "domain": "testing",
+        "type": "third-party-reference",
+        "description": "Java 生态标准测试框架，Spring Boot 默认集成，支持参数化测试、扩展模型和并行测试。",
+        "use_case": "标准 Java 单元测试、与 Spring Boot Test 集成、Mockito Mock 测试，不需要 Groovy 的场景。",
+        "ai_context": "## JUnit 5 集成模式\n\n### Spring Boot 项目（推荐通过 starter）\n```kotlin\ndependencies {\n    testImplementation(libs.spring.boot.starter.test) // 包含 JUnit 5 + Mockito\n    // 或单独使用：\n    testImplementation(libs.junit.jupiter)\n}\n```\n\n### Spring Boot Test 包含内容\n- JUnit 5 (Jupiter)\n- Mockito\n- AssertJ\n- JsonPath\n- Spring Test\n\n### 典型测试\n```java\n@SpringBootTest\nclass UserServiceTest {\n    @Autowired\n    private UserService userService;\n    \n    @MockBean\n    private UserRepository userRepository;\n    \n    @Test\n    @DisplayName(\"创建用户成功\")\n    void createUserSuccess() {\n        when(userRepository.save(any())).thenReturn(new User(1L, \"张三\"));\n        User result = userService.createUser(\"张三\");\n        assertThat(result.getId()).isNotNull();\n    }\n    \n    @ParameterizedTest\n    @ValueSource(ints = {-1, 0, 200})\n    void invalidAgeTest(int age) {\n        assertFalse(userService.isValidAge(age));\n    }\n}\n```\n\n### 注意事项\n- Spring Boot 通过 BOM 管理 JUnit 版本，通常无需手动指定版本。\n- `libs.junit.jupiter` 别名无 version，依赖 Spring Boot BOM 或平台 BOM 提供版本。",
+        "alternatives": [
+          "spock-framework",
+          "testng"
+        ],
+        "maven": {
+          "groupId": "org.junit.jupiter",
+          "artifactId": "junit-jupiter",
+          "version_ref": null
+        },
+        "gradle_ref": [
+          "junit-jupiter",
+          "spring-boot-starter-test"
+        ],
+        "dependencies": [],
+        "tags": [
+          "testing",
+          "junit",
+          "unit-test",
+          "integration-test"
+        ],
+        "status": "stable",
+        "stage": [
+          "qa"
+        ],
+        "related_plugins": [
+          "ihub-test"
+        ],
+        "doc_url": "https://junit.org/junit5/docs/current/user-guide/",
+        "ihub_layer": "L2-libs"
+      },
+      {
+        "id": "pmd-static-analysis",
+        "name": "PMD 静态代码分析",
+        "domain": "testing",
+        "type": "third-party-reference",
+        "description": "静态源码分析工具，检测代码缺陷、命名规范、复杂度等问题；`p3c-pmd` 集成阿里巴巴 Java 规范检查。",
+        "use_case": "CI/CD 流水线中的代码质量门禁、强制执行团队代码规范、检测潜在 Bug（空指针、资源泄漏等）。",
+        "ai_context": "## PMD 集成模式\n\n### IHub 插件集成（推荐）\n`ihub-quality` 插件自动配置 PMD，无需手动设置。\n\n### 手动依赖配置（Gradle PMD 插件）\n```kotlin\nplugins {\n    pmd\n}\n\ndependencies {\n    // PMD 版本由 ihub libs 管理\n    pmd(libs.pmd.ant)\n    pmd(libs.pmd.java)\n    pmd(libs.pmd.groovy)  // Groovy 项目\n    pmd(libs.pmd.ali)     // 阿里 P3C 规范\n}\n\npmd {\n    toolVersion = libs.versions.pmd.get()\n    ruleSetFiles = files(\"config/pmd/ruleset.xml\")\n    isConsoleOutput = true\n}\n```\n\n### P3C 阿里规范\n`p3c-pmd` 包含了阿里巴巴《Java 开发手册》中的 PMD 规则集：\n- 命名规范检查\n- 异常处理规范\n- 集合使用规范\n- 并发编程规范\n\n### 版本管理\n- `pmd-ant`、`pmd-java`、`pmd-groovy` 共享 `version.ref = 'pmd'`。\n- `pmd-ali`（p3c）版本独立硬编码。\n\n### CI 集成建议\n```yaml\n# GitHub Actions\n- name: Run PMD\n  run: ./gradlew pmdMain pmdTest\n```",
+        "alternatives": [
+          "checkstyle",
+          "spotbugs",
+          "sonarqube"
+        ],
+        "maven": {
+          "groupId": "net.sourceforge.pmd",
+          "artifactId": "pmd-java",
+          "version_ref": "pmd"
+        },
+        "gradle_ref": [
+          "pmd-ant",
+          "pmd-java",
+          "pmd-groovy",
+          "pmd-ali"
+        ],
+        "dependencies": [],
+        "tags": [
+          "static-analysis",
+          "code-quality",
+          "pmd",
+          "p3c",
+          "ci"
+        ],
+        "status": "stable",
+        "stage": [
+          "qa"
+        ],
+        "related_plugins": [
+          "ihub-quality"
+        ],
+        "doc_url": "https://pmd.github.io/",
+        "ihub_layer": "L2-libs"
+      }
+    ],
+    "utilities": [
+      {
+        "id": "hutool",
+        "name": "Hutool（Java 工具库）",
+        "domain": "utilities",
+        "type": "third-party-reference",
+        "description": "国内最流行的 Java 工具库，覆盖字符串、日期、加密、HTTP、缓存等 200+ 工具类，减少第三方依赖。",
+        "use_case": "日常编码工具方法（字符串处理、日期计算、加密解密、文件操作）、快速原型开发、减少 Apache Commons 等多个工具库的碎片化引入。",
+        "ai_context": "## Hutool 集成模式\n\n### 依赖选择策略\n```kotlin\n// 方案1：全量引入（适合原型/小项目）\ndependencies {\n    implementation(libs.hutool.all)     // Hutool 5.x\n    // 或 Hutool 7.x（更现代，部分 API 变化）：\n    implementation(libs.hutool.v7.all)\n}\n\n// 方案2：BOM + 按需引入（生产推荐，减小包体积）\ndependencies {\n    implementation(platform(libs.hutool.bom))        // 5.x BOM\n    implementation(\"cn.hutool:hutool-core\")           // 核心工具\n    implementation(\"cn.hutool:hutool-crypto\")         // 加密\n    implementation(\"cn.hutool:hutool-http\")           // HTTP 客户端\n    implementation(\"cn.hutool:hutool-extra\")          // 额外工具（模板等）\n}\n```\n\n### 常用工具类速查\n```java\n// 字符串\nStrUtil.isBlank(str);           // 判空（含空白字符）\nStrUtil.format(\"hello {}\", name); // 模板格式化\n\n// 日期时间\nDateUtil.now();                 // 当前时间\nDateUtil.format(date, \"yyyy-MM-dd\"); // 格式化\nDateUtil.between(start, end, DateUnit.DAY); // 日期差\n\n// 加密\nSecureUtil.md5(str);            // MD5\nSecureUtil.sha256(str);         // SHA-256\nAES aes = SecureUtil.aes(key);  // AES 对称加密\n\n// HTTP\nString result = HttpUtil.get(url); // GET 请求\nHttpUtil.post(url, paramMap);       // POST 请求\n\n// 集合\nCollUtil.isEmpty(list);         // 集合判空\nCollUtil.newArrayList(a, b, c); // 快速创建列表\n```\n\n### 5.x vs 7.x 选择建议\n- **5.x**：稳定版，API 向后兼容，适合现有项目\n- **7.x**：新版本，部分包名和 API 有变化，适合新项目\n- IHub libs 同时提供两者 BOM，通过不同 gradle 别名区分\n\n### 版本管理\n- 5.x：`version.ref = 'hutool'`（`hutool-bom`, `hutool-all`）\n- 7.x：`version.ref = 'hutool-v7'`（`hutool-v7-bom`, `hutool-v7-all`）",
+        "alternatives": [
+          "apache-commons",
+          "guava",
+          "vavr"
+        ],
+        "maven": {
+          "groupId": "cn.hutool",
+          "artifactId": "hutool-bom",
+          "version_ref": "hutool"
+        },
+        "gradle_ref": [
+          "hutool-bom",
+          "hutool-all",
+          "hutool-v7-bom",
+          "hutool-v7-all"
+        ],
+        "dependencies": [],
+        "tags": [
+          "utilities",
+          "toolkit",
+          "string",
+          "date",
+          "crypto",
+          "http"
+        ],
+        "status": "stable",
+        "stage": [
+          "code",
+          "ideate",
+          "init"
+        ],
+        "related_plugins": [],
+        "doc_url": "https://hutool.cn/docs/",
+        "ihub_layer": "L2-libs"
+      },
+      {
+        "id": "sms4j",
+        "name": "SMS4J（短信聚合）",
+        "domain": "utilities",
+        "type": "third-party-reference",
+        "description": "短信聚合框架，统一接口对接阿里云、腾讯云、华为云、七牛云等主流短信服务商，一套代码多服务商切换。",
+        "use_case": "验证码短信发送、营销短信、短信服务商迁移（避免业务代码改动）、多服务商负载均衡/降级。",
+        "ai_context": "## SMS4J 集成模式\n\n### Spring Boot Starter\n```kotlin\ndependencies {\n    implementation(libs.sms4j) // sms4j-spring-boot-starter\n}\n```\n\n### 配置示例（阿里云）\n```yaml\nsms:\n  blends:\n    ali:\n      access-key-id: your-access-key-id\n      access-key-secret: your-access-key-secret\n      signature-name: 你的签名\n      template-id: SMS_123456789\n```\n\n### 发送短信\n```java\n@Autowired\nprivate SmsBlend smsBlend;\n\n// 发送验证码\nSmsResponse response = smsBlend.sendMessage(\"13800138000\", \"123456\");\n\n// 使用模板变量\nLinkedHashMap<String, String> params = new LinkedHashMap<>();\nparams.put(\"code\", \"123456\");\nsmsBlend.sendMessage(\"13800138000\", \"SMS_123456\", params);\n```\n\n### 版本说明\n- 版本号硬编码（`version = '3.3.5'`），无独立 version key。\n- `sms4j-spring-boot-starter` 已包含所有主流服务商 SDK。",
+        "alternatives": [
+          "aliyun-sms-sdk",
+          "tencent-sms-sdk"
+        ],
+        "maven": {
+          "groupId": "org.dromara.sms4j",
+          "artifactId": "sms4j-spring-boot-starter",
+          "version_ref": null
+        },
+        "gradle_ref": [
+          "sms4j"
+        ],
+        "dependencies": [],
+        "tags": [
+          "sms",
+          "notification",
+          "cloud-service",
+          "multi-vendor"
+        ],
+        "status": "stable",
+        "stage": [
+          "adapt"
+        ],
+        "related_plugins": [],
+        "doc_url": "https://wind.kim/",
+        "ihub_layer": "L2-libs"
+      },
+      {
+        "id": "x-file-storage",
+        "name": "X File Storage（文件存储聚合）",
+        "domain": "utilities",
+        "type": "third-party-reference",
+        "description": "文件存储聚合框架，统一接口对接本地存储、阿里云 OSS、腾讯云 COS、MinIO 等 30+ 存储平台，支持切片上传、缩略图。",
+        "use_case": "图片/文件上传下载、多云存储适配、本地开发环境与生产云存储无缝切换。",
+        "ai_context": "## X File Storage 集成模式\n\n### Spring Boot Starter\n```kotlin\ndependencies {\n    implementation(libs.x.file.storage)\n    // 根据使用的存储平台额外引入 SDK：\n    implementation(\"com.aliyun.oss:aliyun-sdk-oss\")   // 阿里云 OSS\n    implementation(\"io.minio:minio\")                  // MinIO\n}\n```\n\n### 配置（阿里云 OSS）\n```yaml\nspring:\n  file-storage:\n    default-platform: aliyun-oss-1\n    aliyun-oss:\n      - platform: aliyun-oss-1\n        enable-storage: true\n        access-key: your-access-key\n        secret-key: your-secret-key\n        end-point: https://oss-cn-hangzhou.aliyuncs.com\n        bucket-name: your-bucket\n```\n\n### 文件上传\n```java\n@Autowired\nprivate FileStorageService fileStorageService;\n\n// 上传并返回 URL\nFileInfo fileInfo = fileStorageService.of(file)\n    .setPath(\"avatars/\")\n    .setObjectId(userId.toString())\n    .upload();\nString url = fileInfo.getUrl();\n\n// 上传图片并生成缩略图\nFileInfo fileInfo = fileStorageService.of(file)\n    .thumbnail(th -> th.size(200, 200))\n    .upload();\n```\n\n### 版本说明\n- 版本号硬编码（`version = '2.3.0'`），无独立 version key。",
+        "alternatives": [
+          "aliyun-oss-sdk",
+          "minio-sdk"
+        ],
+        "maven": {
+          "groupId": "org.dromara.x-file-storage",
+          "artifactId": "x-file-storage-spring",
+          "version_ref": null
+        },
+        "gradle_ref": [
+          "x-file-storage"
+        ],
+        "dependencies": [],
+        "tags": [
+          "file-storage",
+          "oss",
+          "minio",
+          "upload",
+          "cloud-storage"
+        ],
+        "status": "stable",
+        "stage": [
+          "adapt",
+          "code"
+        ],
+        "related_plugins": [],
+        "doc_url": "https://x-file-storage.xuyanwu.cn/",
+        "ihub_layer": "L2-libs"
+      },
+      {
+        "id": "anyline",
+        "name": "AnyLine（动态数据处理）",
+        "domain": "utilities",
+        "type": "third-party-reference",
+        "description": "面向运行时动态数据操作的框架，支持动态 SQL 生成、多数据源切换、低代码数据查询，无需预定义 Entity 类。",
+        "use_case": "报表系统（动态列）、低代码平台数据层、多数据库适配、无实体类的动态数据 CRUD。",
+        "ai_context": "## AnyLine 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.anyline.dependency)\n    implementation(\"org.anyline:anyline-data-jdbc-mysql\") // 按数据库选择\n}\n```\n\n### 核心概念\n- **不需要** Entity 类，直接操作表结构\n- **动态 SQL**：通过 Condition 对象组装查询条件\n- **运行时 Schema 探测**：可查询表结构信息\n\n### 典型用法\n```java\n@Autowired\nprivate AnylineService anylineService;\n\n// 动态查询（无需 Entity）\nDataSet users = anylineService.querys(\"SYS_USER\",\n    new DefaultCondition()\n        .and(\"STATUS\", 1)\n        .and(\"AGE\", Compare.GREAT, 18)\n);\n\n// 读取表结构（低代码场景）\nList<Column> columns = anylineService.metadata().columns(\"SYS_USER\");\n```\n\n### 版本说明\n- 版本号硬编码（`version = '8.7.3-20260501'`），无独立 version key。\n- 版本号含日期后缀，表示快照/里程碑版本。\n\n### 适用场景判断\n- ✅ 需要动态列、动态表的报表/低代码\n- ✅ 多数据库适配（不改业务代码切换 MySQL/Oracle/PG）\n- ❌ 标准 CRUD 业务（用 MyBatis-Plus 或 Easy-Query 更合适）",
+        "alternatives": [
+          "mybatis-plus",
+          "jooq",
+          "querydsl"
+        ],
+        "maven": {
+          "groupId": "org.anyline",
+          "artifactId": "anyline-dependency",
+          "version_ref": null
+        },
+        "gradle_ref": [
+          "anyline-dependency"
+        ],
+        "dependencies": [],
+        "tags": [
+          "dynamic-sql",
+          "no-entity",
+          "low-code",
+          "report",
+          "multi-database"
+        ],
+        "status": "stable",
+        "stage": [
+          "code"
+        ],
+        "related_plugins": [],
+        "doc_url": "https://www.anyline.org/",
+        "ihub_layer": "L2-libs"
+      }
+    ],
+    "workflow": [
+      {
+        "id": "warm-flow",
+        "name": "Warm-Flow（轻量工作流引擎）",
+        "domain": "workflow",
+        "type": "third-party-reference",
+        "description": "国产轻量级工作流引擎，支持 MyBatis-Plus、JPA 等多种 ORM，提供审批流程、条件分支、网关等核心特性，开箱即用。",
+        "use_case": "OA 审批流程、业务单据流转、多级审批、条件路由、退回/撤销操作。不适合需要复杂 BPMN 建模的场景。",
+        "ai_context": "## Warm-Flow 集成模式\n\n### 技术选型矩阵\n| ORM | Spring Boot 2.x | Spring Boot 3.x | Solon |\n|-----|----------------|----------------|-------|\n| MyBatis | warm-flow-m-sb | warm-flow-m-sb3 | warm-flow-m-solon |\n| MyBatis-Plus | warm-flow-mp-sb | warm-flow-mp-sb3 | warm-flow-mp-solon |\n\n### Spring Boot 3 + MyBatis-Plus 典型配置\n```kotlin\ndependencies {\n    implementation(libs.warm.flow.mp.sb3)  // 核心引擎\n    implementation(libs.warm.flow.ui.sb)   // 可选：UI 组件\n}\n```\n\n### 快速入门\n```java\n@Service\npublic class ApprovalService {\n    @Autowired\n    private FlowEngine flowEngine;\n    \n    // 启动审批流\n    public void startFlow(String flowCode, String businessId) {\n        flowEngine.start(flowCode, businessId, new HashMap<>());\n    }\n    \n    // 审批通过\n    public void approve(Long taskId, String opinion) {\n        flowEngine.pass(taskId, opinion, new HashMap<>());\n    }\n    \n    // 退回\n    public void reject(Long taskId, String targetNode) {\n        flowEngine.rollback(taskId, targetNode);\n    }\n}\n```\n\n### 核心概念\n- **流程定义**：XML 或代码定义审批节点和流转规则\n- **流程实例**：一次流程的执行记录\n- **任务节点**：流程中的审批节点（支持会签、或签）\n- **网关**：条件分支路由\n\n### 版本管理\n- 所有 warm-flow 模块共享 `version.ref = 'warm-flow'`，统一版本升级。\n\n### 与 Activiti/Flowable 对比\n- Warm-Flow 学习成本更低，不需要理解完整 BPMN 规范。\n- 适合中小项目的审批流，不适合复杂跨系统流程编排。\n- Activiti/Flowable 功能更全，社区生态更大。",
+        "alternatives": [
+          "activiti",
+          "flowable",
+          "camunda"
+        ],
+        "maven": {
+          "groupId": "org.dromara.warm",
+          "artifactId": "warm-flow-mybatis-plus-sb3-starter",
+          "version_ref": "warm-flow"
+        },
+        "gradle_ref": [
+          "warm-flow-m-sb",
+          "warm-flow-m-sb3",
+          "warm-flow-m-solon",
+          "warm-flow-mp-sb",
+          "warm-flow-mp-sb3",
+          "warm-flow-mp-solon",
+          "warm-flow-ui-sb",
+          "warm-flow-ui-solon"
+        ],
+        "dependencies": [
+          "data"
+        ],
+        "tags": [
+          "workflow",
+          "approval",
+          "bpm",
+          "state-machine",
+          "lightweight"
+        ],
+        "status": "stable",
+        "stage": [
+          "code"
+        ],
+        "related_plugins": [],
+        "doc_url": "https://warm-flow.dromara.org/",
+        "ihub_layer": "L2-libs"
+      }
+    ]
+  },
+  "domain_index": {
+    "infrastructure": [
+      "infra-platform-spring-boot",
+      "infra-platform-spring-cloud",
+      "infra-platform-spring-cloud-alibaba",
+      "infra-platform-spring-boot-admin",
+      "infra-platform-spring-ai",
+      "infra-logging-slf4j",
+      "infra-logging-log4j2",
+      "infra-lang-groovy",
+      "infra-bom-ihub-integration",
+      "infra-bom-ihub-module"
+    ],
+    "data": [
+      "data-orm-mybatis-plus",
+      "data-orm-mybatis-plus-ext",
+      "data-orm-easy-query",
+      "data-datasource-dynamic"
+    ],
+    "ddd": [
+      "ddd-architecture-jmolecules",
+      "ddd-modularity-spring-modulith"
+    ],
+    "mapping": [
+      "mapstruct",
+      "mapstruct-plus",
+      "fastjson2",
+      "easyexcel"
+    ],
+    "security": [
+      "security-auth-sa-token",
+      "security-oauth-justauth"
+    ],
+    "distributed": [
+      "dynamic-tp",
+      "easy-trans",
+      "redisson",
+      "snail-job"
+    ],
+    "workflow": [
+      "warm-flow"
+    ],
+    "observability": [
+      "skywalking-toolkit"
+    ],
+    "documentation": [
+      "springdoc-openapi",
+      "therapi-runtime-javadoc"
+    ],
+    "testing": [
+      "spock-framework",
+      "junit5",
+      "pmd-static-analysis"
+    ],
+    "messaging": [
+      "messaging-placeholder"
+    ],
+    "utilities": [
+      "hutool",
+      "sms4j",
+      "x-file-storage",
+      "anyline"
+    ],
+    "meta": [
+      "meta-guide-ihub-catalog"
+    ],
+    "migration": [
+      "migration-core-ihub-migrate",
+      "migration-agent-java-agent"
+    ]
+  },
+  "stage_index": {
+    "ideate": [
+      "ddd-architecture-jmolecules",
+      "ddd-modularity-spring-modulith",
+      "meta-guide-ihub-catalog",
+      "hutool"
+    ],
+    "init": [
+      "infra-platform-spring-boot",
+      "infra-platform-spring-cloud",
+      "infra-platform-spring-cloud-alibaba",
+      "infra-logging-slf4j",
+      "infra-logging-log4j2",
+      "infra-lang-groovy",
+      "infra-bom-ihub-integration",
+      "infra-bom-ihub-module",
+      "meta-guide-ihub-catalog",
+      "hutool"
+    ],
+    "code": [
+      "data-orm-mybatis-plus",
+      "data-orm-mybatis-plus-ext",
+      "data-orm-easy-query",
+      "data-datasource-dynamic",
+      "ddd-architecture-jmolecules",
+      "ddd-modularity-spring-modulith",
+      "easy-trans",
+      "redisson",
+      "infra-platform-spring-boot",
+      "infra-logging-slf4j",
+      "infra-logging-log4j2",
+      "infra-lang-groovy",
+      "infra-bom-ihub-integration",
+      "infra-bom-ihub-module",
+      "mapstruct",
+      "mapstruct-plus",
+      "fastjson2",
+      "easyexcel",
+      "meta-guide-ihub-catalog",
+      "hutool",
+      "x-file-storage",
+      "anyline",
+      "warm-flow"
+    ],
+    "llm": [
+      "infra-platform-spring-ai",
+      "meta-guide-ihub-catalog"
+    ],
+    "adapt": [
+      "data-datasource-dynamic",
+      "dynamic-tp",
+      "easy-trans",
+      "redisson",
+      "snail-job",
+      "springdoc-openapi",
+      "therapi-runtime-javadoc",
+      "infra-platform-spring-cloud",
+      "infra-platform-spring-cloud-alibaba",
+      "fastjson2",
+      "easyexcel",
+      "messaging-placeholder",
+      "meta-guide-ihub-catalog",
+      "migration-agent-java-agent",
+      "security-auth-sa-token",
+      "security-oauth-justauth",
+      "sms4j",
+      "x-file-storage"
+    ],
+    "qa": [
+      "ddd-architecture-jmolecules",
+      "ddd-modularity-spring-modulith",
+      "springdoc-openapi",
+      "therapi-runtime-javadoc",
+      "infra-lang-groovy",
+      "meta-guide-ihub-catalog",
+      "security-auth-sa-token",
+      "spock-framework",
+      "junit5",
+      "pmd-static-analysis"
+    ],
+    "ops": [
+      "dynamic-tp",
+      "snail-job",
+      "infra-platform-spring-boot-admin",
+      "infra-logging-slf4j",
+      "infra-logging-log4j2",
+      "meta-guide-ihub-catalog",
+      "migration-agent-java-agent",
+      "skywalking-toolkit"
+    ],
+    "migrate": [
+      "meta-guide-ihub-catalog",
+      "migration-core-ihub-migrate",
+      "skywalking-toolkit"
+    ]
+  },
+  "alternatives_graph": {
+    "data-orm-mybatis-plus": [
+      "data-orm-easy-query"
+    ],
+    "data-orm-easy-query": [
+      "data-orm-mybatis-plus"
+    ],
+    "ddd-architecture-jmolecules": [
+      "ddd-modularity-spring-modulith"
+    ],
+    "ddd-modularity-spring-modulith": [
+      "ddd-architecture-jmolecules"
+    ],
+    "dynamic-tp": [
+      "thread-pool-executor-manual",
+      "resilience4j-bulkhead"
+    ],
+    "easy-trans": [
+      "manual-join-query",
+      "mybatis-plus-join"
+    ],
+    "redisson": [
+      "spring-integration-redis",
+      "jedis-lock"
+    ],
+    "snail-job": [
+      "xxl-job",
+      "powerjob",
+      "quartz",
+      "spring-batch"
+    ],
+    "springdoc-openapi": [
+      "springfox-swagger2",
+      "knife4j"
+    ],
+    "therapi-runtime-javadoc": [
+      "manual-swagger-annotations"
+    ],
+    "infra-lang-groovy": [
+      "kotlin"
+    ],
+    "mapstruct": [
+      "mapstruct-plus",
+      "modelmapper",
+      "dozer"
+    ],
+    "mapstruct-plus": [
+      "mapstruct"
+    ],
+    "fastjson2": [
+      "jackson",
+      "gson"
+    ],
+    "easyexcel": [
+      "apache-poi",
+      "hutool-poi"
+    ],
+    "messaging-placeholder": [
+      "rocketmq",
+      "kafka",
+      "rabbitmq",
+      "pulsar"
+    ],
+    "skywalking-toolkit": [
+      "micrometer-tracing",
+      "opentelemetry",
+      "zipkin-brave"
+    ],
+    "spock-framework": [
+      "junit5",
+      "testng"
+    ],
+    "junit5": [
+      "spock-framework",
+      "testng"
+    ],
+    "pmd-static-analysis": [
+      "checkstyle",
+      "spotbugs",
+      "sonarqube"
+    ],
+    "hutool": [
+      "apache-commons",
+      "guava",
+      "vavr"
+    ],
+    "sms4j": [
+      "aliyun-sms-sdk",
+      "tencent-sms-sdk"
+    ],
+    "x-file-storage": [
+      "aliyun-oss-sdk",
+      "minio-sdk"
+    ],
+    "anyline": [
+      "mybatis-plus",
+      "jooq",
+      "querydsl"
+    ],
+    "warm-flow": [
+      "activiti",
+      "flowable",
+      "camunda"
+    ]
+  },
+  "total_entries": 41
+}

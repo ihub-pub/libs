@@ -1,0 +1,29 @@
+[
+  {
+    "id": "meta-guide-ihub-catalog",
+    "name": "IHub 能力目录使用指南",
+    "name_en": "IHub Capability Catalog Guide",
+    "domain": "meta",
+    "subdomain": "guide",
+    "stage": ["ideate", "init", "code", "llm", "adapt", "qa", "ops", "migrate"],
+    "type": "ihub-component",
+    "description": "引导 LLM/AI 工具理解 IHub 组件生态体系、选型策略和最佳实践的元条目",
+    "use_case": "当 LLM 需要理解 IHub 项目依赖、推荐组件或生成代码时，应首先阅读本条目的 ai_context",
+    "ai_context": "## IHub 组件生态概述\n\nIHub 是一个基于 Spring Boot 的 Java 后端开发生态体系，按三层架构组织：\n- **L1 枢纽**：ihub 仓库，项目入口与战略文档\n- **L2 能力板块**：libs 仓库（能力目录）、plugins 仓库（Gradle 插件集）\n- **L3 集成方案**：modules 仓库（可选模块）、integrations 仓库（场景化集成）\n\n## 如何使用本目录\n\n1. **根据开发者当前阶段过滤**：用 `stage` 字段匹配开发者所处的 8 阶旅程阶段\n2. **根据技术领域筛选**：用 `domain` 字段找到所需能力领域\n3. **理解组件关系**：\n   - `dependencies` 字段列出该组件的语义依赖\n   - `alternatives` 字段列出互斥或可替代的组件\n   - `ihub_layer` 字段标出组件在 L2/L3 层次的位置\n4. **版本管理**：本目录不包含版本号，所有版本通过 `version_ref` 引用 `libs.versions.toml` 的 `[versions]` 块\n\n## 组件选型原则\n\n1. **优先 IHub 自研组件**（type = `ihub-component`）：开箱即用，与 IHub 生态深度集成\n2. **推荐第三方参考组件**（type = `third-party-reference`）：经过验证的成熟方案\n3. **统一版本管理**：通过 BOM（type = `platform-bom`）管理版本，避免版本冲突\n4. **status 字段含义**：\n   - `stable`：生产就绪，首选\n   - `experimental`：可以尝试，API 可能变化\n   - `deprecated`：避免新项目使用\n   - `legacy`：存量维护，不推荐新功能\n\n## 领域速查\n\n| 领域 | 用途 | 典型场景 |\n|------|------|----------|\n| infrastructure | Spring 平台、日志、容器 | 项目初始化 |\n| data | ORM、数据源、SQL | 数据层开发 |\n| ddd | 领域驱动设计 | 复杂业务建模 |\n| mapping | 对象映射、序列化 | DTO/VO 转换 |\n| security | 认证、授权、SSO | 权限系统 |\n| distributed | 分布式锁、调度 | 分布式部署 |\n| workflow | 工作流引擎 | 审批流程 |\n| observability | 链路追踪、监控 | 生产运维 |\n| documentation | API 文档 | 接口文档 |\n| testing | 测试框架 | 质量保障 |\n| messaging | 消息队列 | 异步通信 |\n| utilities | 通用工具集 | 辅助开发 |\n\n## 与 Gradle Version Catalog 的关系\n\n- `libs.versions.toml` 的 `[versions]` 是**版本号唯一真相源**\n- 本目录通过 `version_ref` 引用 toml 中的版本键名\n- `gradle_ref` 是 toml `[libraries]` 中的别名，可在 Gradle 构建中直接使用\n- 版本变更只需修改 toml，目录无需同步更新\n\n## 与 ihub-meta 插件集成\n\n`ihub-meta` 插件生成 `project-meta.json` 时，会：\n1. 扫描项目依赖的 GAV 坐标\n2. 通过 `maven` 字段匹配本目录条目\n3. 将 `ai_context`、`use_case` 等语义信息注入输出\n4. 使 LLM 能通过 `project-meta.json` 理解任意 IHub 项目的组件构成",
+    "alternatives": [],
+    "maven": { "group": "pub.ihub.libs", "artifact": "ihub-catalog" },
+    "version_ref": null,
+    "gradle_ref": null,
+    "dependencies": [],
+    "starter_available": false,
+    "tags": ["meta", "catalog", "guide", "llm", "ai"],
+    "status": "stable",
+    "since_version": "1.0.0",
+    "deprecated_since": null,
+    "migration_guide": null,
+    "related_plugins": ["pub.ihub.plugin.ihub-meta"],
+    "doc_url": null,
+    "source_url": "https://github.com/ihub-pub/libs/gradle/ihub-catalog/",
+    "ihub_layer": "L2"
+  }
+]

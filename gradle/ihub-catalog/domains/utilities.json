@@ -1,0 +1,154 @@
+[
+  {
+    "id": "hutool",
+    "name": "Hutool（Java 工具库）",
+    "domain": "utilities",
+    "type": "third-party-reference",
+    "description": "国内最流行的 Java 工具库，覆盖字符串、日期、加密、HTTP、缓存等 200+ 工具类，减少第三方依赖。",
+    "use_case": "日常编码工具方法（字符串处理、日期计算、加密解密、文件操作）、快速原型开发、减少 Apache Commons 等多个工具库的碎片化引入。",
+    "ai_context": "## Hutool 集成模式\n\n### 依赖选择策略\n```kotlin\n// 方案1：全量引入（适合原型/小项目）\ndependencies {\n    implementation(libs.hutool.all)     // Hutool 5.x\n    // 或 Hutool 7.x（更现代，部分 API 变化）：\n    implementation(libs.hutool.v7.all)\n}\n\n// 方案2：BOM + 按需引入（生产推荐，减小包体积）\ndependencies {\n    implementation(platform(libs.hutool.bom))        // 5.x BOM\n    implementation(\"cn.hutool:hutool-core\")           // 核心工具\n    implementation(\"cn.hutool:hutool-crypto\")         // 加密\n    implementation(\"cn.hutool:hutool-http\")           // HTTP 客户端\n    implementation(\"cn.hutool:hutool-extra\")          // 额外工具（模板等）\n}\n```\n\n### 常用工具类速查\n```java\n// 字符串\nStrUtil.isBlank(str);           // 判空（含空白字符）\nStrUtil.format(\"hello {}\", name); // 模板格式化\n\n// 日期时间\nDateUtil.now();                 // 当前时间\nDateUtil.format(date, \"yyyy-MM-dd\"); // 格式化\nDateUtil.between(start, end, DateUnit.DAY); // 日期差\n\n// 加密\nSecureUtil.md5(str);            // MD5\nSecureUtil.sha256(str);         // SHA-256\nAES aes = SecureUtil.aes(key);  // AES 对称加密\n\n// HTTP\nString result = HttpUtil.get(url); // GET 请求\nHttpUtil.post(url, paramMap);       // POST 请求\n\n// 集合\nCollUtil.isEmpty(list);         // 集合判空\nCollUtil.newArrayList(a, b, c); // 快速创建列表\n```\n\n### 5.x vs 7.x 选择建议\n- **5.x**：稳定版，API 向后兼容，适合现有项目\n- **7.x**：新版本，部分包名和 API 有变化，适合新项目\n- IHub libs 同时提供两者 BOM，通过不同 gradle 别名区分\n\n### 版本管理\n- 5.x：`version.ref = 'hutool'`（`hutool-bom`, `hutool-all`）\n- 7.x：`version.ref = 'hutool-v7'`（`hutool-v7-bom`, `hutool-v7-all`）",
+    "alternatives": [
+      "apache-commons",
+      "guava",
+      "vavr"
+    ],
+    "maven": {
+      "groupId": "cn.hutool",
+      "artifactId": "hutool-bom",
+      "version_ref": "hutool"
+    },
+    "gradle_ref": [
+      "hutool-bom",
+      "hutool-all",
+      "hutool-v7-bom",
+      "hutool-v7-all"
+    ],
+    "dependencies": [],
+    "tags": [
+      "utilities",
+      "toolkit",
+      "string",
+      "date",
+      "crypto",
+      "http"
+    ],
+    "status": "stable",
+    "stage": [
+      "code",
+      "ideate",
+      "init"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://hutool.cn/docs/",
+    "ihub_layer": "L2-libs"
+  },
+  {
+    "id": "sms4j",
+    "name": "SMS4J（短信聚合）",
+    "domain": "utilities",
+    "type": "third-party-reference",
+    "description": "短信聚合框架，统一接口对接阿里云、腾讯云、华为云、七牛云等主流短信服务商，一套代码多服务商切换。",
+    "use_case": "验证码短信发送、营销短信、短信服务商迁移（避免业务代码改动）、多服务商负载均衡/降级。",
+    "ai_context": "## SMS4J 集成模式\n\n### Spring Boot Starter\n```kotlin\ndependencies {\n    implementation(libs.sms4j) // sms4j-spring-boot-starter\n}\n```\n\n### 配置示例（阿里云）\n```yaml\nsms:\n  blends:\n    ali:\n      access-key-id: your-access-key-id\n      access-key-secret: your-access-key-secret\n      signature-name: 你的签名\n      template-id: SMS_123456789\n```\n\n### 发送短信\n```java\n@Autowired\nprivate SmsBlend smsBlend;\n\n// 发送验证码\nSmsResponse response = smsBlend.sendMessage(\"13800138000\", \"123456\");\n\n// 使用模板变量\nLinkedHashMap<String, String> params = new LinkedHashMap<>();\nparams.put(\"code\", \"123456\");\nsmsBlend.sendMessage(\"13800138000\", \"SMS_123456\", params);\n```\n\n### 版本说明\n- 版本号硬编码（`version = '3.3.5'`），无独立 version key。\n- `sms4j-spring-boot-starter` 已包含所有主流服务商 SDK。",
+    "alternatives": [
+      "aliyun-sms-sdk",
+      "tencent-sms-sdk"
+    ],
+    "maven": {
+      "groupId": "org.dromara.sms4j",
+      "artifactId": "sms4j-spring-boot-starter",
+      "version_ref": null
+    },
+    "gradle_ref": [
+      "sms4j"
+    ],
+    "dependencies": [],
+    "tags": [
+      "sms",
+      "notification",
+      "cloud-service",
+      "multi-vendor"
+    ],
+    "status": "stable",
+    "stage": [
+      "adapt"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://wind.kim/",
+    "ihub_layer": "L2-libs"
+  },
+  {
+    "id": "x-file-storage",
+    "name": "X File Storage（文件存储聚合）",
+    "domain": "utilities",
+    "type": "third-party-reference",
+    "description": "文件存储聚合框架，统一接口对接本地存储、阿里云 OSS、腾讯云 COS、MinIO 等 30+ 存储平台，支持切片上传、缩略图。",
+    "use_case": "图片/文件上传下载、多云存储适配、本地开发环境与生产云存储无缝切换。",
+    "ai_context": "## X File Storage 集成模式\n\n### Spring Boot Starter\n```kotlin\ndependencies {\n    implementation(libs.x.file.storage)\n    // 根据使用的存储平台额外引入 SDK：\n    implementation(\"com.aliyun.oss:aliyun-sdk-oss\")   // 阿里云 OSS\n    implementation(\"io.minio:minio\")                  // MinIO\n}\n```\n\n### 配置（阿里云 OSS）\n```yaml\nspring:\n  file-storage:\n    default-platform: aliyun-oss-1\n    aliyun-oss:\n      - platform: aliyun-oss-1\n        enable-storage: true\n        access-key: your-access-key\n        secret-key: your-secret-key\n        end-point: https://oss-cn-hangzhou.aliyuncs.com\n        bucket-name: your-bucket\n```\n\n### 文件上传\n```java\n@Autowired\nprivate FileStorageService fileStorageService;\n\n// 上传并返回 URL\nFileInfo fileInfo = fileStorageService.of(file)\n    .setPath(\"avatars/\")\n    .setObjectId(userId.toString())\n    .upload();\nString url = fileInfo.getUrl();\n\n// 上传图片并生成缩略图\nFileInfo fileInfo = fileStorageService.of(file)\n    .thumbnail(th -> th.size(200, 200))\n    .upload();\n```\n\n### 版本说明\n- 版本号硬编码（`version = '2.3.0'`），无独立 version key。",
+    "alternatives": [
+      "aliyun-oss-sdk",
+      "minio-sdk"
+    ],
+    "maven": {
+      "groupId": "org.dromara.x-file-storage",
+      "artifactId": "x-file-storage-spring",
+      "version_ref": null
+    },
+    "gradle_ref": [
+      "x-file-storage"
+    ],
+    "dependencies": [],
+    "tags": [
+      "file-storage",
+      "oss",
+      "minio",
+      "upload",
+      "cloud-storage"
+    ],
+    "status": "stable",
+    "stage": [
+      "adapt",
+      "code"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://x-file-storage.xuyanwu.cn/",
+    "ihub_layer": "L2-libs"
+  },
+  {
+    "id": "anyline",
+    "name": "AnyLine（动态数据处理）",
+    "domain": "utilities",
+    "type": "third-party-reference",
+    "description": "面向运行时动态数据操作的框架，支持动态 SQL 生成、多数据源切换、低代码数据查询，无需预定义 Entity 类。",
+    "use_case": "报表系统（动态列）、低代码平台数据层、多数据库适配、无实体类的动态数据 CRUD。",
+    "ai_context": "## AnyLine 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.anyline.dependency)\n    implementation(\"org.anyline:anyline-data-jdbc-mysql\") // 按数据库选择\n}\n```\n\n### 核心概念\n- **不需要** Entity 类，直接操作表结构\n- **动态 SQL**：通过 Condition 对象组装查询条件\n- **运行时 Schema 探测**：可查询表结构信息\n\n### 典型用法\n```java\n@Autowired\nprivate AnylineService anylineService;\n\n// 动态查询（无需 Entity）\nDataSet users = anylineService.querys(\"SYS_USER\",\n    new DefaultCondition()\n        .and(\"STATUS\", 1)\n        .and(\"AGE\", Compare.GREAT, 18)\n);\n\n// 读取表结构（低代码场景）\nList<Column> columns = anylineService.metadata().columns(\"SYS_USER\");\n```\n\n### 版本说明\n- 版本号硬编码（`version = '8.7.3-20260501'`），无独立 version key。\n- 版本号含日期后缀，表示快照/里程碑版本。\n\n### 适用场景判断\n- ✅ 需要动态列、动态表的报表/低代码\n- ✅ 多数据库适配（不改业务代码切换 MySQL/Oracle/PG）\n- ❌ 标准 CRUD 业务（用 MyBatis-Plus 或 Easy-Query 更合适）",
+    "alternatives": [
+      "mybatis-plus",
+      "jooq",
+      "querydsl"
+    ],
+    "maven": {
+      "groupId": "org.anyline",
+      "artifactId": "anyline-dependency",
+      "version_ref": null
+    },
+    "gradle_ref": [
+      "anyline-dependency"
+    ],
+    "dependencies": [],
+    "tags": [
+      "dynamic-sql",
+      "no-entity",
+      "low-code",
+      "report",
+      "multi-database"
+    ],
+    "status": "stable",
+    "stage": [
+      "code"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://www.anyline.org/",
+    "ihub_layer": "L2-libs"
+  }
+]
