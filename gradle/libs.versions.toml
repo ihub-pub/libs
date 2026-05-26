@@ -35,7 +35,7 @@ spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-depe
 # 动态可监控线程
 dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependencies', version = '1.2.2' }
 # 数据翻译
-easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', version = '3.1.5' }
+easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', version = '3.1.6' }
 # warm flow
 warm-flow = { module = 'org.dromara.warm:warm-flow', version = '1.8.7' }
 
