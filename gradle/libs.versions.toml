@@ -16,7 +16,7 @@ fastjson = '2.0.62'
 spring-boot = '4.1.0'
 spring-cloud = '2025.1.2'
 spring-cloud-alibaba = '2025.1.0.0'
-spring-boot-admin = '4.1.0'
+spring-boot-admin = '4.1.2'
 # ── Testing ─────────────────────────────────────────────────────────────────
 pmd = '7.26.0'
 # ── Distributed ─────────────────────────────────────────────────────────────
