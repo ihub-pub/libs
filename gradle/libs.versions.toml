@@ -52,7 +52,7 @@ spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-depe
 #dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version = '3.4.1.0' }
 # ── Distributed ────────────────────────────────────────────────────────────
 dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependencies', version = '1.2.2' }
-easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', version = '3.1.7' }
+easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', version = '4.0.1' }
 # ── Workflow ───────────────────────────────────────────────────────────────
 warm-flow = { module = 'org.dromara.warm:warm-flow', version = '1.8.9' }
 
