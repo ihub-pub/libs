@@ -133,7 +133,7 @@ jmolecules-archunit = { module = 'org.jmolecules.integrations:jmolecules-archuni
 # ── Testing ────────────────────────────────────────────────────────────────
 junit-jupiter = { module = 'org.junit.jupiter:junit-jupiter' }
 spock-spring = { module = 'org.spockframework:spock-spring' }
-spock-reports = { module = 'com.athaydes:spock-reports', version = '2.6.0-groovy-5.0' }
+spock-reports = { module = 'com.athaydes:spock-reports', version = '2.6.1-groovy-5.0' }
 spring-boot-starter-test = { module = 'org.springframework.boot:spring-boot-starter-test' }
 
 # ── Testing (Verification / PMD) ───────────────────────────────────────────
