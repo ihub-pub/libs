@@ -1,6 +1,6 @@
 {
   "catalog_version": "1.0.0",
-  "generated": "2026-07-26",
+  "generated": "0a131d80",
   "taxonomy": {
     "catalog_version": "1.0.0",
     "generated": "2026-05-03",
@@ -462,6 +462,42 @@
       "ihub_layer": "L2"
     },
     {
+      "id": "data-orm-mpe-table",
+      "name": "MPE 自动建表（AutoTable/Actable）",
+      "domain": "data",
+      "type": "third-party-reference",
+      "description": "MyBatis-Plus-Ext 的表结构自动化模块：实体类即表结构，启动时自动建表/变更字段，免维护 DDL 脚本。",
+      "use_case": "快速原型、内部工具、频繁迭代的小中型项目。对表结构有严格管控的核心系统慎用（自动变更有数据风险）。",
+      "ai_context": "## MPE 自动建表集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.mpe.spring.boot3.starter)\n    implementation(libs.mpe.autotable.core)        // 自动建表核心（推荐）\n    annotationProcessor(libs.mpe.autotable.annotation)\n}\n```\n\n### 实体声明即表结构\n```java\n@Table // 标记纳入自动建表管理（com.tangzc.mpe.autotable.annotation.Table）\n@Data\npublic class SysUser {\n    @TableId\n    private Long id;\n    @ColumnComment(\"用户名\")\n    @Index(fields = \"username\", unique = true)\n    private String username;\n}\n```\n\n### 要点\n- `autotable`（com.tangzc）为活跃维护分支，`actable`（org.dromara.mpe）为历史命名，新项目选 autotable。\n- 生产环境建议开启 table-auto-create=false 仅校验差异不自动变更。\n- 与 Flyway/Liquibase 二选一，勿混用。\n\n### 版本说明\n- version key：`mpe`，与 MyBatis-Plus-Ext 主版本一致。",
+      "alternatives": [
+        "data-orm-mybatis-plus"
+      ],
+      "maven": {
+        "groupId": "org.dromara.mpe",
+        "artifactId": "mybatis-plus-ext-autotable-core",
+        "version_ref": "mpe"
+      },
+      "gradle_ref": [
+        "mpe-autotable-annotation",
+        "mpe-autotable-core",
+        "mpe-actable-core"
+      ],
+      "dependencies": [],
+      "tags": [
+        "auto-ddl",
+        "orm",
+        "mybatis-plus"
+      ],
+      "status": "stable",
+      "stage": [
+        "init",
+        "code"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://mybatis-plus-ext.opensourcex.com",
+      "ihub_layer": "L2-libs"
+    },
+    {
       "id": "ddd-architecture-jmolecules",
       "name": "jMolecules",
       "name_en": "jMolecules",
@@ -568,6 +604,37 @@
       "doc_url": "https://docs.spring.io/spring-modulith/",
       "source_url": null,
       "ihub_layer": "L2"
+    },
+    {
+      "id": "ddd-architecture-jmolecules-archunit",
+      "name": "jMolecules × ArchUnit（架构约束测试）",
+      "domain": "ddd",
+      "type": "third-party-reference",
+      "description": "jMolecules 与 ArchUnit 集成模块：将 DDD 分层/六边形架构约束编译为可执行的架构测试，违规即测试失败。",
+      "use_case": "已采用 jMolecules 注解标记领域模型的项目，用架构测试守护分层纪律（如 domain 层禁止依赖 infrastructure）。",
+      "ai_context": "## jMolecules ArchUnit 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(platform(libs.jmolecules.bom))\n    testImplementation(libs.jmolecules.archunit)\n}\n```\n\n### 典型用法（ArchUnit 测试）\n```java\n@AnalyzeClasses(packages = \"com.example\", importOptions = JMoleculesArchitectureRules.class)\nclass DddArchitectureTest {\n    @ArchTest\n    static final ArchRule domainMustNotDependOnInfrastructure =\n        JMoleculesArchitectureRules.ensureDomainLayerDoesNotDependOnInfrastructure();\n}\n```\n\n### 要点\n- 前提是代码使用 `@AggregateRoot`/`@Service`（jmolecules-ddd）等注解标记。\n- 规则在测试期执行，无运行时开销。\n- 可与自定义 ArchRule 组合，覆盖项目特有分层约定。\n\n### 版本说明\n- 无独立 version key，由 jmolecules-bom（2025.0.2）管理。",
+      "alternatives": [
+        "ddd-architecture-jmolecules"
+      ],
+      "maven": {
+        "groupId": "org.jmolecules.integrations",
+        "artifactId": "jmolecules-archunit",
+        "version_ref": null
+      },
+      "gradle_ref": "jmolecules-archunit",
+      "dependencies": [],
+      "tags": [
+        "ddd",
+        "archunit",
+        "architecture-test"
+      ],
+      "status": "stable",
+      "stage": [
+        "qa"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://github.com/jmolecules/jMolecules",
+      "ihub_layer": "L2-libs"
     },
     {
       "id": "dynamic-tp",
@@ -720,6 +787,68 @@
       "ihub_layer": "L2-libs"
     },
     {
+      "id": "lock4j",
+      "name": "Lock4j（声明式分布式锁）",
+      "domain": "distributed",
+      "type": "third-party-reference",
+      "description": "基于注解的声明式分布式锁框架，一行 @Lock4j 注解即可为方法加锁，底层支持 Redisson/RedisTemplate/Zookeeper。",
+      "use_case": "业务方法级并发控制：防重复提交、库存扣减、定时任务防重入。相比手写 Redisson 锁，免样板代码、支持 SpEL 动态 key 与自动续期。",
+      "ai_context": "## Lock4j 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.lock4j.redisson)   // Redisson 后端（推荐）\n}\n```\n\n### 典型用法\n```java\n@Service\npublic class OrderService {\n    @Lock4j(keys = {\"#orderId\"}, expire = 30000, acquireTimeout = 3000)\n    public void pay(String orderId) {\n        // 同一 orderId 串行执行，30 秒过期，最多等待 3 秒获取锁\n    }\n}\n```\n\n### 要点\n- keys 支持 SpEL，按业务维度细粒度加锁；不指定则锁整个方法签名。\n- expire 必须大于方法最长执行时间，否则锁提前释放导致并发穿透。\n- 后端可选：`lock4j-redisson`（推荐）、`lock4j-redis-template`、`lock4j-zookeeper`。\n\n### 版本说明\n- 版本号硬编码在 `[libraries]`（2.2.7），无独立 version key。",
+      "alternatives": [
+        "redisson"
+      ],
+      "maven": {
+        "groupId": "com.baomidou",
+        "artifactId": "lock4j-redisson-spring-boot-starter",
+        "version_ref": null
+      },
+      "gradle_ref": "lock4j-redisson",
+      "dependencies": [],
+      "tags": [
+        "distributed-lock",
+        "annotation",
+        "redisson"
+      ],
+      "status": "stable",
+      "stage": [
+        "code"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://gitee.com/baomidou/lock4j",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "snail-job-server",
+      "name": "SnailJob Server（任务调度服务端）",
+      "domain": "distributed",
+      "type": "third-party-reference",
+      "description": "SnailJob 分布式任务调度平台的服务端，独立部署提供任务管理、重试编排与可视化控制台。",
+      "use_case": "需要自建任务调度中心时部署 Server 端；客户端接入见 snail-job 条目。适合需要重试任务可视化、失败任务人工干预的场景。",
+      "ai_context": "## SnailJob Server 部署\n\n### 依赖配置（独立部署项目）\n```kotlin\ndependencies {\n    implementation(libs.snail.job.server.starter)\n}\n```\n\n### 部署要点\n- Server 需要独立数据库（初始化官方 SQL 脚本），默认端口 17888（客户端连接端口）+ 8080（控制台）。\n- 客户端项目仅引入 `snail-job-client-starter`，勿混入 server 依赖。\n- 控制台提供任务触发历史、失败重试、任务编排（DAG）能力。\n\n### 版本说明\n- version key：`snailjob`，与客户端保持同版本。",
+      "alternatives": [
+        "snail-job"
+      ],
+      "maven": {
+        "groupId": "com.aizuda",
+        "artifactId": "snail-job-server-starter",
+        "version_ref": "snailjob"
+      },
+      "gradle_ref": "snail-job-server-starter",
+      "dependencies": [],
+      "tags": [
+        "scheduler",
+        "retry",
+        "server"
+      ],
+      "status": "stable",
+      "stage": [
+        "ops"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://snailjob.opensnail.com",
+      "ihub_layer": "L2-libs"
+    },
+    {
       "id": "springdoc-openapi",
       "name": "SpringDoc OpenAPI",
       "domain": "documentation",
@@ -796,6 +925,36 @@
         "ihub-java"
       ],
       "doc_url": "https://github.com/dnault/therapi-runtime-javadoc",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "swagger-core",
+      "name": "Swagger Core（OpenAPI 3 模型）",
+      "domain": "documentation",
+      "type": "third-party-reference",
+      "description": "OpenAPI 3.0 规范的对象模型与注解（swagger-annotations-jakarta + models），springdoc 的底层依赖。",
+      "use_case": "在领域模型/DTO 上标注 @Schema 丰富 OpenAPI 文档；通常由 springdoc 传递引入，显式声明仅用于注解编译期可见。",
+      "ai_context": "## Swagger Core 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(platform(libs.springdoc.openapi.bom))\n    implementation(libs.swagger.core)   // jakarta 版本（Spring Boot 3+）\n}\n```\n\n### 典型用法\n```java\n@Schema(description = \"用户信息\")\npublic record UserDto(\n    @Schema(description = \"用户名\", example = \"alice\") String username,\n    @Schema(description = \"状态\", allowableValues = {\"ACTIVE\", \"LOCKED\"}) String status) {}\n```\n\n### 要点\n- Spring Boot 3+/Jakarta 项目必须用 `-jakarta` 后缀坐标（本别名已内置）。\n- 纯 API 文档展示由 springdoc 负责，swagger-core 只提供模型与注解。\n\n### 版本说明\n- 版本号硬编码（2.2.51），通常由 springdoc BOM 对齐。",
+      "alternatives": [
+        "springdoc-openapi"
+      ],
+      "maven": {
+        "groupId": "io.swagger.core.v3",
+        "artifactId": "swagger-core-jakarta",
+        "version_ref": null
+      },
+      "gradle_ref": "swagger-core",
+      "dependencies": [],
+      "tags": [
+        "openapi",
+        "annotation"
+      ],
+      "status": "stable",
+      "stage": [
+        "code"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://github.com/swagger-api/swagger-core",
       "ihub_layer": "L2-libs"
     },
     {
@@ -1265,6 +1424,36 @@
       "ihub_layer": "L3"
     },
     {
+      "id": "commons-logging-legacy",
+      "name": "Commons Logging（JCL 遗留）",
+      "domain": "infrastructure",
+      "type": "third-party-reference",
+      "description": "Apache Commons Logging 遗留日志门面，仅为兼容强依赖它的老库保留；统一日志应走 SLF4J。",
+      "use_case": "仅当三方库硬依赖 JCL 且无法排除时保留；推荐用 `jcl-over-slf4j` 桥接替代原生 JCL（见 infra-logging-slf4j 条目）。",
+      "ai_context": "## Commons Logging 处置建议\n\n### 推荐：桥接而非保留\n```kotlin\nconfigurations.all {\n    exclude(group = \"commons-logging\", module = \"commons-logging\")\n}\ndependencies {\n    implementation(libs.jcl.over.slf4j)   // JCL API 由 SLF4J 实现接管\n}\n```\n\n### 要点\n- JCL 的类加载机制在容器环境（如 OSGi/WAR）易出问题，这是 SLF4J 取代它的主因。\n- `./gradlew dependencies | grep commons-logging` 可定位引入路径。\n- 桥接冲突排查：classpath 同时存在 commons-logging 与 jcl-over-slf4j 会报 LinkageError，必须二选一。\n\n### 版本说明\n- 版本由依赖传递管理，无独立 version key。",
+      "alternatives": [
+        "infra-logging-slf4j"
+      ],
+      "maven": {
+        "groupId": "commons-logging",
+        "artifactId": "commons-logging",
+        "version_ref": null
+      },
+      "gradle_ref": "commons-logging",
+      "dependencies": [],
+      "tags": [
+        "logging",
+        "legacy"
+      ],
+      "status": "legacy",
+      "stage": [
+        "migrate"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://commons.apache.org/proper/commons-logging/",
+      "ihub_layer": "L2-libs"
+    },
+    {
       "id": "mapstruct",
       "name": "MapStruct",
       "domain": "mapping",
@@ -1418,6 +1607,67 @@
       ],
       "related_plugins": [],
       "doc_url": "https://easyexcel.opensource.alibaba.com/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "fastjson1-legacy",
+      "name": "Fastjson 1.x（遗留）",
+      "domain": "mapping",
+      "type": "third-party-reference",
+      "description": "阿里 Fastjson 1.x 遗留版本，仅为存量兼容保留；新项目一律使用 fastjson2。",
+      "use_case": "仅在对接强依赖 fastjson 1.x API 的老旧三方库时保留，新代码禁用。",
+      "ai_context": "## Fastjson 1.x（遗留）\n\n### 现状与迁移\n- fastjson 1.x 已停止功能开发，历史反序列化漏洞多发（autoType）。\n- 迁移路径：`com.alibaba:fastjson` → `com.alibaba.fastjson2:fastjson2`，多数场景 API 兼容。\n- 兼容层：`fastjson1` 别名即 1.x 坐标；fastjson2 条目提供 `fastjson-extension` 兼容扩展。\n\n### 版本说明\n- version key：`fastjson`（与 fastjson2 共用 key，坐标不同）。",
+      "alternatives": [
+        "fastjson2"
+      ],
+      "maven": {
+        "groupId": "com.alibaba",
+        "artifactId": "fastjson",
+        "version_ref": null
+      },
+      "gradle_ref": "fastjson1",
+      "dependencies": [],
+      "tags": [
+        "json",
+        "legacy"
+      ],
+      "status": "deprecated",
+      "stage": [
+        "migrate"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://github.com/alibaba/fastjson",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "lombok-mapstruct-binding",
+      "name": "Lombok-MapStruct Binding",
+      "domain": "mapping",
+      "type": "third-party-reference",
+      "description": "Lombok 与 MapStruct 注解处理器协作桥接，解决两者编译顺序导致的 getter 缺失问题。",
+      "use_case": "同时使用 Lombok + MapStruct 的项目必配，否则 MapStruct 生成的 Impl 找不到 Lombok 生成的 getter/setter 而编译失败。",
+      "ai_context": "## Lombok-MapStruct Binding 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    annotationProcessor(libs.mapstruct.processor)\n    annotationProcessor(libs.lombok.mapstruct.binding)  // 必须放在 lombok 之后\n    annotationProcessor(\"org.projectlombok:lombok\")\n}\n```\n\n### 要点\n- annotationProcessor 顺序：mapstruct-processor → lombok-mapstruct-binding → lombok。\n- 缺失该依赖的典型报错：`No property named \"xxx\" exists in source parameter`。\n- mapstruct-plus 条目已内置该依赖，使用 mapstruct-plus 时无需单独引入。\n\n### 版本说明\n- 版本号硬编码（0.2.0），无独立 version key。",
+      "alternatives": [
+        "mapstruct-plus"
+      ],
+      "maven": {
+        "groupId": "org.projectlombok",
+        "artifactId": "lombok-mapstruct-binding",
+        "version_ref": null
+      },
+      "gradle_ref": "lombok-mapstruct-binding",
+      "dependencies": [],
+      "tags": [
+        "mapstruct",
+        "lombok",
+        "annotation-processor"
+      ],
+      "status": "stable",
+      "stage": [
+        "code"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://github.com/projectlombok/lombok-mapstruct-binding",
       "ihub_layer": "L2-libs"
     },
     {
@@ -1753,6 +2003,100 @@
       "ihub_layer": "L2-libs"
     },
     {
+      "id": "p3c",
+      "name": "P3C 阿里巴巴 Java 规范（PMD 规则集）",
+      "domain": "testing",
+      "type": "third-party-reference",
+      "description": "阿里巴巴《Java 开发手册》对应的 PMD 规则集，静态检查命名、集合、并发等编码规约。",
+      "use_case": "团队编码规约统一检查，与 PMD 配合运行。规则集上游维护趋缓，建议仅启用长期稳定规则并允许局部豁免。",
+      "ai_context": "## P3C 集成模式\n\n### 依赖配置（PMD 规则集）\n```kotlin\ndependencies {\n    pmd(libs.pmd.ali)   // IHub verification 插件的 pmd 配置会自动聚合\n}\n```\n\n### 要点\n- 通过 ihub-verification 插件运行 `./gradlew pmdMain`，规则集由 pmd-ali 提供。\n- 部分规则误报率较高（如强制注释类规则），可在 pmd-ruleset.xml 中裁剪。\n- 与 PMD 内置最佳实践规则集互补，勿重复启用相同检查项。\n\n### 版本说明\n- 版本号硬编码（2.1.1），上游发版缓慢。",
+      "alternatives": [
+        "pmd-static-analysis"
+      ],
+      "maven": {
+        "groupId": "com.alibaba.p3c",
+        "artifactId": "p3c-pmd",
+        "version_ref": null
+      },
+      "gradle_ref": "pmd-ali",
+      "dependencies": [],
+      "tags": [
+        "static-analysis",
+        "code-style",
+        "pmd"
+      ],
+      "status": "legacy",
+      "stage": [
+        "qa"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://github.com/alibaba/p3c",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "spock-reports",
+      "name": "Spock Reports（测试报告增强）",
+      "domain": "testing",
+      "type": "third-party-reference",
+      "description": "为 Spock 生成可读性强的 HTML/Markdown 测试报告，规格描述（given/when/then 文本）直接呈现在报告中。",
+      "use_case": "需要向非开发人员展示测试覆盖、或将测试报告作为验收交付物时使用。纯开发自测场景可不引入。",
+      "ai_context": "## Spock Reports 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    testImplementation(libs.spock.reports)\n}\n```\n\n### 配置（可选）\n```groovy\n// src/test/resources/META-INF/services/com.athaydes.spockframework.report.IReportCreator\n// 默认生成 HTML 到 build/spock-reports/\n```\n\n### 要点\n- 版本号需匹配 Groovy 大版本（当前 `2.6.0-groovy-5.0`）。\n- 报告聚合所有 Spec，按 feature method 展示 block 描述与数据表。\n- 与 Gradle 内置测试报告互补：内置报告看通过率，spock-reports 看业务语义。\n\n### 版本说明\n- 版本号硬编码且绑定 groovy 后缀，升级 Groovy 时同步更新。",
+      "alternatives": [
+        "spock-framework"
+      ],
+      "maven": {
+        "groupId": "com.athaydes",
+        "artifactId": "spock-reports",
+        "version_ref": null
+      },
+      "gradle_ref": "spock-reports",
+      "dependencies": [],
+      "tags": [
+        "spock",
+        "test-report",
+        "html"
+      ],
+      "status": "stable",
+      "stage": [
+        "qa"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://github.com/renatoathaydes/spock-reports",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "spring-boot-test",
+      "name": "Spring Boot Test Starter",
+      "domain": "testing",
+      "type": "third-party-reference",
+      "description": "Spring Boot 测试全家桶：JUnit 5、Mockito、AssertJ、Spring Test、Testcontainers 支持一次引入。",
+      "use_case": "Spring Boot 应用测试的标准起点；使用 @SpringBootTest 做集成测试、@WebMvcTest 做切片测试。IHub 仓库若已用 Spock 则二选一。",
+      "ai_context": "## Spring Boot Test 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    testImplementation(libs.spring.boot.starter.test)\n}\n```\n\n### 典型用法\n```java\n@SpringBootTest\nclass UserServiceTest {\n    @Autowired UserService userService;\n    @MockBean UserRepository repository;\n\n    @Test\n    void shouldFindUser() {\n        when(repository.findById(1L)).thenReturn(Optional.of(new User(\"alice\")));\n        assertThat(userService.get(1L).name()).isEqualTo(\"alice\");\n    }\n}\n```\n\n### 要点\n- 版本由 spring-boot-dependencies BOM 管理，无需声明版本。\n- 切片测试（@JsonTest/@DataJpaTest）大幅缩短集成测试时间。\n- 与 Spock 并存时注意测试框架冲突（JUnit 平台可共存）。\n\n### 版本说明\n- 无独立 version key，跟随 spring-boot BOM。",
+      "alternatives": [
+        "spock-framework",
+        "junit5"
+      ],
+      "maven": {
+        "groupId": "org.springframework.boot",
+        "artifactId": "spring-boot-starter-test",
+        "version_ref": null
+      },
+      "gradle_ref": "spring-boot-starter-test",
+      "dependencies": [],
+      "tags": [
+        "junit5",
+        "mockito",
+        "integration-test"
+      ],
+      "status": "stable",
+      "stage": [
+        "qa"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://docs.spring.io/spring-boot/reference/testing/index.html",
+      "ihub_layer": "L2-libs"
+    },
+    {
       "id": "hutool",
       "name": "Hutool（Java 工具库）",
       "domain": "utilities",
@@ -1902,6 +2246,39 @@
       ],
       "related_plugins": [],
       "doc_url": "https://www.anyline.org/",
+      "ihub_layer": "L2-libs"
+    },
+    {
+      "id": "hutool-v7",
+      "name": "Hutool 7.x（下一代）",
+      "domain": "utilities",
+      "type": "third-party-reference",
+      "description": "Hutool 下一代大版本：模块化重构（告别单体 hutool-all）、API 现代化，当前处于里程碑预览阶段。",
+      "use_case": "新项目可试点体验模块化依赖；生产系统仍推荐 hutool（5.x 稳定版），待 7.0 GA 后统一迁移。",
+      "ai_context": "## Hutool 7.x 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(platform(libs.hutool.v7.bom))  // BOM 统一版本\n    // 按需引入模块，不再需要 hutool-all\n    implementation(\"cn.hutool.v7:hutool-core\")\n}\n```\n\n### 与 5.x 的差异\n- groupId 从 `cn.hutool` 变为 `cn.hutool.v7`，可与 5.x 共存（平滑迁移期）。\n- 模块按能力拆分，显著减小依赖体积。\n- API 存在破坏性变更，迁移需对照官方升级指南。\n\n### 版本说明\n- version key：`hutool-v7`（当前 7.0.0-M6 里程碑，未 GA）。",
+      "alternatives": [
+        "hutool"
+      ],
+      "maven": {
+        "groupId": "cn.hutool.v7",
+        "artifactId": "hutool-bom",
+        "version_ref": "hutool-v7"
+      },
+      "gradle_ref": [
+        "hutool-v7-bom",
+        "hutool-v7-all"
+      ],
+      "dependencies": [],
+      "tags": [
+        "utility",
+        "modular"
+      ],
+      "status": "experimental",
+      "stage": [
+        "code"
+      ],
+      "related_plugins": [],
+      "doc_url": "https://hutool.cn",
       "ihub_layer": "L2-libs"
     },
     {

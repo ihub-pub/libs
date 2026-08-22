@@ -154,5 +154,66 @@
     "related_plugins": [],
     "doc_url": "https://easyexcel.opensource.alibaba.com/",
     "ihub_layer": "L2-libs"
+  },
+  {
+    "id": "fastjson1-legacy",
+    "name": "Fastjson 1.x（遗留）",
+    "domain": "mapping",
+    "type": "third-party-reference",
+    "description": "阿里 Fastjson 1.x 遗留版本，仅为存量兼容保留；新项目一律使用 fastjson2。",
+    "use_case": "仅在对接强依赖 fastjson 1.x API 的老旧三方库时保留，新代码禁用。",
+    "ai_context": "## Fastjson 1.x（遗留）\n\n### 现状与迁移\n- fastjson 1.x 已停止功能开发，历史反序列化漏洞多发（autoType）。\n- 迁移路径：`com.alibaba:fastjson` → `com.alibaba.fastjson2:fastjson2`，多数场景 API 兼容。\n- 兼容层：`fastjson1` 别名即 1.x 坐标；fastjson2 条目提供 `fastjson-extension` 兼容扩展。\n\n### 版本说明\n- version key：`fastjson`（与 fastjson2 共用 key，坐标不同）。",
+    "alternatives": [
+      "fastjson2"
+    ],
+    "maven": {
+      "groupId": "com.alibaba",
+      "artifactId": "fastjson",
+      "version_ref": null
+    },
+    "gradle_ref": "fastjson1",
+    "dependencies": [],
+    "tags": [
+      "json",
+      "legacy"
+    ],
+    "status": "deprecated",
+    "stage": [
+      "migrate"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://github.com/alibaba/fastjson",
+    "ihub_layer": "L2-libs"
+  },
+  {
+    "id": "lombok-mapstruct-binding",
+    "name": "Lombok-MapStruct Binding",
+    "domain": "mapping",
+    "type": "third-party-reference",
+    "description": "Lombok 与 MapStruct 注解处理器协作桥接，解决两者编译顺序导致的 getter 缺失问题。",
+    "use_case": "同时使用 Lombok + MapStruct 的项目必配，否则 MapStruct 生成的 Impl 找不到 Lombok 生成的 getter/setter 而编译失败。",
+    "ai_context": "## Lombok-MapStruct Binding 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    annotationProcessor(libs.mapstruct.processor)\n    annotationProcessor(libs.lombok.mapstruct.binding)  // 必须放在 lombok 之后\n    annotationProcessor(\"org.projectlombok:lombok\")\n}\n```\n\n### 要点\n- annotationProcessor 顺序：mapstruct-processor → lombok-mapstruct-binding → lombok。\n- 缺失该依赖的典型报错：`No property named \"xxx\" exists in source parameter`。\n- mapstruct-plus 条目已内置该依赖，使用 mapstruct-plus 时无需单独引入。\n\n### 版本说明\n- 版本号硬编码（0.2.0），无独立 version key。",
+    "alternatives": [
+      "mapstruct-plus"
+    ],
+    "maven": {
+      "groupId": "org.projectlombok",
+      "artifactId": "lombok-mapstruct-binding",
+      "version_ref": null
+    },
+    "gradle_ref": "lombok-mapstruct-binding",
+    "dependencies": [],
+    "tags": [
+      "mapstruct",
+      "lombok",
+      "annotation-processor"
+    ],
+    "status": "stable",
+    "stage": [
+      "code"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://github.com/projectlombok/lombok-mapstruct-binding",
+    "ihub_layer": "L2-libs"
   }
 ]
