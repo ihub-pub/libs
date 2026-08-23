@@ -191,5 +191,41 @@
     "doc_url": "https://dynamic-datasource.com",
     "source_url": null,
     "ihub_layer": "L2"
+  },
+  {
+    "id": "data-orm-mpe-table",
+    "name": "MPE 自动建表（AutoTable/Actable）",
+    "domain": "data",
+    "type": "third-party-reference",
+    "description": "MyBatis-Plus-Ext 的表结构自动化模块：实体类即表结构，启动时自动建表/变更字段，免维护 DDL 脚本。",
+    "use_case": "快速原型、内部工具、频繁迭代的小中型项目。对表结构有严格管控的核心系统慎用（自动变更有数据风险）。",
+    "ai_context": "## MPE 自动建表集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.mpe.spring.boot3.starter)\n    implementation(libs.mpe.autotable.core)        // 自动建表核心（推荐）\n    annotationProcessor(libs.mpe.autotable.annotation)\n}\n```\n\n### 实体声明即表结构\n```java\n@Table // 标记纳入自动建表管理（com.tangzc.mpe.autotable.annotation.Table）\n@Data\npublic class SysUser {\n    @TableId\n    private Long id;\n    @ColumnComment(\"用户名\")\n    @Index(fields = \"username\", unique = true)\n    private String username;\n}\n```\n\n### 要点\n- `autotable`（com.tangzc）为活跃维护分支，`actable`（org.dromara.mpe）为历史命名，新项目选 autotable。\n- 生产环境建议开启 table-auto-create=false 仅校验差异不自动变更。\n- 与 Flyway/Liquibase 二选一，勿混用。\n\n### 版本说明\n- version key：`mpe`，与 MyBatis-Plus-Ext 主版本一致。",
+    "alternatives": [
+      "data-orm-mybatis-plus"
+    ],
+    "maven": {
+      "groupId": "org.dromara.mpe",
+      "artifactId": "mybatis-plus-ext-autotable-core",
+      "version_ref": "mpe"
+    },
+    "gradle_ref": [
+      "mpe-autotable-annotation",
+      "mpe-autotable-core",
+      "mpe-actable-core"
+    ],
+    "dependencies": [],
+    "tags": [
+      "auto-ddl",
+      "orm",
+      "mybatis-plus"
+    ],
+    "status": "stable",
+    "stage": [
+      "init",
+      "code"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://mybatis-plus-ext.opensourcex.com",
+    "ihub_layer": "L2-libs"
   }
 ]
