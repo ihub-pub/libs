@@ -119,5 +119,99 @@
     ],
     "doc_url": "https://pmd.github.io/",
     "ihub_layer": "L2-libs"
+  },
+  {
+    "id": "p3c",
+    "name": "P3C 阿里巴巴 Java 规范（PMD 规则集）",
+    "domain": "testing",
+    "type": "third-party-reference",
+    "description": "阿里巴巴《Java 开发手册》对应的 PMD 规则集，静态检查命名、集合、并发等编码规约。",
+    "use_case": "团队编码规约统一检查，与 PMD 配合运行。规则集上游维护趋缓，建议仅启用长期稳定规则并允许局部豁免。",
+    "ai_context": "## P3C 集成模式\n\n### 依赖配置（PMD 规则集）\n```kotlin\ndependencies {\n    pmd(libs.pmd.ali)   // IHub verification 插件的 pmd 配置会自动聚合\n}\n```\n\n### 要点\n- 通过 ihub-verification 插件运行 `./gradlew pmdMain`，规则集由 pmd-ali 提供。\n- 部分规则误报率较高（如强制注释类规则），可在 pmd-ruleset.xml 中裁剪。\n- 与 PMD 内置最佳实践规则集互补，勿重复启用相同检查项。\n\n### 版本说明\n- 版本号硬编码（2.1.1），上游发版缓慢。",
+    "alternatives": [
+      "pmd-static-analysis"
+    ],
+    "maven": {
+      "groupId": "com.alibaba.p3c",
+      "artifactId": "p3c-pmd",
+      "version_ref": null
+    },
+    "gradle_ref": "pmd-ali",
+    "dependencies": [],
+    "tags": [
+      "static-analysis",
+      "code-style",
+      "pmd"
+    ],
+    "status": "legacy",
+    "stage": [
+      "qa"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://github.com/alibaba/p3c",
+    "ihub_layer": "L2-libs"
+  },
+  {
+    "id": "spock-reports",
+    "name": "Spock Reports（测试报告增强）",
+    "domain": "testing",
+    "type": "third-party-reference",
+    "description": "为 Spock 生成可读性强的 HTML/Markdown 测试报告，规格描述（given/when/then 文本）直接呈现在报告中。",
+    "use_case": "需要向非开发人员展示测试覆盖、或将测试报告作为验收交付物时使用。纯开发自测场景可不引入。",
+    "ai_context": "## Spock Reports 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    testImplementation(libs.spock.reports)\n}\n```\n\n### 配置（可选）\n```groovy\n// src/test/resources/META-INF/services/com.athaydes.spockframework.report.IReportCreator\n// 默认生成 HTML 到 build/spock-reports/\n```\n\n### 要点\n- 版本号需匹配 Groovy 大版本（当前 `2.6.0-groovy-5.0`）。\n- 报告聚合所有 Spec，按 feature method 展示 block 描述与数据表。\n- 与 Gradle 内置测试报告互补：内置报告看通过率，spock-reports 看业务语义。\n\n### 版本说明\n- 版本号硬编码且绑定 groovy 后缀，升级 Groovy 时同步更新。",
+    "alternatives": [
+      "spock-framework"
+    ],
+    "maven": {
+      "groupId": "com.athaydes",
+      "artifactId": "spock-reports",
+      "version_ref": null
+    },
+    "gradle_ref": "spock-reports",
+    "dependencies": [],
+    "tags": [
+      "spock",
+      "test-report",
+      "html"
+    ],
+    "status": "stable",
+    "stage": [
+      "qa"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://github.com/renatoathaydes/spock-reports",
+    "ihub_layer": "L2-libs"
+  },
+  {
+    "id": "spring-boot-test",
+    "name": "Spring Boot Test Starter",
+    "domain": "testing",
+    "type": "third-party-reference",
+    "description": "Spring Boot 测试全家桶：JUnit 5、Mockito、AssertJ、Spring Test、Testcontainers 支持一次引入。",
+    "use_case": "Spring Boot 应用测试的标准起点；使用 @SpringBootTest 做集成测试、@WebMvcTest 做切片测试。IHub 仓库若已用 Spock 则二选一。",
+    "ai_context": "## Spring Boot Test 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    testImplementation(libs.spring.boot.starter.test)\n}\n```\n\n### 典型用法\n```java\n@SpringBootTest\nclass UserServiceTest {\n    @Autowired UserService userService;\n    @MockBean UserRepository repository;\n\n    @Test\n    void shouldFindUser() {\n        when(repository.findById(1L)).thenReturn(Optional.of(new User(\"alice\")));\n        assertThat(userService.get(1L).name()).isEqualTo(\"alice\");\n    }\n}\n```\n\n### 要点\n- 版本由 spring-boot-dependencies BOM 管理，无需声明版本。\n- 切片测试（@JsonTest/@DataJpaTest）大幅缩短集成测试时间。\n- 与 Spock 并存时注意测试框架冲突（JUnit 平台可共存）。\n\n### 版本说明\n- 无独立 version key，跟随 spring-boot BOM。",
+    "alternatives": [
+      "spock-framework",
+      "junit5"
+    ],
+    "maven": {
+      "groupId": "org.springframework.boot",
+      "artifactId": "spring-boot-starter-test",
+      "version_ref": null
+    },
+    "gradle_ref": "spring-boot-starter-test",
+    "dependencies": [],
+    "tags": [
+      "junit5",
+      "mockito",
+      "integration-test"
+    ],
+    "status": "stable",
+    "stage": [
+      "qa"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://docs.spring.io/spring-boot/reference/testing/index.html",
+    "ihub_layer": "L2-libs"
   }
 ]

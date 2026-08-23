@@ -148,5 +148,67 @@
     "related_plugins": [],
     "doc_url": "https://snailjob.opensnail.com/",
     "ihub_layer": "L2-libs"
+  },
+  {
+    "id": "lock4j",
+    "name": "Lock4j（声明式分布式锁）",
+    "domain": "distributed",
+    "type": "third-party-reference",
+    "description": "基于注解的声明式分布式锁框架，一行 @Lock4j 注解即可为方法加锁，底层支持 Redisson/RedisTemplate/Zookeeper。",
+    "use_case": "业务方法级并发控制：防重复提交、库存扣减、定时任务防重入。相比手写 Redisson 锁，免样板代码、支持 SpEL 动态 key 与自动续期。",
+    "ai_context": "## Lock4j 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(libs.lock4j.redisson)   // Redisson 后端（推荐）\n}\n```\n\n### 典型用法\n```java\n@Service\npublic class OrderService {\n    @Lock4j(keys = {\"#orderId\"}, expire = 30000, acquireTimeout = 3000)\n    public void pay(String orderId) {\n        // 同一 orderId 串行执行，30 秒过期，最多等待 3 秒获取锁\n    }\n}\n```\n\n### 要点\n- keys 支持 SpEL，按业务维度细粒度加锁；不指定则锁整个方法签名。\n- expire 必须大于方法最长执行时间，否则锁提前释放导致并发穿透。\n- 后端可选：`lock4j-redisson`（推荐）、`lock4j-redis-template`、`lock4j-zookeeper`。\n\n### 版本说明\n- 版本号硬编码在 `[libraries]`（2.2.7），无独立 version key。",
+    "alternatives": [
+      "redisson"
+    ],
+    "maven": {
+      "groupId": "com.baomidou",
+      "artifactId": "lock4j-redisson-spring-boot-starter",
+      "version_ref": null
+    },
+    "gradle_ref": "lock4j-redisson",
+    "dependencies": [],
+    "tags": [
+      "distributed-lock",
+      "annotation",
+      "redisson"
+    ],
+    "status": "stable",
+    "stage": [
+      "code"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://gitee.com/baomidou/lock4j",
+    "ihub_layer": "L2-libs"
+  },
+  {
+    "id": "snail-job-server",
+    "name": "SnailJob Server（任务调度服务端）",
+    "domain": "distributed",
+    "type": "third-party-reference",
+    "description": "SnailJob 分布式任务调度平台的服务端，独立部署提供任务管理、重试编排与可视化控制台。",
+    "use_case": "需要自建任务调度中心时部署 Server 端；客户端接入见 snail-job 条目。适合需要重试任务可视化、失败任务人工干预的场景。",
+    "ai_context": "## SnailJob Server 部署\n\n### 依赖配置（独立部署项目）\n```kotlin\ndependencies {\n    implementation(libs.snail.job.server.starter)\n}\n```\n\n### 部署要点\n- Server 需要独立数据库（初始化官方 SQL 脚本），默认端口 17888（客户端连接端口）+ 8080（控制台）。\n- 客户端项目仅引入 `snail-job-client-starter`，勿混入 server 依赖。\n- 控制台提供任务触发历史、失败重试、任务编排（DAG）能力。\n\n### 版本说明\n- version key：`snailjob`，与客户端保持同版本。",
+    "alternatives": [
+      "snail-job"
+    ],
+    "maven": {
+      "groupId": "com.aizuda",
+      "artifactId": "snail-job-server-starter",
+      "version_ref": "snailjob"
+    },
+    "gradle_ref": "snail-job-server-starter",
+    "dependencies": [],
+    "tags": [
+      "scheduler",
+      "retry",
+      "server"
+    ],
+    "status": "stable",
+    "stage": [
+      "ops"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://snailjob.opensnail.com",
+    "ihub_layer": "L2-libs"
   }
 ]
