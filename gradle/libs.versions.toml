@@ -31,7 +31,7 @@ easy-query = '3.2.6'
 
 [libraries]
 # ── Infrastructure (BOM / Platform) ────────────────────────────────────────
-ihub-integration-bom = { module = 'pub.ihub.integration:ihub-bom', version = '0.2.4' }
+ihub-integration-bom = { module = 'pub.ihub.integration:ihub-bom', version = '0.2.5' }
 ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.3.0' }
 # ── Utilities ──────────────────────────────────────────────────────────────
 hutool-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool' }
