@@ -464,5 +464,35 @@
     "doc_url": "https://doc.ihub.pub",
     "source_url": null,
     "ihub_layer": "L3"
+  },
+  {
+    "id": "commons-logging-legacy",
+    "name": "Commons Logging（JCL 遗留）",
+    "domain": "infrastructure",
+    "type": "third-party-reference",
+    "description": "Apache Commons Logging 遗留日志门面，仅为兼容强依赖它的老库保留；统一日志应走 SLF4J。",
+    "use_case": "仅当三方库硬依赖 JCL 且无法排除时保留；推荐用 `jcl-over-slf4j` 桥接替代原生 JCL（见 infra-logging-slf4j 条目）。",
+    "ai_context": "## Commons Logging 处置建议\n\n### 推荐：桥接而非保留\n```kotlin\nconfigurations.all {\n    exclude(group = \"commons-logging\", module = \"commons-logging\")\n}\ndependencies {\n    implementation(libs.jcl.over.slf4j)   // JCL API 由 SLF4J 实现接管\n}\n```\n\n### 要点\n- JCL 的类加载机制在容器环境（如 OSGi/WAR）易出问题，这是 SLF4J 取代它的主因。\n- `./gradlew dependencies | grep commons-logging` 可定位引入路径。\n- 桥接冲突排查：classpath 同时存在 commons-logging 与 jcl-over-slf4j 会报 LinkageError，必须二选一。\n\n### 版本说明\n- 版本由依赖传递管理，无独立 version key。",
+    "alternatives": [
+      "infra-logging-slf4j"
+    ],
+    "maven": {
+      "groupId": "commons-logging",
+      "artifactId": "commons-logging",
+      "version_ref": null
+    },
+    "gradle_ref": "commons-logging",
+    "dependencies": [],
+    "tags": [
+      "logging",
+      "legacy"
+    ],
+    "status": "legacy",
+    "stage": [
+      "migrate"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://commons.apache.org/proper/commons-logging/",
+    "ihub_layer": "L2-libs"
   }
 ]

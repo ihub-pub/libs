@@ -150,5 +150,38 @@
     "related_plugins": [],
     "doc_url": "https://www.anyline.org/",
     "ihub_layer": "L2-libs"
+  },
+  {
+    "id": "hutool-v7",
+    "name": "Hutool 7.x（下一代）",
+    "domain": "utilities",
+    "type": "third-party-reference",
+    "description": "Hutool 下一代大版本：模块化重构（告别单体 hutool-all）、API 现代化，当前处于里程碑预览阶段。",
+    "use_case": "新项目可试点体验模块化依赖；生产系统仍推荐 hutool（5.x 稳定版），待 7.0 GA 后统一迁移。",
+    "ai_context": "## Hutool 7.x 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(platform(libs.hutool.v7.bom))  // BOM 统一版本\n    // 按需引入模块，不再需要 hutool-all\n    implementation(\"cn.hutool.v7:hutool-core\")\n}\n```\n\n### 与 5.x 的差异\n- groupId 从 `cn.hutool` 变为 `cn.hutool.v7`，可与 5.x 共存（平滑迁移期）。\n- 模块按能力拆分，显著减小依赖体积。\n- API 存在破坏性变更，迁移需对照官方升级指南。\n\n### 版本说明\n- version key：`hutool-v7`（当前 7.0.0-M6 里程碑，未 GA）。",
+    "alternatives": [
+      "hutool"
+    ],
+    "maven": {
+      "groupId": "cn.hutool.v7",
+      "artifactId": "hutool-bom",
+      "version_ref": "hutool-v7"
+    },
+    "gradle_ref": [
+      "hutool-v7-bom",
+      "hutool-v7-all"
+    ],
+    "dependencies": [],
+    "tags": [
+      "utility",
+      "modular"
+    ],
+    "status": "experimental",
+    "stage": [
+      "code"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://hutool.cn",
+    "ihub_layer": "L2-libs"
   }
 ]

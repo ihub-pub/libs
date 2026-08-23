@@ -106,5 +106,36 @@
     "doc_url": "https://docs.spring.io/spring-modulith/",
     "source_url": null,
     "ihub_layer": "L2"
+  },
+  {
+    "id": "ddd-architecture-jmolecules-archunit",
+    "name": "jMolecules × ArchUnit（架构约束测试）",
+    "domain": "ddd",
+    "type": "third-party-reference",
+    "description": "jMolecules 与 ArchUnit 集成模块：将 DDD 分层/六边形架构约束编译为可执行的架构测试，违规即测试失败。",
+    "use_case": "已采用 jMolecules 注解标记领域模型的项目，用架构测试守护分层纪律（如 domain 层禁止依赖 infrastructure）。",
+    "ai_context": "## jMolecules ArchUnit 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(platform(libs.jmolecules.bom))\n    testImplementation(libs.jmolecules.archunit)\n}\n```\n\n### 典型用法（ArchUnit 测试）\n```java\n@AnalyzeClasses(packages = \"com.example\", importOptions = JMoleculesArchitectureRules.class)\nclass DddArchitectureTest {\n    @ArchTest\n    static final ArchRule domainMustNotDependOnInfrastructure =\n        JMoleculesArchitectureRules.ensureDomainLayerDoesNotDependOnInfrastructure();\n}\n```\n\n### 要点\n- 前提是代码使用 `@AggregateRoot`/`@Service`（jmolecules-ddd）等注解标记。\n- 规则在测试期执行，无运行时开销。\n- 可与自定义 ArchRule 组合，覆盖项目特有分层约定。\n\n### 版本说明\n- 无独立 version key，由 jmolecules-bom（2025.0.2）管理。",
+    "alternatives": [
+      "ddd-architecture-jmolecules"
+    ],
+    "maven": {
+      "groupId": "org.jmolecules.integrations",
+      "artifactId": "jmolecules-archunit",
+      "version_ref": null
+    },
+    "gradle_ref": "jmolecules-archunit",
+    "dependencies": [],
+    "tags": [
+      "ddd",
+      "archunit",
+      "architecture-test"
+    ],
+    "status": "stable",
+    "stage": [
+      "qa"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://github.com/jmolecules/jMolecules",
+    "ihub_layer": "L2-libs"
   }
 ]
