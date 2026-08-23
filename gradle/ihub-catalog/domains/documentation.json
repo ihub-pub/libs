@@ -77,5 +77,35 @@
     ],
     "doc_url": "https://github.com/dnault/therapi-runtime-javadoc",
     "ihub_layer": "L2-libs"
+  },
+  {
+    "id": "swagger-core",
+    "name": "Swagger Core（OpenAPI 3 模型）",
+    "domain": "documentation",
+    "type": "third-party-reference",
+    "description": "OpenAPI 3.0 规范的对象模型与注解（swagger-annotations-jakarta + models），springdoc 的底层依赖。",
+    "use_case": "在领域模型/DTO 上标注 @Schema 丰富 OpenAPI 文档；通常由 springdoc 传递引入，显式声明仅用于注解编译期可见。",
+    "ai_context": "## Swagger Core 集成模式\n\n### 依赖配置\n```kotlin\ndependencies {\n    implementation(platform(libs.springdoc.openapi.bom))\n    implementation(libs.swagger.core)   // jakarta 版本（Spring Boot 3+）\n}\n```\n\n### 典型用法\n```java\n@Schema(description = \"用户信息\")\npublic record UserDto(\n    @Schema(description = \"用户名\", example = \"alice\") String username,\n    @Schema(description = \"状态\", allowableValues = {\"ACTIVE\", \"LOCKED\"}) String status) {}\n```\n\n### 要点\n- Spring Boot 3+/Jakarta 项目必须用 `-jakarta` 后缀坐标（本别名已内置）。\n- 纯 API 文档展示由 springdoc 负责，swagger-core 只提供模型与注解。\n\n### 版本说明\n- 版本号硬编码（2.2.51），通常由 springdoc BOM 对齐。",
+    "alternatives": [
+      "springdoc-openapi"
+    ],
+    "maven": {
+      "groupId": "io.swagger.core.v3",
+      "artifactId": "swagger-core-jakarta",
+      "version_ref": null
+    },
+    "gradle_ref": "swagger-core",
+    "dependencies": [],
+    "tags": [
+      "openapi",
+      "annotation"
+    ],
+    "status": "stable",
+    "stage": [
+      "code"
+    ],
+    "related_plugins": [],
+    "doc_url": "https://github.com/swagger-api/swagger-core",
+    "ihub_layer": "L2-libs"
   }
 ]

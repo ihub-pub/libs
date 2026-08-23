@@ -22,7 +22,7 @@ pmd = '7.26.0'
 # ── Distributed ─────────────────────────────────────────────────────────────
 snailjob = '2.0.2'
 # ── Observability ───────────────────────────────────────────────────────────
-skywalking-toolkit = '9.6.0'
+skywalking-toolkit = '9.7.0'
 # ── Documentation ───────────────────────────────────────────────────────────
 therapi-javadoc = '0.15.0'
 # ── Data ────────────────────────────────────────────────────────────────────
@@ -31,7 +31,7 @@ easy-query = '3.2.6'
 
 [libraries]
 # ── Infrastructure (BOM / Platform) ────────────────────────────────────────
-ihub-integration-bom = { module = 'pub.ihub.integration:ihub-bom', version = '0.2.4' }
+ihub-integration-bom = { module = 'pub.ihub.integration:ihub-bom', version = '0.2.5' }
 ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.3.0' }
 # ── Utilities ──────────────────────────────────────────────────────────────
 hutool-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool' }
@@ -41,10 +41,10 @@ mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.17
 spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '2.0.0' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.4-groovy-5.0' }
 # ── Security & Auth ────────────────────────────────────────────────────────
-sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.45.0' }
+sa-token-bom = { module = 'cn.dev33:sa-token-bom', version = '1.46.0' }
 # ── Documentation ──────────────────────────────────────────────────────────
 springdoc-openapi-bom = { module = 'org.springdoc:springdoc-openapi-bom', version = '3.1.0' }
-anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '9.7.6-20260806' }
+anyline-dependency = { module = 'org.anyline:anyline-dependency', version = '17.7.6-20260815' }
 spring-boot-admin-dependencies = { module = 'de.codecentric:spring-boot-admin-dependencies', version.ref = 'spring-boot-admin' }
 spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
 spring-cloud-alibaba-dependencies = { module = 'com.alibaba.cloud:spring-cloud-alibaba-dependencies', version.ref = 'spring-cloud-alibaba' }
@@ -52,7 +52,7 @@ spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-depe
 #dante-cloud-dependencies = { module = 'cn.herodotus.engine:dependencies', version = '3.4.1.0' }
 # ── Distributed ────────────────────────────────────────────────────────────
 dynamic-tp-dependencies = { module = 'org.dromara.dynamictp:dynamic-tp-dependencies', version = '1.2.2' }
-easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', version = '4.0.1' }
+easy-trans-dependencies = { module = 'org.dromara:easy-trans-dependencies', version = '4.0.2' }
 # ── Workflow ───────────────────────────────────────────────────────────────
 warm-flow = { module = 'org.dromara.warm:warm-flow', version = '1.8.9' }
 
@@ -133,7 +133,7 @@ jmolecules-archunit = { module = 'org.jmolecules.integrations:jmolecules-archuni
 # ── Testing ────────────────────────────────────────────────────────────────
 junit-jupiter = { module = 'org.junit.jupiter:junit-jupiter' }
 spock-spring = { module = 'org.spockframework:spock-spring' }
-spock-reports = { module = 'com.athaydes:spock-reports', version = '2.6.0-groovy-5.0' }
+spock-reports = { module = 'com.athaydes:spock-reports', version = '2.6.1-groovy-5.0' }
 spring-boot-starter-test = { module = 'org.springframework.boot:spring-boot-starter-test' }
 
 # ── Testing (Verification / PMD) ───────────────────────────────────────────
@@ -174,7 +174,7 @@ redisson = { module = 'org.redisson:redisson-spring-boot-starter', version = '4.
 lock4j-redisson = { module = 'com.baomidou:lock4j-redisson-spring-boot-starter', version = '2.2.7' }
 sms4j = { module = 'org.dromara.sms4j:sms4j-spring-boot-starter', version = '3.3.5' }
 dynamic-datasource = { module = 'com.baomidou:dynamic-datasource-spring-boot3-starter', version = '4.5.0' }
-swagger-core = { module = 'io.swagger.core.v3:swagger-core-jakarta', version = '2.2.53' }
+swagger-core = { module = 'io.swagger.core.v3:swagger-core-jakarta', version = '2.2.54' }
 x-file-storage = { module = 'org.dromara.x-file-storage:x-file-storage-spring', version = '2.3.0' }
 
 [bundles]
