@@ -37,7 +37,7 @@ ihub-module-bom = { module = 'pub.ihub.module:ihub-bom', version = '0.3.1' }
 hutool-bom = { module = 'cn.hutool:hutool-bom', version.ref = 'hutool' }
 hutool-v7-bom = { module = 'cn.hutool.v7:hutool-bom', version.ref = 'hutool-v7' }
 # ── Data & Persistence ─────────────────────────────────────────────────────
-mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.17' }
+mybatis-plus-bom = { module = 'com.baomidou:mybatis-plus-bom', version = '3.5.18.1' }
 spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version = '2.0.2' }
 spock-bom = { module = 'org.spockframework:spock-bom', version = '2.5-groovy-5.0' }
 # ── Security & Auth ────────────────────────────────────────────────────────
